@@ -1,7 +1,7 @@
 import './styles/App.css';
 import Navbar from './components/Navbar';
-import Login from './components/Login';
 import ProgramDetail from './components/ProgramDetail';
+import Log from './components/Log';
 
 function App() {
   return (
@@ -11,5 +11,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
