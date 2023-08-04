@@ -5,6 +5,7 @@ import ProgramDetail from './components/ProgramDetail';
 import Login from './components/Login';
 import LandingPage from './components/LandingPage';
 import Log from "./components/Log";
+import TitleImage from "./components/TitleImage";
 
 import React, { useState, useEffect } from "react";
 
@@ -12,8 +13,9 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+      <TitleImage />
       {/* <LandingPage /> */}
-      <Login />
+      {/* <Login /> */}
       {/* <Log/> */}
       {/* <Log/> */}
     </div>
