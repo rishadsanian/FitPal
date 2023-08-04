@@ -3,7 +3,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar bg-dark navbar-expand-sm" data-bs-theme="dark">
         <div className="container-fluid">
-          <a href="/" className="navbar-brand p-3" style={{'font-family': 'Pacifico', 'font-size': 30}} >
+          <a href="/" className="navbar-brand p-3 text-warning" style={{'font-family': 'Pacifico', 'font-size': 30}} >
             FitPal
           </a>
 
