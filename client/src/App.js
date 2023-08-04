@@ -1,5 +1,7 @@
 import './styles/App.css';
 import Navbar from './components/Navbar';
+
+import ProgramDetail from './components/ProgramDetail';
 import Login from './components/Login';
 import LandingPage from './components/LandingPage';
 import Log from "./components/Log";
@@ -13,6 +15,7 @@ function App() {
       <LandingPage />
       {/* <Login /> */}
       {/* <Log/> */}
+      <Log/>
     </div>
   );
 }
