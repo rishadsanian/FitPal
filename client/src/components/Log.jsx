@@ -79,20 +79,21 @@ const Log = () => {
     },
   ];
 
-  // {/* will pull from api as an object or array to show choices from to choose from dropdown menu*/}
+  //STATES
+  // will pull from api as an object or array to show choices from to choose from dropdown menu
   const [muscleGroups, setMuscleGroups] = useState(mockMuscleData);
   // {/* will  be the selcted musclegroup*/}
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
-  // {/* will show the exercises from api as an object or array to show choices */}
+  // will show the exercises from api as an object or array to show choices 
   const [exercises, setExercises] = useState(mockExerciseData);
-  // {/* will save the selected exercise */}
+  // will save the selected exercise 
   const [selectedExercise, setSelectedExercise] = useState("");
-  // {/* record inputs from user */}
+  //  record inputs from user 
   const [reps, setReps] = useState("");
-  // {/* record input from user */}
+  // record input from user
   const [weightLoad, setWeightLoad] = useState("");
 
-//useEffect to select exercises by muscle
+  //useEffect to select exercises by muscle
   useEffect(() => {
     if (selectedMuscleGroup) {
       const filteredExercises = mockExerciseData.filter(
@@ -105,22 +106,13 @@ const Log = () => {
     }
   }, [selectedMuscleGroup]);
 
+  //selects muscle group for filtering
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
-
-    // if (selectedMuscleGroup) {
-    //   const filteredExercises = mockExerciseData.filter(
-    //     (exercise) => exercise.muscle === selectedMuscleGroup
-    //   );
-    //   setExercises(filteredExercises);
-    // } else {
-    //   // If no muscle group is selected, show all exercises
-    //   setExercises(mockExerciseData);
-    // }
   };
 
-  //set selected exercise
+  //set selected exercise for the musclegroup
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
@@ -210,8 +202,7 @@ const Log = () => {
                 backgroundColor:
                   "rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))",
                 "&:hover": {
-                  backgroundColor:
-                    "slategray",
+                  backgroundColor: "slategray",
                 },
               }}
             >
