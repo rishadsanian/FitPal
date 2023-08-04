@@ -138,82 +138,80 @@ const Log = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card">
-        <div className="card-body">
-          <header>
-            <h1 className="card-title">Workout Log</h1>
-          </header>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="muscleGroup" className="form-label">
-                Muscle Group
-              </label>
-              <select
-                id="muscleGroup"
-                className="form-select"
-                value={selectedMuscleGroup}
-                onChange={handleMuscleGroupSelection}
-              >
-                <option value="">Select Muscle Group</option>
-                {muscleGroups.map((group) => (
-                  <option key={group} value={group}>
-                    {group}
-                  </option>
-                ))}
-              </select>
-            </div>
+    <div className="position-absolute top-50 start-50 translate-middle">
+      <div className="container bg-dark text-white rounded py-5 px-3">
+        <h3 className="text-warning fw-bold">Workout Log</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="text-start">
+            <label htmlFor="muscleGroup" className="form-label text-secondary">
+              Muscle Group
+            </label>
+            <select
+              id="muscleGroup"
+              className="form-select bg-secondary text-light"
+              value={selectedMuscleGroup}
+              onChange={handleMuscleGroupSelection}
+            >
+              <option value="">Select Muscle Group</option>
+              {muscleGroups.map((group) => (
+                <option key={group} value={group}>
+                  {group}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <div className="mb-3">
-              <label htmlFor="exercise" className="form-label">
-                Exercise
-              </label>
-              <select
-                id="exercise"
-                className="form-select"
-                value={selectedExercise}
-                onChange={handleExerciseSelection}
-              >
-                <option value="">Select Exercise</option>
-                {exercises.map((exercise) => (
-                  <option key={exercise.name} value={exercise.name}>
-                    {exercise.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="text-start">
+            <label htmlFor="exercise" className="form-label text-secondary">
+              Exercise
+            </label>
+            <select
+              id="exercise"
+              className="form-select bg-secondary text-light"
+              value={selectedExercise}
+              onChange={handleExerciseSelection}
+            >
+              <option value="">Select Exercise</option>
+              {exercises.map((exercise) => (
+                <option key={exercise.name} value={exercise.name}>
+                  {exercise.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <div className="mb-3">
-              <label htmlFor="reps" className="form-label">
-                Reps
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="reps"
-                value={reps}
-                onChange={(e) => setReps(e.target.value)}
-              />
-            </div>
+          <div className="text-start">
+            <label htmlFor="reps" className="form-label text-secondary">
+              Reps
+            </label>
+            <input
+              type="number"
+              className="form-control bg-secondary text-light"
+              id="reps"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
+            />
+          </div>
 
-            <div className="mb-3">
-              <label htmlFor="weightLoad" className="form-label">
-                Weight Load (Resistance)
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="weightLoad"
-                value={weightLoad}
-                onChange={(e) => setWeightLoad(e.target.value)}
-              />
-            </div>
+          <div className="text-start">
+            <label htmlFor="weightLoad" className="form-label text-secondary">
+              Weight Load (Resistance)
+            </label>
+            <input
+              type="number"
+              className="form-control bg-secondary text-light"
+              id="weightLoad"
+              value={weightLoad}
+              onChange={(e) => setWeightLoad(e.target.value)}
+            />
+          </div>
 
-            <button type="submit" className="btn btn-primary">
+          <div className="d-grid pt-3">
+            <button type="submit" className="btn btn-warning">
               Log Workout
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
