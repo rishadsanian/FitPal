@@ -1,18 +1,17 @@
 import React from "react";
 
  function LandingCard(props){
-  const cardBodyClass = props.id % 2 ? "row flex-row-reverse g-0" : "row reverse g-0"
-  const roundedImageClass = props.id % 2 ? "img-fluid rounded-start" : "img-fluid rounded-start";
+  const cardBodyClass = props.id % 2 ? "row flex-row-reverse g-0" : "row reverse g-0" ;
   return (
     <div>
-      <div className="card mx-auto mt-4 mb-4" style={{ width: "90%"}}>
-        <div className={cardBodyClass}>
+      <div className="card mx-auto mt-4 mb-4" style={{ width: "90%", padding: 0}}>
+        <div className={cardBodyClass} >
           <div className="col-md-4">
-            <img src={props.image_source} className={roundedImageClass} style={{minHeight: "100%"}}alt="..." />
+            <img src={props.image_source} className="img-fluid rounded" style={{minHeight: "100%"}}alt="..." />
           </div>
-          <div className="bg-dark text-white col-md-8">
+          <div className="bg-light col-md-8">
             <header className ="card-header"> 
-              <h5 className="card-title">{props.title}</h5>
+              <h2 className="card-title">{props.title}</h2>
             </header>
             <div className="card-body">
 
