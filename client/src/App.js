@@ -1,8 +1,10 @@
 import './styles/App.css';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
-import { AppBar, Toolbar}from '@mui/material';
 import LandingPage from './components/LandingPage';
+import Log from "./components/Log";
+
+import React, { useState, useEffect } from "react";
 
 function App() {
   return (
@@ -10,8 +12,8 @@ function App() {
       <Navbar />
       <Login />
       <LandingPage />
+      {/* <Log/> */}
     </div>
   );
 }
-
 export default App;
