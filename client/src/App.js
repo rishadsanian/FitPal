@@ -1,4 +1,5 @@
-import './App.css';
+
+import './styles/App.css';
 import { Button, AppBar, Toolbar, Box }from '@mui/material';
 
 function App() {
