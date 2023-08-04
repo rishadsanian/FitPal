@@ -12,8 +12,9 @@ import {
   Button,
   Grid,
 } from "@mui/material";
+import "../styles/Log.css"
+///////////////////////////////////////////////////////////LOG FORM/////////////
 
-// {/* /////////////////////////////////////////////////////////LOG FORM////////////// */}
 
 const Log = () => {
   const mockMuscleData = [
@@ -138,80 +139,82 @@ const Log = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 5 }}>
-      <Card>
-        <CardContent>
-          <h1>Workout Log</h1>
-          <form onSubmit={handleSubmit}>
-            <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
-              <InputLabel htmlFor="muscleGroup">Muscle Group</InputLabel>
-              <Select
-                label="Muscle Group"
-                value={selectedMuscleGroup}
-                onChange={handleMuscleGroupSelection}
-              >
-                <MenuItem value="">Select Muscle Group</MenuItem>
-                {muscleGroups.map((group) => (
-                  <MenuItem key={group} value={group}>
-                    {group}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+    <div className="container mt-5">
+    <div className="card">
+      <div className="card-body">
+        <h1 className="card-title">Workout Log</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="muscleGroup" className="form-label">
+              Muscle Group
+            </label>
+            <select
+              id="muscleGroup"
+              className="form-select"
+              value={selectedMuscleGroup}
+              onChange={handleMuscleGroupSelection}
+            >
+              <option value="">Select Muscle Group</option>
+              {muscleGroups.map((group) => (
+                <option key={group} value={group}>
+                  {group}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
-              <InputLabel htmlFor="exercise">Exercise</InputLabel>
-              <Select
-                label="Exercise"
-                value={selectedExercise}
-                onChange={handleExerciseSelection}
-              >
-                <MenuItem value="">Select Exercise</MenuItem>
-                {exercises.map((exercise) => (
-                  <MenuItem key={exercise.name} value={exercise.name}>
-                    {exercise.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <div className="mb-3">
+            <label htmlFor="exercise" className="form-label">
+              Exercise
+            </label>
+            <select
+              id="exercise"
+              className="form-select"
+              value={selectedExercise}
+              onChange={handleExerciseSelection}
+            >
+              <option value="">Select Exercise</option>
+              {exercises.map((exercise) => (
+                <option key={exercise.name} value={exercise.name}>
+                  {exercise.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <TextField
-              fullWidth
-              label="Reps"
+          <div className="mb-3">
+            <label htmlFor="reps" className="form-label">
+              Reps
+            </label>
+            <input
               type="number"
-              variant="outlined"
+              className="form-control"
+              id="reps"
               value={reps}
               onChange={(e) => setReps(e.target.value)}
-              sx={{ mb: 2 }}
             />
+          </div>
 
-            <TextField
-              fullWidth
-              label="Weight Load (Resistance)"
+          <div className="mb-3">
+            <label htmlFor="weightLoad" className="form-label">
+              Weight Load (Resistance)
+            </label>
+            <input
               type="number"
-              variant="outlined"
+              className="form-control"
+              id="weightLoad"
               value={weightLoad}
               onChange={(e) => setWeightLoad(e.target.value)}
-              sx={{ mb: 2 }}
             />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              sx={{
-                backgroundColor:
-                  "rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))",
-                "&:hover": {
-                  backgroundColor: "slategray",
-                },
-              }}
-            >
-              Log Workout
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </Container>
+          </div>
+
+          <button type="submit" className="btn btn-primary">
+            Log Workout
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
   );
 };
 
