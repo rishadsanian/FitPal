@@ -12,10 +12,10 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <LandingPage />
-      {/* <Login /> */}
+      {/* <LandingPage /> */}
+      <Login />
       {/* <Log/> */}
-      <Log/>
+      {/* <Log/> */}
     </div>
   );
 }
