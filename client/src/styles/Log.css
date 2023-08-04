@@ -11,7 +11,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   background-color: var(--bs-dark); /* Set card background to .bg dark */
-}
+
 
 .card-title {
   font-size: 24px;
@@ -46,7 +46,7 @@
 
 } */
 
-}
+
 
 .bg-dark {
   background-color: var(--bs-dark); /* Set background dark to .bg dark */
