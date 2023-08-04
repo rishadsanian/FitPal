@@ -10,15 +10,18 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-color: var(--bs-dark); /* Set card background to .bg dark */
 }
 
 .card-title {
   font-size: 24px;
   margin-bottom: 20px;
+  color: var(--bs-warning); /* Set title color to warning */
 }
 
 .form-label {
   font-weight: bold;
+  color: var(--bs-secondary); /* Set label color to secondary */
 }
 
 .form-select,
@@ -27,16 +30,33 @@
 }
 
 .btn-primary {
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity));
+  background-color: var(--bs-secondary); /* Set button background to secondary */
   border: none;
+  color: white; /* Set button text color */
 }
 
 .btn-primary:hover {
-  background-color: slategray;
+  background-color: var(--bs-darkblue); /* Set button hover background to bg a darkblue */
 }
 
 .form-select {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+
 } */
+
+}
+
+.bg-dark {
+  background-color: var(--bs-dark); /* Set background dark to .bg dark */
+}
+
+.bg-secondary {
+  background-color: var(--bs-secondary); /* Set background secondary to .bg secondary */
+}
+
+.bg-light {
+  color: var(--bs-bglight); /* Set font color to bglight */
+}
+
