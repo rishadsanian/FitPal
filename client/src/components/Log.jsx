@@ -82,21 +82,41 @@ const Log = () => {
 
   // {/* setup useEffect to makesure api is up todate? */}
 
+  // useEffect(() => {
+  //   // Filter out exercises based on selected muscle group
+  //   const filteredExercises = exercises.filter(
+  //     (exercise) => exercise.muscle === selectedMuscleGroup
+  //   );
+  //   setExercises(filteredExercises);
+  // }, [selectedMuscleGroup]);
 
-
-
-  
   //allow users to select a muscle group
+
+  useEffect(() => {
+    if (selectedMuscleGroup) {
+      const filteredExercises = mockExerciseData.filter(
+        (exercise) => exercise.muscle === selectedMuscleGroup
+      );
+      setExercises(filteredExercises);
+    } else {
+      // If no muscle group is selected, show all exercises
+      setExercises(mockExerciseData);
+    }
+  }, [selectedMuscleGroup]);
 
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
 
-    //filter out exercises based on selected muscle group
-    const filteredExercises = exercises.filter(
-      (exercise) => exercise.muscle === selectedMuscle
-    );
-    setExercises(filteredExercises);
+    // if (selectedMuscleGroup) {
+    //   const filteredExercises = mockExerciseData.filter(
+    //     (exercise) => exercise.muscle === selectedMuscleGroup
+    //   );
+    //   setExercises(filteredExercises);
+    // } else {
+    //   // If no muscle group is selected, show all exercises
+    //   setExercises(mockExerciseData);
+    // }
   };
 
   //set selected exercise
@@ -108,7 +128,7 @@ const Log = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Workout:", selectedMuscleGroup, " ", selectedExercise);
+    console.log("Workout:", selectedMuscleGroup, " ", selectedExercise, reps, weightLoad);
 
     //Clear form
     setSelectedMuscleGroup("");
@@ -117,9 +137,7 @@ const Log = () => {
     setWeightLoad("");
   };
 
-
-  return(
-
+  return (
     <div className="container mt-5">
       <h1 className="mb-4">Workout Log</h1>
       <form onSubmit={handleSubmit}>
@@ -180,10 +198,7 @@ const Log = () => {
         </button>
       </form>
     </div>
-
-  )
-
-
+  );
 };
 
 export default Log;
