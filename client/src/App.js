@@ -1,22 +1,26 @@
 import './styles/App.css';
+import { BrowserRouter, Routes, Route, } from 'react-router-dom';
 import Navbar from './components/Navbar';
 
 import ProgramDetail from './components/ProgramDetail';
 import Login from './components/Login';
 import LandingPage from './components/LandingPage';
-import Log from "./components/Log";
+import Log from './components/Log';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <ProgramDetail />
-      {/* <LandingPage /> */}
-
-      {/* <Login />
-      <Log/> */}
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/programs/1" element={<ProgramDetail />} />
+          <Route path="/programs/log" element={<Log />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
