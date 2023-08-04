@@ -13,6 +13,7 @@ function App() {
       <LandingPage />
       {/* <Login /> */}
       {/* <Log/> */}
+      <Log/>
     </div>
   );
 }
