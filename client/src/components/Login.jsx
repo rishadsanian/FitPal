@@ -2,7 +2,7 @@ const Login = () => {
   return (
     <div>
       <form id="login_form" class="position-absolute top-50 start-50 translate-middle">
-        <div class="container bg-dark text-white rounded p-5">
+        <div class="container bg-dark text-white rounded py-5 px-3">
           <h3>Log in</h3>
           <p class="text-secondary">You guys can put some messages here if you want</p>
           <div class="text-start">
