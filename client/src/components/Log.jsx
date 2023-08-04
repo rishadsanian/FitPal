@@ -1,5 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  Button,
+  Grid,
+} from "@mui/material";
 
 // {/* /////////////////////////////////////////////////////////LOG FORM////////////// */}
 
@@ -67,31 +79,21 @@ const Log = () => {
     },
   ];
 
-  // {/* will pull from api as an object or array to show choices from to choose from dropdown menu*/}
+  //STATES
+  // will pull from api as an object or array to show choices from to choose from dropdown menu
   const [muscleGroups, setMuscleGroups] = useState(mockMuscleData);
   // {/* will  be the selcted musclegroup*/}
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
-  // {/* will show the exercises from api as an object or array to show choices */}
+  // will show the exercises from api as an object or array to show choices 
   const [exercises, setExercises] = useState(mockExerciseData);
-  // {/* will save the selected exercise */}
+  // will save the selected exercise 
   const [selectedExercise, setSelectedExercise] = useState("");
-  // {/* record inputs from user */}
+  //  record inputs from user 
   const [reps, setReps] = useState("");
-  // {/* record input from user */}
+  // record input from user
   const [weightLoad, setWeightLoad] = useState("");
 
-  // {/* setup useEffect to makesure api is up todate? */}
-
-  // useEffect(() => {
-  //   // Filter out exercises based on selected muscle group
-  //   const filteredExercises = exercises.filter(
-  //     (exercise) => exercise.muscle === selectedMuscleGroup
-  //   );
-  //   setExercises(filteredExercises);
-  // }, [selectedMuscleGroup]);
-
-  //allow users to select a muscle group
-
+  //useEffect to select exercises by muscle
   useEffect(() => {
     if (selectedMuscleGroup) {
       const filteredExercises = mockExerciseData.filter(
@@ -104,22 +106,13 @@ const Log = () => {
     }
   }, [selectedMuscleGroup]);
 
+  //selects muscle group for filtering
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
-
-    // if (selectedMuscleGroup) {
-    //   const filteredExercises = mockExerciseData.filter(
-    //     (exercise) => exercise.muscle === selectedMuscleGroup
-    //   );
-    //   setExercises(filteredExercises);
-    // } else {
-    //   // If no muscle group is selected, show all exercises
-    //   setExercises(mockExerciseData);
-    // }
   };
 
-  //set selected exercise
+  //set selected exercise for the musclegroup
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
@@ -128,7 +121,14 @@ const Log = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Workout:", selectedMuscleGroup, " ", selectedExercise, reps, weightLoad);
+    console.log(
+      "Workout:",
+      selectedMuscleGroup,
+      " ",
+      selectedExercise,
+      reps,
+      weightLoad
+    );
 
     //Clear form
     setSelectedMuscleGroup("");
@@ -138,66 +138,80 @@ const Log = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">Workout Log</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="muscleGroup">Muscle Group:</label>
-          <select
-            id="muscleGroup"
-            className="form-control"
-            value={selectedMuscleGroup}
-            onChange={handleMuscleGroupSelection}
-          >
-            <option value="">Select Muscle Group</option>
-            {muscleGroups.map((group) => (
-              <option key={group} value={group}>
-                {group}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="exercise">Exercise:</label>
-          <select
-            id="exercise"
-            className="form-control"
-            value={selectedExercise}
-            onChange={handleExerciseSelection}
-          >
-            <option value="">Select Exercise</option>
-            {exercises.map((exercise) => (
-              <option key={exercise.name} value={exercise.name}>
-                {exercise.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="reps">Reps:</label>
-          <input
-            type="number"
-            id="reps"
-            className="form-control"
-            value={reps}
-            onChange={(e) => setReps(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="weightLoad">Weight Load (Resistance):</label>
-          <input
-            type="number"
-            id="weightLoad"
-            className="form-control"
-            value={weightLoad}
-            onChange={(e) => setWeightLoad(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Log Workout
-        </button>
-      </form>
-    </div>
+    <Container maxWidth="sm" sx={{ mt: 5 }}>
+      <Card>
+        <CardContent>
+          <h1>Workout Log</h1>
+          <form onSubmit={handleSubmit}>
+            <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
+              <InputLabel htmlFor="muscleGroup">Muscle Group</InputLabel>
+              <Select
+                label="Muscle Group"
+                value={selectedMuscleGroup}
+                onChange={handleMuscleGroupSelection}
+              >
+                <MenuItem value="">Select Muscle Group</MenuItem>
+                {muscleGroups.map((group) => (
+                  <MenuItem key={group} value={group}>
+                    {group}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth variant="outlined" sx={{ mb: 2 }}>
+              <InputLabel htmlFor="exercise">Exercise</InputLabel>
+              <Select
+                label="Exercise"
+                value={selectedExercise}
+                onChange={handleExerciseSelection}
+              >
+                <MenuItem value="">Select Exercise</MenuItem>
+                {exercises.map((exercise) => (
+                  <MenuItem key={exercise.name} value={exercise.name}>
+                    {exercise.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <TextField
+              fullWidth
+              label="Reps"
+              type="number"
+              variant="outlined"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              fullWidth
+              label="Weight Load (Resistance)"
+              type="number"
+              variant="outlined"
+              value={weightLoad}
+              onChange={(e) => setWeightLoad(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor:
+                  "rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))",
+                "&:hover": {
+                  backgroundColor: "slategray",
+                },
+              }}
+            >
+              Log Workout
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };
 
