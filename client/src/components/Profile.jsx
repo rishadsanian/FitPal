@@ -15,7 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/profile/1"); // Replace '1' with user-id from cookies
+        const response = await axios.get("/api/profile/3"); // Replace '1' with user-id from cookies
         setProfile(response.data);
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -32,7 +32,7 @@ const Profile = () => {
     try {
       // Submit form data to the server
       const response = await axios.post("/profile", {
-        user_id: 1, // Replace '1' with user-id from current_user prop
+        user_id: 3, // Replace '1' with user-id from current_user prop
         age: profile.age,
         height: profile.height,
         weight: profile.weight,
