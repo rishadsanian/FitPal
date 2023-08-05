@@ -1,6 +1,8 @@
 import SetRecord from './SetRecord';
 
+
 const ExerciseLog = () => {
+  
   return (
     <div className="pt-3">
       <h1 className="text-warning pb-3">Barbell bench press</h1>
