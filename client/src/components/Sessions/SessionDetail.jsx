@@ -1,4 +1,4 @@
-import ExerciseItem from "./ExerciseItem";
+import ExerciseItem from "../Exercises/ExerciseItem";
 
 const SessionDetail = () => {
   return (

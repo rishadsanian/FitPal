@@ -1,19 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  Container,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  Button,
-  Grid,
-} from "@mui/material";
-import "../styles/Log.css";
-///////////////////////////////////////////////////////////LOG FORM/////////////
 
 const Log = () => {
   const mockMuscleData = [
