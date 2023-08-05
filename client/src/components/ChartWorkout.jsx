@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import { Chart, LinearScale, BarController, CategoryScale, BarElement } from "chart.js";
+import {
+  Chart,
+  LinearScale,
+  BarController,
+  CategoryScale,
+  BarElement,
+} from "chart.js";
 import moment from "moment";
 
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
@@ -15,7 +21,7 @@ const ChartWorkout = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/chartWorkout/3`);//hard-coded change to current user
+        const response = await axios.get(`/api/chartworkout/3`); //hard-coded change to current user
         setWorkoutData(response.data);
       } catch (error) {
         console.error("Error fetching workout data:", error);
