@@ -1,17 +1,20 @@
-import SessionItem from "../Sessions/SessionItem";
+import SessionItem from '../Sessions/SessionItem';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ProgramDetail = () => {
+  const [program, setProgram] = useState([]);
+
+  useEffect(() => {
+    // axios.get
+  });
+
   return (
     <div>
       <div class="p-3 text-start bg-dark opacity-75">
         <div class="container-fluid py-5">
-          <h1 class="display-5 fw-bold text-warning">Program name</h1>
-          <p class="col-md-8 fs-4 text-white">
-            Description: Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Deleniti ab doloremque sint ea, atque velit? Numquam
-            sequi minus dolorem iusto nostrum, doloribus quod eligendi
-            commodi consequatur suscipit, rem porro? Dolore!
-          </p>
+          <h1 class="display-5 fw-bold text-warning">{program.name}</h1>
+          <p class="col-md-8 fs-4 text-white">{program.description}</p>
         </div>
       </div>
 
