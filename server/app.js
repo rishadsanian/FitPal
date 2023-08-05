@@ -8,7 +8,11 @@ const bodyParser = require("body-parser");
 const pool = require("./configs/db.config");
 
 //routes import
+
+const catsRoutes = require('./routes/catsRoutes');
+const progamsRoutes = require('./routes/programsRoutes');
 const catsRoutes = require("./routes/catsRoutes");
+
 
 const app = express();
 
@@ -16,7 +20,10 @@ const app = express();
 app.use(morgan(ENVIROMENT));
 app.use(bodyParser.json());
 
+app.use('/cats', catsRoutes);
+app.use('/api/programs', progamsRoutes);
 app.use("/cats", catsRoutes);
+
 
 app.get("/", (req, res) => {
   res.json({ greetings: "hello world" });

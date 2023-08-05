@@ -1,4 +1,4 @@
-import SessionItem from "./SessionItem";
+import SessionItem from "../Sessions/SessionItem";
 
 const ProgramDetail = () => {
   return (
