@@ -139,7 +139,6 @@ const Log = () => {
       setWeightLoad("");
     } catch (error) {
       console.error("Error logging workout:", error);
-     
     }
   };
 
@@ -192,7 +191,42 @@ const Log = () => {
             </select>
           </div>
 
-          <div className="text-start">
+          <div className="row row-cols-sm-2 pt-4">
+            <div className="col">
+              <div class="input-group flex-nowrap">
+                <span className="input-group-text" id="addon-wrapping">
+                  Weight
+                </span>
+                <input 
+                  type="number"
+                  id="weightLoad"
+                  value={weightLoad}
+                  onChange={(e) => setWeightLoad(e.target.value)}
+                  required
+                  min="1"
+                  className="form-control form-control-lg" 
+                />
+              </div>
+            </div>
+            <div className="col">
+              <div class="input-group flex-nowrap">
+                <span className="input-group-text" id="addon-wrapping">
+                  Reps
+                </span>
+                <input
+                  type="number"
+                  id="reps"
+                  value={reps}
+                  onChange={(e) => setReps(e.target.value)}
+                  required
+                  min="1"
+                  className="form-control form-control-lg"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="text-start">
             <label htmlFor="reps" className="form-label text-secondary">
               Reps
             </label>
@@ -220,7 +254,7 @@ const Log = () => {
               required
               min="1"
             />
-          </div>
+          </div> */}
 
           <div className="d-grid pt-3">
             <button type="submit" className="btn btn-warning">
