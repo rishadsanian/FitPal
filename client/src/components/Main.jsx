@@ -4,7 +4,7 @@ import moment from "moment";
 import SliderComponent from "./Slider";
 
 
-
+//landing logged in page
 
 //data visualization
 
