@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Log = () => {
   const mockMuscleData = [
@@ -118,23 +119,28 @@ const Log = () => {
   };
 
   //on submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(
-      "Workout:",
-      selectedMuscleGroup,
-      " ",
-      selectedExercise,
-      reps,
-      weightLoad
-    );
+    try {
+      const logData = {
+        exercise_name: selectedExercise,
+        reps,
+        resistance: weightLoad,
+        user_id: 1, //replace this with current user id prop
+      };
 
-    //Clear form
-    setSelectedMuscleGroup("");
-    setSelectedExercise("");
-    setReps("");
-    setWeightLoad("");
+      const response = await axios.post("/log", logData);
+
+      console.log("Workout logged successfully:", response.data);
+
+      // Clear form
+      setReps("");
+      setWeightLoad("");
+    } catch (error) {
+      console.error("Error logging workout:", error);
+     
+    }
   };
 
   return (
