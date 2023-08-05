@@ -10,6 +10,7 @@ import TitleImage from "./components/TitleImage";
 import DevTest from './components/DevTest';
 
 import React, { useState, useEffect } from 'react';
+import SessionDetail from './components/SessionDetail';
 
 function App() {
   return (
@@ -21,7 +22,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/programs/1" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
+
+          <Route path="/programs/1/sessions/1" element={<SessionDetail />} />
+
           <Route path="/test" element={<DevTest />} />
+
         </Routes>
       </BrowserRouter>
     </div>

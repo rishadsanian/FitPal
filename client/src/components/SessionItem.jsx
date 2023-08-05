@@ -7,9 +7,9 @@ const SessionItem = () => {
           Some quick example text to build on the card title and make up
           the bulk of the card's content.
         </p>
-        <button class="btn btn-outline-light" type="button">
+        <a href="/programs/1/sessions/1" class="btn btn-outline-light" type="button">
           See it
-        </button>
+        </a>
       </div>
     </div>
   );
