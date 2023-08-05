@@ -5,7 +5,7 @@ import SliderComponent from "./Slider";
 import Profile from "./Profile";
 import HistoryList from "./HistoryList";
 import Log from "./Log";
-
+import ChartWorkout from "./ChartWorkout";
 
 //landing logged in page comment
 
@@ -34,7 +34,7 @@ const Main = () => {
 
       {/* Add Workout Section */}
       <div className="container mt-5">
-        <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3>
+        {/* <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3> */}
         {/* Add your "Add Workout" content here */}
       </div>
 
@@ -46,9 +46,16 @@ const Main = () => {
 
       {/* Recent Activity History Section */}
       <div className="container mt-5">
-        <h3 className="display-5 fw-bold text-warning">Recent Activity History</h3>
+        {/* <h3 className="display-5 fw-bold text-warning">Recent Activity History</h3> */}
         {/* Add your "Recent Activity History" content here */}
         <HistoryList/>
+      </div>
+
+        {/* Analytics Section */}
+        <div className="container mt-5">
+        {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
+        {/* Exercise Tracker */}
+        <ChartWorkout/>
       </div>
     </div>
   );

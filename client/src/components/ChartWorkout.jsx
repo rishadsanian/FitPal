@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Slider from "react-slick";
@@ -36,21 +37,21 @@ const ChartWorkout = ({ userId }) => {
     const currentDate = moment();
     const startDate = moment(currentDate).startOf("isoWeek");
     const endDate = moment(currentDate).endOf("isoWeek");
-
+  
     const workoutsThisWeek = workoutData.filter((workout) => {
       const workoutDate = moment(workout.timestamp);
       return workoutDate.isBetween(startDate, endDate, null, "[]");
     });
-
-    const daysWorkedOut = new Array(7).fill(false);
-
+  
+    const exercisesPerDay = new Array(7).fill(0);
+  
     workoutsThisWeek.forEach((workout) => {
       const workoutDate = moment(workout.timestamp);
       const dayIndex = workoutDate.isoWeekday() - 1; // 0 for Monday, 1 for Tuesday, ..., 6 for Sunday
-      daysWorkedOut[dayIndex] = true;
+      exercisesPerDay[dayIndex]++;
     });
-
-    return daysWorkedOut;
+  
+    return exercisesPerDay;
   };
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const ChartWorkout = ({ userId }) => {
           labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           datasets: [
             {
-              label: "Days Worked Out",
+              label: "Number of Exercises",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
               borderColor: "rgba(75, 192, 192, 1)",
               borderWidth: 1,
@@ -76,6 +77,7 @@ const ChartWorkout = ({ userId }) => {
           scales: {
             y: {
               beginAtZero: true,
+              stepSize: 1, // Set the step size to 1 to show whole numbers on the y-axis
             },
           },
         },
@@ -95,20 +97,32 @@ const ChartWorkout = ({ userId }) => {
     slidesToScroll: 1,
   };
 
-  return (
-    <div>
-      <h2>Workout Days for the Week</h2>
-      <Slider {...sliderSettings}>
-        <div>
-          <h3>Current Week</h3>
-          <div>
-            <canvas id="workoutChart" />
+  const currentDate = moment();
+    const startDate = moment(currentDate).startOf("isoWeek").format("MMM D, YYYY");
+    const endDate = moment(currentDate).endOf("isoWeek").format("MMM D, YYYY");
+
+    return (
+      <div className="chart-container">
+        <div className="card bg-dark opacity-75 weekly-tracker-card mb-3">
+          <div className="card-body">
+            <h3 className="text-warning fw-bold weekly-tracker-header">
+              Weekly Exercise Tracker
+            </h3>
+            <Slider {...sliderSettings} className="slider-container">
+              <div>
+                <div className="chart-wrapper">
+                  {/* Put the canvas inside a div with fixed width of 400px */}
+                  <div className="chart-container-400">
+                    <canvas id="workoutChart" />
+                  </div>
+                </div>
+              </div>
+              {/* Add more weeks here if desired */}
+            </Slider>
           </div>
         </div>
-        {/* Add more weeks here if desired */}
-      </Slider>
-    </div>
-  );
+      </div>
+    );
 };
 
 export default ChartWorkout;
