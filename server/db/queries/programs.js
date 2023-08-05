@@ -10,7 +10,7 @@ const getProgramById = (id) => {
   return db
     .query('SELECT * FROM programs WHERE id = $1;', [id])
     .then((data) => {
-      return data.rows;
+      return data.rows[0];
     });
 };
 
