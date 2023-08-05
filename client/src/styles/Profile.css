@@ -1,0 +1,17 @@
+.profile-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+
+.key {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+.value {
+  font-size: 24px;
+}

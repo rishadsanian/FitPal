@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import '../styles/Profile.css';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
     age: 0,
     height: 0,
     weight: 0,
-    gender: '',
+    gender: "",
   });
 
   // get logged in user's profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('/profile/1'); // Replace '1' with user-id from cookies
+        const response = await axios.get("/profile/1"); // Replace '1' with user-id from cookies
         setProfile(response.data);
       } catch (error) {
-        console.error('Error fetching profile:', error);
+        console.error("Error fetching profile:", error);
       }
     };
 
@@ -29,7 +30,7 @@ const Profile = () => {
 
     try {
       // Submit form data to the server
-      const response = await axios.post('/profile', {
+      const response = await axios.post("/profile", {
         user_id: 1, // Replace '1' with user-id from cookies
         age: profile.age,
         height: profile.height,
@@ -40,7 +41,7 @@ const Profile = () => {
       // Update the profile state with the newly created/updated profile data
       setProfile(response.data);
     } catch (error) {
-      console.error('Error creating/updating profile:', error);
+      console.error("Error creating/updating profile:", error);
     }
   };
 
@@ -59,12 +60,14 @@ const Profile = () => {
         <div className="col-md-6">
           <div className="card bg-dark text-white">
             <div className="card-header">
-            <h3 className="text-warning fw-bold">Profile</h3>
+              <h3 className="text-warning fw-bold">Profile</h3>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="age" className="form-label">Age:</label>
+                  <label htmlFor="age" className="form-label">
+                    Age:
+                  </label>
                   <input
                     type="number"
                     className="form-control"
@@ -75,7 +78,9 @@ const Profile = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="height" className="form-label">Height:</label>
+                  <label htmlFor="height" className="form-label">
+                    Height:
+                  </label>
                   <input
                     type="number"
                     className="form-control"
@@ -86,7 +91,9 @@ const Profile = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="weight" className="form-label">Weight:</label>
+                  <label htmlFor="weight" className="form-label">
+                    Weight:
+                  </label>
                   <input
                     type="number"
                     className="form-control"
@@ -97,7 +104,9 @@ const Profile = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="gender" className="form-label">Gender:</label>
+                  <label htmlFor="gender" className="form-label">
+                    Gender:
+                  </label>
                   <select
                     className="form-select"
                     id="gender"
@@ -110,23 +119,49 @@ const Profile = () => {
                     <option value="Other">Other</option>
                   </select>
                 </div>
-                <button type="submit" className="btn btn-warning">Save Profile</button>
+                <button type="submit" className="btn btn-warning">
+                  Save Profile
+                </button>
               </form>
             </div>
           </div>
         </div>
       </div>
-      <div className="row justify-content-center mt-5">
-        <div className="col-md-6">
-          <div className="card bg-dark text-white">
-            <div className="card-header">
-            <h3 className="text-warning fw-bold">Profile</h3>
-            </div>
-            <div className="card-body">
-              <p>Age: {profile.age}</p>
-              <p>Height: {profile.height}</p>
-              <p>Weight: {profile.weight}</p>
-              <p>Gender: {profile.gender}</p>
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card bg-dark text-white">
+              <div className="card-header">
+                <h3 className="text-warning fw-bold">Profile</h3>
+              </div>
+              <div className="card-body">
+                <div className="row row-cols-2 gy-3">
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Age</div>
+                      <div className="value">{profile.age}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Height</div>
+                      <div className="value">{profile.height}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Weight</div>
+                      <div className="value">{profile.weight}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Gender</div>
+                      <div className="value">{profile.gender}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
