@@ -7,7 +7,7 @@ CREATE TABLE Profile (
   height FLOAT,
   weight FLOAT,
   gender VARCHAR(10),
-  program_id INTEGER NOT NULL
+  program_id INTEGER
   timestamp TIMESTAMP DEFAULT NOW()
 
 );
