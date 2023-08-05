@@ -48,6 +48,8 @@ app.post('/log', async (req, res) => {
     res.status(500).json({ error: 'Error inserting data' });
   }
 });
+
+//**********get request still needed */
 //---------------------------Profile------------------------------------------//
 
 app.post('/profile', async (req, res) => {
@@ -70,7 +72,7 @@ app.post('/profile', async (req, res) => {
     res.status(500).json({ error: 'Error inserting profile data' });
   }
 });
-
+//get request still needed*/
 //---------------------------------------------------------------------------//
 
 
