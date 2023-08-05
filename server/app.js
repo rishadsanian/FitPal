@@ -11,7 +11,6 @@ const pool = require("./configs/db.config");
 
 const catsRoutes = require('./routes/catsRoutes');
 const progamsRoutes = require('./routes/programsRoutes');
-const catsRoutes = require("./routes/catsRoutes");
 
 
 const app = express();
@@ -22,7 +21,6 @@ app.use(bodyParser.json());
 
 app.use('/cats', catsRoutes);
 app.use('/api/programs', progamsRoutes);
-app.use("/cats", catsRoutes);
 
 
 app.get("/", (req, res) => {

@@ -25,12 +25,12 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/main" element={<Main />} />
-          <Route path="/programs/1" element={<ProgramDetail />} />
+          <Route path="/programs/:program_id" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
           <Route path="/profile/1" element={<Profile />} />
 
           <Route
-            path="/programs/1/sessions/1"
+            path="/programs/:program_id/sessions/:session_id"
             element={<SessionDetail />}
           />
           <Route
