@@ -36,10 +36,10 @@ const mockWorkouts = [
 
 const SliderItem = ({ exercise, date, icon }) => {
   return (
-    <div className="slider-item" >
+    <div className="slider-item bg-dark border-warning" >
       <img src={icon} alt={exercise} className="exercise-icon" />
-      <h3 className="exercise">{exercise}</h3>
-      <p className="date">{moment(date).format("dddd, MMMM D")}</p>
+      <h3 className="exercise text-warning">{exercise}</h3>
+      <p className="date text-light">{moment(date).format("dddd, MMMM D")}</p>
     </div>
   );
 };
