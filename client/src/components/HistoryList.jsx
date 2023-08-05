@@ -1,5 +1,6 @@
 import React from "react";
 import HistoryListItem from "./HistoryListItem";
+import "../styles/HistoryList.css";
 
  function HistoryList(){
   return (
