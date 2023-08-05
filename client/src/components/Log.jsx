@@ -121,28 +121,25 @@ const Log = () => {
   //on submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const logData = {
         exercise_name: selectedExercise,
         reps,
         resistance: weightLoad,
-        // Add any other relevant data you want to send to the server
+        user_id: 1, //replace this with current user id prop
       };
-  
-      // Replace 'YOUR_API_URL' with the actual URL of your server API endpoint for logging workouts
+
       const response = await axios.post("/log", logData);
-  
+
       console.log("Workout logged successfully:", response.data);
-  
+
       // Clear form
-      setSelectedMuscleGroup("");
-      setSelectedExercise("");
       setReps("");
       setWeightLoad("");
     } catch (error) {
       console.error("Error logging workout:", error);
-      // Handle error response if needed
+     
     }
   };
 

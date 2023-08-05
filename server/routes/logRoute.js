@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const pool = require("./configs/db.config");
+const pool = require("../configs/db.config");
 const express = require("express");
 const router = express.Router();
 

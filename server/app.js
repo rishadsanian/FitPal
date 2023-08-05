@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const progamsRoutes = require("./routes/programsRoutes");
 const logRoute = require("./routes/logRoute.js");
 const profileRoute = require("./routes/profileRoute");
+const profileRouteAPI = require("./routes/profileRoute_api");
 
 const app = express();
 
@@ -23,7 +24,8 @@ app.use(bodyParser.json());
 
 app.use("/api/programs", progamsRoutes);
 app.use("/log", logRoute);
-
+app.use("/profile",  profileRoute);
+app.use("/api/profile", profileRouteAPI);
 
 //-------------------------------LOG----------------------------------//
 
@@ -95,29 +97,29 @@ app.use("/log", logRoute);
 
 ////////////////////////////////////////////////////////////////////////////////
 
-app.get("/api/profile/:user_id", async (req, res) => {
-  try {
-    const { user_id } = req.params;
+// app.get("/api/profile/:user_id", async (req, res) => {
+//   try {
+//     const { user_id } = req.params;
 
-    // queryString
-    const queryString = `
-      SELECT * FROM Profile
-      WHERE user_id = $1;
-    `;
+//     // queryString
+//     const queryString = `
+//       SELECT * FROM Profile
+//       WHERE user_id = $1;
+//     `;
 
-    // SQL to db
-    const result = await pool.query(queryString, [user_id]);
+//     // SQL to db
+//     const result = await pool.query(queryString, [user_id]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Profile not found" });
-    }
+//     if (result.rows.length === 0) {
+//       return res.status(404).json({ error: "Profile not found" });
+//     }
 
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error("Error fetching profile data:", error);
-    res.status(500).json({ error: "Error fetching profile data" });
-  }
-});
+//     res.json(result.rows[0]);
+//   } catch (error) {
+//     console.error("Error fetching profile data:", error);
+//     res.status(500).json({ error: "Error fetching profile data" });
+//   }
+// });
 //---------------------------------------------------------------------------//
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
