@@ -92,6 +92,10 @@ const Log = () => {
   const [reps, setReps] = useState("");
   // record input from user
   const [weightLoad, setWeightLoad] = useState("");
+  //description of selected exercise
+
+  const [selectedExerciseDescription, setSelectedExerciseDescription] =
+    useState("");
 
   //useEffect to select exercises by muscle
   useEffect(() => {
@@ -105,6 +109,16 @@ const Log = () => {
       setExercises(mockExerciseData);
     }
   }, [selectedMuscleGroup]);
+
+  //useEffect to show selected exercise description
+  useEffect(() => {
+    if (selectedExercise) {
+      const exercise = exercises.find((ex) => ex.name === selectedExercise);
+      setSelectedExerciseDescription(exercise.instructions);
+    } else {
+      setSelectedExerciseDescription("");
+    }
+  }, [selectedExercise]);
 
   //selects muscle group for filtering
   const handleMuscleGroupSelection = (e) => {
@@ -139,8 +153,12 @@ const Log = () => {
 
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
-      <div className="container bg-dark text-white rounded py-5 px-3">
+      <div
+        className="container bg-dark text-white rounded py-5 px-3"
+        style={{ width: "600px" }}
+      >
         <h3 className="text-warning fw-bold">Workout Log</h3>
+        <p className="text-secondary">{selectedExerciseDescription}</p>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
             <label htmlFor="muscleGroup" className="form-label text-secondary">
@@ -151,6 +169,7 @@ const Log = () => {
               className="form-select bg-secondary text-light"
               value={selectedMuscleGroup}
               onChange={handleMuscleGroupSelection}
+              required
             >
               <option value="">Select Muscle Group</option>
               {muscleGroups.map((group) => (
@@ -170,6 +189,7 @@ const Log = () => {
               className="form-select bg-secondary text-light"
               value={selectedExercise}
               onChange={handleExerciseSelection}
+              required
             >
               <option value="">Select Exercise</option>
               {exercises.map((exercise) => (
@@ -190,6 +210,8 @@ const Log = () => {
               id="reps"
               value={reps}
               onChange={(e) => setReps(e.target.value)}
+              required
+              min="1"
             />
           </div>
 
@@ -203,6 +225,8 @@ const Log = () => {
               id="weightLoad"
               value={weightLoad}
               onChange={(e) => setWeightLoad(e.target.value)}
+              required
+              min="1"
             />
           </div>
 
