@@ -9,9 +9,11 @@ router.get("/:user_id", async(req, res) => {
 
     // queryString
     const queryString = `
-      SELECT * FROM Profile
-      WHERE profile.user_id = $1;
-    `;
+    SELECT * FROM Profile
+    WHERE profile.user_id = $1
+    ORDER BY timestamp DESC
+    LIMIT 1;
+  `;
 
     // SQL to db
     const result = await pool.query(queryString, [user_id]);
