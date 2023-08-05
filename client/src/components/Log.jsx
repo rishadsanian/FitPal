@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import "../styles/Log.css";
-///////////////////////////////////////////////////////////LOG FORM/////////////
 
 const Log = () => {
   const mockMuscleData = [
