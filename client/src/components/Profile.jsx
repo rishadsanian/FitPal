@@ -9,6 +9,7 @@ const Profile = () => {
     weight: 0,
     gender: "",
   });
+  const [editing, setEditing] = useState(false); // State to track whether the form is in editing mode or not
 
   // get logged in user's profile
   useEffect(() => {
@@ -40,6 +41,7 @@ const Profile = () => {
 
       // Update the profile state with the newly created/updated profile data
       setProfile(response.data);
+      setEditing(false); // Hide the form after submitting
     } catch (error) {
       console.error("Error creating/updating profile:", error);
     }
@@ -54,6 +56,14 @@ const Profile = () => {
     }));
   };
 
+  const handleEdit = () => {
+    setEditing(true); // Show the form in editing mode
+  };
+
+  const handleCancel = () => {
+    setEditing(false); // Hide the form
+  };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -63,78 +73,81 @@ const Profile = () => {
               <h3 className="text-warning fw-bold">Profile</h3>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="age" className="form-label">
-                    Age:
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="age"
-                    name="age"
-                    value={profile.age}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="height" className="form-label">
-                    Height:
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="height"
-                    name="height"
-                    value={profile.height}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="weight" className="form-label">
-                    Weight:
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="weight"
-                    name="weight"
-                    value={profile.weight}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="gender" className="form-label">
-                    Gender:
-                  </label>
-                  <select
-                    className="form-select"
-                    id="gender"
-                    name="gender"
-                    value={profile.gender}
-                    onChange={handleChange}
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <button type="submit" className="btn btn-warning">
-                  Save Profile
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="container mt-5">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card bg-dark text-white">
-              <div className="card-header">
-                <h3 className="text-warning fw-bold">Profile</h3>
-              </div>
-              <div className="card-body">
+              {editing ? (
+                <form onSubmit={handleSubmit} className="form-content">
+                  <div className="mb-3">
+                    <label htmlFor="age" className="form-label">
+                      Age:
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="age"
+                      name="age"
+                      value={profile.age}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="height" className="form-label">
+                      Height:
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="height"
+                      name="height"
+                      value={profile.height}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="weight" className="form-label">
+                      Weight:
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="weight"
+                      name="weight"
+                      value={profile.weight}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="gender" className="form-label">
+                      Gender:
+                    </label>
+                    <select
+                      className="form-select"
+                      id="gender"
+                      name="gender"
+                      value={profile.gender}
+                      onChange={handleChange}
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div className="form-buttons-container">
+                    <button
+                      type="submit"
+                      className="btn btn-warning"
+                      onClick={handleSubmit}
+                    >
+                      Save Profile
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-warning"
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              ) : (
                 <div className="row row-cols-2 gy-3">
                   <div className="col">
                     <div className="profile-card p-3">
@@ -161,7 +174,18 @@ const Profile = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+              {!editing && (
+                <div className="edit-button text-center">
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={handleEdit}
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

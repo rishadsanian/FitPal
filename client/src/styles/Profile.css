@@ -1,17 +1,33 @@
+/* Profile.css */
 .profile-card {
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 10px;
-  text-align: center;
 }
 
-
-.key {
+.profile-card .key {
   font-size: 14px;
   font-weight: bold;
 }
 
+.profile-card .value {
+  font-size: 20px;
+}
 
-.value {
-  font-size: 24px;
+.form-buttons-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.form-buttons-container button {
+  margin: 0 5px;
+}
+
+.form-content {
+  margin-top: 20px;
+}
+
+.edit-button {
+  padding-top: 1.2em;
 }
