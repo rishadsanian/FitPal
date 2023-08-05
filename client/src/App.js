@@ -13,6 +13,7 @@ import React, { useState, useEffect } from 'react';
 import SessionDetail from './components/SessionDetail';
 import ExerciseLog from './components/ExerciseLog';
 import Footer from './components/Footer';
+import SignUp from './components/SignUp';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path="/programs/1/sessions/1" element={<SessionDetail />} />
           <Route path="/programs/1/sessions/1/exercise/1" element={<ExerciseLog />} />
           <Route path="/test" element={<DevTest />} />
-
+          <Route path='/signup' element={<SignUp />} />
         </Routes>
         <Footer />
       </BrowserRouter>

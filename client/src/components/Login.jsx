@@ -16,7 +16,7 @@ const Login = () => {
           </div>
 
           <div>
-            <a href="/" className="btn btn-link text-secondary">Create an account</a>
+            <a href="/signup" className="btn btn-link text-secondary">Create an account</a>
           </div>
 
           <div className="d-grid pt-3">
