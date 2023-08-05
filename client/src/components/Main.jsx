@@ -2,6 +2,9 @@ import React from "react";
 import { Box, Slide } from "@mui/material";
 import moment from "moment";
 import SliderComponent from "./Slider";
+import Profile from "./Profile";
+import HistoryList from "./HistoryList";
+import Log from "./Log";
 
 
 //landing logged in page comment
@@ -25,8 +28,8 @@ const Main = () => {
 
       {/* Profile Section */}
       <div className="container mt-5">
-        <h3 className="display-5 fw-bold text-warning">Profile</h3>
-        {/* Add your profile content here */}
+        {/* <h3 className="display-5 fw-bold text-warning">Profile</h3> */}
+        <Profile/>
       </div>
 
       {/* Add Workout Section */}
@@ -37,8 +40,7 @@ const Main = () => {
 
       {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
       <div className="container mt-5">
-        <h3 className="display-5 fw-bold text-warning">Program Schedule / for the week</h3>
-       <SliderComponent/>
+        <SliderComponent/>
         {/* Add your "Program Schedule" content here */}
       </div>
 
@@ -46,6 +48,7 @@ const Main = () => {
       <div className="container mt-5">
         <h3 className="display-5 fw-bold text-warning">Recent Activity History</h3>
         {/* Add your "Recent Activity History" content here */}
+        <HistoryList/>
       </div>
     </div>
   );
