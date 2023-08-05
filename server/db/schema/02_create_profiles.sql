@@ -2,10 +2,12 @@ DROP TABLE IF EXISTS profile CASCADE;
 
 CREATE TABLE Profile (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   age INTEGER,
   height FLOAT,
   weight FLOAT,
   gender VARCHAR(10),
+  program_id INTEGER REFERENCES programs(id),
   timestamp TIMESTAMP DEFAULT NOW()
+
 );
