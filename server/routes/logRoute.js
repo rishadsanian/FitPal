@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 // Route to handle the POST request to /log
-router.post("/", async (req, res) => {
+router.post("/", async(req, res) => {
   try {
     const {
       exercise_name,

@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 // Route to handle the POST request to /profile
-router.post("/", async (req, res) => {
+router.post("/", async(req, res) => {
   try {
     const { user_id, age, height, weight, gender } = req.body;
 
