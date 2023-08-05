@@ -6,7 +6,7 @@ import "../styles/HistoryList.css";
   return (
     <div>
       <ul className="history-list list-group mx-auto mt-4 mb-4">
-        <li className="list-group-item bg-dark text-warning"><h2>History</h2></li>
+        <li className="list-group-item bg-dark text-warning border-warning"><h2>History</h2></li>
         <HistoryListItem />
         <HistoryListItem />
         <HistoryListItem />
