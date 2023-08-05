@@ -1,9 +1,9 @@
 
-INSERT INTO sessions (id, name, program_id) VALUES (1, 'Chest-Triceps', 1);
-INSERT INTO sessions (id, name, program_id) VALUES (2, 'Shoulder-Biceps', 1);
-INSERT INTO sessions (id, name, program_id) VALUES (3, 'Back-Leg', 1);
-INSERT INTO sessions (id, name, program_id) VALUES (4, 'Chest', 2);
-INSERT INTO sessions (id, name, program_id) VALUES (5, 'Back', 2);
-INSERT INTO sessions (id, name, program_id) VALUES (6, 'Shoulder', 2);
-INSERT INTO sessions (id, name, program_id) VALUES (7, 'Leg', 2);
-INSERT INTO sessions (id, name, program_id) VALUES (8, 'Arm', 2);
+INSERT INTO sessions (name, description, program_id) VALUES ('Chest-Triceps', 'Chest-Triceps', 1);
+INSERT INTO sessions (name, description, program_id) VALUES ('Shoulder-Biceps', 'Shoulder-Biceps', 1);
+INSERT INTO sessions (name, description, program_id) VALUES ('Back-Leg', 'Back-Leg', 1);
+INSERT INTO sessions (name, description, program_id) VALUES ('Chest', 'Chest', 2);
+INSERT INTO sessions (name, description, program_id) VALUES ('Back', 'Back', 2);
+INSERT INTO sessions (name, description, program_id) VALUES ('Shoulder', 'Shoulder', 2);
+INSERT INTO sessions (name, description, program_id) VALUES ('Leg', 'Leg', 2);
+INSERT INTO sessions (name, description, program_id) VALUES ('Arm', 'Arm', 2);

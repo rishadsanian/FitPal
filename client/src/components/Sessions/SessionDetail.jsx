@@ -1,5 +1,6 @@
 import ExerciseItem from '../Exercises/ExerciseItem';
 import axios from 'axios';
+
 import { useEffect, useState } from 'react';
 
 const SessionDetail = () => {
@@ -28,6 +29,7 @@ const SessionDetail = () => {
       <div className="px-4 row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
         {exercisesListItem}
       </div>
+      
     </div>
   );
 };

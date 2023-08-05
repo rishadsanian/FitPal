@@ -1,5 +1,5 @@
 
-INSERT INTO users (id, email, password) VALUES (1, 'luongtanphat25@gmail.com', 'phat');
-INSERT INTO users (id, email, password) VALUES (2, 'dburnham1212@gmail.com', 'dylan');
-INSERT INTO users (id, email, password) VALUES (3, 'rishad.s.a@gmail.com', 'rishad');
-INSERT INTO users (id, email, password) VALUES (4, 'test@test.com', 'test');
+INSERT INTO users (email, password) VALUES ('luongtanphat25@gmail.com', 'phat');
+INSERT INTO users (email, password) VALUES ('dburnham1212@gmail.com', 'dylan');
+INSERT INTO users (email, password) VALUES ('rishad.s.a@gmail.com', 'rishad');
+INSERT INTO users (email, password) VALUES ('test@test.com', 'test');

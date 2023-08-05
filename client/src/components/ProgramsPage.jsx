@@ -1,16 +1,11 @@
 import React from "react";
 import { useState, useEffect} from "react";
 
-import TitleImage from "./TitleImage";
-import HistoryList from "./HistoryList";
 import CardList from "./CardList";
 import CreateProgram from "./Programs/CreateProgram";
-import CreateSession from "./Sessions/CreateSession";
 import axios from "axios";
 
-import programs from "../mocks/programData";
-
- function DevTest(){
+ function ProgramsPage(){
   const [programs, setPrograms] = useState([]);
   
   useEffect(() => {
@@ -21,13 +16,10 @@ import programs from "../mocks/programData";
 
   return (
     <div>
-      <TitleImage />
-      <HistoryList />
       <CardList cardData={programs} title="Programs" path={`/programs/`}/>
       <CreateProgram />
-      <CreateSession />
     </div>
   )
 }
 
-export default DevTest;
+export default ProgramsPage;

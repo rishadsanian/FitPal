@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const programs = require('../db/queries/programs');
+const pool = require("../configs/db.config");
 
 router.get('/', (req, res) => {
   programs
@@ -27,14 +28,14 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// Route to handle the POST request to /profile
+// Route to handle the POST request to /programs
 router.post("/", async(req, res) => {
   try {
     const { name, description } = req.body;
-
+    
     // queryString
     const queryString = `
-      INSERT INTO Programs (user_id, age, height, weight, gender)
+      INSERT INTO Programs (name, description)
       VALUES ($1, $2)
       RETURNING *;
     `;

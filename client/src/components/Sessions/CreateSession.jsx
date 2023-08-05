@@ -1,9 +1,13 @@
 import React from "react"
 import axios from "axios";
 import { useState }  from "react"
+import {useParams} from "react-router-dom";
 
-const CreateProgram = () => {
-  const [newProgram, setNewProgram] = useState({
+const CreateSession = () => {
+
+  const {program_id} = useParams();
+
+  const [newSession, setNewSession] = useState({
     name: "",
     description: "",
   }); 
@@ -11,8 +15,8 @@ const CreateProgram = () => {
   // Function to handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setNewProgram((prevProgram) => ({
-      ...prevProgram,
+    setNewSession((prevSession) => ({
+      ...prevSession,
       [name]: value,
     }));
   };
@@ -21,14 +25,15 @@ const CreateProgram = () => {
 
     try {
       // Submit form data to the server
-      const response = await axios.post("/programs", {
-        name: newProgram.name,
-        description: newProgram.description
+      const response = await axios.post(`/sessions/program/${program_id}`, {
+        name: newSession.name,
+        description: newSession.description,
+        program_id 
       });
 
       // Update the profile state with the newly created/updated profile data
     } catch (error) {
-      console.error("Error creating/updating profile:", error);
+      console.error("Error creating session:", error);
     }
   };
 
@@ -36,7 +41,7 @@ const CreateProgram = () => {
     <div className="p-5 d-flex justify-content-center" style={{height: '100vh'}}>
       <form id="create_program_form" className="col col-12 col-md-7 col-lg-5 col-xl-4">
         <div className="container bg-dark text-white rounded py-5 px-3">
-          <h3 className="text-warning fw-bold">Create Program</h3>
+          <h3 className="text-warning fw-bold">Create Session</h3>
           <div className="text-start">
             <label for="desciption" className="form-label">Name</label>
             <input onChange={handleChange} className="form-control" id="name" name="name" placeholder="name" required />
@@ -56,4 +61,4 @@ const CreateProgram = () => {
   );
 };
 
-export default CreateProgram;
+export default CreateSession;

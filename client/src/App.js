@@ -15,6 +15,7 @@ import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
+import ProgramsPage from './components/ProgramsPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/programs" element={<ProgramsPage/>} />
           <Route path="/programs/:program_id" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
           <Route path="/profile/1" element={<Profile />} />
