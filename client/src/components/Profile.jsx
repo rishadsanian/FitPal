@@ -15,7 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/profile/1"); // Replace '1' with user-id from cookies
+        const response = await axios.get("/api/profile/1"); // Replace '1' with user-id from cookies
         setProfile(response.data);
       } catch (error) {
         console.error("Error fetching profile:", error);

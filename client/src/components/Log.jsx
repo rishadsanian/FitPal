@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Log = () => {
   const mockMuscleData = [
@@ -118,23 +119,31 @@ const Log = () => {
   };
 
   //on submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(
-      "Workout:",
-      selectedMuscleGroup,
-      " ",
-      selectedExercise,
-      reps,
-      weightLoad
-    );
-
-    //Clear form
-    setSelectedMuscleGroup("");
-    setSelectedExercise("");
-    setReps("");
-    setWeightLoad("");
+  
+    try {
+      const logData = {
+        exercise_name: selectedExercise,
+        reps,
+        resistance: weightLoad,
+        // Add any other relevant data you want to send to the server
+      };
+  
+      // Replace 'YOUR_API_URL' with the actual URL of your server API endpoint for logging workouts
+      const response = await axios.post("/log", logData);
+  
+      console.log("Workout logged successfully:", response.data);
+  
+      // Clear form
+      setSelectedMuscleGroup("");
+      setSelectedExercise("");
+      setReps("");
+      setWeightLoad("");
+    } catch (error) {
+      console.error("Error logging workout:", error);
+      // Handle error response if needed
+    }
   };
 
   return (

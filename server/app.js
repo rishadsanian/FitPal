@@ -5,14 +5,12 @@ const { ENVIROMENT, PORT } = process.env;
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const pool = require("./configs/db.config");
 
 //routes import
 
-const catsRoutes = require('./routes/catsRoutes');
-const progamsRoutes = require('./routes/programsRoutes');
-const catsRoutes = require("./routes/catsRoutes");
-
+const progamsRoutes = require("./routes/programsRoutes");
+const logRoute = require("./routes/logRoute.js");
+const profileRoute = require("./routes/profileRoute");
 
 const app = express();
 
@@ -20,85 +18,84 @@ const app = express();
 app.use(morgan(ENVIROMENT));
 app.use(bodyParser.json());
 
-app.use('/cats', catsRoutes);
-app.use('/api/programs', progamsRoutes);
-app.use("/cats", catsRoutes);
+//////////////////////////ROUTES////////////////////////////////////////
+//-----------------------------------------------------------------//
 
+app.use("/api/programs", progamsRoutes);
+app.use("/log", logRoute);
 
-app.get("/", (req, res) => {
-  res.json({ greetings: "hello world" });
-});
 
 //-------------------------------LOG----------------------------------//
-// Route to handle the POST request to /log
-app.post("/log", async (req, res) => {
-  try {
-    const {
-      exercise_name,
-      reps,
-      resistance,
-      user_id,
-      session_id,
-      exercise_id,
-    } = req.body;
 
-    // queryString
-    const queryString = `
-      INSERT INTO log (exercise_name, reps, resistance, user_id, session_id, exercise_id)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *;
-    `;
+// // Route to handle the POST request to /log
+// app.post("/log", async (req, res) => {
+//   try {
+//     const {
+//       exercise_name,
+//       reps,
+//       resistance,
+//       user_id,
+//       session_id,
+//       exercise_id,
+//     } = req.body;
 
-    // SQL to db
-    const result = await pool.query(queryString, [
-      exercise_name,
-      reps,
-      resistance,
-      user_id,
-      session_id,
-      exercise_id,
-    ]);
+//     // queryString
+//     const queryString = `
+//       INSERT INTO log (exercise_name, reps, resistance, user_id, session_id, exercise_id)
+//       VALUES ($1, $2, $3, $4, $5, $6)
+//       RETURNING *;
+//     `;
 
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error("Error inserting data:", error);
-    res.status(500).json({ error: "Error inserting data" });
-  }
-});
+//     // SQL to db
+//     const result = await pool.query(queryString, [
+//       exercise_name,
+//       reps,
+//       resistance,
+//       user_id,
+//       session_id,
+//       exercise_id,
+//     ]);
+
+//     res.status(201).json(result.rows[0]);
+//   } catch (error) {
+//     console.error("Error inserting data:", error);
+//     res.status(500).json({ error: "Error inserting data" });
+//   }
+// });
 
 //**********get request still needed */
 //---------------------------Profile------------------------------------------//
 
-app.post("/profile", async (req, res) => {
-  try {
-    const { user_id, age, height, weight, gender } = req.body;
+// app.post("/profile", async (req, res) => {
+//   try {
+//     const { user_id, age, height, weight, gender } = req.body;
 
-    // queryString
-    const queryString = `
-      INSERT INTO Profile (user_id, age, height, weight, gender)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING *;
-    `;
+//     // queryString
+//     const queryString = `
+//       INSERT INTO Profile (user_id, age, height, weight, gender)
+//       VALUES ($1, $2, $3, $4, $5)
+//       RETURNING *;
+//     `;
 
-    // SQL to db
-    const result = await pool.query(queryString, [
-      user_id,
-      age,
-      height,
-      weight,
-      gender,
-    ]);
+//     // SQL to db
+//     const result = await pool.query(queryString, [
+//       user_id,
+//       age,
+//       height,
+//       weight,
+//       gender,
+//     ]);
 
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error("Error inserting profile data:", error);
-    res.status(500).json({ error: "Error inserting profile data" });
-  }
-});
+//     res.status(201).json(result.rows[0]);
+//   } catch (error) {
+//     console.error("Error inserting profile data:", error);
+//     res.status(500).json({ error: "Error inserting profile data" });
+//   }
+// });
 
 ////////////////////////////////////////////////////////////////////////////////
 
-app.get("/profile/:user_id", async (req, res) => {
+app.get("/api/profile/:user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
 
