@@ -12,13 +12,13 @@ const pool = new Pool({
   database: DB_DATABASE,
 });
 
-pool
-  .connect()
-  .then(() => {
-    console.log('Database connection established.');
-  })
-  .catch((e) => {
-    throw new Error(e);
-  });
+pool.on('connect', () => {
+  console.log('Connected to the database');
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
 
 module.exports = pool;
