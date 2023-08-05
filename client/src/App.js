@@ -11,6 +11,7 @@ import DevTest from "./components/DevTest";
 
 import React, { useState, useEffect } from "react";
 import SessionDetail from "./components/SessionDetail";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/programs/1" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
+          <Route path="/profile/1" element={<Profile />} />
 
           <Route path="/programs/1/sessions/1" element={<SessionDetail />} />
 
