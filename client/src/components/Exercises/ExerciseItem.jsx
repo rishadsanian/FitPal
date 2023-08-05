@@ -1,10 +1,12 @@
-const ExerciseItem = () => {
+const ExerciseItem = (props) => {
+
+  const exercise = props.exercise;
   return (
     <div className="col my-3">
       <div className="card bg-dark opacity-75 text-start">
         <div className="card-header">
-          <h5 className="text-warning card-title">Barbell bench press</h5>
-          <h6 className="card-subtitle text-secondary">muscle group</h6>
+          <h5 className="text-warning card-title">{exercise.name}</h5>
+          <h6 className="card-subtitle text-secondary">{exercise.muscle}</h6>
         </div>
         <div className="card-body">
           <p className="card-text text-white">
