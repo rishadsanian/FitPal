@@ -15,6 +15,8 @@ import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
+import ChartWorkout from './components/ChartWorkout';
+
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
           <Route path="/programs/:program_id" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
           <Route path="/profile/1" element={<Profile />} />
+          <Route path="/chartworkout/3" element={<ChartWorkout />} />
 
           <Route
             path="/programs/:program_id/sessions/:session_id"
