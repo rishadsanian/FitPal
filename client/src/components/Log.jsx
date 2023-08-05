@@ -1,22 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const MUSCLE = {
+  abdominals: 'Abdominals',
+  abductors: 'Abductors',
+  adductors: 'Adductors',
+  biceps: 'Biceps',
+  calves: 'Calves',
+  chest: 'Chest',
+  forearms: 'Forearms',
+  glutes: 'Glutes',
+  hamstrings: 'Hamstrings',
+  lats: 'Lats',
+  lower_back: 'Lower Back',
+  middle_back: 'Middle Back',
+  neck: 'Neck',
+  quadriceps: 'Quadriceps',
+  traps: 'Traps',
+  triceps: 'Triceps',
+};
 const Log = () => {
-  const mockMuscleData = [
-    "Biceps",
-    "Triceps",
-    "Chest",
-    "Back",
-    "Legs",
-    "Shoulders",
-    "Abs",
-    "Glutes",
-    "Calves",
-    "Forearms",
-    "Hamstrings",
-    "Quadriceps",
-  ];
 
   const mockExerciseData = [
     {
