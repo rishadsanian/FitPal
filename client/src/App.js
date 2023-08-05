@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar-Footer/Navbar';
 
 import Main from "./components/Main";
-import TitleImage from "./components/TitleImage";
 import ProgramDetail from './components/Programs/ProgramDetail';
 import Login from './components/Login-SignUp/Login';
 import LandingPage from './components/LandingPage';
