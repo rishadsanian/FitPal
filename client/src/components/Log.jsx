@@ -26,7 +26,7 @@ const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 const Log = () => {
-  const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
+  const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE)); 
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState("");
@@ -38,7 +38,7 @@ const Log = () => {
   useEffect(() => {
     // Load initial exercise data based on the first muscle group
     if (muscleGroups.length > 0) {
-      const firstMuscleGroup = muscleGroups[0];
+      const firstMuscleGroup = "Select Muscle Group"
       setSelectedMuscleGroup(firstMuscleGroup);
     }
   }, [muscleGroups]);
