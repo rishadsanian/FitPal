@@ -27,4 +27,28 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// Route to handle the POST request to /profile
+router.post("/", async(req, res) => {
+  try {
+    const { name, description } = req.body;
+
+    // queryString
+    const queryString = `
+      INSERT INTO Programs (user_id, age, height, weight, gender)
+      VALUES ($1, $2)
+      RETURNING *;
+    `;
+
+    // SQL to db
+    const result = await pool.query(queryString, [
+      name, description
+    ]);
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error inserting program data:", error);
+    res.status(500).json({ error: "Error inserting program data" });
+  }
+});
+
 module.exports = router;
