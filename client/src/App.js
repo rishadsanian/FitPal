@@ -15,6 +15,7 @@ import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
+import ExerciseList from './components/Exercises/ExerciseList';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           />
           <Route path="/test" element={<DevTest />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path='/exercises' element={<ExerciseList />} />
         </Routes>
         <Footer />
       </BrowserRouter>

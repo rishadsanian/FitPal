@@ -10,8 +10,7 @@ const ExerciseItem = (props) => {
         </div>
         <div className="card-body">
           <p className="card-text text-white">
-            Some quick example text to build on the card title and make up
-            the bulk of the card's content.
+            {exercise.instructions.substring(0, 200) + `...`}
           </p>
         </div>
         <div className="card-footer d-flex flex-wrap justify-content-between gap-2">
