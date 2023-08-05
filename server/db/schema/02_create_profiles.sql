@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS urls CASCADE;
+DROP TABLE IF EXISTS profile CASCADE;
 
 CREATE TABLE Profile (
   id SERIAL PRIMARY KEY,
@@ -6,5 +6,6 @@ CREATE TABLE Profile (
   age INTEGER,
   height FLOAT,
   weight FLOAT,
-  gender VARCHAR(10)
+  gender VARCHAR(10),
+  timestamp TIMESTAMP DEFAULT NOW()
 );

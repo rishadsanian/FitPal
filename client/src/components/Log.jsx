@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import "../styles/Log.css";
-///////////////////////////////////////////////////////////LOG FORM/////////////
 
 const Log = () => {
   const mockMuscleData = [
@@ -154,7 +152,7 @@ const Log = () => {
             </label>
             <select
               id="muscleGroup"
-              className="form-select bg-secondary text-light"
+              className="form-select"
               value={selectedMuscleGroup}
               onChange={handleMuscleGroupSelection}
               required
@@ -174,7 +172,7 @@ const Log = () => {
             </label>
             <select
               id="exercise"
-              className="form-select bg-secondary text-light"
+              className="form-select"
               value={selectedExercise}
               onChange={handleExerciseSelection}
               required
@@ -194,7 +192,7 @@ const Log = () => {
             </label>
             <input
               type="number"
-              className="form-control bg-secondary text-light"
+              className="form-control"
               id="reps"
               value={reps}
               onChange={(e) => setReps(e.target.value)}
@@ -209,7 +207,7 @@ const Log = () => {
             </label>
             <input
               type="number"
-              className="form-control bg-secondary text-light"
+              className="form-control"
               id="weightLoad"
               value={weightLoad}
               onChange={(e) => setWeightLoad(e.target.value)}
