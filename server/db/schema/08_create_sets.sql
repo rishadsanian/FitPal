@@ -5,5 +5,5 @@ CREATE TABLE sets (
   session_id integer REFERENCES sessions(id) ON DELETE CASCADE NOT NULL,
   exercise_id integer REFERENCES exercises(id) ON DELETE CASCADE NOT NULL,
   reps smallserial NOT NULL,
-  weigth real NOT NULL
+  resistant real NOT NULL
 );
