@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useParams} from "react-router-dom";
           
-import sessions from '../../mocks/sessionData';
+//import sessions from '../../mocks/sessionData';
 
 const ProgramDetail = () => {
   const [program, setProgram] = useState({});
@@ -12,15 +12,15 @@ const ProgramDetail = () => {
 
   const {program_id} = useParams();
 
-  const currentSessions = sessions.filter((session) => session.program_id === Number(program_id)) 
+  //const currentSessions = sessions.filter((session) => session.program_id === Number(program_id)) 
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/programs/1`).then((res) => {
+    axios.get(`http://localhost:8080/programs/${program_id}`).then((res) => {
       setProgram(res.data.program);
     });
 
     axios
-      .get(`http://localhost:8080/sessions/program/1`)
+      .get(`http://localhost:8080/sessions/program/${program_id}`)
       .then((res) => {
         setSessions(res.data.sessions);
       });
@@ -40,13 +40,13 @@ const ProgramDetail = () => {
           <p className="col-md-8 fs-4 text-white">{program.description}</p>
         </div>
       </div>
-      <CardList cardData={currentSessions} title="Sessions" path={`/programs/${program_id}/sessions/`}/>
-      {/* <div>
+      {/* <CardList cardData={currentSessions} title="Sessions" path={`/programs/${program_id}/sessions/`}/> */}
+      <div>
         <h1 className="fw-bold text-white pt-5">Session List</h1>
         <div className="px-4 row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4  d-flex justify-content-between">
           {sessionsListItem}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
