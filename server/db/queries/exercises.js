@@ -2,7 +2,7 @@ const db = require('../../configs/db.config');
 
 const getExercisesBySessionId = (id) => {
   const url = `
-    SELECT exercises.id, exercises.name, exercises.difficulty, exercises.muscle FROM exercises
+    SELECT exercises.id, exercises.name, exercises.difficulty, exercises.muscle, sessions.name AS session FROM exercises
     JOIN sessions_exercises
     ON exercises.id = sessions_exercises.exercise_id
     JOIN sessions

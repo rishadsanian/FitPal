@@ -1,5 +1,5 @@
 const ExerciseItem = (props) => {
-  console.log(props);
+
   const exercise = props.exercise;
   return (
     <div className="col my-3">
