@@ -1,4 +1,3 @@
--- foreign keys to be established later
 CREATE TABLE log (
   id SERIAL PRIMARY KEY,
   exercise_name VARCHAR(100) NOT NULL,
@@ -9,4 +8,3 @@ CREATE TABLE log (
   reps INTEGER NOT NULL CHECK (reps > 0),
   timestamp TIMESTAMP DEFAULT NOW()
 );
-
