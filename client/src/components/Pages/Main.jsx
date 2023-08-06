@@ -35,14 +35,14 @@ const Main = () => {
       </div>
 
       {/* Add Workout Section */}
-      <div className="add-workout-container container mt-5">
+      {/* <div className="add-workout-container container mt-5"> */}
         {/* Add log component */}
 
         {/* <Log /> */}
-      </div>
+      {/* </div> */}
 
       {/* Program Schedule Section */}
-      <div className="slider-container">
+      <div className="slider-container container mt-5">
         <SliderComponent />
       </div>
 
