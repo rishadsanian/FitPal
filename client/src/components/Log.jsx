@@ -47,13 +47,18 @@ const Log = () => {
 
   const fetchWorkoutHistory = async () => {
     try {
-      const response = await axios.get(`/api/workout/history/4`); // Replace 4 with current user id
+      const response = await axios.get(`/api/workout/history/4`, {
+        
+        params: {
+          date: moment().format("YYYY-MM-DD"), // Send the current date as a parameter for sql
+        },
+      }); // Replace 4 with current user id
       setWorkoutHistory(response.data);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
   };
-
+  
   useEffect(() => {
     fetchWorkoutHistory();
   }, []);
@@ -265,34 +270,41 @@ const Log = () => {
       </div>
       {/* //----------------------------------------------- workout history */}
       <div className="workout-history">
-        <h2>Workout History (Last 7 Days)</h2>
-        {workoutHistory.map((workout) => (
-          <div key={workout.id} className="workout-entry">
-            <p>
-              <strong>Date:</strong>{" "}
-              {moment(workout.timestamp).format("MMMM D, YYYY")}
-            </p>
-            <p>
-              <strong>Exercise:</strong> {workout.exercise_name}
-            </p>
-            <p>
-              <strong>Reps:</strong> {workout.reps}
-            </p>
-            <p>
-              <strong>Weight Load:</strong> {workout.resistance}
-            </p>
-            <button
-              onClick={() => handleEditWorkout(workout)}
-              disabled={editingWorkout === workout}
-            >
-              Edit
-            </button>
-            <button onClick={() => handleDeleteWorkout(workout.id)}>
-              Delete
-            </button>
-          </div>
-        ))}
+  <h2>Workout History (Today)</h2>
+  {/* If no workouts */}
+  {workoutHistory.length === 0 ? (
+    <p>No workouts recorded for today.</p>
+  ) : (
+    // show workouts for the day from sql response
+    workoutHistory.map((workout) => (
+      <div key={workout.id} className="workout-entry">
+        <p>
+          <strong>Date:</strong>{" "}
+          {moment(workout.timestamp).format("MMMM D, YYYY")}
+        </p>
+        <p>
+          <strong>Exercise:</strong> {workout.exercise_name}
+        </p>
+        <p>
+          <strong>Reps:</strong> {workout.reps}
+        </p>
+        <p>
+          <strong>Weight Load:</strong> {workout.resistance}
+        </p>
+        <button
+          onClick={() => handleEditWorkout(workout)}
+          disabled={editingWorkout === workout}
+        >
+          Edit
+        </button>
+        <button onClick={() => handleDeleteWorkout(workout.id)}>
+          Delete
+        </button>
       </div>
+    ))
+  )}
+</div>
+
     </div>
   );
 };
