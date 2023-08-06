@@ -6,7 +6,9 @@ import "../styles/TitleImage.css";
     <div>
       <div className="title-container" height="200">
         <img className="object-fit-cover" height="200" width="100%" src="https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg"/>
-        <img className="overlay-icon" height="175" src="https://static.vecteezy.com/system/resources/previews/005/377/279/original/weight-icon-on-white-background-free-vector.jpg"/>
+        <div className="overlay-image" height="175">
+          <i class="overlay-icon fa-solid fa-dumbbell"></i>
+        </div>
       </div>
     </div>
   )

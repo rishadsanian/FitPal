@@ -15,11 +15,15 @@ import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
+<<<<<<< HEAD
+import ProgramsPage from './components/ProgramsPage';
+=======
 import ChartWorkout from './components/ChartWorkout';
 
 
 import ExerciseList from './components/Exercises/ExerciseList';
 
+>>>>>>> main
 
 function App() {
   return (
@@ -29,7 +33,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/main" element={<Main />} />
+          <Route path="/dashboard" element={<Main />} />
+          <Route path="/programs" element={<ProgramsPage/>} />
           <Route path="/programs/:program_id" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
           <Route path="/profile/1" element={<Profile />} />

@@ -1,9 +1,8 @@
 import SessionItem from '../Sessions/SessionItem';
-import CardList from '../CardList';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useParams} from "react-router-dom";
-          
+import CreateSession from "../Sessions/CreateSession";
 //import sessions from '../../mocks/sessionData';
 
 const ProgramDetail = () => {
@@ -47,6 +46,7 @@ const ProgramDetail = () => {
           {sessionsListItem}
         </div>
       </div>
+      <CreateSession />
     </div>
   );
 };

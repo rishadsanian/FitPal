@@ -22,8 +22,14 @@ const Navbar = () => {
           <div className="collpase navbar-collapse" id="navbar">
             <ul className="navbar-nav me-auto my-2 my-lg-0">
               <li className="nav-item">
-                <a href="/programs/1" className="nav-link">
-                  Progams
+                <a href="/dashboard" className="nav-link">
+                  Dashboard
+                </a>
+              </li>
+
+              <li className="nav-item">
+                <a href="/programs" className="nav-link">
+                  Programs
                 </a>
               </li>
 

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const programs = require('../db/queries/programs');
+const pool = require("../configs/db.config");
 
 router.get('/', (req, res) => {
   programs
@@ -25,6 +26,30 @@ router.get('/:id', (req, res) => {
         .status(500)
         .json({ error: `error from get program by id: ${e.message}` });
     });
+});
+
+// Route to handle the POST request to /programs
+router.post("/", async(req, res) => {
+  try {
+    const { name, description } = req.body;
+    
+    // queryString
+    const queryString = `
+      INSERT INTO Programs (name, description)
+      VALUES ($1, $2)
+      RETURNING *;
+    `;
+
+    // SQL to db
+    const result = await pool.query(queryString, [
+      name, description
+    ]);
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error inserting program data:", error);
+    res.status(500).json({ error: "Error inserting program data" });
+  }
 });
 
 module.exports = router;
