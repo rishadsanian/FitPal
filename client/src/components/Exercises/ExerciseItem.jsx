@@ -16,6 +16,8 @@ const ExerciseItem = (props) => {
     //if have
     //  => check if sessions_exercises have this exercise for this session
     //  => if have
+    //       =>  back to session page
+    //  => if not
     //       =>  
   };
 
