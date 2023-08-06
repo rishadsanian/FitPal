@@ -18,6 +18,9 @@ import Profile from './components/Profile';
 import ChartWorkout from './components/ChartWorkout';
 
 
+import ExerciseList from './components/Exercises/ExerciseList';
+
+
 function App() {
   return (
     <div className="App">
@@ -42,6 +45,7 @@ function App() {
           />
           <Route path="/test" element={<DevTest />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path='/exercises' element={<ExerciseList />} />
         </Routes>
         <Footer />
       </BrowserRouter>
