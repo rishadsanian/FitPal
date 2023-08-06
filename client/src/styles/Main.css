@@ -16,6 +16,7 @@
 .profile-container {
   margin-top: 20px;
   padding:10px;
+  padding-top: 20px;
   animation: fadeIn 2s;
 }
 
@@ -53,9 +54,6 @@
   text-align: center;
 }
 
-.card {
-  margin-top: 20px;
-}
 
 @media (max-width: 768px) {
   .container {
