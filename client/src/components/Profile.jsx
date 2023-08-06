@@ -67,6 +67,7 @@ const Profile = () => {
     setEditing(false); // Hide the form
   };
 
+  //calculate current age
   const calculatedAge = profile.date_of_birth
     ? moment().diff(moment(profile.date_of_birth), "years")
     : null;
@@ -161,7 +162,7 @@ const Profile = () => {
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Age</div>
-                      <div className="value"> {calculatedAge !== null ? `${calculatedAge} years` : "Birth date not entered"}</div>
+                      <div className="value"> {calculatedAge !== null ? `${calculatedAge}` : "Birth date not entered"}</div>
                     </div>
                   </div>
                   <div className="col">
