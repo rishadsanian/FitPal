@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+//data from external api so that it won't need api get request
+//can be moved to application data
 const MUSCLE = {
   abdominals: "Abdominals",
   abductors: "Abductors",
@@ -21,12 +23,13 @@ const MUSCLE = {
   traps: "Traps",
   triceps: "Triceps",
 };
-
+//TODO MOVE API KEY TO .ENV / USE NEW KEY/DELETE THIS ONE
 const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
+//Set states
 const Log = () => {
-  const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE)); 
+  const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState("");
@@ -36,9 +39,9 @@ const Log = () => {
     useState("");
 
   useEffect(() => {
-    // Load initial exercise data based on the first muscle group
+    // Use Select Muscle group as the first option in dropdown menu
     if (muscleGroups.length > 0) {
-      const firstMuscleGroup = "Select Muscle Group"
+      const firstMuscleGroup = "Select Muscle Group";
       setSelectedMuscleGroup(firstMuscleGroup);
     }
   }, [muscleGroups]);
@@ -61,23 +64,26 @@ const Log = () => {
   }, [selectedMuscleGroup]);
 
   useEffect(() => {
-    // Set exercise description based on the selected exercise
+    //load exercise from api response and account for any changes
     const exercise = exercises.find((ex) => ex.name === selectedExercise);
+    //Dynamic display to show instructions for each exercise or null if no exercise is selected
     setSelectedExerciseDescription(exercise?.instructions || "");
   }, [selectedExercise]);
-
+  //allow for browsing through different exercises
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
   };
 
+  //set selected exercise to updated selection
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
 
+  // On submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    // prganize data for post request
     try {
       const logData = {
         exercise_name: selectedExercise,
@@ -85,7 +91,7 @@ const Log = () => {
         resistance: weightLoad,
         user_id: 1, // Replace this with current user id prop
       };
-
+      // execute post request
       const response = await axios.post("/log", logData);
 
       console.log("Workout logged successfully:", response.data);
@@ -121,7 +127,7 @@ const Log = () => {
               <option value="">Select Muscle Group</option>
               {muscleGroups.map((group) => (
                 <option key={group} value={group}>
-                  {MUSCLE[group]} {/* Use the value of the MUSCLE object */}
+                  {MUSCLE[group]} 
                 </option>
               ))}
             </select>

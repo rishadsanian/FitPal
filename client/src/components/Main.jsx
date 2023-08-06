@@ -8,12 +8,12 @@ import Log from "./Log";
 import ChartWorkout from "./ChartWorkout";
 import TitleImage from "./TitleImage";
 
-//landing logged in page comment
 
-//data visualization
+//Dashboard/logged in main page
 
 
 const Main = () => {
+  //formated date for display
   const currentDate = moment().format('dddd, MMMM D');
 
   return (
@@ -38,19 +38,16 @@ const Main = () => {
       {/* Add Workout Section */}
       <div className="container mt-5">
         {/* <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3> */}
-        {/* Add your "Add Workout" content here */}
       </div>
 
       {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
       <div className="container mt-5">
         <SliderComponent/>
-        {/* Add your "Program Schedule" content here */}
       </div>
 
       {/* Recent Activity History Section */}
       <div className="container mt-5">
         {/* <h3 className="display-5 fw-bold text-warning">Recent Activity History</h3> */}
-        {/* Add your "Recent Activity History" content here */}
         <HistoryList/>
       </div>
 

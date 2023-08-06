@@ -1,12 +1,10 @@
-//packages being tested out
-
 import moment from "moment";
 import Slider from "react-slick";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "../styles/Slider.css";
 
-
+//mock data
 const mockWorkouts = [
   {
     exercise: "Push-ups",
@@ -35,9 +33,10 @@ const mockWorkouts = [
   },
 ];
 
+//each slider item from mock data - could be moved to a different component
 const SliderItem = ({ exercise, date, icon }) => {
   return (
-    <div className="slider-item bg-dark border-warning" >
+    <div className="slider-item bg-dark border-warning">
       <div className="excercise-image">
         <i class="excercise-icon fa-solid fa-dumbbell"></i>
       </div>
@@ -47,6 +46,7 @@ const SliderItem = ({ exercise, date, icon }) => {
   );
 };
 
+//main component
 const SliderComponent = () => {
   const settings = {
     dots: true,
@@ -58,7 +58,6 @@ const SliderComponent = () => {
 
   return (
     <div className="slider-container bg-dark">
-      {/* Apply custom background color and text color to the slider container */}
       <h2 className="slider-title text-warning">Program Schedule</h2>
       <Slider {...settings}>
         {mockWorkouts.map((workout, index) => (

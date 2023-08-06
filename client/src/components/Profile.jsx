@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../styles/Profile.css';
+import "../styles/Profile.css";
 
+//State
 const Profile = () => {
   const [profile, setProfile] = useState({
     age: 0,
@@ -15,7 +16,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/profile/3"); // Replace '1' with user-id from cookies
+        const response = await axios.get("/api/profile/3"); // Replace '3' with user-id from cookies
         setProfile(response.data);
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -30,7 +31,7 @@ const Profile = () => {
     event.preventDefault();
 
     try {
-      // Submit form data to the server
+      // Submit form data to the server and db
       const response = await axios.post("/profile", {
         user_id: 3, // Replace '1' with user-id from current_user prop
         age: profile.age,
@@ -147,6 +148,7 @@ const Profile = () => {
                     </button>
                   </div>
                 </form>
+                // Toggle between form and display
               ) : (
                 <div className="row row-cols-2 gy-3">
                   <div className="col">
@@ -175,6 +177,7 @@ const Profile = () => {
                   </div>
                 </div>
               )}
+              {/* show edit button only on display view */}
               {!editing && (
                 <div className="edit-button text-center">
                   <button
