@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 //data from external api so that it won't need api get request
+//can be moved to application data
 const MUSCLE = {
   abdominals: "Abdominals",
   abductors: "Abductors",
