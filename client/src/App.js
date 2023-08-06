@@ -15,15 +15,9 @@ import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
-<<<<<<< HEAD
 import ProgramsPage from './components/ProgramsPage';
-=======
 import ChartWorkout from './components/ChartWorkout';
-
-
 import ExerciseList from './components/Exercises/ExerciseList';
-
->>>>>>> main
 
 function App() {
   return (
