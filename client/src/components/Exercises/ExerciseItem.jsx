@@ -1,12 +1,15 @@
 import { useState } from 'react';
-
+import AddExerciseModal from "./AddExerciseModal"
 
 const ExerciseItem = (props) => {
   const [icon, setIcon] = useState("fa-solid fa-plus fa-xs");
+  const [modalDisplay, setModalDisplay] = useState(false);
   const exercise = props.exercise;
 
   const handleOnClick = () => {
     setIcon("fa-solid fa-check text-warning");
+    
+    setModalDisplay(true)
     //find exercise by name in exercises table
     //if not have it 
     //  => add to exercises
@@ -45,6 +48,9 @@ const ExerciseItem = (props) => {
           <span className="badge text-bg-light">90lsb/5</span>
         </div>
       </div>
+      {/* Create the excercise modal */}
+      {modalDisplay && <AddExerciseModal name={exercise.name} muscle={exercise.muscle} />}
+      
     </div>
   );
 };

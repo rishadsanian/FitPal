@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExerciseItem from './ExerciseItem';
 
+
 const MUSCLE = {
   abdominals: 'Abdominals',
   abductors: 'Abductors',
@@ -99,6 +100,8 @@ const ExerciseList = () => {
       <div className="px-4 row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
         {exercisesListItem}
       </div>
+
+    
     </div>
   );
 };
