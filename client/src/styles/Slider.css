@@ -13,7 +13,10 @@
 }
 
 .slider-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -21,11 +24,20 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.exercise-icon {
+.excercise-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 60px;
-  object-fit: contain;
+  background-color: white;
+  opacity: 75%;
   margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.excercise-icon {
+  font-size: 30px;
 }
 
 .exercise {

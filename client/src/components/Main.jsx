@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import HistoryList from "./HistoryList";
 import Log from "./Log";
 import ChartWorkout from "./ChartWorkout";
+import TitleImage from "./TitleImage";
 
 //landing logged in page comment
 
@@ -17,6 +18,8 @@ const Main = () => {
 
   return (
     <div>
+      <TitleImage icon={"fa-solid fa-table-columns"}/>
+
       {/* Header */}
       <div className="p-3 text-start bg-dark opacity-75">
         <div className="container-fluid py-5">
