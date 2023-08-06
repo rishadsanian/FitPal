@@ -17,10 +17,7 @@ import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
 import ProgramsPage from './components/ProgramsPage';
 import ChartWorkout from './components/ChartWorkout';
-
-
 import ExerciseList from './components/Exercises/ExerciseList';
-
 
 function App() {
   return (
