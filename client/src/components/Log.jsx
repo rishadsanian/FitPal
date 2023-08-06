@@ -255,9 +255,10 @@ const Log = () => {
               </div>
             </div>
           </div>
+          {/* submit - depend on edit or log mode */}
           <div className="d-grid pt-3">
             <button type="submit" className="btn btn-warning">
-              Save
+              {editingWorkout ? "Save Edit" : "Log Workout"}
             </button>
           </div>
         </form>
