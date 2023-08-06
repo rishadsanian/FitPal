@@ -84,7 +84,7 @@ const Log = () => {
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
     try {
-      await axios.delete(`/api/workout/${workoutId}`);
+      await axios.delete(`/delete/log/${workoutId}`);
       // update workout history after deleting
       fetchWorkoutHistory();
     } catch (error) {
@@ -116,7 +116,7 @@ const Log = () => {
     };
 
     fetchExercisesByMuscle();
-  }, [selectedMuscleGroup,selectedExerciseDescription,selectedExercise]);
+  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
 
   useEffect(() => {
     //load exercise from api response and account for any changes
@@ -148,7 +148,10 @@ const Log = () => {
 
       if (editingWorkout) {
         // If edit mode, perform an update operation
-        const response = await axios.put(`/update/log/${editingWorkout.id}`, logData);
+        const response = await axios.put(
+          `/update/log/${editingWorkout.id}`,
+          logData
+        );
         console.log("Workout updated successfully:", response.data);
       } else {
         // create operation
@@ -178,21 +181,21 @@ const Log = () => {
       >
         <h3 className="text-warning fw-bold">Workout Log</h3>
         <div>
-        <p className="text-secondary"></p>
-        <p className="text-secondary">
-          {selectedExercise && exercises.length > 0 && (
-            <div>
-              <p>{selectedExerciseDescription}</p>
-              <p>
-                <strong>Difficulty:</strong>{" "}
-                {exercises[0].difficulty.toUpperCase()}
-              </p>
-              <p>
-                <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-              </p>
-            </div>
-          )}
-        </p>
+          <p className="text-secondary"></p>
+          <p className="text-secondary">
+            {selectedExercise && exercises.length > 0 && (
+              <div>
+                <p>{selectedExerciseDescription}</p>
+                <p>
+                  <strong>Difficulty:</strong>{" "}
+                  {exercises[0].difficulty.toUpperCase()}
+                </p>
+                <p>
+                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+                </p>
+              </div>
+            )}
+          </p>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
@@ -280,7 +283,7 @@ const Log = () => {
                 className="btn btn-warning"
                 onClick={handleCancelEdit}
               >
-                Cancel Edit
+                Cancel
               </button>
             )}
           </div>
@@ -319,13 +322,13 @@ const Log = () => {
                 <button
                   onClick={() => handleEditWorkout(workout)}
                   disabled={editingWorkout === workout}
-                  className="btn btn-sm btn-primary me-2"
+                  className="btn btn-sm btn-warning me-2"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeleteWorkout(workout.id)}
-                  className="btn btn-sm btn-danger"
+                  className="btn btn-sm btn-warning"
                 >
                   Delete
                 </button>
