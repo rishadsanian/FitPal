@@ -17,11 +17,12 @@ import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
 import ProgramsPage from './components/ProgramsPage';
 import ChartWorkout from './components/ChartWorkout';
-
-
 import ExerciseList from './components/Exercises/ExerciseList';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a5ebd4848069d468fd93764109060bfdfea74e76
 function App() {
   return (
     <div className="App">

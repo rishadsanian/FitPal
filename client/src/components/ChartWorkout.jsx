@@ -59,6 +59,7 @@ const ChartWorkout = ({ userId }) => {
     if (!chartRef.current) {
       // Create the chart for the first time
       const ctx = document.getElementById("workoutChart").getContext("2d");
+      ctx.canvas.height = 400;
       const chartConfig = {
         type: "bar",
         data: {
@@ -74,6 +75,8 @@ const ChartWorkout = ({ userId }) => {
           ],
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
           scales: {
             y: {
               beginAtZero: true,
@@ -113,7 +116,7 @@ const ChartWorkout = ({ userId }) => {
                 <div className="chart-wrapper">
                   {/* Put the canvas inside a div with fixed width of 400px */}
                   <div className="chart-container-400">
-                    <canvas id="workoutChart" />
+                    <canvas id="workoutChart" height="100%" width="100%"/>
                   </div>
                 </div>
               </div>
