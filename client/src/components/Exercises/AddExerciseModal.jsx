@@ -30,37 +30,27 @@ const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 const AddExerciseModal = (props) => {
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE)); 
-  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
+  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(MUSCLE[props.muscle]);
   const [exercises, setExercises] = useState([]);
-  const [selectedExercise, setSelectedExercise] = useState("");
+  const [selectedExercise, setSelectedExercise] = useState(props.name);
   const [selectedExerciseDescription, setSelectedExerciseDescription] = useState("");
   const [setCount, setSetCount] = useState(1);
+  const [sets, setSets] = useState([{id: 0, weight: 0, reps: 0}])
 
-  useEffect(() => {
-    if(props.muscle) {
-      setSelectedMuscleGroup(MUSCLE[props.muscle]);
+  // Fetch exercises from API based on the selected muscle group
+  const fetchExercisesByMuscle = async () => {
+    try {
+      const response = await axios.get(API_URL, {
+        headers: { "X-Api-Key": API_KEY },
+        params: { muscle: selectedMuscleGroup },
+      });
+      setExercises(response.data);
+    } catch (error) {
+      console.error("Error fetching exercises:", error);
     }
-    if(props.name) {
-      setSelectedExercise(props.name);
-      const exercise = exercises.find((ex) => ex.name === selectedExercise);
-      setSelectedExerciseDescription(exercise?.instructions || "");
-    }
-  }, []);
-
+  };
+  
   useEffect(() => {
-    // Fetch exercises from API based on the selected muscle group
-    const fetchExercisesByMuscle = async () => {
-      try {
-        const response = await axios.get(API_URL, {
-          headers: { "X-Api-Key": API_KEY },
-          params: { muscle: selectedMuscleGroup },
-        });
-        setExercises(response.data);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup]);
 
@@ -80,30 +70,26 @@ const AddExerciseModal = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const logData = {
-        exercise_name: selectedExercise,
-        user_id: 1, // Replace this with current user id prop
-      };
-
-      const response = await axios.post("/log", logData);
-
-      console.log("Workout logged successfully:", response.data);
-
-      // Clear form
-    } catch (error) {
-      console.error("Error logging workout:", error);
-    }
   };
 
+  // ADDING AND REMOVING SETS
   const addSet = async (e) => {
     e.preventDefault();
-    if(setCount < MAX_SETS) {
-      setSetCount(prev => prev + 1);
+    if(sets.length < MAX_SETS) {
+      setSets(prev => [...prev, {id: sets.length, weight: 0, reps: 0}])
     }
   }
+
+  const removeSet = async (e) => {
+    e.preventDefault();
+    if(sets.length > 1) {
+      setSets(prev => {
+        return [...prev.slice(0, sets.length - 1)];
+      })
+    }
+  }
+
+  const setsToDisplay = sets.map((set) => <AddSet sets={sets} id={set.id} setSets={setSets}/>)
 
   return (
     <div className="position-fixed top-50 start-50 translate-middle z-1">
@@ -112,6 +98,8 @@ const AddExerciseModal = (props) => {
         style={{ width: "600px" }}
       >
         <h3 className="text-warning fw-bold">Add Excercise</h3>
+        <h4>{selectedExercise}</h4>
+        <h4>{selectedMuscleGroup}</h4>
         <p className="text-secondary">{selectedExerciseDescription}</p>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
@@ -126,7 +114,6 @@ const AddExerciseModal = (props) => {
               onChange={handleMuscleGroupSelection}
               required
             > 
-              <option value="">{props.muscle ? selectedMuscleGroup : "Select Muscle Group"}</option>
               {muscleGroups.map((group) => (
                 <option key={group} value={group}>
                   {MUSCLE[group]} {/* Use the value of the MUSCLE object */}
@@ -146,7 +133,6 @@ const AddExerciseModal = (props) => {
               onChange={handleExerciseSelection}
               required
             >
-              <option value="">{props.name ? selectedExercise : "Select Exercise"}</option>
               {exercises.map((exercise) => (
                 <option key={exercise.name} value={exercise.name}>
                   {exercise.name}
@@ -159,17 +145,25 @@ const AddExerciseModal = (props) => {
               Sets
             </label>
 
-            <AddSet />
+            {setsToDisplay}
 
-            <div className="d-grid pt-3">
+            {sets.length > 1 ?
+              <div className="d-grid pt-3">
+                <button className="btn btn-light" onClick={addSet}>
+                  <i className="fa-solid fa-plus fa-xs"></i>
+                </button>
+                <button className="btn btn-light" onClick={removeSet}>
+                  <i className="fa-solid fa-minus fa-xs"></i>
+                </button>
+              </div>
+             : <div className="d-grid pt-3">
               <button className="btn btn-light" onClick={addSet}>
                 <i className="fa-solid fa-plus fa-xs"></i>
               </button>
             </div>
+            }
             
           </div>
-          
-
           <div className="d-grid pt-3">
             <button type="submit" className="btn btn-warning">
               Add Excercise

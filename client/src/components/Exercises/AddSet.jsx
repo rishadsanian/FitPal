@@ -3,31 +3,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const MUSCLE = {
-  abdominals: "Abdominals",
-  abductors: "Abductors",
-  adductors: "Adductors",
-  biceps: "Biceps",
-  calves: "Calves",
-  chest: "Chest",
-  forearms: "Forearms",
-  glutes: "Glutes",
-  hamstrings: "Hamstrings",
-  lats: "Lats",
-  lower_back: "Lower Back",
-  middle_back: "Middle Back",
-  neck: "Neck",
-  quadriceps: "Quadriceps",
-  traps: "Traps",
-  triceps: "Triceps",
-};
-
-const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
-const API_URL = "https://api.api-ninjas.com/v1/exercises";
-
 const AddExerciseModal = (props) => {
-  const [reps, setReps] = useState("");
-  const [weightLoad, setWeightLoad] = useState("");
+  const [reps, setReps] = useState(10);
+  const [weightLoad, setWeightLoad] = useState(10);
+
+  useEffect(() => {
+    props.setSets((prev) => {
+        prev[props.id].weight = weightLoad;
+        return [...prev]
+    })
+  }, [weightLoad]);
+
+
+  useEffect(() => {
+    props.setSets((prev) => {
+        prev[props.id].reps = reps;
+        return [...prev]
+    })
+  }, [reps]);
 
   return (
     <div>
