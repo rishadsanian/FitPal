@@ -10,11 +10,11 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 //routes import
+const logRoute = require("./routes/logRoute.js");
+const profileRoute = require("./routes/profileRoute");
 const progamsRoutes = require("./routes/programsRoutes");
 const sessionsRoutes = require("./routes/sessionsRoutes");
 const exercisesRoutes = require("./routes/exercisesRoutes");
-const logRoute = require("./routes/logRoute.js");
-const profileRoute = require("./routes/profileRoute");
 const profileRouteAPI = require("./routes/profileRoute_api");
 const chartWorkoutAPI = require("./routes/chartWorkoutRoute_api");
 
