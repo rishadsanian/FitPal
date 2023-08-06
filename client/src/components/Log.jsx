@@ -65,7 +65,7 @@ const Log = () => {
     setWeightLoad(workout.resistance);
     setEditingWorkout(workout);
   };
-  
+
   //--------------------------------------------------------------------------//
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
@@ -120,30 +120,44 @@ const Log = () => {
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
-////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
   // On submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // prganize data for post request
     try {
       const logData = {
         exercise_name: selectedExercise,
         reps,
         resistance: weightLoad,
-        user_id: 4, // Replace this with current user id prop
+        user_id: 4, // replace with current user id prop
       };
-      // execute post request
-      const response = await axios.post("/log", logData);
 
-      console.log("Workout logged successfully:", response.data);
+      if (editingWorkout) {
+        // If editmode, perform an update operation
+        const response = await axios.put(
+          `/api/workout/${editingWorkout.id}`,
+          logData
+        );
+        console.log("Workout updated successfully:", response.data);
+      } else {
+        // create operation
+        const response = await axios.post("/log", logData);
+        console.log("Workout logged successfully:", response.data);
+      }
 
-      // Clear form
+      // Clear form and editingWorkout state
       setReps("");
       setWeightLoad("");
+      setSelectedExercise("");
+      setEditingWorkout(null);
+
+      // Refresh workout history
+      fetchWorkoutHistory();
     } catch (error) {
       console.error("Error logging workout:", error);
     }
   };
+  ///////////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
@@ -243,7 +257,7 @@ const Log = () => {
           </div>
           <div className="d-grid pt-3">
             <button type="submit" className="btn btn-warning">
-              Log Workout
+              Save
             </button>
           </div>
         </form>
@@ -265,7 +279,12 @@ const Log = () => {
             <p>
               <strong>Weight Load:</strong> {workout.resistance}
             </p>
-            <button onClick={() => handleEditWorkout(workout)}>Edit</button>
+            <button
+              onClick={() => handleEditWorkout(workout)}
+              disabled={editingWorkout === workout}
+            >
+              Edit
+            </button>
             <button onClick={() => handleDeleteWorkout(workout.id)}>
               Delete
             </button>
