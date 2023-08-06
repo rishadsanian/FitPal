@@ -1,124 +1,80 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const MUSCLE = {
+  abdominals: "Abdominals",
+  abductors: "Abductors",
+  adductors: "Adductors",
+  biceps: "Biceps",
+  calves: "Calves",
+  chest: "Chest",
+  forearms: "Forearms",
+  glutes: "Glutes",
+  hamstrings: "Hamstrings",
+  lats: "Lats",
+  lower_back: "Lower Back",
+  middle_back: "Middle Back",
+  neck: "Neck",
+  quadriceps: "Quadriceps",
+  traps: "Traps",
+  triceps: "Triceps",
+};
+
+const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
+const API_URL = "https://api.api-ninjas.com/v1/exercises";
+
 const Log = () => {
-  const mockMuscleData = [
-    "Biceps",
-    "Triceps",
-    "Chest",
-    "Back",
-    "Legs",
-    "Shoulders",
-    "Abs",
-    "Glutes",
-    "Calves",
-    "Forearms",
-    "Hamstrings",
-    "Quadriceps",
-  ];
-
-  const mockExerciseData = [
-    {
-      name: "Push-ups",
-      type: "bodyweight",
-      muscle: "Chest",
-      equipment: "None",
-      difficulty: "beginner",
-      instructions:
-        "Assume a prone position on the floor with the hands palms down and aligned with the shoulders. The fingers should be pointed straight ahead. Execute by pushing the body up from the ground until the arms are fully extended.",
-    },
-    {
-      name: "Pull-ups",
-      type: "bodyweight",
-      muscle: "Back",
-      equipment: "Pull-up bar",
-      difficulty: "intermediate",
-      instructions:
-        "Hang from a pull-up bar with an overhand grip, hands shoulder-width apart. Pull yourself up by squeezing your back muscles, bringing your chest toward the bar. Lower yourself back to the starting position with control.",
-    },
-    {
-      name: "Squats",
-      type: "strength",
-      muscle: "Legs",
-      equipment: "Barbell",
-      difficulty: "beginner",
-      instructions:
-        "Stand with your feet shoulder-width apart, toes slightly turned out. Hold a barbell on your upper back. Bend your knees and lower your body, keeping your chest up and back straight. Go as low as you can, then push through your heels to stand back up.",
-    },
-    {
-      name: "Dumbbell Shoulder Press",
-      type: "strength",
-      muscle: "Shoulders",
-      equipment: "Dumbbells",
-      difficulty: "intermediate",
-      instructions:
-        "Sit on a bench with back support, holding a dumbbell in each hand at shoulder level. Press the weights overhead, fully extending your arms. Lower the weights back to shoulder level with control.",
-    },
-    {
-      name: "Bicep Curls",
-      type: "strength",
-      muscle: "Biceps",
-      equipment: "Dumbbells",
-      difficulty: "beginner",
-      instructions:
-        "Stand with dumbbells in your hands, palms facing forward. Curl the weights up toward your shoulders, keeping your elbows close to your body. Lower the weights back down with control.",
-    },
-  ];
-
-  //STATES
-  // will pull from api as an object or array to show choices from to choose from dropdown menu
-  const [muscleGroups, setMuscleGroups] = useState(mockMuscleData);
-  // {/* will  be the selcted musclegroup*/}
+  const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE)); 
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
-  // will show the exercises from api as an object or array to show choices
-  const [exercises, setExercises] = useState(mockExerciseData);
-  // will save the selected exercise
+  const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState("");
-  //  record inputs from user
   const [reps, setReps] = useState("");
-  // record input from user
   const [weightLoad, setWeightLoad] = useState("");
-  //description of selected exercise
-
   const [selectedExerciseDescription, setSelectedExerciseDescription] =
     useState("");
 
-  //useEffect to select exercises by muscle
   useEffect(() => {
-    if (selectedMuscleGroup) {
-      const filteredExercises = mockExerciseData.filter(
-        (exercise) => exercise.muscle === selectedMuscleGroup
-      );
-      setExercises(filteredExercises);
-    } else {
-      // If no muscle group is selected, show all exercises
-      setExercises(mockExerciseData);
+    // Load initial exercise data based on the first muscle group
+    if (muscleGroups.length > 0) {
+      const firstMuscleGroup = "Select Muscle Group"
+      setSelectedMuscleGroup(firstMuscleGroup);
     }
+  }, [muscleGroups]);
+
+  useEffect(() => {
+    // Fetch exercises from API based on the selected muscle group
+    const fetchExercisesByMuscle = async () => {
+      try {
+        const response = await axios.get(API_URL, {
+          headers: { "X-Api-Key": API_KEY },
+          params: { muscle: selectedMuscleGroup },
+        });
+        setExercises(response.data);
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+      }
+    };
+
+    fetchExercisesByMuscle();
   }, [selectedMuscleGroup]);
 
-  //useEffect to show selected exercise description
   useEffect(() => {
-    if (selectedExercise) {
-      const exercise = exercises.find((ex) => ex.name === selectedExercise);
-      setSelectedExerciseDescription(exercise.instructions);
-    } else {
-      setSelectedExerciseDescription("");
-    }
+    // Set exercise description based on the selected exercise
+    const exercise = exercises.find((ex) => ex.name === selectedExercise);
+    setSelectedExerciseDescription(exercise?.instructions || "");
   }, [selectedExercise]);
 
-  //selects muscle group for filtering
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
   };
 
-  //set selected exercise for the musclegroup
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
 
-  //on submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -127,7 +83,7 @@ const Log = () => {
         exercise_name: selectedExercise,
         reps,
         resistance: weightLoad,
-        user_id: 1, //replace this with current user id prop
+        user_id: 1, // Replace this with current user id prop
       };
 
       const response = await axios.post("/log", logData);
@@ -165,7 +121,7 @@ const Log = () => {
               <option value="">Select Muscle Group</option>
               {muscleGroups.map((group) => (
                 <option key={group} value={group}>
-                  {group}
+                  {MUSCLE[group]} {/* Use the value of the MUSCLE object */}
                 </option>
               ))}
             </select>
@@ -197,14 +153,14 @@ const Log = () => {
                 <span className="input-group-text" id="addon-wrapping">
                   Weight
                 </span>
-                <input 
+                <input
                   type="number"
                   id="weightLoad"
                   value={weightLoad}
                   onChange={(e) => setWeightLoad(e.target.value)}
                   required
                   min="1"
-                  className="form-control form-control-lg" 
+                  className="form-control form-control-lg"
                 />
               </div>
             </div>
@@ -225,37 +181,6 @@ const Log = () => {
               </div>
             </div>
           </div>
-
-          {/* <div className="text-start">
-            <label htmlFor="reps" className="form-label text-secondary">
-              Reps
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="reps"
-              value={reps}
-              onChange={(e) => setReps(e.target.value)}
-              required
-              min="1"
-            />
-          </div>
-
-          <div className="text-start">
-            <label htmlFor="weightLoad" className="form-label text-secondary">
-              Weight Load (Resistance)
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="weightLoad"
-              value={weightLoad}
-              onChange={(e) => setWeightLoad(e.target.value)}
-              required
-              min="1"
-            />
-          </div> */}
-
           <div className="d-grid pt-3">
             <button type="submit" className="btn btn-warning">
               Log Workout
