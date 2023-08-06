@@ -24,6 +24,7 @@ const ChartWorkout = ({ userId }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/chartworkout/4`); //hard-coded change to current user
+        console.log(response.data);
         setWorkoutData(response.data);
       } catch (error) {
         console.error("Error fetching workout data:", error);

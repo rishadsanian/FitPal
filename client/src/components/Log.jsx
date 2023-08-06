@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
+import "../styles/Log.css";
 
 //data from external api so that it won't need api get request
 //can be moved to application data
@@ -48,7 +49,6 @@ const Log = () => {
   const fetchWorkoutHistory = async () => {
     try {
       const response = await axios.get(`/api/history/4`, {
-        
         params: {
           date: moment().format("YYYY-MM-DD"), // Send the current date as a parameter for sql
         },
@@ -58,19 +58,28 @@ const Log = () => {
       console.error("Error fetching workout history:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchWorkoutHistory();
   }, []);
   //--------------------------------------------------------------------------//
   //Edit  workout
   const handleEditWorkout = (workout) => {
+    setSelectedMuscleGroup(workout.muscle_group);
     setSelectedExercise(workout.exercise_name);
+    // setSelectedExerciseDescription(workout.exercise_name.)
     setReps(workout.reps);
     setWeightLoad(workout.resistance);
     setEditingWorkout(workout);
   };
 
+  //--------------------------------------------------------------------------//
+  const handleCancelEdit = () => {
+    setSelectedExercise("");
+    setReps("");
+    setWeightLoad("");
+    setEditingWorkout(null);
+  };
   //--------------------------------------------------------------------------//
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
@@ -107,7 +116,7 @@ const Log = () => {
     };
 
     fetchExercisesByMuscle();
-  }, [selectedMuscleGroup]);
+  }, [selectedMuscleGroup,selectedExerciseDescription,selectedExercise]);
 
   useEffect(() => {
     //load exercise from api response and account for any changes
@@ -138,11 +147,8 @@ const Log = () => {
       };
 
       if (editingWorkout) {
-        // If editmode, perform an update operation
-        const response = await axios.put(
-          `/api/workout/${editingWorkout.id}`,
-          logData
-        );
+        // If edit mode, perform an update operation
+        const response = await axios.put(`/update/log/${editingWorkout.id}`, logData);
         console.log("Workout updated successfully:", response.data);
       } else {
         // create operation
@@ -165,16 +171,18 @@ const Log = () => {
   ///////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="position-absolute top-50 start-50 translate-middle">
+    <div className="log container">
       <div
-        className="container bg-dark text-white rounded py-5 px-3"
+        className="container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
         <h3 className="text-warning fw-bold">Workout Log</h3>
-        <p className="text-secondary">{selectedExerciseDescription}</p>
+        <div>
+        <p className="text-secondary"></p>
         <p className="text-secondary">
           {selectedExercise && exercises.length > 0 && (
             <div>
+              <p>{selectedExerciseDescription}</p>
               <p>
                 <strong>Difficulty:</strong>{" "}
                 {exercises[0].difficulty.toUpperCase()}
@@ -185,6 +193,7 @@ const Log = () => {
             </div>
           )}
         </p>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
             <label htmlFor="muscleGroup" className="form-label text-secondary">
@@ -195,7 +204,7 @@ const Log = () => {
               className="form-select"
               value={selectedMuscleGroup}
               onChange={handleMuscleGroupSelection}
-              required
+              // required
             >
               <option value="">Select Muscle Group</option>
               {muscleGroups.map((group) => (
@@ -215,7 +224,7 @@ const Log = () => {
               className="form-select"
               value={selectedExercise}
               onChange={handleExerciseSelection}
-              required
+              // required
             >
               <option value="">Select Exercise</option>
               {exercises.map((exercise) => (
@@ -261,50 +270,70 @@ const Log = () => {
             </div>
           </div>
           {/* submit - depend on edit or log mode */}
-          <div className="d-grid pt-3">
+          <div className="form-buttons-container">
             <button type="submit" className="btn btn-warning">
-              {editingWorkout ? "Save Edit" : "Log Workout"}
+              {editingWorkout ? "Update" : "Log Workout"}
             </button>
+            {editingWorkout && (
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={handleCancelEdit}
+              >
+                Cancel Edit
+              </button>
+            )}
           </div>
         </form>
       </div>
       {/* //----------------------------------------------- workout history */}
-      <div className="workout-history">
-  <h2>Workout History (Today)</h2>
-  {/* If no workouts */}
-  {workoutHistory.length === 0 ? (
-    <p>No workouts recorded for today.</p>
-  ) : (
-    // show workouts for the day from sql response
-    workoutHistory.map((workout) => (
-      <div key={workout.id} className="workout-entry">
-        <p>
-          <strong>Date:</strong>{" "}
-          {moment(workout.timestamp).format("MMMM D, YYYY")}
-        </p>
-        <p>
-          <strong>Exercise:</strong> {workout.exercise_name}
-        </p>
-        <p>
-          <strong>Reps:</strong> {workout.reps}
-        </p>
-        <p>
-          <strong>Weight Load:</strong> {workout.resistance}
-        </p>
-        <button
-          onClick={() => handleEditWorkout(workout)}
-          disabled={editingWorkout === workout}
-        >
-          Edit
-        </button>
-        <button onClick={() => handleDeleteWorkout(workout.id)}>
-          Delete
-        </button>
+      {/* Workout History */}
+      <div
+        className="workout-history container addlog bg-dark text-white rounded py-5 px-3"
+        style={{ width: "600px" }}
+      >
+        <h2>Workout History (Today)</h2>
+        {workoutHistory.length === 0 ? (
+          <p>No workouts recorded for today.</p>
+        ) : (
+          <div>
+            {/* show workout items from sql response */}
+            {workoutHistory.map((workout) => (
+              <div
+                key={workout.id}
+                className="workout-entry border rounded p-3 mb-2"
+              >
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {moment(workout.timestamp).format("MMMM D, YYYY")}
+                </p>
+                <p>
+                  <strong>Exercise:</strong> {workout.exercise_name}
+                </p>
+                <p>
+                  <strong>Reps:</strong> {workout.reps}
+                </p>
+                <p>
+                  <strong>Weight Load:</strong> {workout.resistance}
+                </p>
+                <button
+                  onClick={() => handleEditWorkout(workout)}
+                  disabled={editingWorkout === workout}
+                  className="btn btn-sm btn-primary me-2"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteWorkout(workout.id)}
+                  className="btn btn-sm btn-danger"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    ))
-  )}
-</div>
-
     </div>
   );
 };
