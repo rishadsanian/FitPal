@@ -38,8 +38,8 @@ const CreateSession = () => {
   };
 
   return (
-    <div className="p-5 d-flex justify-content-center" style={{height: '100vh'}}>
-      <form id="create_program_form" className="col col-12 col-md-7 col-lg-5 col-xl-4">
+    <div className="p-5 d-flex justify-content-center">
+      <form id="create_program_form" className="w-100">
         <div className="container bg-dark text-white rounded py-5 px-3">
           <h3 className="text-warning fw-bold">Create Session</h3>
           <div className="text-start">

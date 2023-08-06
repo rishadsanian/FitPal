@@ -33,8 +33,8 @@ const CreateProgram = () => {
   };
 
   return (
-    <div className="p-5 d-flex justify-content-center">
-      <form id="create_program_form" className="w-100">
+    <div className="p-5">
+      <form id="create_program_form" className="">
         <div className="container bg-dark text-white rounded">
           <h3 className="text-warning fw-bold">Create Program</h3>
           <div className="text-start">

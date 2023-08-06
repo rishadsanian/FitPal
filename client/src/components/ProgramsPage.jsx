@@ -25,10 +25,8 @@ function ProgramsPage() {
           />
         </div>
 
-        <div className="col col-12 col-md-6 col-lg-5 col-xl-4 bg-dark opacity-75 p-0 align-self-stretch">
-          <div className="d-flex justify-content-center" style={{ minHeight: '100vh' }}>
-            <CreateProgram />
-          </div>
+        <div className="col col-12 col-md-6 col-lg-5 col-xl-4 bg-dark opacity-75 p-0 align-self-stretch" style={{ minHeight: '100vh' }} >
+          <CreateProgram />
         </div>
       </div>
     </div>
