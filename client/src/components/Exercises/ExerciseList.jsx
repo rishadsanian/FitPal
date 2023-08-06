@@ -71,7 +71,7 @@ const ExerciseList = () => {
 
   return (
     <div className="p-3">
-      <h1 className="text-warning fw-bold">Add new Exercise</h1>
+      <h1 className="text-warning fw-bold">Add New Exercise</h1>
       <div className="p-3">
         <form className="row row-cols-1 row-cols-md-2">
           <div className="col col-md-3 p-1">
