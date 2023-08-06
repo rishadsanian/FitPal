@@ -269,7 +269,8 @@ const Log = () => {
         {workoutHistory.map((workout) => (
           <div key={workout.id} className="workout-entry">
             <p>
-              <strong>Date:</strong> {workout.timestamp}
+              <strong>Date:</strong>{" "}
+              {moment(workout.timestamp).format("MMMM D, YYYY")}
             </p>
             <p>
               <strong>Exercise:</strong> {workout.exercise_name}
