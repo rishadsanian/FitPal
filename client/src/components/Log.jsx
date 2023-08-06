@@ -47,7 +47,7 @@ const Log = () => {
 
   const fetchWorkoutHistory = async () => {
     try {
-      const response = await axios.get(`/api/workout/history/4`, {
+      const response = await axios.get(`/api/history/4`, {
         
         params: {
           date: moment().format("YYYY-MM-DD"), // Send the current date as a parameter for sql
