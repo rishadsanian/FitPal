@@ -14,4 +14,6 @@ const getExercisesBySessionId = (id) => {
   });
 };
 
+
+
 module.exports = { getExercisesBySessionId };
