@@ -38,7 +38,7 @@ const SliderItem = ({ exercise, date, icon }) => {
   return (
     <div className="slider-item bg-dark border-warning">
       <div className="excercise-image">
-        <i class="excercise-icon fa-solid fa-dumbbell"></i>
+        <i className="excercise-icon fa-solid fa-dumbbell"></i>
       </div>
       <h3 className="exercise text-warning">{exercise}</h3>
       <p className="date text-light">{moment(date).format("dddd, MMMM D")}</p>

@@ -89,7 +89,7 @@ const Log = () => {
         exercise_name: selectedExercise,
         reps,
         resistance: weightLoad,
-        user_id: 1, // Replace this with current user id prop
+        user_id: 4, // Replace this with current user id prop
       };
       // execute post request
       const response = await axios.post("/log", logData);
@@ -165,7 +165,7 @@ const Log = () => {
 
           <div className="row row-cols-sm-2 pt-4">
             <div className="col">
-              <div class="input-group flex-nowrap">
+              <div className="input-group flex-nowrap">
                 <span className="input-group-text" id="addon-wrapping">
                   Weight
                 </span>
@@ -181,7 +181,7 @@ const Log = () => {
               </div>
             </div>
             <div className="col">
-              <div class="input-group flex-nowrap">
+              <div className="input-group flex-nowrap">
                 <span className="input-group-text" id="addon-wrapping">
                   Reps
                 </span>

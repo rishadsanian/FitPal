@@ -17,7 +17,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/profile/3");
+        const response = await axios.get("/api/profile/4");
         const formattedDate = moment(response.data.date_of_birth).format("YYYY-MM-DD"); // Format the date
         setProfile({ ...response.data, date_of_birth: formattedDate });
       } catch (error) {
@@ -35,7 +35,7 @@ const Profile = () => {
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
-        user_id: 3, // Replace '1' with user-id from current_user prop
+        user_id: 4, // Replace '1' with user-id from current_user prop
         date_of_birth: profile.date_of_birth,
         height: profile.height,
         weight: profile.weight,
