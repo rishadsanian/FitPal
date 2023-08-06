@@ -6,6 +6,30 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #27374D;
+
+}
+
+/* scroll bar */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #333333;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #333333;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ffc107;
+  border-radius: 6px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #666666;
 }
 
 code {

@@ -18,25 +18,28 @@ const Main = () => {
       <TitleImage icon={"fa-solid fa-table-columns"} />
 
       {/* Header */}
-   
-        <div className="header-container p-3 text-start bg-dark opacity-75">
-          <div className="container-fluid py-5">
-            <h1 className="display-5 fw-bold text-warning">Welcome User</h1>
-            <p className="col-md-8 fs-4 text-white">{currentDate}</p>
-            <p className="col-md-8 fs-4 text-white">
-              CHAT GPT generated motivation
-            </p>
-          </div>
+
+      <div className="header-container p-3 text-start bg-dark opacity-75">
+        <div className="container-fluid py-5">
+          <h1 className="display-5 fw-bold text-warning">Welcome User</h1>
+          <p className="col-md-8 fs-4 text-white">{currentDate}</p>
+          <p className="col-md-8 fs-4 text-white">
+            CHAT GPT generated motivation
+          </p>
         </div>
-     
+      </div>
 
       {/* Profile Section */}
-      <div className="profile-container">
+      <div className="profile-container container mt-5">
         <Profile />
       </div>
 
       {/* Add Workout Section */}
-      <div className="add-workout-container">{/* Add log component */}</div>
+      <div className="add-workout-container container mt-5">
+        {/* Add log component */}
+
+        {/* <Log /> */}
+      </div>
 
       {/* Program Schedule Section */}
       <div className="slider-container">
@@ -44,12 +47,12 @@ const Main = () => {
       </div>
 
       {/* Recent Activity History Section */}
-      <div className="history-container">
+      <div className="history-container container mt-5">
         <HistoryList />
       </div>
 
       {/* Analytics Section */}
-      <div className="analytics-container">
+      <div className="analytics-container container mt-5">
         {/* Exercise Tracker */}
         <ChartWorkout />
       </div>
