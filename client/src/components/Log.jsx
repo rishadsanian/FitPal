@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 
 //data from external api so that it won't need api get request
 //can be moved to application data
@@ -37,23 +38,47 @@ const Log = () => {
   const [weightLoad, setWeightLoad] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] =
     useState("");
+
   const [workoutHistory, setWorkoutHistory] = useState([]);
+  const [editingWorkout, setEditingWorkout] = useState(null);
 
   ///////////////////////////////////////////////////////////////WORKOUT HISTORY
+  //Get history
+
+  const fetchWorkoutHistory = async () => {
+    try {
+      const response = await axios.get(`/api/workout/history/4`); // Replace 4 with current user id
+      setWorkoutHistory(response.data);
+    } catch (error) {
+      console.error("Error fetching workout history:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchWorkoutHistory = async () => {
-      try {
-        const response = await axios.get(`/api/workout/history/7`); // Replace with your API endpoint to fetch workout history
-        setWorkoutHistory(response.data);
-      } catch (error) {
-        console.error("Error fetching workout history:", error);
-      }
-    };
-  
     fetchWorkoutHistory();
   }, []);
+  //--------------------------------------------------------------------------//
+  //Edit  workout
+  const handleEditWorkout = (workout) => {
+    setSelectedExercise(workout.exercise_name);
+    setReps(workout.reps);
+    setWeightLoad(workout.resistance);
+    setEditingWorkout(workout);
+  };
+  
+  //--------------------------------------------------------------------------//
+  //Delete workout
+  const handleDeleteWorkout = async (workoutId) => {
+    try {
+      await axios.delete(`/api/workout/${workoutId}`);
+      // update workout history after deleting
+      fetchWorkoutHistory();
+    } catch (error) {
+      console.error("Error deleting workout:", error);
+    }
+  };
 
-///////////////////////////////////////////////////////////////WORKOUT LOG
+  ///////////////////////////////////////////////////////////////WORKOUT LOG
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
     if (muscleGroups.length > 0) {
@@ -95,7 +120,7 @@ const Log = () => {
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
-
+////////////////////////////////////////////////////////////////////////
   // On submit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -222,6 +247,30 @@ const Log = () => {
             </button>
           </div>
         </form>
+      </div>
+      {/* //----------------------------------------------- workout history */}
+      <div className="workout-history">
+        <h2>Workout History (Last 7 Days)</h2>
+        {workoutHistory.map((workout) => (
+          <div key={workout.id} className="workout-entry">
+            <p>
+              <strong>Date:</strong> {workout.timestamp}
+            </p>
+            <p>
+              <strong>Exercise:</strong> {workout.exercise_name}
+            </p>
+            <p>
+              <strong>Reps:</strong> {workout.reps}
+            </p>
+            <p>
+              <strong>Weight Load:</strong> {workout.resistance}
+            </p>
+            <button onClick={() => handleEditWorkout(workout)}>Edit</button>
+            <button onClick={() => handleDeleteWorkout(workout.id)}>
+              Delete
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
