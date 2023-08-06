@@ -33,6 +33,6 @@ app.use("/sessions", sessionsRoutes);
 app.use("/exercises", exercisesRoutes);
 app.use("/api/profile", profileRouteAPI);
 app.use("/workout", logHistoryCurrentDayAPI);
-app.use("/api/chartworkout", chartWorkoutAPI);
+app.use("/api/history", chartWorkoutAPI);
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));

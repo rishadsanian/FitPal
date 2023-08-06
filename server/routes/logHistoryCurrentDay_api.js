@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../configs/db.config");
 
-router.get("/history/:user_id", async (req, res) => {
+router.get(":user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
 
@@ -12,7 +12,7 @@ router.get("/history/:user_id", async (req, res) => {
 
     // Query to fetch current day workout history for the current user and current date
     const queryString = `
-      SELECT * FROM workout_history
+      SELECT * FROM log
       WHERE user_id = $1 AND DATE(timestamp) = $2
       ORDER BY timestamp DESC;
     `;
