@@ -1,7 +1,7 @@
 const Navbar = () => {
   return (
     <div>
-      <nav className="navbar bg-dark navbar-expand-sm" data-bs-theme="dark">
+      <nav className="navbar bg-dark navbar-expand-sm fixed-top" data-bs-theme="dark">
         <div className="container-fluid">
           <a href="/" className="navbar-brand p-3 text-warning" style={{'fontFamily': 'Pacifico', 'fontSize': 30}} >
             FitPal
