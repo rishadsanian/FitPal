@@ -4,8 +4,10 @@
   left: 0;
 }
 
-.overlay-icon {
+.overlay-image {
   position: absolute;
+  height: 175px;
+  width: 175px;
   opacity: 0.5;
   left: 0;
   top: 0;
@@ -13,4 +15,12 @@
   bottom: 0;
   margin: auto;
   border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-icon{
+  font-size: 100px;
 }
