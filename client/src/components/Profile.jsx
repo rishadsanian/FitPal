@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import moment from "moment";
 import "../styles/Profile.css";
 
 //State
 const Profile = () => {
   const [profile, setProfile] = useState({
-    age: 0,
+    date_of_birth: null,
     height: 0,
     weight: 0,
     gender: "Not Selected",
@@ -16,13 +17,14 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/profile/3"); // Replace '3' with user-id from cookies
-        setProfile(response.data);
+        const response = await axios.get("/api/profile/3");
+        const formattedDate = moment(response.data.date_of_birth).format("YYYY-MM-DD"); // Format the date
+        setProfile({ ...response.data, date_of_birth: formattedDate });
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
-
+  
     fetchProfile();
   }, []);
 
@@ -34,7 +36,7 @@ const Profile = () => {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
         user_id: 3, // Replace '1' with user-id from current_user prop
-        age: profile.age,
+        date_of_birth: profile.date_of_birth,
         height: profile.height,
         weight: profile.weight,
         gender: profile.gender,
@@ -65,6 +67,11 @@ const Profile = () => {
     setEditing(false); // Hide the form
   };
 
+  const calculatedAge = profile.date_of_birth
+    ? moment().diff(moment(profile.date_of_birth), "years")
+    : null;
+
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -77,15 +84,15 @@ const Profile = () => {
               {editing ? (
                 <form onSubmit={handleSubmit} className="form-content">
                   <div className="mb-3">
-                    <label htmlFor="age" className="form-label">
-                      Age:
+                    <label htmlFor="date_of_birth" className="form-label">
+                      Date of Birth:
                     </label>
                     <input
-                      type="number"
+                      type="date"
                       className="form-control"
-                      id="age"
-                      name="age"
-                      value={profile.age}
+                      id="date_of_birth"
+                      name="date_of_birth"
+                      value={profile.date_of_birth}
                       onChange={handleChange}
                     />
                   </div>
@@ -154,7 +161,7 @@ const Profile = () => {
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Age</div>
-                      <div className="value">{profile.age}</div>
+                      <div className="value"> {calculatedAge !== null ? `${calculatedAge} years` : "Birth date not entered"}</div>
                     </div>
                   </div>
                   <div className="col">
