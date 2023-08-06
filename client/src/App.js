@@ -19,13 +19,6 @@ import ProgramsPage from './components/ProgramsPage';
 import ChartWorkout from './components/ChartWorkout';
 import ExerciseList from './components/Exercises/ExerciseList';
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> a5ebd4848069d468fd93764109060bfdfea74e76
->>>>>>> main
 function App() {
   return (
     <div className="App">
