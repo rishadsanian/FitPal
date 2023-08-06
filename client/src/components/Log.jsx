@@ -111,7 +111,17 @@ const Log = () => {
         style={{ width: "600px" }}
       >
         <h3 className="text-warning fw-bold">Workout Log</h3>
-        <p className="text-secondary">{selectedExerciseDescription}</p>
+        <p className="text-secondary">
+          {selectedExerciseDescription}
+          </p>
+          <p className="text-secondary" >
+          {selectedExercise && exercises.length > 0 && (
+            <div>
+              <p><strong>Difficulty:</strong> {exercises[0].difficulty.toUpperCase()}</p>
+              <p><strong>Type:</strong> {exercises[0].type.toUpperCase()}</p>
+            </div>
+          )}
+        </p>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
             <label htmlFor="muscleGroup" className="form-label text-secondary">
