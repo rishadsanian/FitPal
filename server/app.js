@@ -32,7 +32,7 @@ app.use("/programs", progamsRoutes);
 app.use("/sessions", sessionsRoutes);
 app.use("/exercises", exercisesRoutes);
 app.use("/api/profile", profileRouteAPI);
-app.use("/workout", logHistoryCurrentDayAPI);
-app.use("/api/history", chartWorkoutAPI);
+app.use("/api/chartworkout/", chartWorkoutAPI);
+app.use("/api/history", logHistoryCurrentDayAPI);
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));

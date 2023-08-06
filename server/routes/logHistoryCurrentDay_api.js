@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../configs/db.config");
 
-router.get(":user_id", async (req, res) => {
+router.get("/:user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
 
