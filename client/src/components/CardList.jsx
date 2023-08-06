@@ -16,7 +16,7 @@ import CardListItem from "./CardListItem";
     <div> 
       <div>
         <h1 className="display-5 pt-3 fw-bold text-white">{props.title}</h1>
-        <div className="px-4 row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+        <div className="px-4 row row-cols-1 row-cols-lg-2 row-cols-xl-3">
           {cards}
         </div>
       </div>    
