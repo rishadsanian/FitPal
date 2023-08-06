@@ -11,7 +11,7 @@
 
 .header-container {
   padding: 20px;
-  animation: fadeIn 1s;
+  animation: fadeIn 2s;
 }
 
 
@@ -19,28 +19,36 @@
 .profile-container {
   margin-top: 20px;
   padding: 20px;
-  animation: fadeIn 1s;
+  animation: fadeIn 2s;
 }
 
  
 .add-workout-container {
   margin-top: 20px;
   padding: 20px;
+  animation: fadeIn 2s;
+
 }
 
 .program-schedule-container {
   margin-top: 20px;
   padding: 20px;
+  animation: fadeIn 2s;
+
 }
 
 .history-container {
   margin-top: 20px;
   padding: 20px;
+  animation: fadeIn 2s;
+
 }
 
 .analytics-container {
   margin-top: 20px;
   padding: 20px;
+  animation: fadeIn 2s;
+
 }
 
 
