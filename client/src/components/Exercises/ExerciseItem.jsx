@@ -10,7 +10,7 @@ const ExerciseItem = (props) => {
         </div>
         <div className="card-body">
           <p className="card-text text-white">
-            {exercise.instructions.substring(0, 200) + `...`}
+            {exercise.instructions || 'No instruction added yet.'}
           </p>
         </div>
         <div className="card-footer d-flex flex-wrap justify-content-between gap-2">
