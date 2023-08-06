@@ -27,7 +27,7 @@ const MUSCLE = {
 const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
-//Set states
+//////////////////////////////////////////////////////////////////Set states
 const Log = () => {
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
@@ -37,7 +37,23 @@ const Log = () => {
   const [weightLoad, setWeightLoad] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] =
     useState("");
+  const [workoutHistory, setWorkoutHistory] = useState([]);
 
+  ///////////////////////////////////////////////////////////////WORKOUT HISTORY
+  useEffect(() => {
+    const fetchWorkoutHistory = async () => {
+      try {
+        const response = await axios.get(`/api/workout/history/7`); // Replace with your API endpoint to fetch workout history
+        setWorkoutHistory(response.data);
+      } catch (error) {
+        console.error("Error fetching workout history:", error);
+      }
+    };
+  
+    fetchWorkoutHistory();
+  }, []);
+
+///////////////////////////////////////////////////////////////WORKOUT LOG
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
     if (muscleGroups.length > 0) {
@@ -111,14 +127,17 @@ const Log = () => {
         style={{ width: "600px" }}
       >
         <h3 className="text-warning fw-bold">Workout Log</h3>
+        <p className="text-secondary">{selectedExerciseDescription}</p>
         <p className="text-secondary">
-          {selectedExerciseDescription}
-          </p>
-          <p className="text-secondary" >
           {selectedExercise && exercises.length > 0 && (
             <div>
-              <p><strong>Difficulty:</strong> {exercises[0].difficulty.toUpperCase()}</p>
-              <p><strong>Type:</strong> {exercises[0].type.toUpperCase()}</p>
+              <p>
+                <strong>Difficulty:</strong>{" "}
+                {exercises[0].difficulty.toUpperCase()}
+              </p>
+              <p>
+                <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+              </p>
             </div>
           )}
         </p>
@@ -137,7 +156,7 @@ const Log = () => {
               <option value="">Select Muscle Group</option>
               {muscleGroups.map((group) => (
                 <option key={group} value={group}>
-                  {MUSCLE[group]} 
+                  {MUSCLE[group]}
                 </option>
               ))}
             </select>
