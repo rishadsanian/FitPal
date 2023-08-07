@@ -69,11 +69,11 @@ const Profile = () => {
     <div className="p-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className="card bg-dark text-white">
-            <div className="card-header">
+          <div className="card bg-dark text-white border border-warning">
+            <div className="card-header border border-warning">
               <h3 className="text-warning fw-bold">Profile</h3>
             </div>
-            <div className="card-body">
+            <div className="card-body p-3">
               {editing ? (
                 <form onSubmit={handleSubmit} className="form-content">
                   <div className="mb-3">
