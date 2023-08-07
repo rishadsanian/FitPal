@@ -181,21 +181,20 @@ const Log = () => {
       >
         <h3 className="text-warning fw-bold">Workout Log</h3>
         <div>
-          <p className="text-secondary"></p>
-          <p className="text-secondary">
+          <div>
             {selectedExercise && exercises.length > 0 && (
-              <div>
-                <p>{selectedExerciseDescription}</p>
-                <p>
+              <>
+                <p className="text-secondary">{selectedExerciseDescription}</p>
+                <p className="text-secondary">
                   <strong>Difficulty:</strong>{" "}
                   {exercises[0].difficulty.toUpperCase()}
                 </p>
-                <p>
+                <p className="text-secondary">
                   <strong>Type:</strong> {exercises[0].type.toUpperCase()}
                 </p>
-              </div>
+              </>
             )}
-          </p>
+          </div>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
@@ -300,7 +299,6 @@ const Log = () => {
           <p>No workouts recorded for today.</p>
         ) : (
           <div>
-            {/* show workout items from sql response */}
             {workoutHistory.map((workout) => (
               <div
                 key={workout.id}
@@ -319,19 +317,21 @@ const Log = () => {
                 <p>
                   <strong>Weight Load:</strong> {workout.resistance}
                 </p>
-                <button
-                  onClick={() => handleEditWorkout(workout)}
-                  disabled={editingWorkout === workout}
-                  className="btn btn-sm btn-warning me-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteWorkout(workout.id)}
-                  className="btn btn-sm btn-warning"
-                >
-                  Delete
-                </button>
+                <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
+                  <button
+                    onClick={() => handleEditWorkout(workout)}
+                    disabled={editingWorkout === workout}
+                    className="btn btn-dark"
+                  >
+                    <i className="far fa-pen-to-square fa-xl text-light"></i>
+                  </button>
+                  <button
+                    onClick={() => handleDeleteWorkout(workout.id)}
+                    className="btn btn-dark"
+                  >
+                    <i className="far fa-trash-can fa-xl text-danger"></i>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
