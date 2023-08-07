@@ -22,11 +22,11 @@ const Login = () => {
           window.sessionStorage.setItem('isAuthenticated', true);
           window.sessionStorage.setItem('userId', res.data.user.id);
           window.sessionStorage.setItem('email', res.data.user.email);
-          window.location('/dashboard');
+          window.location = '/dashboard';
         }
       })
       .catch((e) => {
-        alert('Incorret email / password');
+        alert(e);
       });
   };
 

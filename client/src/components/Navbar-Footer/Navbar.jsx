@@ -65,7 +65,9 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="d-flex gap-3 align-items-center">
-                <ProfileLogo />
+                <ProfileLogo
+                  email={window.sessionStorage.getItem('email')}
+                />
                 <button className="btn btn-warning" onClick={logOut}>
                   Log out
                 </button>
