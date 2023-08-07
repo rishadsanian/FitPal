@@ -1,5 +1,6 @@
 import ExerciseItem from '../Exercises/ExerciseItem';
 import axios from 'axios';
+import { useParams } from 'react-router';
 
 import { useEffect, useState } from 'react';
 
@@ -10,6 +11,10 @@ const SessionDetail = () => {
   const urlPath = window.location.pathname;
   const pathParts = urlPath.split('/');
   const sessionID = pathParts[pathParts.length - 1];
+
+  const { program_id, session_id } = useParams();
+
+  const addPath = `${session_id}/exercises`
 
   useEffect(() => {
     axios
@@ -27,7 +32,7 @@ const SessionDetail = () => {
     <div>
       <div className="d-flex justify-content-between align-items-center p-3 bg-dark opacity-75">
         <h1 className="display-5 fw-bold text-warning">{title}</h1>
-        <a href='/exercises' className='btn btn-outline-warning text-white p-3 rounded-circle'>
+        <a href={addPath} className='btn btn-outline-warning text-white p-3 rounded-circle'>
           <i class="fa-solid fa-plus fa-2xl"></i>
         </a>
       </div>

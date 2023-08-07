@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddSet from "./AddSet"
-
+import "../../styles/AddExerciseModal.css";
+import { useParams } from "react-router";
 const MUSCLE = {
   abdominals: "Abdominals",
   abductors: "Abductors",
@@ -30,12 +31,24 @@ const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 const AddExerciseModal = (props) => {
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE)); 
-  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(MUSCLE[props.muscle]);
+  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
   const [exercises, setExercises] = useState([]);
-  const [selectedExercise, setSelectedExercise] = useState(props.name);
+  const [selectedExercise, setSelectedExercise] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] = useState("");
-  const [setCount, setSetCount] = useState(1);
   const [sets, setSets] = useState([{id: 0, weight: 0, reps: 0}])
+
+  const { session_id } = useParams();
+
+  // setup the initial states
+  const setInitialValues = async () => {
+    setSelectedMuscleGroup(props.muscle); 
+    await fetchExercisesByMuscle();
+    setSelectedExercise(props.name);
+  }
+
+  useEffect(() => {
+    setInitialValues();
+  }, []);
 
   // Fetch exercises from API based on the selected muscle group
   const fetchExercisesByMuscle = async () => {
@@ -48,6 +61,7 @@ const AddExerciseModal = (props) => {
     } catch (error) {
       console.error("Error fetching exercises:", error);
     }
+    console.log(exercises)
   };
   
   useEffect(() => {
@@ -70,13 +84,26 @@ const AddExerciseModal = (props) => {
   };
 
   const handleSubmit = async (e) => {
+    try {
+      // Submit form data to the server
+      const response = await axios.post(`/exercises/session/${session_id}`, {
+        name: selectedExercise,
+        muscle: selectedMuscleGroup,
+        sessionId: session_id,
+        sets
+      });
+
+      // Update the profile state with the newly created/updated profile data
+    } catch (error) {
+      console.error("Error creating session:", error);
+    }
   };
 
   // ADDING AND REMOVING SETS
   const addSet = async (e) => {
     e.preventDefault();
     if(sets.length < MAX_SETS) {
-      setSets(prev => [...prev, {id: sets.length, weight: 0, reps: 0}])
+      setSets(prev => [...prev, {id: sets.length, weight: 10, reps: 10}])
     }
   }
 
@@ -89,17 +116,20 @@ const AddExerciseModal = (props) => {
     }
   }
 
-  const setsToDisplay = sets.map((set) => <AddSet sets={sets} id={set.id} setSets={setSets}/>)
 
   return (
-    <div className="position-fixed top-50 start-50 translate-middle z-1">
+    <div>
+
+    <div className="add-excercise-modal-background">
+    </div>
+    <div className="position-fixed top-50 start-50 translate-middle z-2">
+      
       <div
+        
         className="container bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
         <h3 className="text-warning fw-bold">Add Excercise</h3>
-        <h4>{selectedExercise}</h4>
-        <h4>{selectedMuscleGroup}</h4>
         <p className="text-secondary">{selectedExerciseDescription}</p>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
@@ -145,7 +175,7 @@ const AddExerciseModal = (props) => {
               Sets
             </label>
 
-            {setsToDisplay}
+            {sets.map((set) => <AddSet key={set.id} sets={sets} id={set.id} setSets={setSets}/>)}
 
             {sets.length > 1 ?
               <div className="d-grid pt-3">
@@ -170,6 +200,7 @@ const AddExerciseModal = (props) => {
             </button>
           </div>
         </form>
+      </div>
       </div>
     </div>
   );

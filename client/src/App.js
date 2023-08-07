@@ -44,7 +44,7 @@ function App() {
           />
           <Route path="/test" element={<DevTest />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path='/exercises' element={<ExerciseList />} />
+          <Route path='/programs/:program_id/sessions/:session_id/exercises' element={<ExerciseList />} />
         </Routes>
         <Footer />
       </BrowserRouter>
