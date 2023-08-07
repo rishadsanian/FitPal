@@ -28,15 +28,23 @@ const ExerciseList = () => {
   const [name, setName] = useState('');
   const [muscle, setMuscle] = useState('');
   const [exercises, setExercies] = useState([]);
-  const [userExercises, setUserExercices] = useState([]);
+  const [userExercises, setUserExercises] = useState([]);
   const { session_id } = useParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/exercises/session/${session_id}/exercises`)
-      .then((res) => {
-        setUserExercices(res.data.exercises);
-      });
+    .get(`http://localhost:8080/sets/${session_id}`)
+    .then((res) => {
+      
+      //Set up the list of exercises from sets
+      let exerciseList = [];
+      for(const set of res.data.sets) {
+        if(!exerciseList.map(exercise => exercise.name).includes(set.exercise_name)) {
+          exerciseList.push({name: set.exercise_name})
+        }
+      }
+      setUserExercises(exerciseList)
+    });
   }, []);
 
   const muscleOptions = Object.entries(MUSCLE).map(
@@ -77,10 +85,7 @@ const ExerciseList = () => {
   }, [name, muscle]);
 
   const exercisesListItem = exercises.map((exercise, index) => {
-    if(userExercises.map((exercise) => exercise.name).includes(exercise.name)) {
-      exercise.id = 1;
-    }
-    return <ExerciseItem key={index} exercise={exercise} />;
+    return <ExerciseItem key={index} exercise={exercise} userExercises={userExercises}/>;
   });
 
   return (

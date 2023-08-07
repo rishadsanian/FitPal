@@ -15,6 +15,20 @@ router.get('/program/:id', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  sessions
+    .getSessionById(req.params.id)
+    .then((sessions) => {
+      res.json({ sessions });
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error from get session by session_id: ${e.message}` });
+    });
+});
+
+
 // Route to handle the POST request to /programs
 router.post("/program/:id", async(req, res) => {
   try {

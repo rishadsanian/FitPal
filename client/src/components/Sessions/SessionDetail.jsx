@@ -15,14 +15,8 @@ const SessionDetail = () => {
   const addPath = `${session_id}/exercises`;
 
   useEffect(() => {
-    // axios
-    //   .get(`http://localhost:8080/exercises/session/${session_id}/exercises`)
-    //   .then((res) => {
-    //     setExercises(res.data.exercises);
-    //   });
-
     axios
-      .get(`http://localhost:8080/exercises/session/${session_id}`)
+      .get(`http://localhost:8080/sessions/${session_id}`)
       .then((res) => {
         setTitle(res.data.sessions[0].name);
       });
@@ -46,7 +40,7 @@ const SessionDetail = () => {
   }, []);
 
   const exercisesListItem = exercises.map((exercise, index) => {
-    return <ExerciseItem key={index} exercise={exercise} sets={sets}/>;
+    return <ExerciseItem key={index} exercise={exercise} sets={sets} userExercises={exercises}/>;
   });
   return (
     <div>

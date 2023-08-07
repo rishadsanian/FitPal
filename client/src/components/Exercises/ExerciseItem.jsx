@@ -33,9 +33,11 @@ const ExerciseItem = (props) => {
               {exercise.muscle}
             </h6>
           </div>
-          {!exercise.id ? <button className="btn btn-light" onClick={handleOnClick}>
-             <i className="fa-solid fa-plus fa-xs"></i> 
-          </button>:
+          {!props.userExercises.map((exercise) => exercise.name).includes(exercise.name) ? 
+            <button className="btn btn-light" onClick={handleOnClick}>
+              <i className="fa-solid fa-plus fa-xs"></i> 
+            </button>
+            :
             <button className="btn btn-light" disabled>
               <i className="fa-solid fa-check text-warning"></i> 
             </button>
