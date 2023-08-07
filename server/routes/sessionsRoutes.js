@@ -15,11 +15,27 @@ router.get('/program/:id', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  sessions
+    .getSessionById(req.params.id)
+    .then((sessions) => {
+      res.json({ sessions });
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error from get session by session_id: ${e.message}` });
+    });
+});
+
+
 // Route to handle the POST request to /programs
 router.post("/program/:id", async(req, res) => {
   try {
-    const { name, description, program_id } = req.body;
+    const { name, program_id } = req.body;
 
+
+    console.log(name, program_id)
     // queryString
     const queryString = `
       INSERT INTO Sessions (name, description, program_id)
@@ -29,7 +45,7 @@ router.post("/program/:id", async(req, res) => {
 
     // SQL to db
     const result = await pool.query(queryString, [
-      name, description, program_id
+      name, "", program_id
     ]);
 
     res.status(201).json(result.rows[0]);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import "../styles/Profile.css";
+import "../../styles/Profile.css";
 
 //State
 const Profile = () => {

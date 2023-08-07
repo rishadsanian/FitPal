@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import "../styles/Log.css";
+import "../../styles/Log.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 //data from external api so that it won't need api get request
 //can be moved to application data
@@ -174,28 +177,29 @@ const Log = () => {
   ///////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="log container">
+    <div className="log container m-auto p-auto">
       <div
         className="container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
-        <h3 className="text-warning fw-bold">Workout Log</h3>
+        <h3 className="text-warning fw-bold">Log Workout</h3>
         <div>
-          <p className="text-secondary"></p>
-          <p className="text-secondary">
-            {selectedExercise && exercises.length > 0 && (
-              <div>
-                <p>{selectedExerciseDescription}</p>
-                <p>
-                  <strong>Difficulty:</strong>{" "}
-                  {exercises[0].difficulty.toUpperCase()}
-                </p>
-                <p>
-                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-                </p>
-              </div>
-            )}
-          </p>
+          {/* Exercise Details Section */}
+          {!editingWorkout && selectedExercise && exercises.length > 0 && (
+            <div>
+              <p className="text-secondary">{selectedExerciseDescription}</p>
+              <p className="text-secondary">
+                <strong>Difficulty:</strong>{" "}
+                {exercises[0].difficulty.toUpperCase()}
+              </p>
+              <p className="text-secondary">
+                <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+              </p>
+            </div>
+          )}
+          {editingWorkout && selectedExercise &&(
+            <h4 className="text-secondary">{selectedExercise}</h4>
+          )}
         </div>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
@@ -291,21 +295,15 @@ const Log = () => {
       </div>
       {/* //----------------------------------------------- workout history */}
       {/* Workout History */}
-      <div
-        className="workout-history container addlog bg-dark text-white rounded py-5 px-3"
-        style={{ width: "600px" }}
-      >
-        <h2>Workout History (Today)</h2>
+      {/* Workout History Slider */}
+      <div className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3" style={{ width: "600px" }}>
+        <h3 className="text-warning fw-bold">Daily Workout History</h3>
         {workoutHistory.length === 0 ? (
           <p>No workouts recorded for today.</p>
         ) : (
-          <div>
-            {/* show workout items from sql response */}
+          <Slider dots={true} infinite={false} slidesToShow={1} slidesToScroll={1}>
             {workoutHistory.map((workout) => (
-              <div
-                key={workout.id}
-                className="workout-entry border rounded p-3 mb-2"
-              >
+              <div key={workout.id} className="workout-entry border rounded p-3 mb-2 slick-slide" style={{ margin: "0 10px" }}>
                 <p>
                   <strong>Date:</strong>{" "}
                   {moment(workout.timestamp).format("MMMM D, YYYY")}
@@ -319,22 +317,24 @@ const Log = () => {
                 <p>
                   <strong>Weight Load:</strong> {workout.resistance}
                 </p>
-                <button
-                  onClick={() => handleEditWorkout(workout)}
-                  disabled={editingWorkout === workout}
-                  className="btn btn-sm btn-warning me-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteWorkout(workout.id)}
-                  className="btn btn-sm btn-warning"
-                >
-                  Delete
-                </button>
+                <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
+                  <button
+                    onClick={() => handleEditWorkout(workout)}
+                    disabled={editingWorkout === workout}
+                    className="btn btn-dark"
+                  >
+                    <i className="far fa-pen-to-square fa-xl text-light"></i>
+                  </button>
+                  <button
+                    onClick={() => handleDeleteWorkout(workout.id)}
+                    className="btn btn-dark"
+                  >
+                    <i className="far fa-trash-can fa-xl text-danger"></i>
+                  </button>
+                </div>
               </div>
             ))}
-          </div>
+          </Slider>
         )}
       </div>
     </div>

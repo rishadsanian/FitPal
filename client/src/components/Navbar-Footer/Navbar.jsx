@@ -1,9 +1,26 @@
+import axios from 'axios';
+import ProfileLogo from '../Login-SignUp/ProfileLogo';
+
 const Navbar = () => {
+  const logOut = () => {
+    axios.post('http://localhost:8080/users/logout').then(() => {
+      window.sessionStorage.clear();
+      window.location = '/';
+    });
+  };
+
   return (
     <div>
-      <nav className="navbar bg-dark navbar-expand-sm fixed-top" data-bs-theme="dark">
+      <nav
+        className="navbar bg-dark navbar-expand-sm fixed-top"
+        data-bs-theme="dark"
+      >
         <div className="container-fluid">
-          <a href="/" className="navbar-brand p-3 text-warning" style={{'fontFamily': 'Pacifico', 'fontSize': 30}} >
+          <a
+            href="/"
+            className="navbar-brand p-3 text-warning"
+            style={{ fontFamily: 'Pacifico', fontSize: 30 }}
+          >
             FitPal
           </a>
 
@@ -40,11 +57,22 @@ const Navbar = () => {
               </li>
             </ul>
 
-            <div className="d-flex">
-              <a href="/login" className="btn btn-warning">
-                Log in
-              </a>
-            </div>
+            {!window.sessionStorage.getItem('isAuthenticated') ? (
+              <div className="d-flex">
+                <a href="/login" className="btn btn-warning">
+                  Log in
+                </a>
+              </div>
+            ) : (
+              <div className="d-flex gap-3 align-items-center">
+                <ProfileLogo
+                  email={window.sessionStorage.getItem('email')}
+                />
+                <button className="btn btn-warning" onClick={logOut}>
+                  Log out
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </nav>
