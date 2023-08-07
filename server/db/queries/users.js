@@ -1,11 +1,5 @@
 const db = require('../../configs/db.config');
 
-const getAllUsers = () => {
-  return db.query('SELECT * FROM users;').then((data) => {
-    return data.rows;
-  });
-};
-
 const getUserById = (id) => {
   return db
     .query('SELECT * FROM users; WHERE id = $1', [id])
@@ -14,4 +8,23 @@ const getUserById = (id) => {
     });
 };
 
-module.exports = { getAllUsers, getUserById };
+const getUserByEmail = (email) => {
+  return db
+    .query('SELECT * FROM users; WHERE email = $1', [email])
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
+const createUser = (user) => {
+  const queryString = `INSERT INTO users(email, password) VALUES ($1, $2) RETURNING *;`;
+  const values = [user.email, user.password];
+  return db
+    .query(queryString, values)
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((e) => console.log(e));
+};
+
+module.exports = { getUserByEmail, getUserById, createUser };
