@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddSet from "./AddSet"
-import "../../styles/AddExerciseModal.css";
+import "../../styles/Modals.css";
 import { useParams, useNavigate } from "react-router-dom";
 
 const MUSCLE = {
@@ -131,9 +131,9 @@ const AddExerciseModal = (props) => {
   return (
     <div>
 
-    <div className="add-excercise-modal-background">
+    <div className="modal-background">
     </div>
-    <div className="position-fixed top-50 start-50 translate-middle z-2">
+    <div className="modal-foreground position-fixed top-50 start-50 translate-middle">
       
       <div
         

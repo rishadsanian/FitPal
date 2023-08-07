@@ -2,9 +2,12 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import DeletePopupModal from './DeletePopupModal';
 
 function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
+  const [newSessionName, setNewSessionName] = useState("");
+  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +18,35 @@ function ProgramListItem(props) {
       });
   }, []);
 
+  
+
+  const createNewSession = async (event, program_id) => {
+      try {
+        
+        // Submit form data to the server
+        const response = await axios.post(`/sessions/program/${program_id}`, {
+          name: newSessionName,
+          program_id
+        });
+
+        // Update the profile state with the newly created/updated profile data
+      } catch (error) {
+        console.error("Error creating session:", error);
+      }
+  };
+
+  const deleteProgram = async (programId) => {
+    try {
+      // Submit form data to the server
+      await axios.post(`/programs/${programId}/delete`);
+      //reload the page
+      navigate(0);
+    } catch (error) {
+      console.error("Error deleting program:", error);
+    }
+  }
+  
+  // navigation for the session
   const navigateToSession = (session) => {
     navigate(`/programs/${props.programId}/sessions/${session.id}`);
   }
@@ -47,10 +79,12 @@ function ProgramListItem(props) {
                 type="text"
                 className="form-control bg-secondary opacity-75 text-white"
                 placeholder="Add session"
+                onChange={(e) => setNewSessionName(e.target.value)}
               />
               <button
                 className="input-group-text btn btn-warning"
                 id="addon-wrapping"
+                onClick={(e) => createNewSession(e, props.programId)}
               >
                 <i class="fa-solid fa-plus"></i>
               </button>
@@ -69,11 +103,18 @@ function ProgramListItem(props) {
           <button className="btn btn-dark">
             <i class="fa-regular fa-pen-to-square fa-xl text-light"></i>
           </button>
-          <button className="btn btn-dark">
+          <button className="btn btn-dark" onClick={() => setDisplayDeleteModal(true)}>
             <i class="fa-regular fa-trash-can fa-xl text-danger"></i>
           </button>
         </div>
       </div>
+      {displayDeleteModal && 
+      <DeletePopupModal 
+        modalToggle={setDisplayDeleteModal} 
+        modalAction={deleteProgram}
+        modalParams={props.programId}
+        message={`Deleting program ${props.name}`}
+      />}
     </div>
   );
 }
