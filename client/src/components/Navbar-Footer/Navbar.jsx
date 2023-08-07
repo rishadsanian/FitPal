@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ProfileLogo from '../Login-SignUp/ProfileLogo';
+import { useEffect } from 'react';
 
 const Navbar = () => {
   const logOut = () => {
