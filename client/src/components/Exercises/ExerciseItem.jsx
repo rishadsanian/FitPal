@@ -3,7 +3,6 @@ import AddExerciseModal from "./AddExerciseModal"
 import { useParams } from 'react-router';
 import axios from 'axios';
 const ExerciseItem = (props) => {
-  const [icon, setIcon] = useState("fa-solid fa-plus fa-xs");
   const [modalDisplay, setModalDisplay] = useState(false);
   const [sets, setSets] = useState([]);
   const exercise = props.exercise;
@@ -22,7 +21,6 @@ const ExerciseItem = (props) => {
   }, [])
 
   const handleOnClick = () => {
-    setIcon("fa-solid fa-check text-warning");
     
     setModalDisplay(true)
     //find exercise by name in exercises table
@@ -48,7 +46,7 @@ const ExerciseItem = (props) => {
             </h6>
           </div>
           {!exercise.id ? <button className="btn btn-light" onClick={handleOnClick}>
-             <i className={icon}></i> 
+             <i className="fa-solid fa-plus fa-xs"></i> 
           </button>:
             <button className="btn btn-light" disabled>
               <i className="fa-solid fa-check text-warning"></i> 
@@ -65,7 +63,7 @@ const ExerciseItem = (props) => {
         </div>}
       </div>
       {/* Create the excercise modal */}
-      {modalDisplay && <AddExerciseModal name={exercise.name} muscle={exercise.muscle} />}
+      {modalDisplay && <AddExerciseModal name={exercise.name} muscle={exercise.muscle} setModalDisplay={setModalDisplay}/>}
       
     </div>
   );

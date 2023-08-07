@@ -84,6 +84,11 @@ const AddExerciseModal = (props) => {
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
+
+  const closeModal = async (e) => {
+    e.preventDefault();
+    props.setModalDisplay(false);
+  };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,10 +137,16 @@ const AddExerciseModal = (props) => {
       
       <div
         
-        className="container bg-dark text-white rounded py-5 px-3"
+        className="container bg-dark text-white rounded py-3 px-3"
         style={{ width: "600px" }}
       >
-        <h3 className="text-warning fw-bold">Add Excercise</h3>
+        <div className="d-flex justify-content-between pb-3">
+          <h3 className="text-warning fw-bold">Add Excercise</h3>
+          <button className="btn btn-light end-0" onClick={closeModal}>
+            <i className="fa-solid fa-x text-warning"></i> 
+          </button>
+        </div>
+        
         <p className="text-secondary">{selectedExerciseDescription}</p>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
