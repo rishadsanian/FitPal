@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS profile CASCADE;
 CREATE TABLE Profile (
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  age INTEGER,
+  date_of_birth DATE,
   height FLOAT,
   weight FLOAT,
   gender VARCHAR(10),

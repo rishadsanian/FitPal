@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable camelcase */
 const pool = require("../configs/db.config");
 const express = require("express");
@@ -6,11 +7,11 @@ const router = express.Router();
 // Route to handle the POST request to /profile
 router.post("/", async(req, res) => {
   try {
-    const { user_id, age, height, weight, gender } = req.body;
+    const { user_id, date_of_birth, height, weight, gender } = req.body;
 
     // queryString
     const queryString = `
-      INSERT INTO Profile (user_id, age, height, weight, gender)
+      INSERT INTO Profile (user_id, date_of_birth, height, weight, gender)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `;
@@ -18,7 +19,7 @@ router.post("/", async(req, res) => {
     // SQL to db
     const result = await pool.query(queryString, [
       user_id,
-      age,
+      date_of_birth,
       height,
       weight,
       gender,
