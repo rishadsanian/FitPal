@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect} from "react";
 
 import TitleImage from "../TitleCards/TitleImage";
-import HistoryList from "../HistoryList";
+import HistoryList from "../Dashboard/HistoryList";
 import CardList from "../CardList";
 import CreateProgram from "../Programs/CreateProgram";
 import CreateSession from "../Sessions/CreateSession";

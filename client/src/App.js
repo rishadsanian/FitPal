@@ -14,9 +14,9 @@ import SessionDetail from './components/Sessions/SessionDetail';
 import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
-import Profile from './components/Profile';
+import Profile from './components/Dashboard/Profile';
 import ProgramsPage from './components/Pages/ProgramsPage';
-import ChartWorkout from './components/ChartWorkout';
+import ChartWorkout from './components/Dashboard/ChartWorkout';
 import ExerciseList from './components/Exercises/ExerciseList';
 
 function App() {
