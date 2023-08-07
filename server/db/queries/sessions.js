@@ -12,4 +12,16 @@ const getAllSessionByProgramId = (id) => {
     });
 };
 
-module.exports = { getAllSessionByProgramId };
+const getSessionById = (id) => {
+  return db
+    .query(
+      `SELECT * FROM sessions
+      WHERE id = $1;`,
+      [id]
+    )
+    .then((data) => {
+      return data.rows;
+    });
+};
+
+module.exports = { getAllSessionByProgramId, getSessionById };

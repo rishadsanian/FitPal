@@ -22,4 +22,12 @@ const getProgramBySessionId = (id) => {
     });
 };
 
-module.exports = { getAllPrograms, getProgramById, getProgramBySessionId };
+const deleteProgramById = (id) => {
+  return db
+    .query('DELETE FROM programs WHERE id = $1;', [id])
+    .then((data) => {
+      return data.rows;
+    });
+}
+
+module.exports = { getAllPrograms, getProgramById, getProgramBySessionId, deleteProgramById };

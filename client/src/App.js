@@ -6,17 +6,17 @@ import Main from "./components/Pages/Main";
 import ProgramDetail from './components/Programs/ProgramDetail';
 import Login from './components/Login-SignUp/Login';
 import LandingPage from './components/Pages/LandingPage';
-import Log from './components/Log';
-import DevTest from './components/DevTest';
+import Log from './components/Pages/Log';
+import DevTest from './components/Pages/DevTest';
 
 
 import SessionDetail from './components/Sessions/SessionDetail';
 import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
-import Profile from './components/Profile';
+import Profile from './components/Dashboard/Profile';
 import ProgramsPage from './components/Pages/ProgramsPage';
-import ChartWorkout from './components/ChartWorkout';
+import ChartWorkout from './components/Dashboard/ChartWorkout';
 import ExerciseList from './components/Exercises/ExerciseList';
 
 function App() {

@@ -32,7 +32,7 @@ router.get('/:id', (req, res) => {
 router.post("/", async(req, res) => {
   try {
     const { name, description } = req.body;
-    
+
     // queryString
     const queryString = `
       INSERT INTO Programs (name, description)
@@ -50,6 +50,17 @@ router.post("/", async(req, res) => {
     console.error("Error inserting program data:", error);
     res.status(500).json({ error: "Error inserting program data" });
   }
+});
+
+// Route to handle the POST request to /programs/:id/delete
+router.post('/:id/delete', (req, res) => {
+  programs
+    .deleteProgramById(req.params.id)
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error deleting program by id: ${e.message}` });
+    });
 });
 
 module.exports = router;

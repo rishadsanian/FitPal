@@ -10,10 +10,12 @@ const cors = require('cors');
 const session = require('express-session');
 
 //routes import
+
 const logRoute = require('./routes/logRoute.js');
 const profileRoute = require('./routes/profileRoute');
 const progamsRoutes = require('./routes/programsRoutes');
 const sessionsRoutes = require('./routes/sessionsRoutes');
+const setsRoutes = require("./routes/setsRoute");
 const exercisesRoutes = require('./routes/exercisesRoutes');
 const profileRouteAPI = require('./routes/profileRoute_api');
 const chartWorkoutAPI = require('./routes/chartWorkoutRoute_api');
@@ -48,6 +50,7 @@ app.use('/profile', profileRoute);
 app.use('/api/profile', profileRouteAPI);
 app.use('/api/chartworkout', chartWorkoutAPI);
 app.use('/users', userRoutes);
+app.use("/sets", setsRoutes);
 app.use("/api/history", logHistoryCurrentDayAPI);
 app.use("/update/log", logUpdateRoute);
 app.use("/delete/log", logDeleteRoute);
