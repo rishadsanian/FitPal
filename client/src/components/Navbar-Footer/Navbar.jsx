@@ -19,7 +19,7 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collpase navbar-collapse" id="navbar">
+          <div className="collapse navbar-collapse" id="navbar">
             <ul className="navbar-nav me-auto my-2 my-lg-0">
               <li className="nav-item">
                 <a href="/dashboard" className="nav-link">
@@ -41,7 +41,7 @@ const Navbar = () => {
             </ul>
 
             <div className="d-flex">
-              <a href="/login" className="btn btn-light">
+              <a href="/login" className="btn btn-warning">
                 Log in
               </a>
             </div>

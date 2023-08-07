@@ -1,14 +1,12 @@
 import React from "react";
 import { useState, useEffect} from "react";
 
-import TitleImage from "./TitleImage";
+import TitleImage from "./TitleCards/TitleImage";
 import HistoryList from "./HistoryList";
 import CardList from "./CardList";
 import CreateProgram from "./Programs/CreateProgram";
 import CreateSession from "./Sessions/CreateSession";
 import axios from "axios";
-
-import programs from "../mocks/programData";
 
  function DevTest(){
   const [programs, setPrograms] = useState([]);

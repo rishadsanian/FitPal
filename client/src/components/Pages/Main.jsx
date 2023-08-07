@@ -1,22 +1,25 @@
 import React from "react";
 import { Box, Slide } from "@mui/material";
 import moment from "moment";
-import SliderComponent from "./Slider";
-import Profile from "./Profile";
-import HistoryList from "./HistoryList";
-import Log from "./Log";
-import ChartWorkout from "./ChartWorkout";
+import SliderComponent from "../Slider";
+import Profile from "../Profile";
+import HistoryList from "../HistoryList";
+import Log from "../Log";
+import ChartWorkout from "../ChartWorkout";
+import TitleImage from "../TitleCards/TitleImage";
 
-//landing logged in page comment
 
-//data visualization
+//Dashboard/logged in main page
 
 
 const Main = () => {
+  //formated date for display
   const currentDate = moment().format('dddd, MMMM D');
 
   return (
     <div>
+      <TitleImage icon={"fa-solid fa-table-columns"}/>
+
       {/* Header */}
       <div className="p-3 text-start bg-dark opacity-75">
         <div className="container-fluid py-5">
@@ -35,19 +38,16 @@ const Main = () => {
       {/* Add Workout Section */}
       <div className="container mt-5">
         {/* <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3> */}
-        {/* Add your "Add Workout" content here */}
       </div>
 
       {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
       <div className="container mt-5">
         <SliderComponent/>
-        {/* Add your "Program Schedule" content here */}
       </div>
 
       {/* Recent Activity History Section */}
       <div className="container mt-5">
         {/* <h3 className="display-5 fw-bold text-warning">Recent Activity History</h3> */}
-        {/* Add your "Recent Activity History" content here */}
         <HistoryList/>
       </div>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/HeroImage.css";
+import "../../styles/HeroImage.css";
 
  function HeroImage(){
   return (

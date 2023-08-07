@@ -14,9 +14,10 @@ import moment from "moment";
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = ({ userId }) => {
+  //state
   const [workoutData, setWorkoutData] = useState([]);
+  //useref needed to fix canvas clash bug
   const chartRef = useRef(null);
-  // const userId = 3
 
   // get data from db
   useEffect(() => {
@@ -35,30 +36,33 @@ const ChartWorkout = ({ userId }) => {
   //extract and process needed data
   const processWorkoutData = () => {
     const currentDate = moment();
+    //Process data for one week
     const startDate = moment(currentDate).startOf("isoWeek");
     const endDate = moment(currentDate).endOf("isoWeek");
-  
+    //Filter log data for one week
     const workoutsThisWeek = workoutData.filter((workout) => {
       const workoutDate = moment(workout.timestamp);
       return workoutDate.isBetween(startDate, endDate, null, "[]");
     });
-  
+    //
     const exercisesPerDay = new Array(7).fill(0);
-  
+
     workoutsThisWeek.forEach((workout) => {
       const workoutDate = moment(workout.timestamp);
       const dayIndex = workoutDate.isoWeekday() - 1; // 0 for Monday, 1 for Tuesday, ..., 6 for Sunday
       exercisesPerDay[dayIndex]++;
     });
-  
+
     return exercisesPerDay;
   };
 
   useEffect(() => {
     // Initialize or update the chart when the workoutData changes
     if (!chartRef.current) {
-      // Create the chart for the first time
+      // Create chart for the first time
       const ctx = document.getElementById("workoutChart").getContext("2d");
+      ctx.canvas.height = 400;
+      //Configurations for chart
       const chartConfig = {
         type: "bar",
         data: {
@@ -74,6 +78,8 @@ const ChartWorkout = ({ userId }) => {
           ],
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
           scales: {
             y: {
               beginAtZero: true,
@@ -97,32 +103,35 @@ const ChartWorkout = ({ userId }) => {
     slidesToScroll: 1,
   };
 
+  //TODO show data on dates for whcih workouts are listed
   const currentDate = moment();
-    const startDate = moment(currentDate).startOf("isoWeek").format("MMM D, YYYY");
-    const endDate = moment(currentDate).endOf("isoWeek").format("MMM D, YYYY");
+  const startDate = moment(currentDate)
+    .startOf("isoWeek")
+    .format("MMM D, YYYY");
+  const endDate = moment(currentDate).endOf("isoWeek").format("MMM D, YYYY");
 
-    return (
-      <div className="chart-container">
-        <div className="card bg-dark opacity-75 weekly-tracker-card mb-3">
-          <div className="card-body">
-            <h3 className="text-warning fw-bold weekly-tracker-header">
-              Weekly Exercise Tracker
-            </h3>
-            <Slider {...sliderSettings} className="slider-container">
-              <div>
-                <div className="chart-wrapper">
-                  {/* Put the canvas inside a div with fixed width of 400px */}
-                  <div className="chart-container-400">
-                    <canvas id="workoutChart" />
-                  </div>
+  return (
+    <div className="chart-container">
+      <div className="card bg-dark opacity-75 weekly-tracker-card mb-3">
+        <div className="card-body">
+          <h3 className="text-warning fw-bold weekly-tracker-header">
+            Weekly Exercise Tracker
+          </h3>
+          <Slider {...sliderSettings} className="slider-container">
+            <div>
+              <div className="chart-wrapper">
+                {/* Put the canvas inside a div with fixed width of 400px */}
+                <div className="chart-container-400">
+                  <canvas id="workoutChart" height="100%" width="100%" />
                 </div>
               </div>
-              {/* Add more weeks here if desired */}
-            </Slider>
-          </div>
+            </div>
+            {/* Add more weeks here if desired */}
+          </Slider>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default ChartWorkout;
