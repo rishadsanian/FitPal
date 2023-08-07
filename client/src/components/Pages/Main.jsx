@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Slide } from "@mui/material";
 import moment from "moment";
-import SliderComponent from "./Slider";
-import Profile from "./Profile";
-import HistoryList from "./HistoryList";
-import Log from "./Log";
-import ChartWorkout from "./ChartWorkout";
-import TitleImage from "./TitleImage";
+import SliderComponent from "../Slider";
+import Profile from "../Profile";
+import HistoryList from "../HistoryList";
+import Log from "../Log";
+import ChartWorkout from "../ChartWorkout";
+import TitleImage from "../TitleCards/TitleImage";
 
 
 //Dashboard/logged in main page

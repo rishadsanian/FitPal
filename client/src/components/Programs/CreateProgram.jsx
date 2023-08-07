@@ -18,17 +18,18 @@ const CreateProgram = () => {
   };
   
   const handleSubmit = async (event) => {
+    if(newProgram.name && newProgram.description){
+      try {
+        // Submit form data to the server
+        const response = await axios.post("/programs", {
+          name: newProgram.name,
+          description: newProgram.description
+        });
 
-    try {
-      // Submit form data to the server
-      const response = await axios.post("/programs", {
-        name: newProgram.name,
-        description: newProgram.description
-      });
-
-      // Update the profile state with the newly created/updated profile data
-    } catch (error) {
-      console.error("Error creating/updating profile:", error);
+        // Update the profile state with the newly created/updated profile data
+      } catch (error) {
+        console.error("Error creating/updating profile:", error);
+      }
     }
   };
 

@@ -22,18 +22,20 @@ const CreateSession = () => {
   };
   
   const handleSubmit = async (event) => {
+    if(newSession.name && newSession.description) {
+      try {
+        
+        // Submit form data to the server
+        const response = await axios.post(`/sessions/program/${program_id}`, {
+          name: newSession.name,
+          description: newSession.description,
+          program_id 
+        });
 
-    try {
-      // Submit form data to the server
-      const response = await axios.post(`/sessions/program/${program_id}`, {
-        name: newSession.name,
-        description: newSession.description,
-        program_id 
-      });
-
-      // Update the profile state with the newly created/updated profile data
-    } catch (error) {
-      console.error("Error creating session:", error);
+        // Update the profile state with the newly created/updated profile data
+      } catch (error) {
+        console.error("Error creating session:", error);
+      }
     }
   };
 
