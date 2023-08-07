@@ -197,7 +197,7 @@ const Log = () => {
               </p>
             </div>
           )}
-          {editingWorkout && selectedExercise &&(
+          {editingWorkout && selectedExercise && (
             <h4 className="text-secondary">{selectedExercise}</h4>
           )}
         </div>
@@ -296,14 +296,29 @@ const Log = () => {
       {/* //----------------------------------------------- workout history */}
       {/* Workout History */}
       {/* Workout History Slider */}
-      <div className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3" style={{ width: "600px" }}>
+      <div
+        className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
+        style={{ width: "600px" }}
+      >
         <h3 className="text-warning fw-bold">Daily Workout History</h3>
         {workoutHistory.length === 0 ? (
           <p>No workouts recorded for today.</p>
         ) : (
-          <Slider dots={true} infinite={false} slidesToShow={1} slidesToScroll={1}>
+          <Slider
+            dots={true}
+            infinite={false}
+            slidesToShow={1}
+            slidesToScroll={1}
+          >
             {workoutHistory.map((workout) => (
-              <div key={workout.id} className="workout-entry border rounded p-3 mb-2 slick-slide" style={{ margin: "0 10px" }}>
+              <div
+                key={workout.id}
+                className="workout-entry border rounded p-3 mb-2 slick-slide"
+                style={{
+                  margin: "0 10px",
+                  backgroundColor: "rgba(52, 58, 64, 0.75)",
+                }}
+              >
                 <p>
                   <strong>Date:</strong>{" "}
                   {moment(workout.timestamp).format("MMMM D, YYYY")}
