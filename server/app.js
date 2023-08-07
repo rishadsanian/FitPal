@@ -5,7 +5,6 @@ const { ENVIROMENT, PORT } = process.env;
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const session = require('express-session');
@@ -28,7 +27,6 @@ app.use(express.json());
 
 // established session
 app.use(cookieParser('secretcode'));
-app.use(passport.initialize());
 app.use(
   session({
     secret: 'secretcode',
