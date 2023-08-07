@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/TitleImage.css";
+import "../../styles/TitleImage.css";
 
  function TitleImage(props){
   const icon = `overlay-icon ${props.icon}`; 

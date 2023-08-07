@@ -2,10 +2,10 @@ import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar-Footer/Navbar';
 
-import Main from "./components/Main";
+import Main from "./components/Pages/Main";
 import ProgramDetail from './components/Programs/ProgramDetail';
 import Login from './components/Login-SignUp/Login';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/Pages/LandingPage';
 import Log from './components/Log';
 import DevTest from './components/DevTest';
 
@@ -15,7 +15,7 @@ import ExerciseLog from './components/Exercises/ExerciseLog';
 import Footer from './components/Navbar-Footer/Footer';
 import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Profile';
-import ProgramsPage from './components/ProgramsPage';
+import ProgramsPage from './components/Pages/ProgramsPage';
 import ChartWorkout from './components/ChartWorkout';
 import ExerciseList from './components/Exercises/ExerciseList';
 

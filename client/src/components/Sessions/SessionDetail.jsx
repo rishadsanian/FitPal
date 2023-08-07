@@ -8,17 +8,14 @@ const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
 
-  const urlPath = window.location.pathname;
-  const pathParts = urlPath.split('/');
-  const sessionID = pathParts[pathParts.length - 1];
-
-  const { program_id, session_id } = useParams();
+  // get the session id from the url
+  const { session_id } = useParams();
 
   const addPath = `${session_id}/exercises`
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/exercises/session/${sessionID}`)
+      .get(`http://localhost:8080/exercises/session/${session_id}`)
       .then((res) => {
         setExercises(res.data.exercises);
         setTitle(res.data.exercises[0].session);

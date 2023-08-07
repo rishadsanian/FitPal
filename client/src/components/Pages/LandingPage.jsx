@@ -1,9 +1,9 @@
 import React from "react";
 import { Box }from '@mui/material';
-import HeroImage from "./HeroImage";
-import LandingCard from "./LandingCard";
+import HeroImage from "../TitleCards/HeroImage";
+import LandingCard from "../LandingCard";
 
-import featureData from "../mocks/featureData";
+import featureData from "../../mocks/featureData";
 
 export default function LandingPage(){
   const features = featureData.map(data =>

@@ -54,6 +54,8 @@ router.post("/session/:id", async(req, res) => {
     } else { // if it does use its id
       exerciseId = result1.rows[0].id;
     }
+
+    // create a row in the session exercise table based on results
     const intertToSesExQueryString = `
       INSERT INTO sessions_exercises (session_id, exercise_id)
       VALUES ($1, $2)
@@ -65,6 +67,7 @@ router.post("/session/:id", async(req, res) => {
       sessionId, exerciseId]
     );
 
+    // Add sets to the session exercise table
     for(let set of sets) {
       const intertToSetsString = `
       INSERT INTO sets (session_id, exercise_id, reps, resistant) 
@@ -73,7 +76,7 @@ router.post("/session/:id", async(req, res) => {
       `;
       
       // SQL to db
-      const result2 = await pool.query(intertToSetsString, [
+      const result3 = await pool.query(intertToSetsString, [
         sessionId, exerciseId, set.reps, set.weight]
       );
     }

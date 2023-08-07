@@ -7,7 +7,7 @@ import React from "react";
       <div className="d-flex justify-content-between align-items-center">
         <span className="text-light">Yesterday</span>
         <button className="btn btn-dark">
-          <i class="fa-solid fa-circle-info"></i>
+          <i className="fa-solid fa-circle-info"></i>
         </button>
       </div>
     </li>

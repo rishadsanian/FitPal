@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import CardList from './CardList';
-import CreateProgram from './Programs/CreateProgram';
+import CardList from '../CardList';
+import CreateProgram from '../Programs/CreateProgram';
 import axios from 'axios';
 
 function ProgramsPage() {
