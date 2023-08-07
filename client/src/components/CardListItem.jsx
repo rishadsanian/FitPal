@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -13,13 +15,21 @@ function ProgramListItem(props) {
       });
   }, []);
 
+  const navigateToSession = (session) => {
+    navigate(`/programs/${props.programId}/sessions/${session.id}`);
+  }
+
   const sessionsListItem = sessions.map((session) => {
     return (
       <tr>
-        <td>{session.name}</td>
+          <td role="button" onClick={() => navigateToSession(session)}>
+            {session.name}
+          </td>
       </tr>
     );
   });
+
+
 
   return (
     <div className="col my-3">

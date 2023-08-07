@@ -27,7 +27,7 @@ const SessionDetail = () => {
       });
 
     return;
-  });
+  }, []);
 
   const exercisesListItem = exercises.map((exercise, index) => {
     return <ExerciseItem key={index} exercise={exercise} />;

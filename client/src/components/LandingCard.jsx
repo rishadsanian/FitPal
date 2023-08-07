@@ -9,7 +9,7 @@ import React from "react";
 
   return (
     <div>
-      <div className={cardColorClass} style={{ padding: 0}}>
+      <div className={cardColorClass} style={{ padding: 0 }}>
         <div className={cardBodyClass} >
           <div className="col-md-4">
             <img src={props.image_source} className="img-fluid" style={{minHeight: "100%"}}alt="..." />
