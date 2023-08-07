@@ -15,12 +15,14 @@ const Main = () => {
   const currentDate = moment().format('dddd, MMMM D');
 
   return (
-    <div className="main-container">
+    // delete main-container
+    <div className=""> 
       <TitleImage icon={'fa-solid fa-table-columns'} />
 
+      {/* delete header-container */}
       <div className="row row-cols-1 row-cols-md-2">
         {/* Header */}
-        <div className="header-container p-3 text-start bg-dark col col-md-12 col-lg-4">
+        <div className="p-3 text-start bg-dark col col-md-12 col-lg-4">
           <div className="container-fluid py-5">
             <h1 className="display-5 fw-bold text-warning">
               Welcome User
@@ -33,31 +35,27 @@ const Main = () => {
         </div>
 
         {/* Profile Section */}
-        <div className="profile-container col col-md-12 col-lg-8">
+        {/* delete profile-container */}
+        <div className="col col-md-12 col-lg-8">
           <Profile />
         </div>
       </div>
 
       {/* Add Workout Section */}
       <div className="container">
-        {/* <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3> */}
+      <Log/>
       </div>
 
       {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
-      <div className="slider-container bg-dark opacity-75 p-5">
+      {/* delete slider-container */}
+      <div className="bg-dark opacity-75 p-5">
         <h1 className="display-5 fw-light text-warning">
           Program Schedule
         </h1>
         <SliderComponent />
       </div>
 
-      {/* Recent Activity History Section */}
-
-      <div className="history-container container mt-5">
-        <HistoryList />
-      </div>
-
-      {/* Analytics Section */}
+         {/* Analytics Section */}
       <div className="container mt-5">
         {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
 
