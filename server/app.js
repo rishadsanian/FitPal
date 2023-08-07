@@ -18,6 +18,9 @@ const setsRoutes = require("./routes/setsRoute");
 const exercisesRoutes = require("./routes/exercisesRoutes");
 const profileRouteAPI = require("./routes/profileRoute_api");
 const chartWorkoutAPI = require("./routes/chartWorkoutRoute_api");
+const logHistoryCurrentDayAPI = require("./routes/logHistoryCurrentDay_api");
+const logUpdateRoute = require("./routes/logUpdateRoute");
+const logDeleteRoute = require("./routes/logDeleteRoute");
 
 const app = express();
 // middleware setup
@@ -26,13 +29,16 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
+app.use("/log", logRoute);
+app.use("/profile", profileRoute);
 app.use("/programs", progamsRoutes);
 app.use("/sessions", sessionsRoutes);
 app.use("/exercises", exercisesRoutes);
 app.use("/sets", setsRoutes);
-app.use("/log", logRoute);
-app.use("/profile", profileRoute);
 app.use("/api/profile", profileRouteAPI);
 app.use("/api/chartworkout", chartWorkoutAPI);
+app.use("/api/history", logHistoryCurrentDayAPI);
+app.use("/update/log", logUpdateRoute);
+app.use("/delete/log", logDeleteRoute);
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));

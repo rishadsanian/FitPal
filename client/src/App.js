@@ -32,7 +32,7 @@ function App() {
           <Route path="/programs/:program_id" element={<ProgramDetail />} />
           <Route path="/programs/log" element={<Log />} />
           <Route path="/profile/1" element={<Profile />} />
-          <Route path="/chartworkout/3" element={<ChartWorkout />} />
+          <Route path="/chartworkout/4" element={<ChartWorkout />} />
 
           <Route
             path="/programs/:program_id/sessions/:session_id"
