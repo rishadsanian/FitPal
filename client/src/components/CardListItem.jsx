@@ -21,6 +21,10 @@ function ProgramListItem(props) {
   
 
   const createNewSession = async (event, program_id) => {
+    // prevent the default form action
+    event.preventDefault();
+    // check if the session name field is not blank
+    if(newSessionName) {
       try {
         
         // Submit form data to the server
@@ -28,19 +32,19 @@ function ProgramListItem(props) {
           name: newSessionName,
           program_id
         });
-
+        // reload the page after the session is created
+        window.location.reload();
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error("Error creating session:", error);
       }
+    }
   };
 
   const deleteProgram = async (programId) => {
     try {
       // Submit form data to the server
       await axios.post(`/programs/${programId}/delete`);
-      //reload the page
-      navigate(0);
     } catch (error) {
       console.error("Error deleting program:", error);
     }
@@ -60,8 +64,6 @@ function ProgramListItem(props) {
       </tr>
     );
   });
-
-
 
   return (
     <div className="col my-3">

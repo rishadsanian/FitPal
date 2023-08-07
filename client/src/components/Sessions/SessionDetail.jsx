@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
+  const [sets, setSets] = useState([]);
 
   // get the session id from the url
   const { session_id } = useParams();
@@ -14,11 +15,11 @@ const SessionDetail = () => {
   const addPath = `${session_id}/exercises`;
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/exercises/session/${session_id}/exercises`)
-      .then((res) => {
-        setExercises(res.data.exercises);
-      });
+    // axios
+    //   .get(`http://localhost:8080/exercises/session/${session_id}/exercises`)
+    //   .then((res) => {
+    //     setExercises(res.data.exercises);
+    //   });
 
     axios
       .get(`http://localhost:8080/exercises/session/${session_id}`)
@@ -26,11 +27,26 @@ const SessionDetail = () => {
         setTitle(res.data.sessions[0].name);
       });
 
+    axios
+      .get(`http://localhost:8080/sets/${session_id}`)
+      .then((res) => {
+        
+        //Set up the list of exercises from sets
+        let exerciseList = [];
+        for(const set of res.data.sets) {
+          if(!exerciseList.map(exercise => exercise.name).includes(set.exercise_name)) {
+            exerciseList.push({name: set.exercise_name})
+          }
+        }
+        setSets(res.data.sets);
+        setExercises(exerciseList)
+    });
+
     return;
   }, []);
 
   const exercisesListItem = exercises.map((exercise, index) => {
-    return <ExerciseItem key={index} exercise={exercise} />;
+    return <ExerciseItem key={index} exercise={exercise} sets={sets}/>;
   });
   return (
     <div>

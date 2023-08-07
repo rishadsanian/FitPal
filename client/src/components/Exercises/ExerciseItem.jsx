@@ -4,21 +4,7 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 const ExerciseItem = (props) => {
   const [modalDisplay, setModalDisplay] = useState(false);
-  const [sets, setSets] = useState([]);
   const exercise = props.exercise;
-  
-  const {session_id} = useParams();
-
-  useEffect(() => {
-    if(exercise.id){
-      axios
-        .get(`http://localhost:8080/sets/${session_id}/${exercise.id}`)
-        .then((res) => {
-          setSets(res.data.sets);
-          console.log(sets)
-      });
-    }
-  }, [])
 
   const handleOnClick = () => {
     
@@ -60,8 +46,8 @@ const ExerciseItem = (props) => {
             {exercise.instructions || 'No instruction added yet.'}
           </p>
         </div>
-        {sets.length &&< div className="card-footer d-flex flex-wrap justify-content-between gap-2">
-          {sets.map((set) => <span className="badge text-bg-light">{set.resistant}lbs/{set.reps}</span>)}
+        {props.sets &&< div className="card-footer d-flex flex-wrap justify-content-between gap-2">
+          {props.sets.filter((set) => set.exercise_name === exercise.name).map((set) => <span className="badge text-bg-light">{set.resistant}lbs/{set.reps}</span>)}
         </div>}
       </div>
       {/* Create the excercise modal */}

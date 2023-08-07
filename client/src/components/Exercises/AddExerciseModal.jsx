@@ -94,20 +94,17 @@ const AddExerciseModal = (props) => {
     e.preventDefault();
     try {
       // Submit form data to the server
-      const response = await axios.post(`/exercises/session/${session_id}`, {
-        name: selectedExercise,
-        muscle: selectedMuscleGroup,
+      await axios.post(`/exercises/session/${session_id}`, {
         sessionId: session_id,
-        sets
+        sets,
+        exerciseName: selectedExercise
       });
-
-      
+      console.log(program_id, session_id)
+      // Navigate back to correct page after submitting
       navigate(`/programs/${program_id}/sessions/${session_id}`);
     } catch (error) {
       console.error("Error creating session:", error);
     }
-
-    
   };
 
   // ADDING AND REMOVING SETS
