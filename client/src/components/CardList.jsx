@@ -5,6 +5,7 @@ function CardList(props) {
   const cards = props.cardData.map((card) => (
     <CardListItem
       key={card.id}
+      programId={card.id}
       name={card.name}
       description={card.description}
       path={props.path}
