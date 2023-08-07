@@ -67,16 +67,16 @@ router.post("/session/:id", async(req, res) => {
       sessionId, exerciseId]
     );
 
-    // Add sets to the session exercise table
+    // Add sets to the sets table
     for(let set of sets) {
-      const intertToSetsString = `
+      const insertToSetsString = `
       INSERT INTO sets (session_id, exercise_id, reps, resistant) 
       VALUES ($1, $2, $3, $4)
       RETURNING *;
       `;
       
       // SQL to db
-      const result3 = await pool.query(intertToSetsString, [
+      const result3 = await pool.query(insertToSetsString, [
         sessionId, exerciseId, set.reps, set.weight]
       );
     }
