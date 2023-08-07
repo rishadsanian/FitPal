@@ -17,11 +17,11 @@ const Main = () => {
   const currentDate = moment().format('dddd, MMMM D');
 
   return (
-    <div>
+    <div className="bg">
       <TitleImage icon={"fa-solid fa-table-columns"}/>
 
       {/* Header */}
-      <div className="p-3 text-start bg-dark opacity-75">
+      <div className="p-3 text-start bg-dark">
         <div className="container-fluid py-5">
           <h1 className="display-5 fw-bold text-warning">Welcome User</h1>
           <p className="col-md-8 fs-4 text-white">{currentDate}</p>
@@ -30,18 +30,19 @@ const Main = () => {
       </div>
 
       {/* Profile Section */}
-      <div className="container mt-5">
+      <div className="bg-dark opacity-75">
         {/* <h3 className="display-5 fw-bold text-warning">Profile</h3> */}
         <Profile/>
       </div>
 
       {/* Add Workout Section */}
-      <div className="container mt-5">
+      <div className="container">
         {/* <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3> */}
       </div>
 
       {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
-      <div className="container mt-5">
+      <div className="bg-dark p-5">
+        <h1 className="display-5 fw-light text-warning">Program Schedule</h1>
         <SliderComponent/>
       </div>
 
