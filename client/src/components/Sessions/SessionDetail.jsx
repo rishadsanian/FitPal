@@ -18,7 +18,9 @@ const SessionDetail = () => {
       .get(`http://localhost:8080/exercises/session/${session_id}`)
       .then((res) => {
         setExercises(res.data.exercises);
-        setTitle(res.data.exercises[0].session);
+        if(res.data.exercises.length){
+          setTitle(res.data.exercises[0].session);
+        }
       });
   }, []);
 
