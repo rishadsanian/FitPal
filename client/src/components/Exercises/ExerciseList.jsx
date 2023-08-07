@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExerciseItem from './ExerciseItem';
-
+import { useParams } from 'react-router';
 
 const MUSCLE = {
   abdominals: 'Abdominals',
@@ -28,6 +28,18 @@ const ExerciseList = () => {
   const [name, setName] = useState('');
   const [muscle, setMuscle] = useState('');
   const [exercises, setExercies] = useState([]);
+  const [userExercises, setUserExercises] = useState([]);
+
+   // get the session id from the url
+   const { session_id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/exercises/session/${session_id}/exercises`)
+      .then((res) => {
+        setUserExercises(res.data.exercises);
+      });
+  }, []);
 
   const muscleOptions = Object.entries(MUSCLE).map(
     ([muscle, description]) => (
@@ -67,6 +79,9 @@ const ExerciseList = () => {
   }, [name, muscle]);
 
   const exercisesListItem = exercises.map((exercise, index) => {
+    if(userExercises.map(exercise => exercise.name).includes(exercise.name)){
+      exercise.id=1;
+    }
     return <ExerciseItem key={index} exercise={exercise} />;
   });
 

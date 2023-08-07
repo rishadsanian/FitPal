@@ -32,9 +32,9 @@ const ExerciseItem = (props) => {
               {exercise.muscle}
             </h6>
           </div>
-          <button className="btn btn-light" onClick={handleOnClick}>
+          {!exercise.id && <button className="btn btn-light" onClick={handleOnClick}>
              <i className={icon}></i>
-          </button>
+          </button>}
         </div>
         <div className="card-body">
           <p className="card-text text-white">
