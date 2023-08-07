@@ -93,13 +93,14 @@ const AddExerciseModal = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Submit form data to the server
-      await axios.post(`/exercises/session/${session_id}`, {
-        sessionId: session_id,
-        sets,
-        exerciseName: selectedExercise
-      });
-      console.log(program_id, session_id)
+      // Submit set data to server
+      for(const set of sets) {
+        await axios.post(`/sets/session/${session_id}`, {
+          sessionId: session_id,
+          set,
+          exerciseName: selectedExercise
+        });
+      }
       // Navigate back to correct page after submitting
       navigate(`/programs/${program_id}/sessions/${session_id}`);
     } catch (error) {

@@ -82,6 +82,7 @@ router.post("/session/:id", async(req, res) => {
     // );
 
     // Add sets to the sets table
+
     for(const set of sets) {
       const insertToSetsString = `
       INSERT INTO sets (session_id, reps, resistant, exercise_name) 
@@ -93,9 +94,10 @@ router.post("/session/:id", async(req, res) => {
       const result3 = await pool.query(insertToSetsString, [
         sessionId, set.reps, set.weight, exerciseName ]
       );
+      
     }
 
-    //res.status(201).json(result2.rows[0]);
+    res.status(201).json("sets added");
   } catch (error) {
     console.error("Error inserting program data:", error);
     res.status(500).json({ error: "Error inserting program data" });
