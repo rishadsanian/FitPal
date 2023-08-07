@@ -174,27 +174,29 @@ const Log = () => {
   ///////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="log container">
+    <div className="log container m-auto p-auto">
       <div
         className="container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
-        <h3 className="text-warning fw-bold">Workout Log</h3>
+        <h3 className="text-warning fw-bold">Log Workout</h3>
         <div>
-          <div>
-            {selectedExercise && exercises.length > 0 && (
-              <>
-                <p className="text-secondary">{selectedExerciseDescription}</p>
-                <p className="text-secondary">
-                  <strong>Difficulty:</strong>{" "}
-                  {exercises[0].difficulty.toUpperCase()}
-                </p>
-                <p className="text-secondary">
-                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-                </p>
-              </>
-            )}
-          </div>
+          {/* Exercise Details Section */}
+          {!editingWorkout && selectedExercise && exercises.length > 0 && (
+            <div>
+              <p className="text-secondary">{selectedExerciseDescription}</p>
+              <p className="text-secondary">
+                <strong>Difficulty:</strong>{" "}
+                {exercises[0].difficulty.toUpperCase()}
+              </p>
+              <p className="text-secondary">
+                <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+              </p>
+            </div>
+          )}
+          {editingWorkout && selectedExercise &&(
+            <h4 className="text-secondary">{selectedExercise}</h4>
+          )}
         </div>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
@@ -294,7 +296,7 @@ const Log = () => {
         className="workout-history container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
-        <h2>Workout History (Today)</h2>
+       <h3 class="text-warning fw-bold">Daily Workout History</h3>
         {workoutHistory.length === 0 ? (
           <p>No workouts recorded for today.</p>
         ) : (
@@ -302,7 +304,7 @@ const Log = () => {
             {workoutHistory.map((workout) => (
               <div
                 key={workout.id}
-                className="workout-entry border rounded p-3 mb-2"
+                className="workout-entry border  rounded p-3 mb-2"
               >
                 <p>
                   <strong>Date:</strong>{" "}
