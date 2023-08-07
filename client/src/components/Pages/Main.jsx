@@ -43,7 +43,7 @@ const Main = () => {
 
       {/* Add Workout Section */}
       <div className="container">
-        {/* <h3 className="display-5 fw-bold text-warning">Add Workout |  Today's Session</h3> */}
+      <Log/>
       </div>
 
       {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
@@ -55,13 +55,7 @@ const Main = () => {
         <SliderComponent />
       </div>
 
-      {/* Recent Activity History Section */}
-
-      <div className="history-container container mt-5">
-        <HistoryList />
-      </div>
-
-      {/* Analytics Section */}
+         {/* Analytics Section */}
       <div className="container mt-5">
         {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
 
