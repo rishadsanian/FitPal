@@ -42,10 +42,10 @@ const ExerciseItem = (props) => {
           </p>
         </div>
         <div className="card-footer d-flex flex-wrap justify-content-between gap-2">
-          <span className="badge text-bg-light">45lsb/8</span>
-          <span className="badge text-bg-light">70lsb/8</span>
-          <span className="badge text-bg-light">80lsb/6</span>
-          <span className="badge text-bg-light">90lsb/5</span>
+          <span className="badge text-bg-light">45lbs/8</span>
+          <span className="badge text-bg-light">70lbs/8</span>
+          <span className="badge text-bg-light">80lbs/6</span>
+          <span className="badge text-bg-light">90lbs/5</span>
         </div>
       </div>
       {/* Create the excercise modal */}

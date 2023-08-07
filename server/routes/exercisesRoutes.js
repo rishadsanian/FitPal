@@ -1,6 +1,33 @@
 const router = require('express').Router();
 const exercises = require('../db/queries/exercises');
+const sessions = require('../db/queries/sessions');
 const pool = require("../configs/db.config");
+
+router.get('/session/:id/exercises', (req, res) => {
+  exercises
+    .getExercisesBySessionId(req.params.id)
+    .then((exercises) => {
+      res.json({ exercises });
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error from get exercise by session_id: ${e.message}` });
+    });
+});
+
+router.get('/session/:id', (req, res) => {
+  sessions
+    .getSessionById(req.params.id)
+    .then((sessions) => {
+      res.json({ sessions });
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error from get session by session_id: ${e.message}` });
+    });
+});
 
 router.get('/session/:id', (req, res) => {
   exercises

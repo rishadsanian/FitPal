@@ -15,12 +15,15 @@ const SessionDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/exercises/session/${session_id}`)
+      .get(`http://localhost:8080/exercises/session/${session_id}/exercises`)
       .then((res) => {
         setExercises(res.data.exercises);
-        if(res.data.exercises.length){
-          setTitle(res.data.exercises[0].session);
-        }
+      });
+
+    axios
+      .get(`http://localhost:8080/exercises/session/${session_id}`)
+      .then((res) => {
+        setTitle(res.data.sessions[0].name);
       });
   }, []);
 
