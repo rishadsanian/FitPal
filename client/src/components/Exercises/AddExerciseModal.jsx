@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddSet from "./AddSet"
 import "../../styles/AddExerciseModal.css";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
+
 const MUSCLE = {
   abdominals: "Abdominals",
   abductors: "Abductors",
@@ -36,8 +37,9 @@ const AddExerciseModal = (props) => {
   const [selectedExercise, setSelectedExercise] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] = useState("");
   const [sets, setSets] = useState([{id: 0, weight: 0, reps: 0}])
-
-  const { session_id } = useParams();
+  
+  const navigate = useNavigate();
+  const { program_id, session_id } = useParams();
 
   // setup the initial states
   const setInitialValues = async () => {
@@ -82,8 +84,9 @@ const AddExerciseModal = (props) => {
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
-
+  
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       // Submit form data to the server
       const response = await axios.post(`/exercises/session/${session_id}`, {
@@ -93,10 +96,13 @@ const AddExerciseModal = (props) => {
         sets
       });
 
-      // Update the profile state with the newly created/updated profile data
+      
+      navigate(`/programs/${program_id}/sessions/${session_id}`);
     } catch (error) {
       console.error("Error creating session:", error);
     }
+
+    
   };
 
   // ADDING AND REMOVING SETS
