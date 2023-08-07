@@ -31,11 +31,11 @@ const SignUp = () => {
 
     axios
       .post('http://localhost:8080/users/', user)
-      .then((res, err) => {
+      .then((res) => {
         if (res.status === 200) {
           window.sessionStorage.setItem('isAuthenticated', true);
           window.sessionStorage.setItem('userId', res.data.result.id);
-          window.sessionStorage.setItem('email', res.data.user.email);
+          window.sessionStorage.setItem('email', res.data.result.email);
           window.location="/dashboard"
         }
       })
