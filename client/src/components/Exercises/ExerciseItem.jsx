@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddExerciseModal from "./AddExerciseModal"
-
+import { useParams } from 'react-router';
+import axios from 'axios';
 const ExerciseItem = (props) => {
   const [icon, setIcon] = useState("fa-solid fa-plus fa-xs");
   const [modalDisplay, setModalDisplay] = useState(false);
+  const [sets, setSets] = useState([]);
   const exercise = props.exercise;
+  
+  const {session_id} = useParams();
+
+  useEffect(() => {
+    if(exercise.id){
+      axios
+        .get(`http://localhost:8080/sets/${session_id}/${exercise.id}`)
+        .then((res) => {
+          setSets(res.data.sets);
+          console.log(sets)
+      });
+    }
+  }, [])
 
   const handleOnClick = () => {
     setIcon("fa-solid fa-check text-warning");
@@ -32,21 +47,22 @@ const ExerciseItem = (props) => {
               {exercise.muscle}
             </h6>
           </div>
-          {!exercise.id && <button className="btn btn-light" onClick={handleOnClick}>
-             <i className={icon}></i>
-          </button>}
+          {!exercise.id ? <button className="btn btn-light" onClick={handleOnClick}>
+             <i className={icon}></i> 
+          </button>:
+            <button className="btn btn-light" disabled>
+              <i className="fa-solid fa-check text-warning"></i> 
+            </button>
+          }
         </div>
         <div className="card-body">
           <p className="card-text text-white">
             {exercise.instructions || 'No instruction added yet.'}
           </p>
         </div>
-        <div className="card-footer d-flex flex-wrap justify-content-between gap-2">
-          <span className="badge text-bg-light">45lbs/8</span>
-          <span className="badge text-bg-light">70lbs/8</span>
-          <span className="badge text-bg-light">80lbs/6</span>
-          <span className="badge text-bg-light">90lbs/5</span>
-        </div>
+        {sets.length &&< div className="card-footer d-flex flex-wrap justify-content-between gap-2">
+          {sets.map((set) => <span className="badge text-bg-light">{set.resistant}lbs/{set.reps}</span>)}
+        </div>}
       </div>
       {/* Create the excercise modal */}
       {modalDisplay && <AddExerciseModal name={exercise.name} muscle={exercise.muscle} />}

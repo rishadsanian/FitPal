@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const sets = require('../db/queries/sets');
 
-router.get('/sets/:session_id/exercise_id', (req, res) => {
+router.get('/:session_id/:exercise_id', (req, res) => {
   sets
     .getSetBySessionAndExerciseId(req.params.session_id, req.params.exercise_id)
     .then((sets) => {
