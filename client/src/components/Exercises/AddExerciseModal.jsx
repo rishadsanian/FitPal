@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddSet from "./AddSet"
-import "../../styles/AddExerciseModal.css";
+import "../../styles/Modals.css";
 import { useParams, useNavigate } from "react-router-dom";
 
 const MUSCLE = {
@@ -84,25 +84,28 @@ const AddExerciseModal = (props) => {
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
   };
+
+  const closeModal = async (e) => {
+    e.preventDefault();
+    props.setModalDisplay(false);
+  };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Submit form data to the server
-      const response = await axios.post(`/exercises/session/${session_id}`, {
-        name: selectedExercise,
-        muscle: selectedMuscleGroup,
-        sessionId: session_id,
-        sets
-      });
-
-      
+      // Submit set data to server
+      for(const set of sets) {
+        await axios.post(`/sets/session/${session_id}`, {
+          sessionId: session_id,
+          set,
+          exerciseName: selectedExercise
+        });
+      }
+      // Navigate back to correct page after submitting
       navigate(`/programs/${program_id}/sessions/${session_id}`);
     } catch (error) {
       console.error("Error creating session:", error);
     }
-
-    
   };
 
   // ADDING AND REMOVING SETS
@@ -126,16 +129,22 @@ const AddExerciseModal = (props) => {
   return (
     <div>
 
-    <div className="add-excercise-modal-background">
+    <div className="modal-background">
     </div>
-    <div className="position-fixed top-50 start-50 translate-middle z-2">
+    <div className="modal-foreground position-fixed top-50 start-50 translate-middle">
       
       <div
         
-        className="container bg-dark text-white rounded py-5 px-3"
+        className="container bg-dark text-white rounded py-3 px-3"
         style={{ width: "600px" }}
       >
-        <h3 className="text-warning fw-bold">Add Excercise</h3>
+        <div className="d-flex justify-content-between pb-3">
+          <h3 className="text-warning fw-bold">Add Excercise</h3>
+          <button className="btn btn-light end-0" onClick={closeModal}>
+            <i className="fa-solid fa-x text-warning"></i> 
+          </button>
+        </div>
+        
         <p className="text-secondary">{selectedExerciseDescription}</p>
         <form onSubmit={handleSubmit}>
           <div className="text-start">
