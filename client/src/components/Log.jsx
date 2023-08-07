@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import "../styles/Log.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 //data from external api so that it won't need api get request
 //can be moved to application data
@@ -292,20 +295,15 @@ const Log = () => {
       </div>
       {/* //----------------------------------------------- workout history */}
       {/* Workout History */}
-      <div
-        className="workout-history container addlog bg-dark text-white rounded py-5 px-3"
-        style={{ width: "600px" }}
-      >
-       <h3 class="text-warning fw-bold">Daily Workout History</h3>
+      {/* Workout History Slider */}
+      <div className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3" style={{ width: "600px" }}>
+        <h3 className="text-warning fw-bold">Daily Workout History</h3>
         {workoutHistory.length === 0 ? (
           <p>No workouts recorded for today.</p>
         ) : (
-          <div>
+          <Slider dots={true} infinite={false} slidesToShow={1} slidesToScroll={1}>
             {workoutHistory.map((workout) => (
-              <div
-                key={workout.id}
-                className="workout-entry border  rounded p-3 mb-2"
-              >
+              <div key={workout.id} className="workout-entry border rounded p-3 mb-2 slick-slide" style={{ margin: "0 10px" }}>
                 <p>
                   <strong>Date:</strong>{" "}
                   {moment(workout.timestamp).format("MMMM D, YYYY")}
@@ -336,7 +334,7 @@ const Log = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </Slider>
         )}
       </div>
     </div>
