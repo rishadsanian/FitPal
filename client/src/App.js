@@ -6,7 +6,7 @@ import Main from "./components/Pages/Main";
 import ProgramDetail from './components/Programs/ProgramDetail';
 import Login from './components/Login-SignUp/Login';
 import LandingPage from './components/Pages/LandingPage';
-import Log from './components/Log';
+import Log from './components/Pages/Log';
 import DevTest from './components/Pages/DevTest';
 
 

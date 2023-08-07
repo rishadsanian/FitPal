@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Slide } from '@mui/material';
 import moment from 'moment';
-import SliderComponent from '../Slider';
+import SliderComponent from '../Dashboard/Slider';
 import Profile from '../Dashboard/Profile';
 import HistoryList from '../Dashboard/HistoryList';
-import Log from '../Log';
+import Log from './Log';
 import ChartWorkout from '../Dashboard/ChartWorkout';
 import TitleImage from '../TitleCards/TitleImage';
 import '../../styles/Main.css';

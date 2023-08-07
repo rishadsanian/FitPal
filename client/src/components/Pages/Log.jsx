@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import "../styles/Log.css";
+import "../../styles/Log.css";
 
 //data from external api so that it won't need api get request
 //can be moved to application data
