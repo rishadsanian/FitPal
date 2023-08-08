@@ -37,7 +37,8 @@ function App() {
 
           {/* Page Routes */}
           <Route path="/dashboard" element={authenticated ? <Main /> : <Login/>} />
-          <Route path="/programs" element={authenticated ? <ProgramsPage/> : <Login/>} />
+          <Route path="/programs" element={authenticated ? <ProgramsPage userView={true}/> : <ProgramsPage userView={false}/>} 
+          />
           <Route path="/programs/:program_id" element={authenticated ? <ProgramDetail /> :<Login/>} />
           <Route path="/programs/log" element={authenticated ? <Log /> : <Login/>} />
           <Route path="/profile/1" element={authenticated ? <Profile /> : <Login/>} />

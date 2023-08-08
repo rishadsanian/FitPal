@@ -8,7 +8,7 @@ const getAllPrograms = () => {
 
 const getAllProgramsByUserId = (id) => {
   return db
-    .query('SELECT * FROM programs WHERE user_id = $1;', [id])
+    .query('SELECT * FROM programs WHERE user_id = $1 ORDER BY id;', [id])
     .then((data) => {
       return data.rows;
     });

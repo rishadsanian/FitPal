@@ -73,7 +73,6 @@ const ExerciseList = () => {
     if (muscle) {
       params.muscle = muscle;
     }
-
     axios
       .get(urlAPI, {
         headers: { 'X-Api-Key': API },
