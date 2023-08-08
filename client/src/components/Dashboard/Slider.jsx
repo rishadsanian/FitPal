@@ -89,7 +89,8 @@ const SliderComponent = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: slidesToShow,
+    slidesToShow: 3,
+    // slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
 
