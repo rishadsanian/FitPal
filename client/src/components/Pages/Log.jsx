@@ -67,6 +67,24 @@ const Log = () => {
   useEffect(() => {
     fetchWorkoutHistory();
   }, []);
+  //////////////////////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    fetchWorkoutHistory();
+  }, []); // Initial fetch
+  
+  useEffect(() => {
+    fetchWorkoutHistory();
+  }, [currentDate]);
+
+
+
+
+
+
+
+
+
   //--------------------------------------------------------------------------//
   //Edit  workout
   const handleEditWorkout = (workout) => {
@@ -79,6 +97,7 @@ const Log = () => {
   };
 
   //--------------------------------------------------------------------------//
+  //Cancel Edit
   const handleCancelEdit = () => {
     setSelectedExercise("");
     setReps("");
@@ -97,6 +116,7 @@ const Log = () => {
     }
   };
   //--------------------------------------------------------------------------//
+  // Slider handle to change to show different days
   const handleSliderChange = (index) => {
     const newDate = moment().subtract(index, "days").format("YYYY-MM-DD");
     setCurrentDate(newDate);
@@ -111,7 +131,7 @@ const Log = () => {
       setSelectedMuscleGroup(firstMuscleGroup);
     }
   }, [muscleGroups]);
-
+//--------------------------------------------------------------------------//
   useEffect(() => {
     // Fetch exercises from API based on the selected muscle group
     const fetchExercisesByMuscle = async () => {
@@ -128,7 +148,7 @@ const Log = () => {
 
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
-
+//---------------------------------------------------------------------------//
   useEffect(() => {
     //load exercise from api response and account for any changes
     const exercise = exercises.find((ex) => ex.name === selectedExercise);
@@ -140,6 +160,7 @@ const Log = () => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
   };
+////////////////////////////////////////////////////////////////////////////////
 
   //set selected exercise to updated selection
   const handleExerciseSelection = (e) => {
@@ -333,7 +354,7 @@ const Log = () => {
                     <tr>
                       <td colSpan="2">
                         <p className="fw-bold">
-                          {moment(workoutHistory[0]?.timestamp).format(
+                          {moment(currentDate).format(
                             "MMMM D, YYYY"
                           )}
                         </p>
