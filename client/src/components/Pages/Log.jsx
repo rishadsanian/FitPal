@@ -57,7 +57,7 @@ const Log = () => {
           date: currentDate, // Send the current date as a parameter for SQL
         },
       }); // Replace 4 with the current user id
-      
+
       // Check if response contains data
       if (response.data.length === 0) {
         // If no data, set workoutHistory to an array with a placeholder entry
@@ -73,14 +73,14 @@ const Log = () => {
         // If there's data, set workoutHistory with the response data
         setWorkoutHistory(response.data);
       }
-      
+
       console.log("fetchworkouthistory:", workoutHistory);
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
   };
-  
+
   //--------------------------------------------------------------------------//
   useEffect(() => {
     fetchWorkoutHistory();
@@ -339,7 +339,6 @@ const Log = () => {
           slidesToShow={1}
           slidesToScroll={1}
           afterChange={(index) => handleSliderChange(index)}
-          
         >
           {workoutHistory
             .filter((workout) =>
@@ -376,10 +375,11 @@ const Log = () => {
                             </div>
                             <div>
                               <div className="badge text-bg-warning me-2">
-                                {workout.resistance} lbs
+                                {workout.resistance > 0 &&
+                                  `${workout.resistance} lbs`}
                               </div>
                               <div className="badge text-bg-warning">
-                                {workout.reps} Reps
+                                {workout.reps > 0 && `${workout.reps} Reps`}
                               </div>
                             </div>
                           </div>
@@ -391,12 +391,13 @@ const Log = () => {
                             >
                               <i className="far fa-pen-to-square fa-xl text-light"></i>
                             </button>
+                            {workout.reps > 0 && 
                             <button
                               onClick={() => handleDeleteWorkout(workout.id)}
                               className="btn btn-dark"
                             >
                               <i className="far fa-trash-can fa-xl text-danger"></i>
-                            </button>
+                            </button>}
                           </div>
                         </td>
                       </tr>
