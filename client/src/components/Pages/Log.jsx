@@ -57,7 +57,11 @@ const Log = () => {
           date: currentDate, // Send the current date as a parameter for sql
         },
       }); // Replace 4 with current user id
-      setWorkoutHistory(response.data);
+      if (response.data.length === 0) {
+        setCurrentDate(moment().format("YYYY-MM-DD")); // Set current date to today if no history found
+      } else {
+        setWorkoutHistory(response.data);
+      }
       console.log("fetchworkouthistory:", workoutHistory);
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
@@ -309,25 +313,25 @@ const Log = () => {
       </div>
       {/* //----------------------------------------------- workout history */}
       {/* Workout History */}
-      {/* Workout History Slider */}
       <div
         className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
-      >
+        >
         <h3 className="text-warning fw-bold">Daily Workout History</h3>
-        {workoutHistory.length === 0 ? (
-          <p>No workouts recorded for  {moment(currentDate).format("MMMM D, YYYY")}.</p>
-        ) : (
-          <Slider
-            dots={true}
-            infinite={true}
-            slidesToShow={1}
-            slidesToScroll={1}
-            afterChange={(index) => handleSliderChange(index)}
-          >
-            {workoutHistory
-              .filter(workout => moment(workout.timestamp).isSame(currentDate, 'day'))
-              .map((workout) => (
+        {/* Workout History Slider */}
+
+        <Slider
+          dots={true}
+          infinite={false}
+          slidesToShow={1}
+          slidesToScroll={1}
+          afterChange={(index) => handleSliderChange(index)}
+        >
+          {workoutHistory
+            .filter((workout) =>
+              moment(workout.timestamp).isSame(currentDate, "day")
+            )
+            .map((workout) => (
               <div
                 key={workout.id}
                 className="workout-entry border rounded p-3 mb-2 slick-slide"
@@ -352,7 +356,10 @@ const Log = () => {
                           className="d-flex flex-row  justify-content-between"
                         >
                           <div className="d-flex flex-column justify-content-start align-items-start">
-                            <div>{workout.exercise_name}{moment(workout.timestamp).format("MMMM D, YYYY")}</div>
+                            <div>
+                              {workout.exercise_name}
+                              {moment(workout.timestamp).format("MMMM D, YYYY")}
+                            </div>
                             <div>
                               <div className="badge text-bg-warning me-2">
                                 {workout.resistance} lbs
@@ -384,8 +391,7 @@ const Log = () => {
                 </table>
               </div>
             ))}
-          </Slider>
-        )}
+        </Slider>
       </div>
     </div>
   );
