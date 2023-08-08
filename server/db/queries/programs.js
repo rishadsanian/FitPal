@@ -6,6 +6,14 @@ const getAllPrograms = () => {
   });
 };
 
+const getAllProgramsByUserId = (id) => {
+  return db
+    .query('SELECT * FROM programs WHERE user_id = $1;', [id])
+    .then((data) => {
+      return data.rows;
+    });
+};
+
 const getProgramById = (id) => {
   return db
     .query('SELECT * FROM programs WHERE id = $1;', [id])
@@ -30,4 +38,4 @@ const deleteProgramById = (id) => {
     });
 }
 
-module.exports = { getAllPrograms, getProgramById, getProgramBySessionId, deleteProgramById };
+module.exports = { getAllPrograms, getAllProgramsByUserId, getProgramById, getProgramBySessionId, deleteProgramById };

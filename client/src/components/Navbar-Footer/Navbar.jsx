@@ -59,11 +59,15 @@ const Navbar = () => {
             </ul>
 
             {!window.sessionStorage.getItem('isAuthenticated') ? (
-              <div className="d-flex">
+              <div className="d-flex gap-3 align-items-center">
                 <a href="/login" className="btn btn-warning">
                   Log in
                 </a>
+                <a href="/signup" className="btn btn-warning">
+                  Register
+                </a>
               </div>
+              
             ) : (
               <div className="d-flex gap-3 align-items-center">
                 <ProfileLogo

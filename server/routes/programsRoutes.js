@@ -15,6 +15,19 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/users/:id', (req, res) => {
+  programs
+    .getAllProgramsByUserId(req.params.id)
+    .then((program) => {
+      res.json({ program });
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error from get all programs: ${e.message}` });
+    });
+});
+
 router.get('/:id', (req, res) => {
   programs
     .getProgramById(req.params.id)

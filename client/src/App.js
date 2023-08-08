@@ -1,5 +1,6 @@
 import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import Navbar from './components/Navbar-Footer/Navbar';
 
 import Main from "./components/Pages/Main";
@@ -20,31 +21,33 @@ import ChartWorkout from './components/Dashboard/ChartWorkout';
 import ExerciseList from './components/Exercises/ExerciseList';
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(window.sessionStorage.getItem('isAuthenticated'));
+
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <Routes>
+          {/* Home Page */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Main />} />
-          <Route path="/programs" element={<ProgramsPage/>} />
-          <Route path="/programs/:program_id" element={<ProgramDetail />} />
-          <Route path="/programs/log" element={<Log />} />
-          <Route path="/profile/1" element={<Profile />} />
-          <Route path="/chartworkout/4" element={<ChartWorkout />} />
+          
+          {/* Login and signup routes */}
+          <Route path="/login" element={authenticated ? <Main /> : <Login /> } />
+          <Route path="/signup" element={authenticated ? <Main /> : <SignUp />} />
 
-          <Route
-            path="/programs/:program_id/sessions/:session_id"
-            element={<SessionDetail />}
-          />
-          <Route
-            path="/programs/1/sessions/1/exercise/1"
-            element={<ExerciseLog />}
-          />
+          {/* Page Routes */}
+          <Route path="/dashboard" element={authenticated ? <Main /> : <Login/>} />
+          <Route path="/programs" element={authenticated ? <ProgramsPage/> : <Login/>} />
+          <Route path="/programs/:program_id" element={authenticated ? <ProgramDetail /> :<Login/>} />
+          <Route path="/programs/log" element={authenticated ? <Log /> : <Login/>} />
+          <Route path="/profile/1" element={authenticated ? <Profile /> : <Login/>} />
+          <Route path="/chartworkout/4" element={authenticated ? <ChartWorkout /> : <Login/>} />
+          <Route path="/programs/:program_id/sessions/:session_id" element={authenticated ? <SessionDetail /> : <Login/>} />
+          <Route path="/programs/1/sessions/1/exercise/1" element={authenticated ? <ExerciseLog /> : <Login/>} />
+          <Route path='/programs/:program_id/sessions/:session_id/exercises' element={authenticated ? <ExerciseList /> : <Login/>} />
+          
+          {/* Testing Routes */}
           <Route path="/test" element={<DevTest />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path='/programs/:program_id/sessions/:session_id/exercises' element={<ExerciseList />} />
         </Routes>
         <Footer />
       </BrowserRouter>
