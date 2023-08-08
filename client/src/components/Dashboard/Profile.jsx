@@ -10,8 +10,8 @@ const Profile = () => {
     height: 0,
     weight: 0,
     gender: "Not Selected",
-    fitness_level: "Not Selected", 
-    goal: "Not Set", 
+    fitness_level: "Not Selected",
+    goal: "Not Set",
   });
   const [editing, setEditing] = useState(false); // State to track whether the form is in editing mode or not
 
@@ -20,13 +20,15 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get("/api/profile/4");
-        const formattedDate = moment(response.data.date_of_birth).format("YYYY-MM-DD"); // Format the date
+        const formattedDate = moment(response.data.date_of_birth).format(
+          "YYYY-MM-DD"
+        ); // Format the date
         setProfile({ ...response.data, date_of_birth: formattedDate });
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
-  
+
     fetchProfile();
   }, []);
 
@@ -42,6 +44,8 @@ const Profile = () => {
         height: profile.height,
         weight: profile.weight,
         gender: profile.gender,
+        fitness_level: profile.fitness_level,
+        goal: profile.goal,
       });
 
       // Update the profile state with the newly created/updated profile data
@@ -74,14 +78,13 @@ const Profile = () => {
     ? moment().diff(moment(profile.date_of_birth), "years")
     : null;
 
-
   return (
     <div className="p-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card bg-dark text-white">
             <div className="card-header">
-            <h1 className="display-5 fw-light text-warning">Profile</h1>
+              <h1 className="display-5 fw-light text-warning">Profile</h1>
             </div>
             <div className="card-body p-3">
               {editing ? (
@@ -158,13 +161,18 @@ const Profile = () => {
                     </button>
                   </div>
                 </form>
-                // Toggle between form and display
               ) : (
+                // Toggle between form and display
                 <div className="row row-cols-2 gy-3">
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Age</div>
-                      <div className="value"> {calculatedAge !== null ? `${calculatedAge}` : "Birth date not entered"}</div>
+                      <div className="value">
+                        {" "}
+                        {calculatedAge !== null
+                          ? `${calculatedAge}`
+                          : "Birth date not entered"}
+                      </div>
                     </div>
                   </div>
                   <div className="col">
