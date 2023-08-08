@@ -67,12 +67,8 @@ const Log = () => {
 
   useEffect(() => {
     fetchWorkoutHistory();
-  }, []);
+  }, [currentDate]);
   //////////////////////////////////////////////////////////////////////////////
-
-  // useEffect(() => {
-  //   fetchWorkoutHistory();
-  // }, [currentDate]);
 
   //--------------------------------------------------------------------------//
   //Edit  workout
@@ -109,7 +105,6 @@ const Log = () => {
   const handleSliderChange = (index) => {
     const newDate = moment().subtract(index, "days").format("YYYY-MM-DD");
     setCurrentDate(newDate);
-    fetchWorkoutHistory();
     console.log("index:", index);
   };
 
@@ -330,7 +325,9 @@ const Log = () => {
             slidesToScroll={1}
             afterChange={(index) => handleSliderChange(index)}
           >
-            {workoutHistory.map((workout, index) => (
+            {workoutHistory
+              .filter(workout => moment(workout.timestamp).isSame(currentDate, 'day'))
+              .map((workout) => (
               <div
                 key={workout.id}
                 className="workout-entry border rounded p-3 mb-2 slick-slide"
@@ -355,7 +352,7 @@ const Log = () => {
                           className="d-flex flex-row  justify-content-between"
                         >
                           <div className="d-flex flex-column justify-content-start align-items-start">
-                            <div>{workout.exercise_name}</div>
+                            <div>{workout.exercise_name}{moment(workout.timestamp).format("MMMM D, YYYY")}</div>
                             <div>
                               <div className="badge text-bg-warning me-2">
                                 {workout.resistance} lbs
