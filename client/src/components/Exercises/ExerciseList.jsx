@@ -88,7 +88,7 @@ const ExerciseList = () => {
   });
 
   return (
-    <div className="p-3">
+    <div className="w-100 p-3">
       <h1 className="text-warning fw-bold">Add New Exercise</h1>
       <div className="p-3">
         <form className="row row-cols-1 row-cols-md-2">
@@ -114,7 +114,7 @@ const ExerciseList = () => {
         </form>
       </div>
 
-      <div className="px-3 row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+      <div className="row row-cols-1 row-cols-lg-2 row-cols-xl-3 text-center">
         {exercisesListItem}
       </div>
 
