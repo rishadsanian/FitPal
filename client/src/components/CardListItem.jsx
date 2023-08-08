@@ -8,6 +8,7 @@ function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
   const [newSessionName, setNewSessionName] = useState("");
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+  // State for when editing a program
   const [programUpdate, setProgramUpdate] = useState({
     name: props.name,
     description: props.description
@@ -17,6 +18,7 @@ function ProgramListItem(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Get the list of sessions based off of the program id
     axios
       .get(`http://localhost:8080/sessions/program/${props.programId}`)
       .then((res) => {
@@ -96,6 +98,7 @@ function ProgramListItem(props) {
         {/* Program info */}
         {editMode ? 
         <div className="card-body ">
+          {/* If we are in edit mode */}
           <input 
             type="text"
             value={programUpdate.name}
@@ -108,12 +111,10 @@ function ProgramListItem(props) {
             className="form-control bg-secondary opacity-75 text-white"
             onChange={(e) => setProgramUpdate({...programUpdate, description: e.target.value})}
           />
-          <div className="d-flex justify-content-end pt-2">
-          
-        </div>
         </div> 
         : 
         <div className="card-body ">
+          {/* If not in edit mode */}
           <h3 className="text-warning">{props.name}</h3>
           <p className="text-white">{props.description}</p>
         </div>}
@@ -158,6 +159,7 @@ function ProgramListItem(props) {
           
         </div>
       </div>
+      {/* Delete Modal */}
       {displayDeleteModal && 
       <DeletePopupModal 
         modalToggle={setDisplayDeleteModal} 
