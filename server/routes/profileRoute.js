@@ -14,13 +14,14 @@ router.post("/", async (req, res) => {
       weight,
       gender,
       fitness_level,
+      program_id,
       goal,
     } = req.body;
 
     // queryString
     const queryString = `
-    INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, fitness_level, goal)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, fitness_level, program_id, goal)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *;
   `;
   
@@ -32,6 +33,7 @@ router.post("/", async (req, res) => {
       weight,
       gender,
       fitness_level,
+      program_id,
       goal,
     ]);
 

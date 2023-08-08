@@ -10,6 +10,9 @@ function CardList(props) {
       description={card.description}
       path={props.path}
       path_id={card.id}
+      editable={props.editable}
+      userView={props.userView}
+      currentProfile={props.currentProfile}
     />
   ));
 

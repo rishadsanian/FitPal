@@ -14,6 +14,12 @@ function ProgramListItem(props) {
     description: props.description,
   });
   const [editMode, setEditMode] = useState(false);
+  // Toggle the class on the card when the program is the current program for the user
+  const cardClass = (props.currentProfile 
+    && props.currentProfile.program_id 
+    && (props.currentProfile.program_id !== props.programId)) 
+    ? "card bg-dark text-start" : "card bg-dark text-start border-warning"
+
 
   const navigate = useNavigate();
 
@@ -41,7 +47,7 @@ function ProgramListItem(props) {
           }
         );
         // reload the page after the session is created
-        window.location.reload();
+        window.location.reload(true);
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -61,6 +67,22 @@ function ProgramListItem(props) {
   // navigation for the session
   const navigateToSession = (session) => {
     navigate(`/programs/${props.programId}/sessions/${session.id}`);
+  };
+
+  // function to toggle edit mode
+  const updateCurrentProgram = async (programId) => {
+      try {
+        // Submit form data to the server
+        const response = await axios.post(
+          `/profile/`,
+          {...props.currentProfile, program_id: programId}
+        );
+        // reload the page after the session is created
+        window.location.reload(true);
+        // Update the profile state with the newly created/updated profile data
+      } catch (error) {
+        console.error('Error creating session:', error);
+      }
   };
 
   // function to toggle edit mode
@@ -93,9 +115,11 @@ function ProgramListItem(props) {
     );
   });
 
+
+
   return (
     <div className="col my-3">
-      <div className="card bg-dark text-start">
+      <div className={cardClass}>
         {/* Program info */}
         {editMode ? (
           <div className="card-body ">
@@ -131,7 +155,7 @@ function ProgramListItem(props) {
           </div>
         )}
         {/* Add session form */}
-        <div className="card-body border-top border-color-white">
+        {props.editable && <div className="card-body border-top border-color-white">
           <form>
             <div className="input-group flex-nowrap">
               <input
@@ -149,7 +173,7 @@ function ProgramListItem(props) {
               </button>
             </div>
           </form>
-        </div>
+        </div>}
         {/* Session list */}
         <div className="card-body d-flex justify-content-between text-white">
           <table className="table table-dark table-striped">
@@ -157,8 +181,22 @@ function ProgramListItem(props) {
           </table>
         </div>
 
-        {/* Edit - Delete */}
-        <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
+        
+        {props.userView && <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
+          {/* Toggle star Icon when the current program is the users selected program*/}
+           {props.currentProfile && props.currentProfile.program_id && (props.currentProfile.program_id !== props.programId) ? 
+            <button
+              className="btn btn-dark"
+              onClick={() => updateCurrentProgram(props.programId)}
+              >
+              <i className="fa-regular fa-star fa-xl text-warning"></i>
+            </button> 
+          :
+            <button className="btn btn-dark" disabled>
+              <i className="fa-solid fa-star fa-xl text-warning"></i>
+            </button> 
+          }
+          {/* Edit - Delete */}
           {editMode && (
             <button
               className="btn btn-dark"
@@ -167,23 +205,23 @@ function ProgramListItem(props) {
               <i className="fa-regular fa-x text-danger fa-xl"></i>
             </button>
           )}
-          <button
+           {props.editable && <button
             className="btn btn-dark"
             onClick={() => toggleEditMode(props.programId)}
           >
-            {editMode ? (
+           {editMode ? (
               <i class="fa-solid fa-check fa-xl text-warning"></i>
             ) : (
               <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
             )}
-          </button>
-          <button
+          </button>}
+          {props.editable && <button
             className="btn btn-dark"
             onClick={() => setDisplayDeleteModal(true)}
           >
             <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-          </button>
-        </div>
+          </button>}
+        </div>}
       </div>
       {/* Delete Modal */}
       {displayDeleteModal && (
