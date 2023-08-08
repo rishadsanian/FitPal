@@ -44,18 +44,18 @@ router.get('/:id', (req, res) => {
 // Route to handle the POST request to /programs
 router.post("/", async(req, res) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, userId } = req.body;
 
     // queryString
     const queryString = `
-      INSERT INTO Programs (name, description)
-      VALUES ($1, $2)
+      INSERT INTO Programs (user_id, name, description)
+      VALUES ($1, $2, $3)
       RETURNING *;
     `;
 
     // SQL to db
     const result = await pool.query(queryString, [
-      name, description
+      userId, name, description
     ]);
 
     res.status(201).json(result.rows[0]);
