@@ -18,7 +18,6 @@ import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Dashboard/Profile';
 import ProgramsPage from './components/Pages/ProgramsPage';
 import ChartWorkout from './components/Dashboard/ChartWorkout';
-import ExerciseList from './components/Exercises/ExerciseList';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(window.sessionStorage.getItem('isAuthenticated'));
@@ -44,7 +43,6 @@ function App() {
           <Route path="/chartworkout/4" element={authenticated ? <ChartWorkout /> : <Login/>} />
           <Route path="/programs/:program_id/sessions/:session_id" element={authenticated ? <SessionDetail /> : <Login/>} />
           <Route path="/programs/1/sessions/1/exercise/1" element={authenticated ? <ExerciseLog /> : <Login/>} />
-          <Route path='/programs/:program_id/sessions/:session_id/exercises' element={authenticated ? <ExerciseList /> : <Login/>} />
           
           {/* Testing Routes */}
           <Route path="/test" element={<DevTest />} />

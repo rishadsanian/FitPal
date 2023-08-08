@@ -25,18 +25,15 @@ const MUSCLE = {
   triceps: 'Triceps',
 };
 
-const MAX_SETS = 4;
+const MAX_SETS = 8;
 
 const API_KEY = '66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti';
 const API_URL = 'https://api.api-ninjas.com/v1/exercises';
 
 const AddExerciseModal = (props) => {
-  const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('');
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState('');
-  const [selectedExerciseDescription, setSelectedExerciseDescription] =
-    useState('');
   const [sets, setSets] = useState([{ id: 0, weight: 0, reps: 0 }]);
 
   const navigate = useNavigate();
@@ -71,21 +68,6 @@ const AddExerciseModal = (props) => {
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup]);
 
-  useEffect(() => {
-    // Set exercise description based on the selected exercise
-    const exercise = exercises.find((ex) => ex.name === selectedExercise);
-    setSelectedExerciseDescription(exercise?.instructions || '');
-  }, [selectedExercise]);
-
-  const handleMuscleGroupSelection = (e) => {
-    const selectedMuscle = e.target.value;
-    setSelectedMuscleGroup(selectedMuscle);
-  };
-
-  const handleExerciseSelection = (e) => {
-    setSelectedExercise(e.target.value);
-  };
-
   const closeModal = async (e) => {
     e.preventDefault();
     props.setModalDisplay(false);
@@ -103,7 +85,8 @@ const AddExerciseModal = (props) => {
         });
       }
       // Navigate back to correct page after submitting
-      navigate(`/programs/${program_id}/sessions/${session_id}`);
+      // navigate(`/programs/${program_id}/sessions/${session_id}`);
+      window.location.reload(true)
     } catch (error) {
       console.error('Error creating session:', error);
     }
