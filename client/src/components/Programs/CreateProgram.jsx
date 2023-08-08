@@ -22,6 +22,7 @@ const CreateProgram = () => {
       try {
         // Submit form data to the server
         const response = await axios.post("/programs", {
+          userId: window.sessionStorage.getItem('userId'),
           name: newProgram.name,
           description: newProgram.description
         });
