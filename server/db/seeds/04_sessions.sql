@@ -1,12 +1,12 @@
 
-INSERT INTO sessions (name, program_id) VALUES ('Chest-Triceps', 'Chest-Triceps', 1);
-INSERT INTO sessions (name, program_id) VALUES ('Shoulder-Biceps', 'Shoulder-Biceps', 1);
-INSERT INTO sessions (name, program_id) VALUES ('Back-Leg', 'Back-Leg', 1);
-INSERT INTO sessions (name, program_id) VALUES ('Chest', 'Chest', 2);
-INSERT INTO sessions (name, program_id) VALUES ('Back', 'Back', 2);
-INSERT INTO sessions (name, program_id) VALUES ('Shoulder', 'Shoulder', 2);
-INSERT INTO sessions (name, program_id) VALUES ('Leg', 'Leg', 2);
-INSERT INTO sessions (name, program_id) VALUES ('Arm', 'Arm', 2);
+INSERT INTO sessions (name, program_id) VALUES ('Chest-Triceps', 1);
+INSERT INTO sessions (name, program_id) VALUES ('Shoulder-Biceps',1);
+INSERT INTO sessions (name, program_id) VALUES ('Back-Leg', 1);
+INSERT INTO sessions (name, program_id) VALUES ('Chest', 2);
+INSERT INTO sessions (name, program_id) VALUES ('Back', 2);
+INSERT INTO sessions (name, program_id) VALUES ('Shoulder',2);
+INSERT INTO sessions (name, program_id) VALUES ('Leg', 2);
+INSERT INTO sessions (name, program_id) VALUES ('Arm', 2);
 
 INSERT INTO sessions (name, program_id) VALUES ('Compound Power Lifts', 3);
 INSERT INTO sessions (name, program_id) VALUES ('Bodyweight Blast', 3);
