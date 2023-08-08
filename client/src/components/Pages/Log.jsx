@@ -319,36 +319,18 @@ const Log = () => {
                   backgroundColor: "rgba(52, 58, 64, 0.75)",
                 }}
               >
-                {/* <p>
-                  <strong>Date:</strong>{" "}
-                  {moment(workout.timestamp).format("MMMM D, YYYY")}
-                </p>
-                <p>
-                  <strong>Exercise:</strong> {workout.exercise_name}
-                </p>
-                <p>
-                  <strong>Reps:</strong> {workout.reps}
-                </p>
-                <p>
-                  <strong>Weight Load:</strong> {workout.resistance}
-                </p>
-                <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
-                  <button
-                    onClick={() => handleEditWorkout(workout)}
-                    disabled={editingWorkout === workout}
-                    className="btn btn-dark"
-                  >
-                    <i className="far fa-pen-to-square fa-xl text-light"></i>
-                  </button>
-                  <button
-                    onClick={() => handleDeleteWorkout(workout.id)}
-                    className="btn btn-dark"
-                  >
-                    <i className="far fa-trash-can fa-xl text-danger"></i>
-                  </button>
-                </div> */}
                 <table className="table table-dark table-striped mt-3">
                   <tbody>
+                    <tr>
+                      <td colSpan="2">
+                        <p className="fw-bold">
+                          Date:{" "}
+                          {moment(workoutHistory[0]?.timestamp).format(
+                            "MMMM D, YYYY"
+                          )}
+                        </p>
+                      </td>
+                    </tr>
                     {workoutHistory.map((workout) => (
                       <tr key={workout.exercise_name}>
                         <td
