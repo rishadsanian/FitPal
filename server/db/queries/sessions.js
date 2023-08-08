@@ -32,6 +32,10 @@ const setNameForSession = (data) => {
     });
 };
 
+const deleteSession = (id) => {
+  return db.query(`DETELE sessions `)
+}
+
 module.exports = {
   getAllSessionByProgramId,
   getSessionById,
