@@ -324,7 +324,6 @@ const Log = () => {
                     <tr>
                       <td colSpan="2">
                         <p className="fw-bold">
-                          Date:{" "}
                           {moment(workoutHistory[0]?.timestamp).format(
                             "MMMM D, YYYY"
                           )}
