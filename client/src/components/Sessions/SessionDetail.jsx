@@ -46,11 +46,8 @@ const SessionDetail = () => {
     <div>
       <div className="d-flex justify-content-between align-items-center p-3 bg-dark opacity-75">
         <h1 className="display-5 fw-bold text-warning">{title}</h1>
-        <a
-          href={addPath}
-          className="btn btn-outline-warning text-white p-3 rounded-circle"
-        >
-          <i class="fa-solid fa-plus fa-2xl"></i>
+        <a href={addPath} className="btn btn-outline-warning p-3">
+          <i class="fa-solid fa-plus fa-xl"></i>
         </a>
       </div>
 

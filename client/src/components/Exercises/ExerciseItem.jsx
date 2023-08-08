@@ -7,20 +7,7 @@ const ExerciseItem = (props) => {
   const exercise = props.exercise;
 
   const handleOnClick = () => {
-    
     setModalDisplay(true)
-    //find exercise by name in exercises table
-    //if not have it 
-    //  => add to exercises
-    //  => add to sessions_exercises
-    //  =>  how many weight and rep
-    //  => mark added by changing icon
-    //if have
-    //  => check if sessions_exercises have this exercise for this session
-    //  => if have
-    //       =>  back to session page
-    //  => if not
-    //       =>  
   };
 
   return (
