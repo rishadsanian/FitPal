@@ -10,6 +10,8 @@ const Profile = () => {
     height: 0,
     weight: 0,
     gender: "Not Selected",
+    fitness_level: "Not Selected", 
+    goal: "Not Set", 
   });
   const [editing, setEditing] = useState(false); // State to track whether the form is in editing mode or not
 
