@@ -351,22 +351,28 @@ const Log = () => {
                   <tbody>
                     {workoutHistory.map((workout) => (
                       <tr key={workout.exercise_name}>
-                        <td role="button">{workout.exercise_name}</td>
-                        <div className="d-flex justify-content-end gap-3 p-2">
-                          <button
-                            onClick={() => handleEditWorkout(workout)}
-                            disabled={editingWorkout === workout}
-                            className="btn btn-dark"
-                          >
-                            <i className="far fa-pen-to-square fa-xl text-light"></i>
-                          </button>
-                          <button
-                            onClick={() => handleDeleteWorkout(workout.id)}
-                            className="btn btn-dark"
-                          >
-                            <i className="far fa-trash-can fa-xl text-danger"></i>
-                          </button>
-                        </div>
+                        <td role="button">
+                          <div>{workout.exercise_name}</div>
+                          <div class="badge text-bg-warning">
+                            {workout.resistance} lbs
+                          </div>
+
+                          <div className="d-flex justify-content-end gap-3 p-2">
+                            <button
+                              onClick={() => handleEditWorkout(workout)}
+                              disabled={editingWorkout === workout}
+                              className="btn btn-dark"
+                            >
+                              <i className="far fa-pen-to-square fa-xl text-light"></i>
+                            </button>
+                            <button
+                              onClick={() => handleDeleteWorkout(workout.id)}
+                              className="btn btn-dark"
+                            >
+                              <i className="far fa-trash-can fa-xl text-danger"></i>
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
