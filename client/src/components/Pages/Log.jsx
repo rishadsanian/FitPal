@@ -29,7 +29,7 @@ const MUSCLE = {
   triceps: "Triceps",
 };
 //TODO MOVE API KEY TO .ENV / USE NEW KEY/DELETE THIS ONE
-const API_KEY = process.env.API_NINJA_EXERCISE_KEY;
+const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 //////////////////////////////////////////////////////////////////Set states
@@ -300,7 +300,7 @@ const Log = () => {
         className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
-        <h3 className="text-warning fw-bold">Daily Workout History</h3>
+        <h3 className="text-warning fw-bold">Weekly Workout History</h3>
         {workoutHistory.length === 0 ? (
           <p>No workouts recorded for today.</p>
         ) : (
@@ -319,7 +319,7 @@ const Log = () => {
                   backgroundColor: "rgba(52, 58, 64, 0.75)",
                 }}
               >
-                <p>
+                {/* <p>
                   <strong>Date:</strong>{" "}
                   {moment(workout.timestamp).format("MMMM D, YYYY")}
                 </p>
@@ -346,7 +346,31 @@ const Log = () => {
                   >
                     <i className="far fa-trash-can fa-xl text-danger"></i>
                   </button>
-                </div>
+                </div> */}
+                <table className="table table-dark table-striped mt-3">
+                  <tbody>
+                    {workoutHistory.map((workout) => (
+                      <tr key={workout.exercise_name}>
+                        <td role="button">{workout.exercise_name}</td>
+                        <div className="d-flex justify-content-end gap-3 p-2">
+                          <button
+                            onClick={() => handleEditWorkout(workout)}
+                            disabled={editingWorkout === workout}
+                            className="btn btn-dark"
+                          >
+                            <i className="far fa-pen-to-square fa-xl text-light"></i>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteWorkout(workout.id)}
+                            className="btn btn-dark"
+                          >
+                            <i className="far fa-trash-can fa-xl text-danger"></i>
+                          </button>
+                        </div>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             ))}
           </Slider>
