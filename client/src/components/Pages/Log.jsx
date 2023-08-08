@@ -45,6 +45,8 @@ const Log = () => {
 
   const [workoutHistory, setWorkoutHistory] = useState([]);
   const [editingWorkout, setEditingWorkout] = useState(null);
+  const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
+
 
   ///////////////////////////////////////////////////////////////WORKOUT HISTORY
   //Get history
@@ -53,7 +55,7 @@ const Log = () => {
     try {
       const response = await axios.get(`/api/history/4`, {
         params: {
-          date: moment().format("YYYY-MM-DD"), // Send the current date as a parameter for sql
+          date: currentDate // Send the current date as a parameter for sql
         },
       }); // Replace 4 with current user id
       setWorkoutHistory(response.data);
@@ -94,7 +96,13 @@ const Log = () => {
       console.error("Error deleting workout:", error);
     }
   };
-
+  //--------------------------------------------------------------------------//
+  const handleSliderChange = (index) => {
+    const newDate = moment().subtract(index, "days").format("YYYY-MM-DD");
+    setCurrentDate(newDate);
+    console.log("index:", index)
+  };
+  
   ///////////////////////////////////////////////////////////////WORKOUT LOG
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -309,8 +317,9 @@ const Log = () => {
             infinite={false}
             slidesToShow={1}
             slidesToScroll={1}
+            afterChange={(index) => handleSliderChange(index)}
           >
-            {workoutHistory.map((workout) => (
+            {workoutHistory.map((workout,index) => (
               <div
                 key={workout.id}
                 className="workout-entry border rounded p-3 mb-2 slick-slide"
