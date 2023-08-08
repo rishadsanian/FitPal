@@ -14,11 +14,34 @@ const SessionDetail = () => {
 
   //edit session's name
   const onEditSessionName = () => {
-    setEditmode(!editMode);
+    setEditmode(true);
+  };
+
+  const onSaveSessionName = (e) => {
+    e.preventDefault();
+    console.log(session_id)
+    const data= {
+      id: session_id,
+      name: title
+    }
+    axios
+      .post(`http://localhost:8080/sessions/${session_id}`, data)
+      .then((res) => {
+        if (res.status === 200) {
+          setEditmode(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const onDeleteSession = () => {
     //delete session
+  };
+
+  const onChangeName = (e) => {
+    setTitle(e.target.value);
   };
 
   useEffect(() => {
@@ -51,7 +74,7 @@ const SessionDetail = () => {
     const setList = sets
       .filter((set) => set.exercise_name === exercise.name)
       .map((set) => (
-        <span className="badge text-bg-light">
+        <span className="badge text-bg-light" key={set.id}>
           {set.resistant}lbs/{set.reps}
         </span>
       ));
@@ -83,22 +106,23 @@ const SessionDetail = () => {
   });
   return (
     <div>
-      <div className="row">
-        <div className="col col-12 col-md-5 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
+      <div className="row row-col-1 row-col-md-2">
+        <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
             <form className="mb-5">
               <div className="input-group">
                 <input
-                  className="form-control bg-secondary text-white"
+                  className="form-control bg-secondary text-white fs-3"
                   type="text"
                   value={title}
+                  onChange={onChangeName}
                 />
                 <button
                   className="input-group-text btn btn-warning"
                   id="addon-wrapping"
-                  onClick={onEditSessionName}
+                  onClick={onSaveSessionName}
                 >
-                  <i class="fa-solid fa-check fa-xl text-white"></i>
+                  <i className="fa-solid fa-check fa-xl text-white"></i>
                 </button>
               </div>
             </form>
@@ -132,7 +156,7 @@ const SessionDetail = () => {
           </div>
         </div>
 
-        <div className="col col-12 col-md-7 ccol-xl-8">
+        <div className="col col-12 col-md-6 col-xl-8">
           <ExerciseList />
         </div>
       </div>
