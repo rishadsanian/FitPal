@@ -77,8 +77,7 @@ function ProgramListItem(props) {
           `/profile/`,
           {...props.currentProfile, program_id: programId}
         );
-        // reload the page after the session is created
-        window.location.reload(true);
+        props.setCurrentProfile({...props.currentProfile, program_id: programId})
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -94,8 +93,7 @@ function ProgramListItem(props) {
           `/programs/${programId}/update`,
           programUpdate
         );
-        // reload the page after the session is created
-        window.location.reload();
+        setEditMode(false);
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -150,8 +148,8 @@ function ProgramListItem(props) {
         ) : (
           <div className="card-body ">
             {/* If not in edit mode */}
-            <h3 className="text-warning">{props.name}</h3>
-            <p className="text-white">{props.description}</p>
+            <h3 className="text-warning">{programUpdate.name}</h3>
+            <p className="text-white">{programUpdate.description}</p>
           </div>
         )}
         {/* Add session form */}
