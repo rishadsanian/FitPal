@@ -29,7 +29,7 @@ const MUSCLE = {
   triceps: "Triceps",
 };
 //TODO MOVE API KEY TO .ENV / USE NEW KEY/DELETE THIS ONE
-const API_KEY = "66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti";
+const API_KEY = process.env.API_NINJA_EXERCISE_KEY;
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 //////////////////////////////////////////////////////////////////Set states
