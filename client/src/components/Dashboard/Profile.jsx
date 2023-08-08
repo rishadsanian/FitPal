@@ -222,6 +222,18 @@ const Profile = () => {
                       <div className="value">{profile.gender}</div>
                     </div>
                   </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Fitness Level</div>
+                      <div className="value">{profile.fitness_level}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Goal</div>
+                      <div className="value">{profile.goal}</div>
+                    </div>
+                  </div>
                 </div>
               )}
               {/* show edit button only on display view */}
