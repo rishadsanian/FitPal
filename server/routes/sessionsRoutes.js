@@ -36,13 +36,13 @@ router.post('/program/:id', async (req, res) => {
     console.log(name, program_id);
     // queryString
     const queryString = `
-      INSERT INTO Sessions (name, description, program_id)
-      VALUES ($1, $2, $3)
+      INSERT INTO Sessions (name, program_id)
+      VALUES ($1, $2)
       RETURNING *;
     `;
 
     // SQL to db
-    const result = await pool.query(queryString, [name, '', program_id]);
+    const result = await pool.query(queryString, [name, program_id]);
 
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -58,6 +58,15 @@ router.post('/:id', (req, res) => {
     .setNameForSession(data)
     .then(() => {
       res.send({ message: 'updated' });
+    })
+    .catch((e) => res.send(e));
+});
+
+router.delete('/:id', (req, res) => {
+  sessions
+    .deleteSession(req.params.id)
+    .then(() => {
+      res.send({ message: 'session deleted' });
     })
     .catch((e) => res.send(e));
 });
