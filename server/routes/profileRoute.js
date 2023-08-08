@@ -5,17 +5,25 @@ const express = require("express");
 const router = express.Router();
 
 // Route to handle the POST request to /profile
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { user_id, date_of_birth, height, weight, gender } = req.body;
+    const {
+      user_id,
+      date_of_birth,
+      height,
+      weight,
+      gender,
+      fitness_level,
+      goal,
+    } = req.body;
 
     // queryString
     const queryString = `
-      INSERT INTO Profile (user_id, date_of_birth, height, weight, gender)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING *;
-    `;
-
+    INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, fitness_level, goal)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *;
+  `;
+  
     // SQL to db
     const result = await pool.query(queryString, [
       user_id,
@@ -23,6 +31,8 @@ router.post("/", async(req, res) => {
       height,
       weight,
       gender,
+      fitness_level,
+      goal,
     ]);
 
     res.status(201).json(result.rows[0]);

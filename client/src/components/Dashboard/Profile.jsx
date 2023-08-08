@@ -10,6 +10,8 @@ const Profile = () => {
     height: 0,
     weight: 0,
     gender: "Not Selected",
+    fitness_level: "Not Selected",
+    goal: "Not Set",
   });
   const [editing, setEditing] = useState(false); // State to track whether the form is in editing mode or not
 
@@ -18,13 +20,15 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get("/api/profile/4");
-        const formattedDate = moment(response.data.date_of_birth).format("YYYY-MM-DD"); // Format the date
+        const formattedDate = moment(response.data.date_of_birth).format(
+          "YYYY-MM-DD"
+        ); // Format the date
         setProfile({ ...response.data, date_of_birth: formattedDate });
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
-  
+
     fetchProfile();
   }, []);
 
@@ -40,6 +44,8 @@ const Profile = () => {
         height: profile.height,
         weight: profile.weight,
         gender: profile.gender,
+        fitness_level: profile.fitness_level,
+        goal: profile.goal,
       });
 
       // Update the profile state with the newly created/updated profile data
@@ -72,14 +78,13 @@ const Profile = () => {
     ? moment().diff(moment(profile.date_of_birth), "years")
     : null;
 
-
   return (
     <div className="p-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card bg-dark text-white">
             <div className="card-header">
-            <h1 className="display-5 fw-light text-warning">Profile</h1>
+              <h1 className="display-5 fw-light text-warning">Profile</h1>
             </div>
             <div className="card-body p-3">
               {editing ? (
@@ -139,6 +144,35 @@ const Profile = () => {
                       <option value="Other">Other</option>
                     </select>
                   </div>
+                  <div className="mb-3">
+                    <label htmlFor="fitness_level" className="form-label">
+                      Fitness Level:
+                    </label>
+                    <select
+                      className="form-select"
+                      id="fitness_level"
+                      name="fitness_level"
+                      value={profile.fitness_level}
+                      onChange={handleChange}
+                    >
+                      <option value="beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="expert">Expert</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="goal" className="form-label">
+                      Goal:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="goal"
+                      name="goal"
+                      value={profile.goal}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <div className="form-buttons-container">
                     <button
                       type="submit"
@@ -156,13 +190,18 @@ const Profile = () => {
                     </button>
                   </div>
                 </form>
-                // Toggle between form and display
               ) : (
+                // Toggle between form and display
                 <div className="row row-cols-2 gy-3">
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Age</div>
-                      <div className="value"> {calculatedAge !== null ? `${calculatedAge}` : "Birth date not entered"}</div>
+                      <div className="value">
+                        {" "}
+                        {calculatedAge !== null
+                          ? `${calculatedAge}`
+                          : "Birth date not entered"}
+                      </div>
                     </div>
                   </div>
                   <div className="col">
@@ -181,6 +220,18 @@ const Profile = () => {
                     <div className="profile-card p-3">
                       <div className="key">Gender</div>
                       <div className="value">{profile.gender}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Fitness Level</div>
+                      <div className="value">{profile.fitness_level}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Goal</div>
+                      <div className="value">{profile.goal}</div>
                     </div>
                   </div>
                 </div>

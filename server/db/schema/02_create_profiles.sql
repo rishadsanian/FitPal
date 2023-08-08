@@ -7,7 +7,8 @@ CREATE TABLE Profile (
   height FLOAT,
   weight FLOAT,
   gender VARCHAR(10),
+  fitness_level VARCHAR(20), 
+  goal VARCHAR(100),          
   program_id INTEGER REFERENCES programs(id),
   timestamp TIMESTAMP DEFAULT NOW()
-
 );
