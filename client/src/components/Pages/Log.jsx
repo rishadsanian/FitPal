@@ -314,13 +314,13 @@ const Log = () => {
         className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
       >
-        <h3 className="text-warning fw-bold">Weekly Workout History</h3>
+        <h3 className="text-warning fw-bold">Daily Workout History</h3>
         {workoutHistory.length === 0 ? (
-          <p>No workouts recorded for today.</p>
+          <p>No workouts recorded for  {moment(currentDate).format("MMMM D, YYYY")}.</p>
         ) : (
           <Slider
             dots={true}
-            infinite={false}
+            infinite={true}
             slidesToShow={1}
             slidesToScroll={1}
             afterChange={(index) => handleSliderChange(index)}
