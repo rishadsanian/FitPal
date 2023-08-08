@@ -156,7 +156,7 @@ const Profile = () => {
                       onChange={handleChange}
                     >
                       <option value="beginner">Beginner</option>
-                      <option value="intermediate">Intermediate</option>
+                      <option value="Intermediate">Intermediate</option>
                       <option value="expert">Expert</option>
                     </select>
                   </div>
