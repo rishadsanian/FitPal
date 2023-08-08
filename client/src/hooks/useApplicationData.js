@@ -3,7 +3,6 @@ import axios from "axios";
 
 const useApplicationData = () => {
 
-
   //-----------------------------------LOG------------------------------------//
 
   // // Function to log a workout

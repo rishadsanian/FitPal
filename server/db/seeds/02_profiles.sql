@@ -67,3 +67,6 @@ VALUES ('4', '1992-06-25', 160.8, 117.90, 'Female', NOW() - INTERVAL '1 month' -
 
 INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, timestamp)
 VALUES ('4', '1992-06-11', 160.8, 116.80, 'Female', NOW() - INTERVAL '1 month' - INTERVAL '10 weeks');
+
+INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, fitness_level, goal, timestamp)
+VALUES ('4', '1992-08-06', 160.8, 121.78, 'Male', 'Beginner', 'Bulk Up', NOW() - INTERVAL '1 month' - INTERVAL '2 weeks');

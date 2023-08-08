@@ -16,7 +16,6 @@ const profileRoute = require('./routes/profileRoute');
 const progamsRoutes = require('./routes/programsRoutes');
 const sessionsRoutes = require('./routes/sessionsRoutes');
 const setsRoutes = require("./routes/setsRoute");
-const exercisesRoutes = require('./routes/exercisesRoutes');
 const profileRouteAPI = require('./routes/profileRoute_api');
 const chartWorkoutAPI = require('./routes/chartWorkoutRoute_api');
 const userRoutes = require('./routes/usersRoutes');
@@ -44,7 +43,6 @@ app.use(
 
 app.use('/programs', progamsRoutes);
 app.use('/sessions', sessionsRoutes);
-app.use('/exercises', exercisesRoutes);
 app.use('/log', logRoute);
 app.use('/profile', profileRoute);
 app.use('/api/profile', profileRouteAPI);

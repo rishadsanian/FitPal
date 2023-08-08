@@ -9,9 +9,9 @@ function ProgramsPage() {
   const [programs, setPrograms] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/programs`).then((res) => {
-      setPrograms(res.data.program);
-    });
+      axios.get(`http://localhost:8080/programs/users/${window.sessionStorage.getItem('userId')}`).then((res) => {
+        setPrograms(res.data.program);
+      });
   }, []);
 
   return (
