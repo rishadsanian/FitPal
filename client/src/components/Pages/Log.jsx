@@ -47,7 +47,6 @@ const Log = () => {
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
 
-
   ///////////////////////////////////////////////////////////////WORKOUT HISTORY
   //Get history
 
@@ -55,10 +54,12 @@ const Log = () => {
     try {
       const response = await axios.get(`/api/history/4`, {
         params: {
-          date: currentDate // Send the current date as a parameter for sql
+          date: currentDate, // Send the current date as a parameter for sql
         },
       }); // Replace 4 with current user id
       setWorkoutHistory(response.data);
+      console.log("fetchworkouthistory:", workoutHistory);
+      console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
@@ -69,21 +70,9 @@ const Log = () => {
   }, []);
   //////////////////////////////////////////////////////////////////////////////
 
-  useEffect(() => {
-    fetchWorkoutHistory();
-  }, []); // Initial fetch
-  
-  useEffect(() => {
-    fetchWorkoutHistory();
-  }, [currentDate]);
-
-
-
-
-
-
-
-
+  // useEffect(() => {
+  //   fetchWorkoutHistory();
+  // }, [currentDate]);
 
   //--------------------------------------------------------------------------//
   //Edit  workout
@@ -120,9 +109,10 @@ const Log = () => {
   const handleSliderChange = (index) => {
     const newDate = moment().subtract(index, "days").format("YYYY-MM-DD");
     setCurrentDate(newDate);
-    console.log("index:", index)
+    fetchWorkoutHistory();
+    console.log("index:", index);
   };
-  
+
   ///////////////////////////////////////////////////////////////WORKOUT LOG
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -131,7 +121,7 @@ const Log = () => {
       setSelectedMuscleGroup(firstMuscleGroup);
     }
   }, [muscleGroups]);
-//--------------------------------------------------------------------------//
+  //--------------------------------------------------------------------------//
   useEffect(() => {
     // Fetch exercises from API based on the selected muscle group
     const fetchExercisesByMuscle = async () => {
@@ -148,7 +138,7 @@ const Log = () => {
 
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
-//---------------------------------------------------------------------------//
+  //---------------------------------------------------------------------------//
   useEffect(() => {
     //load exercise from api response and account for any changes
     const exercise = exercises.find((ex) => ex.name === selectedExercise);
@@ -160,7 +150,7 @@ const Log = () => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
   };
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
   //set selected exercise to updated selection
   const handleExerciseSelection = (e) => {
@@ -340,7 +330,7 @@ const Log = () => {
             slidesToScroll={1}
             afterChange={(index) => handleSliderChange(index)}
           >
-            {workoutHistory.map((workout,index) => (
+            {workoutHistory.map((workout, index) => (
               <div
                 key={workout.id}
                 className="workout-entry border rounded p-3 mb-2 slick-slide"
@@ -354,9 +344,7 @@ const Log = () => {
                     <tr>
                       <td colSpan="2">
                         <p className="fw-bold">
-                          {moment(currentDate).format(
-                            "MMMM D, YYYY"
-                          )}
+                          {moment(currentDate).format("MMMM D, YYYY")}
                         </p>
                       </td>
                     </tr>
