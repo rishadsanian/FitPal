@@ -19,7 +19,7 @@ const ExerciseDetailModal = (props) => {
             </button>
           </div>
           <div className="text-start modal-body">
-            <p className="text-secondary">
+            <p className="text-secondary p-0">
               Muscle: {exercise.muscle} - Level: {exercise.difficulty}
             </p>
             <p className="text-secondary">

@@ -24,4 +24,16 @@ const getSessionById = (id) => {
     });
 };
 
-module.exports = { getAllSessionByProgramId, getSessionById };
+const setNameForSession = (data) => {
+  return db
+    .query(`UPDATE sessions SET name = $1 WHERE id = $2`, [data.name, data.id])
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
+module.exports = {
+  getAllSessionByProgramId,
+  getSessionById,
+  setNameForSession,
+};
