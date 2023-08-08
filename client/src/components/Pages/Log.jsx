@@ -61,7 +61,14 @@ const Log = () => {
       // Check if response contains data
       if (response.data.length === 0) {
         // If no data, set workoutHistory to an array with a placeholder entry
-        setWorkoutHistory([{ exercise_name: "No workouts for that day" }]);
+        setWorkoutHistory([
+          {
+            exercise_name: "No workouts for that day",
+            resistance: 0, // Default resistance value
+            reps: 0, // Default reps value
+            timestamp: moment(currentDate).format("YYYY-MM-DD HH:mm:ss"), // Set timestamp to current date
+          },
+        ]);
       } else {
         // If there's data, set workoutHistory with the response data
         setWorkoutHistory(response.data);
@@ -74,6 +81,7 @@ const Log = () => {
     }
   };
   
+  //--------------------------------------------------------------------------//
   useEffect(() => {
     fetchWorkoutHistory();
   }, [currentDate]);
@@ -327,10 +335,11 @@ const Log = () => {
 
         <Slider
           dots={true}
-          infinite={false}
+          infinite={true}
           slidesToShow={1}
           slidesToScroll={1}
           afterChange={(index) => handleSliderChange(index)}
+          
         >
           {workoutHistory
             .filter((workout) =>
