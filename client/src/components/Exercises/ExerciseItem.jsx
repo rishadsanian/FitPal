@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import AddExerciseModal from "./AddExerciseModal"
-import { useParams } from 'react-router';
-import axios from 'axios';
+import AddExerciseModal from './AddExerciseModal';
 const ExerciseItem = (props) => {
   const [modalDisplay, setModalDisplay] = useState(false);
   const exercise = props.exercise;
 
   const handleOnClick = () => {
-    setModalDisplay(true)
+    setModalDisplay(true);
   };
 
   return (
@@ -20,28 +18,43 @@ const ExerciseItem = (props) => {
               {exercise.muscle}
             </h6>
           </div>
-          {!props.userExercises.map((exercise) => exercise.name).includes(exercise.name) ? 
+          {!props.userExercises
+            .map((exercise) => exercise.name)
+            .includes(exercise.name) ? (
             <button className="btn btn-light" onClick={handleOnClick}>
-              <i className="fa-solid fa-plus fa-xs"></i> 
+              <i className="fa-solid fa-plus fa-xs"></i>
             </button>
-            :
+          ) : (
             <button className="btn btn-light" disabled>
-              <i className="fa-solid fa-check text-warning"></i> 
+              <i className="fa-solid fa-check text-warning"></i>
             </button>
-          }
+          )}
         </div>
         <div className="card-body">
           <p className="card-text text-white">
             {exercise.instructions || 'No instruction added yet.'}
           </p>
         </div>
-        {props.sets &&< div className="card-footer d-flex flex-wrap justify-content-between gap-2">
-          {props.sets.filter((set) => set.exercise_name === exercise.name).map((set) => <span className="badge text-bg-light">{set.resistant}lbs/{set.reps}</span>)}
-        </div>}
+        {props.sets && (
+          <div className="card-footer d-flex flex-wrap justify-content-between gap-2">
+            {props.sets
+              .filter((set) => set.exercise_name === exercise.name)
+              .map((set) => (
+                <span className="badge text-bg-light">
+                  {set.resistant}lbs/{set.reps}
+                </span>
+              ))}
+          </div>
+        )}
       </div>
       {/* Create the excercise modal */}
-      {modalDisplay && <AddExerciseModal name={exercise.name} muscle={exercise.muscle} setModalDisplay={setModalDisplay}/>}
-      
+      {modalDisplay && (
+        <AddExerciseModal
+          name={exercise.name}
+          muscle={exercise.muscle}
+          setModalDisplay={setModalDisplay}
+        />
+      )}
     </div>
   );
 };

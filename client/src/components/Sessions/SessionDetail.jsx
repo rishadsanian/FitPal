@@ -1,7 +1,5 @@
-import ExerciseItem from '../Exercises/ExerciseItem';
 import axios from 'axios';
 import { useParams } from 'react-router';
-
 import { useEffect, useState } from 'react';
 import ExerciseList from '../Exercises/ExerciseList';
 
@@ -12,8 +10,6 @@ const SessionDetail = () => {
 
   // get the session id from the url
   const { session_id } = useParams();
-
-  const addPath = `${session_id}/exercises`;
 
   useEffect(() => {
     axios
@@ -57,9 +53,9 @@ const SessionDetail = () => {
       //   userExercises={exercises}
       // />
       <tr key={index}>
-        <td role="button" className='p-3'>
-          <h6 className=''>{exercise.name}</h6>
-          <div className='d-flex gap-2 flex-wrap'>{setList}</div>
+        <td role="button" className="p-3">
+          <h6 className="">{exercise.name}</h6>
+          <div className="d-flex gap-2 flex-wrap">{setList}</div>
         </td>
       </tr>
     );

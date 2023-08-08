@@ -85,7 +85,8 @@ const AddExerciseModal = (props) => {
         });
       }
       // Navigate back to correct page after submitting
-      navigate(`/programs/${program_id}/sessions/${session_id}`);
+      // navigate(`/programs/${program_id}/sessions/${session_id}`);
+      window.location.reload(true);
     } catch (error) {
       console.error('Error creating session:', error);
     }
@@ -144,10 +145,21 @@ const AddExerciseModal = (props) => {
               ))}
 
               <div className="d-flex justify-content-between gap-2 mt-3">
-                <button className="btn btn-outline-light flex-fill" onClick={addSet}>
+                <button
+                  className="btn btn-outline-light flex-fill"
+                  onClick={addSet}
+                >
                   <i className="fa-solid fa-plus fa-xs"></i>
                 </button>
-                <button className={sets.length === 1 ? "btn btn-outline-secondary flex-fill" : "btn btn-outline-light flex-fill"} onClick={removeSet} disabled={sets.length === 1}>
+                <button
+                  className={
+                    sets.length === 1
+                      ? 'btn btn-outline-secondary flex-fill'
+                      : 'btn btn-outline-light flex-fill'
+                  }
+                  onClick={removeSet}
+                  disabled={sets.length === 1}
+                >
                   <i className="fa-solid fa-minus fa-xs"></i>
                 </button>
               </div>

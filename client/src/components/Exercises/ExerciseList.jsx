@@ -115,7 +115,7 @@ const ExerciseList = () => {
         </form>
       </div>
 
-      <div className="px-4 row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+      <div className="px-3 row row-cols-1 row-cols-lg-2 row-cols-xl-3">
         {exercisesListItem}
       </div>
 
