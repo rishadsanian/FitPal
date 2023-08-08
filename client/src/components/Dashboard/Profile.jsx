@@ -144,6 +144,35 @@ const Profile = () => {
                       <option value="Other">Other</option>
                     </select>
                   </div>
+                  <div className="mb-3">
+                    <label htmlFor="fitness_level" className="form-label">
+                      Fitness Level:
+                    </label>
+                    <select
+                      className="form-select"
+                      id="fitness_level"
+                      name="fitness_level"
+                      value={profile.fitness_level}
+                      onChange={handleChange}
+                    >
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="expert">Expert</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="goal" className="form-label">
+                      Goal:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="goal"
+                      name="goal"
+                      value={profile.goal}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <div className="form-buttons-container">
                     <button
                       type="submit"
