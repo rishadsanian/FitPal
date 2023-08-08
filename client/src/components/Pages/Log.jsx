@@ -351,10 +351,13 @@ const Log = () => {
                   <tbody>
                     {workoutHistory.map((workout) => (
                       <tr key={workout.exercise_name}>
-                        <td role="button">
+                        <td role="button" className="">
                           <div>{workout.exercise_name}</div>
                           <div class="badge text-bg-warning">
                             {workout.resistance} lbs
+                          </div>
+                          <div class="badge text-bg-warning">
+                            {workout.reps} Reps
                           </div>
 
                           <div className="d-flex justify-content-end gap-3 p-2">
