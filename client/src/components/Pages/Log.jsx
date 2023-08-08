@@ -54,21 +54,26 @@ const Log = () => {
     try {
       const response = await axios.get(`/api/history/4`, {
         params: {
-          date: currentDate, // Send the current date as a parameter for sql
+          date: currentDate, // Send the current date as a parameter for SQL
         },
-      }); // Replace 4 with current user id
+      }); // Replace 4 with the current user id
+      
+      // Check if response contains data
       if (response.data.length === 0) {
-        setCurrentDate(moment().format("YYYY-MM-DD")); // Set current date to today if no history found
+        // If no data, set workoutHistory to an array with a placeholder entry
+        setWorkoutHistory([{ exercise_name: "No workouts for that day" }]);
       } else {
+        // If there's data, set workoutHistory with the response data
         setWorkoutHistory(response.data);
       }
+      
       console.log("fetchworkouthistory:", workoutHistory);
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
   };
-
+  
   useEffect(() => {
     fetchWorkoutHistory();
   }, [currentDate]);
@@ -313,12 +318,12 @@ const Log = () => {
       </div>
       {/* //----------------------------------------------- workout history */}
       {/* Workout History */}
+      {/* Workout History Slider */}
       <div
         className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
         style={{ width: "600px" }}
-        >
+      >
         <h3 className="text-warning fw-bold">Daily Workout History</h3>
-        {/* Workout History Slider */}
 
         <Slider
           dots={true}
