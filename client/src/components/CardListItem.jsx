@@ -14,6 +14,12 @@ function ProgramListItem(props) {
     description: props.description,
   });
   const [editMode, setEditMode] = useState(false);
+  // Toggle the class on the card when the program is the current program for the user
+  const cardClass = (props.currentProfile 
+    && props.currentProfile.program_id 
+    && (props.currentProfile.program_id !== props.programId)) 
+    ? "card bg-dark text-start" : "card bg-dark text-start border-warning"
+
 
   const navigate = useNavigate();
 
@@ -41,7 +47,7 @@ function ProgramListItem(props) {
           }
         );
         // reload the page after the session is created
-        window.location.reload();
+        window.location.reload(true);
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -72,7 +78,7 @@ function ProgramListItem(props) {
           {...props.currentProfile, program_id: programId}
         );
         // reload the page after the session is created
-        window.location.reload();
+        window.location.reload(true);
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -109,14 +115,11 @@ function ProgramListItem(props) {
     );
   });
 
-  const cardOutlineClass = (props.currentProfile 
-    && props.currentProfile.program_id 
-    && (props.currentProfile.program_id !== props.programId)) 
-    ? "card bg-dark text-start" : "card bg-dark text-start border-warning"
+
 
   return (
     <div className="col my-3">
-      <div className={cardOutlineClass}>
+      <div className={cardClass}>
         {/* Program info */}
         {editMode ? (
           <div className="card-body ">
@@ -179,13 +182,20 @@ function ProgramListItem(props) {
         </div>
 
         
-        {props.userView &&<div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
-           {props.currentProfile && props.currentProfile.program_id && (props.currentProfile.program_id !== props.programId) && <button
-            className="btn btn-dark"
-            onClick={() => updateCurrentProgram(props.programId)}
-          >
-            <i className="fa-regular fa-star fa-xl text-warning"></i>
-          </button>}
+        {props.userView && <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
+          {/* Toggle star Icon when the current program is the users selected program*/}
+           {props.currentProfile && props.currentProfile.program_id && (props.currentProfile.program_id !== props.programId) ? 
+            <button
+              className="btn btn-dark"
+              onClick={() => updateCurrentProgram(props.programId)}
+              >
+              <i className="fa-regular fa-star fa-xl text-warning"></i>
+            </button> 
+          :
+            <button className="btn btn-dark" disabled>
+              <i className="fa-solid fa-star fa-xl text-warning"></i>
+            </button> 
+          }
           {/* Edit - Delete */}
           {editMode && (
             <button

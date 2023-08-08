@@ -12,6 +12,7 @@ function ProgramsPage(props) {
   const [currentProfile, setCurrentProfile] = useState();
 
   useEffect(() => {
+    window.scrollTo({top:0, left:0});
     if(props.userView){
       axios.get(`http://localhost:8080/api/profile/${window.sessionStorage.getItem('userId')}`).then((res) => {
        setCurrentProfile(res.data);
