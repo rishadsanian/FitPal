@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import ExerciseList from '../Exercises/ExerciseList';
+import DeletePopupModal from '../DeletePopupModal';
+import SessionItem from './SessionItem';
 
 const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
@@ -70,40 +72,38 @@ const SessionDetail = () => {
     return;
   }, []);
 
+  // const exercisesListItem = exercises.map((exercise, index) => {
+  //   const setList = sets
+  //     .filter((set) => set.exercise_name === exercise.name)
+  //     .map((set) => (
+  //       <span className="badge text-bg-light" key={set.id}>
+  //         {set.resistant}lbs/{set.reps}
+  //       </span>
+  //     ));
+  //   return (
+  //     <tr key={index}>
+  //       <td role="button" className="p-3 d-flex justify-content-between">
+  //         <div>
+  //           <h6 className="">{exercise.name}</h6>
+  //           <div className="d-flex gap-2 flex-wrap">{setList}</div>
+  //         </div>
+  //         {/* {add edit - delete button} */}
+  //         <div className="align-self-center">
+  //           <button className="btn">
+  //             <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+  //           </button>
+  //           <button className="btn">
+  //             <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+  //           </button>
+  //         </div>
+  //       </td>
+  //     </tr>
+  //   );
+  // });
   const exercisesListItem = exercises.map((exercise, index) => {
-    const setList = sets
-      .filter((set) => set.exercise_name === exercise.name)
-      .map((set) => (
-        <span className="badge text-bg-light" key={set.id}>
-          {set.resistant}lbs/{set.reps}
-        </span>
-      ));
-    return (
-      // <ExerciseItem
-      //   key={index}
-      //   exercise={exercise}
-      //   sets={sets}
-      //   userExercises={exercises}
-      // />
-      <tr key={index}>
-        <td role="button" className="p-3 d-flex justify-content-between">
-          <div>
-            <h6 className="">{exercise.name}</h6>
-            <div className="d-flex gap-2 flex-wrap">{setList}</div>
-          </div>
-          {/* {add edit - delete button} */}
-          <div className="align-self-center">
-            <button className="btn">
-              <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-            </button>
-            <button className="btn">
-              <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    );
+    return <SessionItem sets={sets} exercise={exercise}/>
   });
+  
   return (
     <div>
       <div className="row row-col-1 row-col-md-2">
@@ -148,6 +148,7 @@ const SessionDetail = () => {
               <table className="table table-dark table-striped">
                 <tbody>{exercisesListItem}</tbody>
               </table>
+              
             ) : (
               <p className="display-6 fw-light text-white">
                 no exercises added yet
@@ -155,7 +156,6 @@ const SessionDetail = () => {
             )}
           </div>
         </div>
-
         <div className="col col-12 col-md-6 col-xl-8">
           <ExerciseList />
         </div>
