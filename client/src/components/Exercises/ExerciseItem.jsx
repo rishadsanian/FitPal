@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
 import AddExerciseModal from './AddExerciseModal';
+import ExerciseDetailModal from './ExerciseDetailModal';
+
 const ExerciseItem = (props) => {
   const [modalDisplay, setModalDisplay] = useState(false);
+  const [exerciseDetailDisplay, setExerciseDetailDisplay] =
+    useState(false);
   const exercise = props.exercise;
 
   const handleOnClick = () => {
     setModalDisplay(true);
+  };
+  const displayDetail = () => {
+    setExerciseDetailDisplay(true);
   };
 
   return (
@@ -13,7 +20,7 @@ const ExerciseItem = (props) => {
       <div className="card bg-dark opacity-75 text-start">
         <div className="card-header d-flex justify-content-between align-items-center">
           <div>
-            <h5 className="text-warning card-title">{exercise.name}</h5>
+            <h6 className="text-warning card-title">{exercise.name}</h6>
             <h6 className="card-subtitle text-secondary">
               {exercise.muscle}
             </h6>
@@ -21,19 +28,23 @@ const ExerciseItem = (props) => {
           {!props.userExercises
             .map((exercise) => exercise.name)
             .includes(exercise.name) ? (
-            <button className="btn btn-light" onClick={handleOnClick}>
+            <button className="btn btn-dark" onClick={handleOnClick}>
               <i className="fa-solid fa-plus fa-xs"></i>
             </button>
           ) : (
-            <button className="btn btn-light" disabled>
-              <i className="fa-solid fa-check text-warning"></i>
+            <button className="btn btn-dark" disabled>
+              <i className="fa-solid fa-check text-info"></i>
             </button>
           )}
         </div>
         <div className="card-body">
           <p className="card-text text-white">
-            {exercise.instructions || 'No instruction added yet.'}
+            {exercise.instructions.substring(0, 100) + ' ...' ||
+              'No instruction added yet.'}
           </p>
+          <button type="button" className="btn btn-link text-info" onClick={displayDetail}>
+            more details
+          </button>
         </div>
         {props.sets && (
           <div className="card-footer d-flex flex-wrap justify-content-between gap-2">
@@ -55,6 +66,8 @@ const ExerciseItem = (props) => {
           setModalDisplay={setModalDisplay}
         />
       )}
+
+      {exerciseDetailDisplay &&(<ExerciseDetailModal exercise={exercise} setExerciseDetailDisplay={setExerciseDetailDisplay} />)}
     </div>
   );
 };

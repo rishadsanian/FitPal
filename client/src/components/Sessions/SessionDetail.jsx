@@ -7,9 +7,19 @@ const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
   const [sets, setSets] = useState([]);
+  const [editMode, setEditmode] = useState(false);
 
   // get the session id from the url
   const { session_id } = useParams();
+
+  //edit session's name
+  const onEditSessionName = () => {
+    setEditmode(!editMode);
+  };
+
+  const onDeleteSession = () => {
+    //delete session
+  };
 
   useEffect(() => {
     axios
@@ -53,9 +63,20 @@ const SessionDetail = () => {
       //   userExercises={exercises}
       // />
       <tr key={index}>
-        <td role="button" className="p-3">
-          <h6 className="">{exercise.name}</h6>
-          <div className="d-flex gap-2 flex-wrap">{setList}</div>
+        <td role="button" className="p-3 d-flex justify-content-between">
+          <div>
+            <h6 className="">{exercise.name}</h6>
+            <div className="d-flex gap-2 flex-wrap">{setList}</div>
+          </div>
+          {/* {add edit - delete button} */}
+          <div className="align-self-center">
+            <button className="btn">
+              <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+            </button>
+            <button className="btn">
+              <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+            </button>
+          </div>
         </td>
       </tr>
     );
@@ -64,7 +85,39 @@ const SessionDetail = () => {
     <div>
       <div className="row">
         <div className="col col-12 col-md-5 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
-          <h1 className="display-5 fw-bold text-warning">{title}</h1>
+          {editMode ? (
+            <form className="mb-5">
+              <div className="input-group">
+                <input
+                  className="form-control bg-secondary text-white"
+                  type="text"
+                  value={title}
+                />
+                <button
+                  className="input-group-text btn btn-warning"
+                  id="addon-wrapping"
+                  onClick={onEditSessionName}
+                >
+                  <i class="fa-solid fa-check fa-xl text-white"></i>
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="d-flex justify-content-between mb-5">
+              <h1 className="display-5 fw-bold text-warning">{title}</h1>
+              <div className="align-self-center">
+                <button
+                  className="btn btn-dark"
+                  onClick={onEditSessionName}
+                >
+                  <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+                </button>
+                <button className="btn btn-dark" onClick={onDeleteSession}>
+                  <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="row row-cols-1 ">
             {exercises.length > 0 ? (
