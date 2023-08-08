@@ -1,7 +1,7 @@
 const db = require('../../configs/db.config');
 
 const getAllPrograms = () => {
-  return db.query('SELECT * FROM programs;').then((data) => {
+  return db.query('SELECT * FROM programs ORDER BY id;').then((data) => {
     return data.rows;
   });
 };
