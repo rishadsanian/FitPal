@@ -371,7 +371,6 @@ const Log = () => {
                           <div className="d-flex flex-column justify-content-start align-items-start">
                             <div>
                               {workout.exercise_name}
-                              {moment(workout.timestamp).format("MMMM D, YYYY")}
                             </div>
                             <div>
                               <div className="badge text-bg-warning me-2">
@@ -383,22 +382,23 @@ const Log = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="d-flex justify-content-end gap-3 p-2">
-                            <button
-                              onClick={() => handleEditWorkout(workout)}
-                              disabled={editingWorkout === workout}
-                              className="btn btn-dark"
-                            >
-                              <i className="far fa-pen-to-square fa-xl text-light"></i>
-                            </button>
-                            {workout.reps > 0 && 
-                            <button
-                              onClick={() => handleDeleteWorkout(workout.id)}
-                              className="btn btn-dark"
-                            >
-                              <i className="far fa-trash-can fa-xl text-danger"></i>
-                            </button>}
-                          </div>
+                          {workout.reps > 0 && (
+                            <div className="d-flex justify-content-end gap-3 p-2">
+                              <button
+                                onClick={() => handleEditWorkout(workout)}
+                                disabled={editingWorkout === workout}
+                                className="btn btn-dark"
+                              >
+                                <i className="far fa-pen-to-square fa-xl text-light"></i>
+                              </button>
+                              <button
+                                onClick={() => handleDeleteWorkout(workout.id)}
+                                className="btn btn-dark"
+                              >
+                                <i className="far fa-trash-can fa-xl text-danger"></i>
+                              </button>
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}
