@@ -71,8 +71,8 @@ const ChartWorkout = ({ userId }) => {
           datasets: [
             {
               label: "Number of Exercises",
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "rgba(255, 193, 7, 0.2)",
+              borderColor: "#ffc107",
               borderWidth: 1,
               data: processWorkoutData(),
             },
@@ -118,7 +118,7 @@ const ChartWorkout = ({ userId }) => {
           <h3 className="text-warning fw-bold weekly-tracker-header">
             Weekly Exercise Tracker
           </h3>
-          <Slider {...sliderSettings} className="slider-container">
+          
             <div>
               <div className="chart-wrapper">
                 {/* Put the canvas inside a div with fixed width of 400px */}
@@ -128,7 +128,7 @@ const ChartWorkout = ({ userId }) => {
               </div>
             </div>
             {/* Add more weeks here if desired */}
-          </Slider>
+        
         </div>
       </div>
     </div>

@@ -1,22 +1,35 @@
-const router = require('express').Router();
-const sets = require('../db/queries/sets');
+const router = require("express").Router();
+const sets = require("../db/queries/sets");
 const pool = require("../configs/db.config");
 
-router.get('/:session_id', (req, res) => {
+router.get("/:session_id", (req, res) => {
   sets
     .getSetBySessionId(req.params.session_id)
     .then((sets) => {
       res.json({ sets });
     })
     .catch((e) => {
-      res
-        .status(500)
-        .json({ error: `error from get set by session_id and exercise_id: ${e.message}` });
+      res.status(500).json({
+        error: `error from get set by session_id and exercise_id: ${e.message}`,
+      });
+    });
+});
+
+router.get("/program/:program_id", (req, res) => {
+  sets
+    .getSetsByProgramId(req.params.program_id)
+    .then((sets) => {
+      res.json({ sets });
+    })
+    .catch((e) => {
+      res.status(500).json({
+        error: `error from get set by session_id and exercise_id: ${e.message}`,
+      });
     });
 });
 
 // Route to handle the POST request to /programs
-router.post("/session/:id", async(req, res) => {
+router.post("/session/:id", async (req, res) => {
   try {
     const { set, sessionId, exerciseName } = req.body;
 
@@ -25,11 +38,14 @@ router.post("/session/:id", async(req, res) => {
     VALUES ($1, $2, $3, $4)
     RETURNING *;
     `;
-    
+
     // SQL to db
     const result = await pool.query(insertToSetsString, [
-      sessionId, set.reps, set.weight, exerciseName ]
-    );
+      sessionId,
+      set.reps,
+      set.resistant,
+      exerciseName,
+    ]);
 
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -37,4 +53,37 @@ router.post("/session/:id", async(req, res) => {
     res.status(500).json({ error: "Error inserting program data" });
   }
 });
+
+// Route to handle the POST request to /:id/delete
+router.post("/:id/delete", async (req, res) => {
+  sets
+    .deleteSetById(req.params.id)
+    .then((sets) => {
+      res.json({ sets });
+    })
+    .catch((e) => {
+      res.status(500).json({ error: `error deleting set: ${e.message}` });
+    });
+});
+
+router.get("/:session_id/:exercise_name", (req, res) => {
+  sets
+    .getSetsBySessionAndExercise(req.params)
+    .then((sets) => {
+      res.json({ sets });
+    })
+    .catch((e) => {
+      res.send({ error: e.message });
+    });
+});
+
+router.delete("/:session_id/:exercise_name", (req, res) => {
+  sets
+    .deleteAllSetsOfSessionAndExercise(req.params)
+    .then((data) => {
+      res.json({ message: "deleted" });
+    })
+    .catch((E) => res.json({ error: error.message }));
+});
+
 module.exports = router;

@@ -2,76 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import "../../styles/Profile.css";
+import { useProfileContext } from "../../contexts/ProfileContext";
 
 //State
 const Profile = () => {
-  const [profile, setProfile] = useState({
-    date_of_birth: null,
-    height: 0,
-    weight: 0,
-    gender: "Not Selected",
-  });
-  const [editing, setEditing] = useState(false); // State to track whether the form is in editing mode or not
-
+  const {
+    profile,
+    setProfile,
+    editing,
+    setEditing,
+    fetchProfile,
+    handleSubmit,
+    handleCancel,
+    handleChange,
+    handleEdit,
+    calculatedAge,
+  } = useProfileContext();
   // get logged in user's profile
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get("/api/profile/4");
-        const formattedDate = moment(response.data.date_of_birth).format("YYYY-MM-DD"); // Format the date
-        setProfile({ ...response.data, date_of_birth: formattedDate });
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
-  
     fetchProfile();
   }, []);
-
-  // on submit
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Submit form data to the server and db
-      const response = await axios.post("/profile", {
-        user_id: 4, // Replace '1' with user-id from current_user prop
-        date_of_birth: profile.date_of_birth,
-        height: profile.height,
-        weight: profile.weight,
-        gender: profile.gender,
-      });
-
-      // Update the profile state with the newly created/updated profile data
-      setProfile(response.data);
-      setEditing(false); // Hide the form after submitting
-    } catch (error) {
-      console.error("Error creating/updating profile:", error);
-    }
-  };
-
-  // Function to handle form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      [name]: value,
-    }));
-  };
-
-  const handleEdit = () => {
-    setEditing(true); // Show the form in editing mode
-  };
-
-  const handleCancel = () => {
-    setEditing(false); // Hide the form
-  };
-
-  //calculate current age
-  const calculatedAge = profile.date_of_birth
-    ? moment().diff(moment(profile.date_of_birth), "years")
-    : null;
-
 
   return (
     <div className="p-5">
@@ -79,7 +29,7 @@ const Profile = () => {
         <div className="col-md-6">
           <div className="card bg-dark text-white">
             <div className="card-header">
-            <h1 className="display-5 fw-light text-warning">Profile</h1>
+              <h1 className="display-5 fw-light text-warning">Profile</h1>
             </div>
             <div className="card-body p-3">
               {editing ? (
@@ -139,6 +89,35 @@ const Profile = () => {
                       <option value="Other">Other</option>
                     </select>
                   </div>
+                  <div className="mb-3">
+                    <label htmlFor="fitness_level" className="form-label">
+                      Fitness Level:
+                    </label>
+                    <select
+                      className="form-select"
+                      id="fitness_level"
+                      name="fitness_level"
+                      value={profile.fitness_level}
+                      onChange={handleChange}
+                    >
+                      <option value="beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="expert">Expert</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="goal" className="form-label">
+                      Goal:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="goal"
+                      name="goal"
+                      value={profile.goal}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <div className="form-buttons-container">
                     <button
                       type="submit"
@@ -156,13 +135,18 @@ const Profile = () => {
                     </button>
                   </div>
                 </form>
-                // Toggle between form and display
               ) : (
+                // Toggle between form and display
                 <div className="row row-cols-2 gy-3">
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Age</div>
-                      <div className="value"> {calculatedAge !== null ? `${calculatedAge}` : "Birth date not entered"}</div>
+                      <div className="value">
+                        {" "}
+                        {calculatedAge !== null
+                          ? `${calculatedAge}`
+                          : "Birth date not entered"}
+                      </div>
                     </div>
                   </div>
                   <div className="col">
@@ -181,6 +165,29 @@ const Profile = () => {
                     <div className="profile-card p-3">
                       <div className="key">Gender</div>
                       <div className="value">{profile.gender}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Fitness Level</div>
+                      <div className="value">{profile.fitness_level}</div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="profile-card p-3">
+                      <div className="key">Goal</div>
+                      <div className="value">{profile.goal}</div>
+                    </div>
+                  </div>
+                  {/* show program id here */}
+                  <div className="">
+                    <div className="profile-card p-3">
+                      <div className="key">Program Name</div>
+                      {profile.program_id ? (
+                        <div className="value">{profile.name}</div>
+                      ) : (
+                        <div className="value">No Program Selected</div>
+                      )}
                     </div>
                   </div>
                 </div>

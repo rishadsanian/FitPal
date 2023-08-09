@@ -53,7 +53,7 @@ const SignUp = () => {
         onSubmit={onSignUp}
       >
         <div className="container bg-dark text-white rounded py-5 px-3">
-          <h3 className="text-warning fw-bold">Creat an account</h3>
+          <h3 className="text-warning fw-bold">Create an account</h3>
           <p className="text-secondary">
             You guys can put some messages here if you want
           </p>

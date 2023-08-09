@@ -1,9 +1,17 @@
 const db = require('../../configs/db.config');
 
 const getAllPrograms = () => {
-  return db.query('SELECT * FROM programs;').then((data) => {
+  return db.query('SELECT * FROM programs ORDER BY id;').then((data) => {
     return data.rows;
   });
+};
+
+const getAllProgramsByUserId = (id) => {
+  return db
+    .query('SELECT * FROM programs WHERE user_id = $1 ORDER BY id;', [id])
+    .then((data) => {
+      return data.rows;
+    });
 };
 
 const getProgramById = (id) => {
@@ -30,4 +38,4 @@ const deleteProgramById = (id) => {
     });
 }
 
-module.exports = { getAllPrograms, getProgramById, getProgramBySessionId, deleteProgramById };
+module.exports = { getAllPrograms, getAllProgramsByUserId, getProgramById, getProgramBySessionId, deleteProgramById };
