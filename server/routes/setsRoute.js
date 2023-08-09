@@ -30,7 +30,7 @@ router.post('/session/:id', async (req, res) => {
     const result = await pool.query(insertToSetsString, [
       sessionId,
       set.reps,
-      set.weight,
+      set.resistant,
       exerciseName,
     ]);
 
@@ -54,15 +54,20 @@ router.post('/:id/delete', async (req, res) => {
 });
 
 router.get('/:session_id/:exercise_name', (req, res) => {
-  console.log(req.params);
   sets
     .getSetsBySessionAndExercise(req.params)
     .then((sets) => {
-      res.json({sets})
+      res.json({ sets });
     })
     .catch((e) => {
       res.send({ error: e.message });
     });
+});
+
+router.delete('/:session_id/:exercise_name', (req, res) => {
+  sets.deleteAllSetsOfSessionAndExercise(req.params).then((data) => {
+    res.json({ message: 'deleted' });
+  }).catch(E=>res.json({error: error.message}));
 });
 
 module.exports = router;

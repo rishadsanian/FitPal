@@ -33,4 +33,25 @@ const getSetsBySessionAndExercise = (data) => {
     .catch((e) => console.log(`Error from getting set: ${e.message}`));
 };
 
-module.exports = { getSetBySessionId, deleteSetById, getSetsBySessionAndExercise };
+const deleteAllSetsOfSessionAndExercise = (data) => {
+  const queryString = `
+    DELETE FROM sets
+    WHERE session_id = $1 AND exercise_name = $2;
+  `;
+  const { session_id, exercise_name } = data;
+  return db
+    .query(queryString, [session_id, exercise_name])
+    .then((data) => {
+      if (!data) {
+        return 'Error of deleting sets for this exercise of this sesstion';
+      }
+      return data.rows;
+    })
+    .catch((e) => console.log(`Error from getting set: ${e.message}`));
+};
+module.exports = {
+  getSetBySessionId,
+  deleteSetById,
+  getSetsBySessionAndExercise,
+  deleteAllSetsOfSessionAndExercise
+};
