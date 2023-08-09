@@ -30,40 +30,50 @@ const SliderComponent = () => {
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   const [userExercises, setUserExercises] = useState();
-  const { profile } = useProfileContext();
+  const { profile, fetchProfile } = useProfileContext();
   const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
+ 
+  const programName = profile.name;
 
-  // const uniqueExerciseNames = [
-  //   ...new Set(workoutHistory.map((workout) => workout.exercise.name)),
+  let exerciseList = []; //needs to be a state
+
+  const uniqueExerciseNames = [
+    ...new Set(workoutHistory.map((workout) => workout.exercise.name))]
   
-    const programId = profile.program_id;
-    const programName = profile.name;
-  
-    let exerciseList = []; //needs to be a state
-  // ];
   const recommendedSessionExercises = exerciseList.map(
     (exercise) => exercise.name
   );
 
-  // console.log("programid in axios",programId);
-  // useEffect(() => {
-  //   axios.get(`http://localhost:8080/sets/program/${programId}`).then((res) => {
-      
-  //   //Set up the list of exercises from sets
-      
-  //     for (const set of res.data.sets) {
-  //       if (
-  //         !exerciseList
-  //           .map((exercise) => exercise.name)
-  //           .includes(set.exercise_name)
-  //       ) {
-  //         exerciseList.push({ name: set.exercise_name });
-  //       }
-  //     }
-  //     setUserExercises(exerciseList);
-  //   });
-  // }, []);
+  
+ 
+  useEffect(() => {
+    fetchProfile();  
+  }, []);
 
+  useEffect(() => {
+    console.log("got profile", profile)
+    if(profile.program_id){
+      axios.get(`http://localhost:8080/sets/program/${profile.program_id}`).then((res) => {
+        
+      //Set up the list of exercises from sets
+        console.log(res.data);
+        for (const set of res.data.sets) {
+          if (
+            !exerciseList
+              .map((exercise) => exercise.name)
+              .includes(set.exercise_name)
+          ) {
+            exerciseList.push({ name: set.exercise_name });
+          }
+        }
+        console.log(res.data.sets);
+        setUserExercises(exerciseList);
+      });
+    }
+  }, [profile.user_id]);
+
+  console.log("Exercise List", exerciseList);
+console.log("Workout History", workoutHistory);
   // const uniqueExercisesCompleted = workoutHistory.map((workout)=>{workout.exercise_name = })
 
   const getSlidesToShow = (windowWidth) => {
@@ -111,22 +121,21 @@ const SliderComponent = () => {
 
   //current day as day of week
   const currentDate = moment();
+  const dayOfWeek = (currentDate.day() + 6) % 7;
   
-
-
-
   return (
     <div className="slider-container bg-dark p-5">
       {/* <h2 className="slider-title text-warning">Program Schedule</h2> */}
       <Slider {...settings}>
-        {/* {exerciseList.map((workout, index) => ( */}
+        {exerciseList.map((workout, index) => (
           <SliderItem
-            key={1}
+            key={index}
+            exercise="{workout.exercise}"
             // exercise={workout.exercise}
             day={moment().day()}
-            // icon={workout.icon}
+            icon={workout.icon}
           />
-        {/* ))} */}
+         ))}
       </Slider>
     </div>
   );
