@@ -13,6 +13,7 @@ function CardList(props) {
       editable={props.editable}
       userView={props.userView}
       currentProfile={props.currentProfile}
+      setCurrentProfile={props.setCurrentProfile}
     />
   ));
 

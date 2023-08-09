@@ -32,8 +32,6 @@ router.get('/:id', (req, res) => {
 router.post('/program/:id', async (req, res) => {
   try {
     const { name, program_id } = req.body;
-
-    console.log(name, program_id);
     // queryString
     const queryString = `
       INSERT INTO Sessions (name, program_id)

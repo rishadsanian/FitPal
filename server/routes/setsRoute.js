@@ -37,4 +37,22 @@ router.post("/session/:id", async(req, res) => {
     res.status(500).json({ error: "Error inserting program data" });
   }
 });
+
+// Route to handle the POST request to /:id/delete
+router.post("/:id/delete", async(req, res) => {
+  sets
+    .deleteSetById(req.params.id)
+    .then((sets) => {
+      res.json({ sets });
+    })
+    .catch((e) => {
+      res
+        .status(500)
+        .json({ error: `error deleting set: ${e.message}` });
+    });
+});
+
+
+
+
 module.exports = router;
