@@ -29,6 +29,10 @@ const MUSCLE = {
   triceps: "Triceps",
 };
 
+//TODO MOVE API KEY TO .ENV / USE NEW KEY/DELETE THIS ONE
+const API_KEY = "Fj2LIBjGKtBSKvtmbX2ZASJH9NzxyqednyyPebSu";
+const API_URL = "https://api.api-ninjas.com/v1/exercises";
+
 // Provider component
 export function WorkoutProvider({ children }) {
   ////////////////////////////////STATES///////////////////////////////////////
@@ -48,7 +52,7 @@ export function WorkoutProvider({ children }) {
   const [currentSlideindex, setCurrentSlideIndex] = useState(null);
   ////////////////////////////////////////////////////////////////////////////////
 
-  ////////////////////////////////FUNCTIONS///////////////////////////////////////
+  //////////////////////////////FUNCTIONS///////////////////////////////////////
 
   /////////////////////////////////CRUD Functions//////////////////////////////
   //Get history
@@ -186,6 +190,7 @@ export function WorkoutProvider({ children }) {
 
   // Define context values
   const contextValues = {
+    MUSCLE,
     muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
@@ -212,6 +217,8 @@ export function WorkoutProvider({ children }) {
     handleMuscleGroupSelection,
     handleExerciseSelection,
     handleSubmit,
+    API_KEY,
+    API_URL
   };
 
   return (
