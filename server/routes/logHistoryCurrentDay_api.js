@@ -6,18 +6,16 @@ const pool = require("../configs/db.config");
 router.get("/:user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
-
-    // Get the current date in readable format
-    const currentDate = new Date().toISOString().split("T")[0];
+    const { date } = req.query;
+  
 
     // Query to fetch current day workout history for the current user and current date
     const queryString = `
-      SELECT * FROM log
-      WHERE user_id = $1 AND DATE(timestamp) = $2
-      ORDER BY timestamp DESC;
-    `;
-
-    const result = await pool.query(queryString, [user_id, currentDate]);
+    SELECT * FROM log
+    WHERE user_id = $1 AND timestamp::date = $2
+    ORDER BY timestamp DESC;
+  `;
+    const result = await pool.query(queryString, [user_id, date]);
 
     res.json(result.rows);
   } catch (error) {

@@ -5,3 +5,6 @@ INSERT INTO programs (user_id, name, description) VALUES (1, 'Superman workout',
 INSERT INTO programs (user_id, name, description) VALUES (2, 'Full Body Strength','A full-body weight training program to build strength and muscle.');
 
 INSERT INTO programs (user_id, name, description) VALUES (2, 'Upper Body Strength', 'A weight training program focused on building upper body strength.');
+INSERT INTO programs (user_id, name, description) VALUES (4, 'Full Body Strength','A full-body weight training program to build strength and muscle.');
+
+INSERT INTO programs (user_id, name, description) VALUES (4, 'Upper Body Strength', 'A weight training program focused on building upper body strength.');
