@@ -34,6 +34,8 @@ const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 //////////////////////////////////////////////////////////////////Set states
 const Log = () => {
+  ////////////////////////////////STATES///////////////////////////////////////
+  //  work out form
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -42,15 +44,14 @@ const Log = () => {
   const [weightLoad, setWeightLoad] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] =
     useState("");
-
+  // history
   const [workoutHistory, setWorkoutHistory] = useState([]);
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
   const [currentSlideindex, setCurrentSlideIndex] = useState(null);
 
-  ///////////////////////////////////////////////////////////////WORKOUT HISTORY
+  /////////////////////////////////CRUD Functions//////////////////////////////
   //Get history
-
   const fetchWorkoutHistory = async () => {
     try {
       const response = await axios.get(`/api/history/4`, {
@@ -76,8 +77,6 @@ const Log = () => {
             timestamp: moment(currentDate).format("YYYY-MM-DD HH:mm:ss"), // Set timestamp to current date
           },
         ];
-        // setWorkoutHistory(response.data);
-        // setCurrentSlideIndex(999);
       } else {
         // If there's data, set workoutHistory with the response data
         setWorkoutHistory(response.data);
@@ -90,12 +89,6 @@ const Log = () => {
   };
 
   //--------------------------------------------------------------------------//
-  useEffect(() => {
-    fetchWorkoutHistory();
-  }, [currentDate]);
-  //////////////////////////////////////////////////////////////////////////////
-
-  //--------------------------------------------------------------------------//
   //Edit  workout
   const handleEditWorkout = (workout) => {
     setSelectedMuscleGroup(workout.muscle_group);
@@ -106,15 +99,6 @@ const Log = () => {
     setEditingWorkout(workout);
   };
 
-  //--------------------------------------------------------------------------//
-  //Cancel Edit
-  const handleCancelEdit = () => {
-    setSelectedExercise("");
-    setReps("");
-    setWeightLoad("");
-    setEditingWorkout(null);
-  };
-  //--------------------------------------------------------------------------//
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
     try {
@@ -126,59 +110,8 @@ const Log = () => {
     }
   };
   //--------------------------------------------------------------------------//
-  // Slider handle to change to show different days
-  const handleSliderChange = (index) => {
-    setCurrentSlideIndex(index);
-    const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
-    setCurrentDate(newDate);
-    console.log("index:", index);
-  };
 
-  ///////////////////////////////////////////////////////////////WORKOUT LOG
-  useEffect(() => {
-    // Use Select Muscle group as the first option in dropdown menu
-    if (muscleGroups.length > 0) {
-      const firstMuscleGroup = "Select Muscle Group";
-      setSelectedMuscleGroup(firstMuscleGroup);
-    }
-  }, [muscleGroups]);
-  //--------------------------------------------------------------------------//
-  useEffect(() => {
-    // Fetch exercises from API based on the selected muscle group
-    const fetchExercisesByMuscle = async () => {
-      try {
-        const response = await axios.get(API_URL, {
-          headers: { "X-Api-Key": API_KEY },
-          params: { muscle: selectedMuscleGroup },
-        });
-        setExercises(response.data);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-
-    fetchExercisesByMuscle();
-  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
-  //---------------------------------------------------------------------------//
-  useEffect(() => {
-    //load exercise from api response and account for any changes
-    const exercise = exercises.find((ex) => ex.name === selectedExercise);
-    //Dynamic display to show instructions for each exercise or null if no exercise is selected
-    setSelectedExerciseDescription(exercise?.instructions || "");
-  }, [selectedExercise]);
-  //allow for browsing through different exercises
-  const handleMuscleGroupSelection = (e) => {
-    const selectedMuscle = e.target.value;
-    setSelectedMuscleGroup(selectedMuscle);
-  };
-  ////////////////////////////////////////////////////////////////////////////////
-
-  //set selected exercise to updated selection
-  const handleExerciseSelection = (e) => {
-    setSelectedExercise(e.target.value);
-  };
-  ////////////////////////////////////////////////////////////////////////
-  // On submit
+  // Post workout
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -214,7 +147,73 @@ const Log = () => {
       console.error("Error logging workout:", error);
     }
   };
-  ///////////////////////////////////////////////////////////////////////////////
+  //--------------------------------------------------------------------------//
+  //Other Functions
+
+  //Cancel Edit
+  const handleCancelEdit = () => {
+    setSelectedExercise("");
+    setReps("");
+    setWeightLoad("");
+    setEditingWorkout(null);
+  };
+  //--------------------------------------------------------------------------//
+  //allow for browsing through different exercises
+  const handleMuscleGroupSelection = (e) => {
+    const selectedMuscle = e.target.value;
+    setSelectedMuscleGroup(selectedMuscle);
+  };
+  //--------------------------------------------------------------------------//
+  // Slider handle to change to show different days
+  const handleSliderChange = (index) => {
+    setCurrentSlideIndex(index);
+    const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
+    setCurrentDate(newDate);
+    console.log("index:", index);
+  };
+  //--------------------------------------------------------------------------//
+    //set selected exercise to updated selection
+    const handleExerciseSelection = (e) => {
+      setSelectedExercise(e.target.value);
+    };
+  /////////////////////////////////////////////Use effects/////////////////////
+  useEffect(() => {
+    fetchWorkoutHistory();
+  }, [currentDate]);
+
+  useEffect(() => {
+    // Use Select Muscle group as the first option in dropdown menu
+    if (muscleGroups.length > 0) {
+      const firstMuscleGroup = "Select Muscle Group";
+      setSelectedMuscleGroup(firstMuscleGroup);
+    }
+  }, [muscleGroups]);
+
+  useEffect(() => {
+    // Fetch exercises from API based on the selected muscle group
+    const fetchExercisesByMuscle = async () => {
+      try {
+        const response = await axios.get(API_URL, {
+          headers: { "X-Api-Key": API_KEY },
+          params: { muscle: selectedMuscleGroup },
+        });
+        setExercises(response.data);
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+      }
+    };
+
+    fetchExercisesByMuscle();
+  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
+
+  useEffect(() => {
+    //load exercise from api response and account for any changes
+    const exercise = exercises.find((ex) => ex.name === selectedExercise);
+    //Dynamic display to show instructions for each exercise or null if no exercise is selected
+    setSelectedExerciseDescription(exercise?.instructions || "");
+  }, [selectedExercise]);
+  //////////////////////////////////////////////////////////////////////////////
+  
   return (
     <div className="log container m-auto p-auto">
       <div
@@ -375,10 +374,7 @@ const Log = () => {
                       </tr>
                       {workoutHistory.map((workout) => (
                         <tr key={workout.exercise_name}>
-                          <td
-                           
-                            className="d-flex flex-row  justify-content-between"
-                          >
+                          <td className="d-flex flex-row  justify-content-between">
                             <div className="d-flex flex-column justify-content-start align-items-start">
                               <div>{workout.exercise_name}</div>
                               <div>
