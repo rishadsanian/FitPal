@@ -1,12 +1,10 @@
 import React from "react";
-import {useWorkoutContext} from "../../contexts/WorkoutContext";
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
-
-
 
 const WorkoutHistory = () => {
   const {
@@ -58,39 +56,41 @@ const WorkoutHistory = () => {
                         </p>
                       </td>
                     </tr>
-                    <tr>
-                      <td className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-column justify-content-start align-items-start">
-                          <div>{workout.exercise_name}</div>
-                          <div>
-                            <div className="badge text-bg-warning me-2">
-                              {workout.resistance > 0 &&
-                                `${workout.resistance} lbs`}
-                            </div>
-                            <div className="badge text-bg-warning">
-                              {workout.reps > 0 && `${workout.reps} Reps`}
+                    {workoutHistory.map((workout) => (
+                      <tr key={workout.exercise_name}>
+                        <td className="d-flex flex-row  justify-content-between">
+                          <div className="d-flex flex-column justify-content-start align-items-start">
+                            <div>{workout.exercise_name}</div>
+                            <div>
+                              <div className="badge text-bg-warning me-2">
+                                {workout.resistance > 0 &&
+                                  `${workout.resistance} lbs`}
+                              </div>
+                              <div className="badge text-bg-warning">
+                                {workout.reps > 0 && `${workout.reps} Reps`}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        {workout.reps > 0 && (
-                          <div className="d-flex justify-content-end gap-3 p-2">
-                            <button
-                              onClick={() => handleEditWorkout(workout)}
-                              disabled={editingWorkout === workout}
-                              className="btn btn-dark"
-                            >
-                              <i className="far fa-pen-to-square fa-xl text-light"></i>
-                            </button>
-                            <button
-                              onClick={() => handleDeleteWorkout(workout.id)}
-                              className="btn btn-dark"
-                            >
-                              <i className="far fa-trash-can fa-xl text-danger"></i>
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
+                          {workout.reps > 0 && (
+                            <div className="d-flex justify-content-end gap-3 p-2">
+                              <button
+                                onClick={() => handleEditWorkout(workout)}
+                                disabled={editingWorkout === workout}
+                                className="btn btn-dark"
+                              >
+                                <i className="far fa-pen-to-square fa-xl text-light"></i>
+                              </button>
+                              <button
+                                onClick={() => handleDeleteWorkout(workout.id)}
+                                className="btn btn-dark"
+                              >
+                                <i className="far fa-trash-can fa-xl text-danger"></i>
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
