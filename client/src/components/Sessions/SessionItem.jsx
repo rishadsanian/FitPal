@@ -7,8 +7,6 @@ const SessionItem = (props) => {
 
   const deleteItem = async () => {
     for(const set of props.sets) {
-      console.log(props.sets)
-
       if(set.exercise_name === props.exercise.name){
         try {
           // Submit form data to the server
@@ -56,10 +54,10 @@ const SessionItem = (props) => {
         {/* {add edit - delete button} */}
         <div className="align-self-center">
           <button className="btn" onClick={() => deleteItem()}>
-            <i className="fa-solid fa-check fa-xl text-light"></i>
+            <i className="fa-solid fa-check fa-xl text-danger"></i>
           </button>
           <button className="btn" onClick={() => setDeleteMode(false)}>
-            <i className="fa-solid fa-x fa-xl text-danger"></i>
+            <i className="fa-solid fa-x fa-xl text-light"></i>
           </button>
         </div>
       </td> 

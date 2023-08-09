@@ -21,11 +21,10 @@ const SessionDetail = () => {
 
   const onSaveSessionName = (e) => {
     e.preventDefault();
-    console.log(session_id)
-    const data= {
+    const data = {
       id: session_id,
-      name: title
-    }
+      name: title,
+    };
     axios
       .post(`http://localhost:8080/sessions/${session_id}`, data)
       .then((res) => {
@@ -38,8 +37,16 @@ const SessionDetail = () => {
       });
   };
 
-  const onDeleteSession = () => {
-    //delete session
+  const onDeleteSession = (e) => {
+    e.preventDefault();
+    axios
+      .delete(`http://localhost:8080/sessions/${session_id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.href = '/programs';
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   const onChangeName = (e) => {
@@ -73,7 +80,7 @@ const SessionDetail = () => {
   }, []);
 
   const exercisesListItem = exercises.map((exercise, index) => {
-    return <SessionItem key={index} sets={sets} exercise={exercise}/>
+    return <SessionItem key={index} sets={sets} exercise={exercise} />;
   });
 
   return (
@@ -100,8 +107,8 @@ const SessionDetail = () => {
             </form>
           ) : (
             <div className="d-flex justify-content-between mb-5">
-              <h1 className="display-5 fw-bold text-warning">{title}</h1>
-              <div className="align-self-center">
+              <h3 className="fw-bold text-warning">{title}</h3>
+              <div className="d-flex">
                 <button
                   className="btn btn-dark"
                   onClick={onEditSessionName}
@@ -120,7 +127,6 @@ const SessionDetail = () => {
               <table className="table table-dark table-striped">
                 <tbody>{exercisesListItem}</tbody>
               </table>
-              
             ) : (
               <p className="display-6 fw-light text-white">
                 no exercises added yet
