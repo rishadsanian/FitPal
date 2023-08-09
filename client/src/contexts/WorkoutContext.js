@@ -36,7 +36,7 @@ const API_URL = "https://api.api-ninjas.com/v1/exercises";
 // Provider component
 export function WorkoutProvider({ children }) {
   ////////////////////////////////STATES///////////////////////////////////////
-  //Workout Form
+  //  work out form
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -45,14 +45,10 @@ export function WorkoutProvider({ children }) {
   const [weightLoad, setWeightLoad] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] =
     useState("");
-  //History
+  // history
   const [workoutHistory, setWorkoutHistory] = useState([]);
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
-  const [currentSlideindex, setCurrentSlideIndex] = useState(null);
-  ////////////////////////////////////////////////////////////////////////////////
-
-  //////////////////////////////FUNCTIONS///////////////////////////////////////
 
   /////////////////////////////////CRUD Functions//////////////////////////////
   //Get history
@@ -64,27 +60,9 @@ export function WorkoutProvider({ children }) {
         },
       }); // Replace 4 with the current user id
       console.log("fetchworkouthistory:", response.data);
-      // Check if response contains data
-
-      if (response.data.length === 0) {
-        handleSliderChange(currentSlideindex + 1);
-        // If no data, set workoutHistory to an array with a placeholder entry
-        const emptyWorkout = [
-          {
-            exercise_id: 999,
-            exercise_name: "No workouts for that day",
-            id: 99,
-            session_id: 0,
-            user_id: 4,
-            resistance: 0, // Default resistance value
-            reps: 0, // Default reps value
-            timestamp: moment(currentDate).format("YYYY-MM-DD HH:mm:ss"), // Set timestamp to current date
-          },
-        ];
-      } else {
-        // If there's data, set workoutHistory with the response data
-        setWorkoutHistory(response.data);
-      }
+     
+      setWorkoutHistory(response.data);
+      // }
 
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
@@ -152,7 +130,6 @@ export function WorkoutProvider({ children }) {
     }
   };
   //--------------------------------------------------------------------------//
-
   //Other Functions
 
   //Cancel Edit
@@ -171,7 +148,6 @@ export function WorkoutProvider({ children }) {
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
   const handleSliderChange = (index) => {
-    setCurrentSlideIndex(index);
     const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
     setCurrentDate(newDate);
     console.log("index:", index);
@@ -182,11 +158,19 @@ export function WorkoutProvider({ children }) {
     setSelectedExercise(e.target.value);
   };
 
+  
   useEffect(() => {
     // Initialize muscle groups here or fetch them from an API
     const initialMuscleGroups = Object.keys(MUSCLE);
     setMuscleGroups(initialMuscleGroups);
   }, []);
+  
+  useEffect(() => {
+    fetchWorkoutHistory();
+  }, [currentDate]);
+
+ 
+
 
   // Define context values
   const contextValues = {
@@ -209,14 +193,13 @@ export function WorkoutProvider({ children }) {
     setEditingWorkout,
     currentDate,
     setCurrentDate,
-    currentSlideindex,
-    setCurrentSlideIndex,
     handleEditWorkout,
     handleCancelEdit,
     handleDeleteWorkout,
     handleMuscleGroupSelection,
     handleExerciseSelection,
     handleSubmit,
+    handleSliderChange,
     API_KEY,
     API_URL,
     // WorkoutHistory,
