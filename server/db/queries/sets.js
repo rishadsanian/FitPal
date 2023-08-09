@@ -10,6 +10,13 @@ const getSetBySessionId = (session_id) => {
   });
 };
 
+const deleteSetById = (id) => {
+  return db
+    .query('DELETE FROM sets WHERE id = $1;', [id])
+    .then((data) => {
+      return data.rows;
+    });
+}
 
 
-module.exports = { getSetBySessionId };
+module.exports = { getSetBySessionId, deleteSetById };

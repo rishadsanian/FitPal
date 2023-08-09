@@ -40,6 +40,7 @@ function ProgramsPage(props) {
             editable={true}
             userView={props.userView}
             currentProfile={currentProfile}
+            setCurrentProfile={setCurrentProfile}
           />
           
           }
@@ -50,6 +51,7 @@ function ProgramsPage(props) {
           editable={false}
           userView={props.userView}
           currentProfile={currentProfile}
+          setCurrentProfile={setCurrentProfile}
         />
         </div>
         

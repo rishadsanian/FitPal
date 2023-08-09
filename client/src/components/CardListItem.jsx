@@ -16,9 +16,8 @@ function ProgramListItem(props) {
   const [editMode, setEditMode] = useState(false);
   // Toggle the class on the card when the program is the current program for the user
   const cardClass = (props.currentProfile 
-    && props.currentProfile.program_id 
-    && (props.currentProfile.program_id !== props.programId)) 
-    ? "card bg-dark text-start" : "card bg-dark text-start border-warning"
+    && (props.currentProfile.program_id === props.programId)) 
+    ? "card bg-dark text-start border-warning" : "card bg-dark text-start"
 
 
   const navigate = useNavigate();
@@ -45,9 +44,11 @@ function ProgramListItem(props) {
             name: newSessionName,
             program_id,
           }
+          
         );
+        setSessions([...sessions, response.data])
+        setNewSessionName("");
         // reload the page after the session is created
-        window.location.reload(true);
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -77,8 +78,7 @@ function ProgramListItem(props) {
           `/profile/`,
           {...props.currentProfile, program_id: programId}
         );
-        // reload the page after the session is created
-        window.location.reload(true);
+        props.setCurrentProfile({...props.currentProfile, program_id: programId})
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -94,8 +94,7 @@ function ProgramListItem(props) {
           `/programs/${programId}/update`,
           programUpdate
         );
-        // reload the page after the session is created
-        window.location.reload();
+        setEditMode(false);
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error('Error creating session:', error);
@@ -150,8 +149,8 @@ function ProgramListItem(props) {
         ) : (
           <div className="card-body ">
             {/* If not in edit mode */}
-            <h3 className="text-warning">{props.name}</h3>
-            <p className="text-white">{props.description}</p>
+            <h3 className="text-warning">{programUpdate.name}</h3>
+            <p className="text-white">{programUpdate.description}</p>
           </div>
         )}
         {/* Add session form */}
@@ -162,6 +161,7 @@ function ProgramListItem(props) {
                 type="text"
                 className="form-control bg-secondary opacity-75 text-white"
                 placeholder="Add session"
+                value={newSessionName}
                 onChange={(e) => setNewSessionName(e.target.value)}
               />
               <button
@@ -184,7 +184,7 @@ function ProgramListItem(props) {
         
         {props.userView && <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
           {/* Toggle star Icon when the current program is the users selected program*/}
-           {props.currentProfile && props.currentProfile.program_id && (props.currentProfile.program_id !== props.programId) ? 
+           {props.currentProfile && (props.currentProfile.program_id !== props.programId) ? 
             <button
               className="btn btn-dark"
               onClick={() => updateCurrentProgram(props.programId)}
