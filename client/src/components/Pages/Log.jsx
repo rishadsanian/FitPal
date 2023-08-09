@@ -46,6 +46,7 @@ const Log = () => {
   const [workoutHistory, setWorkoutHistory] = useState([]);
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
+  const [currentSlideindex, setCurrentSlideIndex] = useState(null);
 
   ///////////////////////////////////////////////////////////////WORKOUT HISTORY
   //Get history
@@ -57,24 +58,31 @@ const Log = () => {
           date: currentDate, // Send the current date as a parameter for SQL
         },
       }); // Replace 4 with the current user id
-
+      console.log("fetchworkouthistory:", response.data);
       // Check if response contains data
+
       if (response.data.length === 0) {
+        handleSliderChange(currentSlideindex+1);
         // If no data, set workoutHistory to an array with a placeholder entry
-        setWorkoutHistory([
+        const emptyWorkout = [
           {
+            exercise_id: 999,
             exercise_name: "No workouts for that day",
+            id: 99,
+            session_id: 0,
+            user_id: 4,
             resistance: 0, // Default resistance value
             reps: 0, // Default reps value
             timestamp: moment(currentDate).format("YYYY-MM-DD HH:mm:ss"), // Set timestamp to current date
           },
-        ]);
+        ];
+        // setWorkoutHistory(response.data);
+        // setCurrentSlideIndex(999);
       } else {
         // If there's data, set workoutHistory with the response data
         setWorkoutHistory(response.data);
       }
 
-      console.log("fetchworkouthistory:", workoutHistory);
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
@@ -120,6 +128,7 @@ const Log = () => {
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
   const handleSliderChange = (index) => {
+    setCurrentSlideIndex(index);
     const newDate = moment().subtract(index, "days").format("YYYY-MM-DD");
     setCurrentDate(newDate);
     console.log("index:", index);
@@ -206,7 +215,6 @@ const Log = () => {
     }
   };
   ///////////////////////////////////////////////////////////////////////////////
-
   return (
     <div className="log container m-auto p-auto">
       <div
@@ -335,77 +343,81 @@ const Log = () => {
 
         <Slider
           dots={true}
-          infinite={true}
+          infinite={false}
           slidesToShow={1}
           slidesToScroll={1}
           afterChange={(index) => handleSliderChange(index)}
         >
-          {workoutHistory
-            .filter((workout) =>
-              moment(workout.timestamp).isSame(currentDate, "day")
-            )
-            .map((workout) => (
-              <div
-                key={workout.id}
-                className="workout-entry border rounded p-3 mb-2 slick-slide"
-                style={{
-                  margin: "0 10px",
-                  backgroundColor: "rgba(52, 58, 64, 0.75)",
-                }}
-              >
-                <table className="table table-dark table-striped mt-3">
-                  <tbody>
-                    <tr>
-                      <td colSpan="2">
-                        <p className="fw-bold">
-                          {moment(currentDate).format("MMMM D, YYYY")}
-                        </p>
-                      </td>
-                    </tr>
-                    {workoutHistory.map((workout) => (
-                      <tr key={workout.exercise_name}>
-                        <td
-                          role="button"
-                          className="d-flex flex-row  justify-content-between"
-                        >
-                          <div className="d-flex flex-column justify-content-start align-items-start">
-                            <div>
-                              {workout.exercise_name}
-                            </div>
-                            <div>
-                              <div className="badge text-bg-warning me-2">
-                                {workout.resistance > 0 &&
-                                  `${workout.resistance} lbs`}
-                              </div>
-                              <div className="badge text-bg-warning">
-                                {workout.reps > 0 && `${workout.reps} Reps`}
-                              </div>
-                            </div>
-                          </div>
-                          {workout.reps > 0 && (
-                            <div className="d-flex justify-content-end gap-3 p-2">
-                              <button
-                                onClick={() => handleEditWorkout(workout)}
-                                disabled={editingWorkout === workout}
-                                className="btn btn-dark"
-                              >
-                                <i className="far fa-pen-to-square fa-xl text-light"></i>
-                              </button>
-                              <button
-                                onClick={() => handleDeleteWorkout(workout.id)}
-                                className="btn btn-dark"
-                              >
-                                <i className="far fa-trash-can fa-xl text-danger"></i>
-                              </button>
-                            </div>
-                          )}
+          {currentSlideindex === 999 ? (
+            <p> No Workouts Found </p>
+          ) : (
+            workoutHistory
+              .filter((workout) =>
+                moment(workout.timestamp).isSame(currentDate, "day")
+              )
+              .map((workout) => (
+                <div
+                  key={workout.id}
+                  className="workout-entry border rounded p-3 mb-2 slick-slide"
+                  style={{
+                    margin: "0 10px",
+                    backgroundColor: "rgba(52, 58, 64, 0.75)",
+                  }}
+                >
+                  <table className="table table-dark table-striped mt-3">
+                    <tbody>
+                      <tr>
+                        <td colSpan="2">
+                          <p className="fw-bold">
+                            {moment(currentDate).format("MMMM D, YYYY")}
+                          </p>
                         </td>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ))}
+                      {workoutHistory.map((workout) => (
+                        <tr key={workout.exercise_name}>
+                          <td
+                            role="button"
+                            className="d-flex flex-row  justify-content-between"
+                          >
+                            <div className="d-flex flex-column justify-content-start align-items-start">
+                              <div>{workout.exercise_name}</div>
+                              <div>
+                                <div className="badge text-bg-warning me-2">
+                                  {workout.resistance > 0 &&
+                                    `${workout.resistance} lbs`}
+                                </div>
+                                <div className="badge text-bg-warning">
+                                  {workout.reps > 0 && `${workout.reps} Reps`}
+                                </div>
+                              </div>
+                            </div>
+                            {workout.reps > 0 && (
+                              <div className="d-flex justify-content-end gap-3 p-2">
+                                <button
+                                  onClick={() => handleEditWorkout(workout)}
+                                  disabled={editingWorkout === workout}
+                                  className="btn btn-dark"
+                                >
+                                  <i className="far fa-pen-to-square fa-xl text-light"></i>
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleDeleteWorkout(workout.id)
+                                  }
+                                  className="btn btn-dark"
+                                >
+                                  <i className="far fa-trash-can fa-xl text-danger"></i>
+                                </button>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ))
+          )}
         </Slider>
       </div>
     </div>
