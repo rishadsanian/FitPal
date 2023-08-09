@@ -1,4 +1,4 @@
-const db = require('../../configs/db.config');
+const db = require("../../configs/db.config");
 
 const getSetBySessionId = (session_id) => {
   const url = `
@@ -11,12 +11,9 @@ const getSetBySessionId = (session_id) => {
 };
 
 const deleteSetById = (id) => {
-  return db
-    .query('DELETE FROM sets WHERE id = $1;', [id])
-    .then((data) => {
-      return data.rows;
-    });
-}
-
+  return db.query("DELETE FROM sets WHERE id = $1;", [id]).then((data) => {
+    return data.rows;
+  });
+};
 
 module.exports = { getSetBySessionId, deleteSetById };
