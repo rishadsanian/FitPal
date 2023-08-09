@@ -95,7 +95,7 @@ const SliderComponent = () => {
 
   return (
     <div className="slider-container bg-dark p-5">
-      {/* <h2 className="slider-title text-warning">Program Schedule</h2> */}
+      <h2 className="slider-title text-warning">Program Schedule</h2> 
       <Slider {...settings}>
         {mockWorkouts.map((workout, index) => (
           <SliderItem

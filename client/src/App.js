@@ -4,11 +4,11 @@ import { useState } from "react";
 import Navbar from "./components/Navbar-Footer/Navbar";
 
 import Main from "./components/Pages/Main";
-import ProgramDetail from "./components/Programs/ProgramDetail";
-import Login from "./components/Login-SignUp/Login";
-import LandingPage from "./components/Pages/LandingPage";
-import Log from "./components/Pages/Log";
-import DevTest from "./components/Pages/DevTest";
+import Login from './components/Login-SignUp/Login';
+import LandingPage from './components/Pages/LandingPage';
+import Log from './components/Pages/Log';
+import DevTest from './components/Pages/DevTest';
+
 
 import SessionDetail from "./components/Sessions/SessionDetail";
 import ExerciseLog from "./components/Exercises/ExerciseLog";
@@ -17,6 +17,8 @@ import SignUp from "./components/Login-SignUp/SignUp";
 import Profile from "./components/Dashboard/Profile";
 import ProgramsPage from "./components/Pages/ProgramsPage";
 import ChartWorkout from "./components/Dashboard/ChartWorkout";
+
+import ProgramProvider from './providers/ProgramProvider';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
@@ -47,15 +49,15 @@ function App() {
             path="/programs"
             element={
               authenticated ? (
-                <ProgramsPage userView={true} />
+                <ProgramProvider>
+                  <ProgramsPage userView={false}/>
+                </ProgramProvider>
               ) : (
-                <ProgramsPage userView={false} />
+                <ProgramProvider>
+                  <ProgramsPage userView={false}/>
+                </ProgramProvider>
               )
             }
-          />
-          <Route
-            path="/programs/:program_id"
-            element={authenticated ? <ProgramDetail /> : <Login />}
           />
           <Route
             path="/programs/log"
