@@ -1,6 +1,7 @@
 // src/contexts/WorkoutContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import moment from "moment";
+import { userContext } from "./UserContext";
 import axios from "axios";
 import WorkoutHistory from "../components/Log/WorkoutHistory";
 import WorkoutForm from "../components/Log/WorkoutForm.jsx";
@@ -9,6 +10,8 @@ const WorkoutContext = createContext();
 export const useWorkoutContext = () => {
   return useContext(WorkoutContext);
 };
+
+
 
 const MUSCLE = {
   abdominals: "Abdominals",
