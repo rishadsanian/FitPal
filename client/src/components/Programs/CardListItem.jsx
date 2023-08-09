@@ -17,12 +17,8 @@ const daysOfWeek = [
 
 function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
-<<<<<<< HEAD
   const [newSessionName, setNewSessionName] = useState('');
   const [newSessionDay, setNewSessionDay] = useState(0);
-=======
-  const [newSessionName, setNewSessionName] = useState("");
->>>>>>> main
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
   const [potentialDays, setPotentialDays] = useState([]);
   // State for when editing a program
