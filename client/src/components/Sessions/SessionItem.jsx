@@ -37,7 +37,7 @@ const SessionItem = (props) => {
             <div className="d-flex gap-2 flex-wrap">{setList}</div>
           </div>
           {/* {add edit - delete button} */}
-          <div className="align-self-center">
+          <div className="d-flex align-self-center">
             <button className="btn" onClick={props.onClick}>
               <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
             </button>
