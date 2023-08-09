@@ -3,7 +3,7 @@ import { useState, useEffect} from "react";
 
 import TitleImage from "../TitleCards/TitleImage";
 import HistoryList from "../Dashboard/HistoryList";
-import CardList from "../CardList";
+import CardList from "../Programs/CardList";
 import CreateProgram from "../Programs/CreateProgram";
 import CreateSession from "../Sessions/CreateSession";
 import axios from "axios";

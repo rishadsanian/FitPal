@@ -1,8 +1,9 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-import DeletePopupModal from './DeletePopupModal';
+import DeletePopupModal from '../DeletePopupModal';
+import { programContext } from '../../providers/ProgramProvider';
 
 function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
@@ -21,6 +22,9 @@ function ProgramListItem(props) {
 
 
   const navigate = useNavigate();
+
+  // Get program functions from
+  const {deleteProgram, updateProgram} = useContext(programContext);
 
   useEffect(() => {
     // Get the list of sessions based off of the program id
@@ -56,15 +60,6 @@ function ProgramListItem(props) {
     }
   };
 
-  const deleteProgram = async (programId) => {
-    try {
-      // Submit form data to the server
-      await axios.post(`/programs/${programId}/delete`);
-    } catch (error) {
-      console.error('Error deleting program:', error);
-    }
-  };
-
   // navigation for the session
   const navigateToSession = (session) => {
     navigate(`/programs/${props.programId}/sessions/${session.id}`);
@@ -88,17 +83,8 @@ function ProgramListItem(props) {
   // function to toggle edit mode
   const toggleEditMode = async (programId) => {
     if (editMode) {
-      try {
-        // Submit form data to the server
-        const response = await axios.post(
-          `/programs/${programId}/update`,
-          programUpdate
-        );
-        setEditMode(false);
-        // Update the profile state with the newly created/updated profile data
-      } catch (error) {
-        console.error('Error creating session:', error);
-      }
+      updateProgram(programId, programUpdate);
+      setEditMode(false);
     } else {
       setEditMode(true);
     }
@@ -113,9 +99,6 @@ function ProgramListItem(props) {
       </tr>
     );
   });
-
-
-
   return (
     <div className="col my-3">
       <div className={cardClass}>
@@ -180,8 +163,6 @@ function ProgramListItem(props) {
             <tbody>{sessionsListItem}</tbody>
           </table>
         </div>
-
-        
         {props.userView && <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
           {/* Toggle star Icon when the current program is the users selected program*/}
            {props.currentProfile && (props.currentProfile.program_id !== props.programId) ? 

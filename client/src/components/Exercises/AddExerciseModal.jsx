@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddSet from './AddSet';
 import '../../styles/Modals.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const MUSCLE = {
   abdominals: 'Abdominals',
@@ -27,16 +27,13 @@ const MUSCLE = {
 
 const MAX_SETS = 8;
 
-const API_URL = 'https://api.api-ninjas.com/v1/exercises';
-
 const AddExerciseModal = (props) => {
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('');
   const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState('');
   const [sets, setSets] = useState([{ id: 0, weight: 0, reps: 0 }]);
 
-  const navigate = useNavigate();
-  const { program_id, session_id } = useParams();
+  const { session_id } = useParams();
 
   // setup the initial states
   const setInitialValues = async () => {
@@ -52,7 +49,7 @@ const AddExerciseModal = (props) => {
   // Fetch exercises from API based on the selected muscle group
   const fetchExercisesByMuscle = async () => {
     try {
-      const response = await axios.get(API_URL, {
+      const response = await axios.get(process.env.REACT_APP_EXERCISE_API_URL, {
         headers: { 'X-Api-Key': process.env.REACT_APP_EXERCISE_API_KEY },
         params: { muscle: selectedMuscleGroup },
       });

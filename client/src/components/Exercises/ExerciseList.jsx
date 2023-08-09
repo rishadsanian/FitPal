@@ -62,8 +62,6 @@ const ExerciseList = () => {
   };
 
   useEffect(() => {
-    let urlAPI = 'https://api.api-ninjas.com/v1/exercises';
-
     const params = {};
     if (name) {
       params.name = name;
@@ -72,7 +70,7 @@ const ExerciseList = () => {
       params.muscle = muscle;
     }
     axios
-      .get(urlAPI, {
+      .get(process.env.REACT_APP_EXERCISE_API_URL, {
         headers: { 'X-Api-Key': process.env.REACT_APP_EXERCISE_API_KEY },
         params: params,
       })
