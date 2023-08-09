@@ -1,5 +1,5 @@
 import React from "react";
-import { useWorkoutContext } from "./contexts/WorkoutContext";
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

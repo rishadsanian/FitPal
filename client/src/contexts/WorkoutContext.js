@@ -2,10 +2,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
-// Create a context
 const WorkoutContext = createContext();
 
-// Custom hook to use the context
 export const useWorkoutContext = () => {
   return useContext(WorkoutContext);
 };

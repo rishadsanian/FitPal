@@ -1,6 +1,6 @@
 // WorkoutForm.js
 import React from "react";
-import { useWorkoutContext } from "./contexts/WorkoutContext";
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
 
 const WorkoutForm = () => {
   // Using the custom hook to access context values
