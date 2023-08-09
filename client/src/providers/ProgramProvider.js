@@ -16,6 +16,7 @@ export default function ProgramProvider(props) {
 
   // Use effect to fetch program data from the server
   useEffect(() => {
+    
       // Get program data and update appropriate lists
       axios.get(`http://localhost:8080/programs`).then((res) => {
         setAllPrograms(res.data.program)
