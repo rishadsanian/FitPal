@@ -60,23 +60,7 @@ export function WorkoutProvider({ children }) {
         },
       }); // Replace 4 with the current user id
       console.log("fetchworkouthistory:", response.data);
-  
-      if (response.data.length === 0) {
-        const placeholderWorkout = {
-          id: 0,
-          exercise_name: "No workouts recorded",
-          exercise_id: 0,
-          session_id: 0,
-          user_id: 0,
-          resistance: 0,
-          reps: 0,
-          timestamp: moment(),
-        };
-  
-        setWorkoutHistory([placeholderWorkout]);
-      } else {
         setWorkoutHistory(response.data);
-      }
   
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
