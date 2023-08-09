@@ -9,7 +9,7 @@ export default function UserProvider(props) {
   const [authenticated, setAuthenticated] = useState(
     window.sessionStorage.getItem("isAuthenticated")
   );
-  const [userId, setUserId] = useState(window.sessionStorage.getItem("userId"));
+  const [userId, setUserId] = useState(Number(window.sessionStorage.getItem("userId")));
   // This list can get long with a lot of functions.  Reducer may be a better choice
 
   const providerData = { authenticated, userId };

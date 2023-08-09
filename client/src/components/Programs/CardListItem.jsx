@@ -48,22 +48,21 @@ function ProgramListItem(props) {
         newPotentialDays = daysOfWeek.filter((day) => !res.data.sessions.map(session => session.day_of_week).includes(day.day_val));
       });
     setPotentialDays(newPotentialDays);
-    if(newPotentialDays){
+    if(newPotentialDays.length){
       setNewSessionDay(newPotentialDays[0].day_val)
     }
    
   }
 
   useEffect(() => {
-    setUpSessions();
-  }, []);
-
-  useEffect(() => {
-    setPotentialDays(daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val)))
-    if(potentialDays){
-      setNewSessionDay(daysOfWeek[0].day_val)
+    // Update possible session days
+    let newPotentialDays = daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val));
+    setPotentialDays(newPotentialDays)
+    if(newPotentialDays.length){
+      setNewSessionDay(newPotentialDays[0].day_val)
     }
-  }, [potentialDays.length])
+    setUpSessions();
+  }, [sessions.length]);
 
   const createNewSession = async (event, program_id) => {
     // prevent the default form action
@@ -81,8 +80,7 @@ function ProgramListItem(props) {
           }
           
         );
-        setSessions([...sessions, response.data])
-        
+        setSessions([...sessions, response.data].sort((a,b) => a.day_of_week < b.day_of_week))
         setNewSessionName("");
         // reload the page after the session is created
         // Update the profile state with the newly created/updated profile data

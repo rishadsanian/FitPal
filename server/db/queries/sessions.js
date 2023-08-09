@@ -4,7 +4,8 @@ const getAllSessionByProgramId = (id) => {
   return db
     .query(
       `SELECT * FROM sessions
-      WHERE program_id = $1;`,
+      WHERE program_id = $1
+      ORDER BY day_of_week;`,
       [id]
     )
     .then((data) => {

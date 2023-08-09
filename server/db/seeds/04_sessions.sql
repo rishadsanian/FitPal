@@ -2,7 +2,7 @@
 INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Chest-Triceps', 1, 1);
 INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Shoulder-Biceps', 2, 1);
 INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Back-Leg', 3, 1);
-INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Chest', 4, 2);
+INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Chest', 0, 2);
 INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Back', 1, 2);
 INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Shoulder', 2, 2);
 INSERT INTO sessions (name, day_of_week, program_id) VALUES ('Leg', 3, 2);
