@@ -15,6 +15,19 @@ router.get('/:session_id', (req, res) => {
     });
 });
 
+router.get("/program/:program_id", (req, res) => {
+  sets
+    .getSetsByProgramId(req.params.program_id)
+    .then((sets) => {
+      res.json({ sets });
+    })
+    .catch((e) => {
+      res.status(500).json({
+        error: `error from get set by session_id and exercise_id: ${e.message}`,
+      });
+    });
+});
+
 // Route to handle the POST request to /programs
 router.post('/session/:id', async (req, res) => {
   try {
@@ -71,3 +84,4 @@ router.delete('/:session_id/:exercise_name', (req, res) => {
 });
 
 module.exports = router;
+

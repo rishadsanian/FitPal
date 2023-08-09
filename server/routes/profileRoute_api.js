@@ -9,9 +9,11 @@ router.get("/:user_id", async(req, res) => {
 
     // queryString
     const queryString = `
-    SELECT * FROM Profile
-    WHERE profile.user_id = $1
-    ORDER BY timestamp DESC
+    SELECT p.*, pr.name, pr.description
+    FROM Profile p
+    LEFT JOIN programs pr ON p.program_id = pr.id
+    WHERE p.user_id = $1
+    ORDER BY p.timestamp DESC
     LIMIT 1;
   `;
 

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
+
 import "../../styles/Log.css";
 import axios from "axios";
 
@@ -29,6 +30,7 @@ const WorkoutForm = () => {
     setExercises,
     setSelectedExerciseDescription
   } = useWorkoutContext();
+
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
     if (muscleGroups.length > 0) {
