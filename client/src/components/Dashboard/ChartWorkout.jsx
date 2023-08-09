@@ -118,7 +118,7 @@ const ChartWorkout = ({ userId }) => {
           <h3 className="text-warning fw-bold weekly-tracker-header">
             Weekly Exercise Tracker
           </h3>
-          <Slider {...sliderSettings} className="slider-container">
+          
             <div>
               <div className="chart-wrapper">
                 {/* Put the canvas inside a div with fixed width of 400px */}
@@ -128,7 +128,7 @@ const ChartWorkout = ({ userId }) => {
               </div>
             </div>
             {/* Add more weeks here if desired */}
-          </Slider>
+        
         </div>
       </div>
     </div>

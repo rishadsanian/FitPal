@@ -1,3 +1,4 @@
+
 import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
@@ -18,7 +19,6 @@ import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Dashboard/Profile';
 import ProgramsPage from './components/Pages/ProgramsPage';
 import ChartWorkout from './components/Dashboard/ChartWorkout';
-import ExerciseList from './components/Exercises/ExerciseList';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(window.sessionStorage.getItem('isAuthenticated'));
@@ -37,14 +37,14 @@ function App() {
 
           {/* Page Routes */}
           <Route path="/dashboard" element={authenticated ? <Main /> : <Login/>} />
-          <Route path="/programs" element={authenticated ? <ProgramsPage/> : <Login/>} />
+          <Route path="/programs" element={authenticated ? <ProgramsPage userView={true}/> : <ProgramsPage userView={false}/>} 
+          />
           <Route path="/programs/:program_id" element={authenticated ? <ProgramDetail /> :<Login/>} />
           <Route path="/programs/log" element={authenticated ? <Log /> : <Login/>} />
           <Route path="/profile/1" element={authenticated ? <Profile /> : <Login/>} />
           <Route path="/chartworkout/4" element={authenticated ? <ChartWorkout /> : <Login/>} />
           <Route path="/programs/:program_id/sessions/:session_id" element={authenticated ? <SessionDetail /> : <Login/>} />
           <Route path="/programs/1/sessions/1/exercise/1" element={authenticated ? <ExerciseLog /> : <Login/>} />
-          <Route path='/programs/:program_id/sessions/:session_id/exercises' element={authenticated ? <ExerciseList /> : <Login/>} />
           
           {/* Testing Routes */}
           <Route path="/test" element={<DevTest />} />
