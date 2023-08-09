@@ -40,22 +40,30 @@ function ProgramListItem(props) {
 
   const setUpSessions = async () => {
     // Get the list of sessions based off of the program id
+    let newPotentialDays = [];
     await axios
       .get(`http://localhost:8080/sessions/program/${props.programId}`)
       .then((res) => {
         setSessions(res.data.sessions);
-        setPotentialDays(daysOfWeek.filter((day) => !res.data.sessions.map(session => session.day_of_week).includes(day.day_val)))
+        newPotentialDays = daysOfWeek.filter((day) => !res.data.sessions.map(session => session.day_of_week).includes(day.day_val));
       });
-      
-    if(potentialDays){
-      console.log(potentialDays[0].day_val)
-      setNewSessionDay(potentialDays[0].day_val)
+    setPotentialDays(newPotentialDays);
+    if(newPotentialDays){
+      setNewSessionDay(newPotentialDays[0].day_val)
     }
+   
   }
 
   useEffect(() => {
     setUpSessions();
   }, []);
+
+  useEffect(() => {
+    setPotentialDays(daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val)))
+    if(potentialDays){
+      setNewSessionDay(daysOfWeek[0].day_val)
+    }
+  }, [potentialDays.length])
 
   const createNewSession = async (event, program_id) => {
     // prevent the default form action
@@ -74,10 +82,7 @@ function ProgramListItem(props) {
           
         );
         setSessions([...sessions, response.data])
-        setPotentialDays(daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val)))
-        if(potentialDays){
-          setNewSessionDay(daysOfWeek[0].day_val)
-        }
+        
         setNewSessionName("");
         // reload the page after the session is created
         // Update the profile state with the newly created/updated profile data
