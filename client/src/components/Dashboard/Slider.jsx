@@ -111,7 +111,7 @@ const SliderComponent = () => {
 
   //current day as day of week
   const currentDate = moment();
-  const currentDayOfWeek = (currentDate.day() + 6) % 7;
+  
 
 
 
@@ -123,7 +123,7 @@ const SliderComponent = () => {
           <SliderItem
             key={1}
             // exercise={workout.exercise}
-            day={currentDayOfWeek}
+            day={moment().day()}
             // icon={workout.icon}
           />
         {/* ))} */}
