@@ -6,32 +6,9 @@ import AddSet from './AddSet';
 import '../../styles/Modals.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const MUSCLE = {
-  abdominals: 'Abdominals',
-  abductors: 'Abductors',
-  adductors: 'Adductors',
-  biceps: 'Biceps',
-  calves: 'Calves',
-  chest: 'Chest',
-  forearms: 'Forearms',
-  glutes: 'Glutes',
-  hamstrings: 'Hamstrings',
-  lats: 'Lats',
-  lower_back: 'Lower Back',
-  middle_back: 'Middle Back',
-  neck: 'Neck',
-  quadriceps: 'Quadriceps',
-  traps: 'Traps',
-  triceps: 'Triceps',
-};
-
 const MAX_SETS = 8;
 
-const API_URL = 'https://api.api-ninjas.com/v1/exercises';
-
 const AddExerciseModal = (props) => {
-  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('');
-  const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState('');
   const [sets, setSets] = useState([{ id: 0, weight: 0, reps: 0 }]);
 
@@ -40,32 +17,23 @@ const AddExerciseModal = (props) => {
 
   // setup the initial states
   const setInitialValues = async () => {
-    setSelectedMuscleGroup(props.muscle);
-    await fetchExercisesByMuscle();
     setSelectedExercise(props.name);
   };
 
   useEffect(() => {
     setInitialValues();
-  }, []);
-
-  // Fetch exercises from API based on the selected muscle group
-  const fetchExercisesByMuscle = async () => {
-    try {
-      const response = await axios.get(API_URL, {
-        headers: { 'X-Api-Key': process.env.REACT_APP_EXERCISE_API_KEY },
-        params: { muscle: selectedMuscleGroup },
+    axios
+      .get(`http://localhost:8080/sets/${session_id}/${props.name}`)
+      .then((res) => {
+        if (!res.error) {
+          console.log(res.data.sets);
+          
+        }
+      })
+      .catch((e) => {
+        console.log(e);
       });
-      setExercises(response.data);
-    } catch (error) {
-      console.error('Error fetching exercises:', error);
-    }
-    console.log(exercises);
-  };
-
-  useEffect(() => {
-    fetchExercisesByMuscle();
-  }, [selectedMuscleGroup]);
+  }, []);
 
   const closeModal = async (e) => {
     e.preventDefault();
@@ -85,7 +53,7 @@ const AddExerciseModal = (props) => {
       }
       // Navigate back to correct page after submitting
       // navigate(`/programs/${program_id}/sessions/${session_id}`);
-      window.location.reload(true)
+      window.location.reload(true);
     } catch (error) {
       console.error('Error creating session:', error);
     }
@@ -144,10 +112,21 @@ const AddExerciseModal = (props) => {
               ))}
 
               <div className="d-flex justify-content-between gap-2 mt-3">
-                <button className="btn btn-outline-light flex-fill" onClick={addSet}>
+                <button
+                  className="btn btn-outline-light flex-fill"
+                  onClick={addSet}
+                >
                   <i className="fa-solid fa-plus fa-xs"></i>
                 </button>
-                <button className={sets.length === 1 ? "btn btn-outline-secondary flex-fill" : "btn btn-outline-light flex-fill"} onClick={removeSet} disabled={sets.length === 1}>
+                <button
+                  className={
+                    sets.length === 1
+                      ? 'btn btn-outline-secondary flex-fill'
+                      : 'btn btn-outline-light flex-fill'
+                  }
+                  onClick={removeSet}
+                  disabled={sets.length === 1}
+                >
                   <i className="fa-solid fa-minus fa-xs"></i>
                 </button>
               </div>

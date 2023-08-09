@@ -62,7 +62,6 @@ const ExerciseItem = (props) => {
       {modalDisplay && (
         <AddExerciseModal
           name={exercise.name}
-          muscle={exercise.muscle}
           setModalDisplay={setModalDisplay}
         />
       )}

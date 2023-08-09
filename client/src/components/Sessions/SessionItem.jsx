@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const SessionItem = (props) => {
   const [deleteMode, setDeleteMode] = useState();
-  const [editSet, setEditSet] = useState(false);
+  // const [editSet, setEditSet] = useState(props.editSet);
 
   const deleteItem = async () => {
     for (const set of props.sets) {
@@ -20,8 +20,6 @@ const SessionItem = (props) => {
     }
     window.location.reload();
   };
-
-  const onEditSets = () => {};
 
   const setList = props.sets
     .filter((set) => set.exercise_name === props.exercise.name)
@@ -40,7 +38,7 @@ const SessionItem = (props) => {
           </div>
           {/* {add edit - delete button} */}
           <div className="align-self-center">
-            <button className="btn" onClick={onEditSets}>
+            <button className="btn" onClick={props.onClick}>
               <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
             </button>
             <button className="btn" onClick={() => setDeleteMode(true)}>
@@ -49,7 +47,10 @@ const SessionItem = (props) => {
           </div>
         </td>
       ) : (
-        <td role="button" className="p-3 d-flex justify-content-between">
+        <td
+          role="button"
+          className="p-3 d-flex justify-content-between align-items-center"
+        >
           <div>
             <h6 className="">Deleting {props.exercise.name}</h6>
           </div>

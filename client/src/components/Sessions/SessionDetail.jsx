@@ -2,14 +2,16 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import ExerciseList from '../Exercises/ExerciseList';
-import DeletePopupModal from '../DeletePopupModal';
 import SessionItem from './SessionItem';
+import AddExerciseModal from '../Exercises/AddExerciseModal';
 
 const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
   const [sets, setSets] = useState([]);
   const [editMode, setEditmode] = useState(false);
+  const [editSet, setEditSet] = useState(false);
+  const [selectedEx, setSelectedEx] = useState('');
 
   // get the session id from the url
   const { session_id } = useParams();
@@ -53,6 +55,11 @@ const SessionDetail = () => {
     setTitle(e.target.value);
   };
 
+  const onEdit = (exercise) => {
+    setEditSet(true);
+    setSelectedEx(exercise);
+  };
+
   useEffect(() => {
     axios
       .get(`http://localhost:8080/sessions/${session_id}`)
@@ -80,7 +87,16 @@ const SessionDetail = () => {
   }, []);
 
   const exercisesListItem = exercises.map((exercise, index) => {
-    return <SessionItem key={index} sets={sets} exercise={exercise} />;
+    return (
+      <SessionItem
+        key={index}
+        sets={sets}
+        exercise={exercise}
+        onClick={() => {
+          onEdit(exercise);
+        }}
+      />
+    );
   });
 
   return (
@@ -138,6 +154,13 @@ const SessionDetail = () => {
           <ExerciseList />
         </div>
       </div>
+
+      {editSet && (
+        <AddExerciseModal
+          setModalDisplay={setEditSet}
+          name={selectedEx.name}
+        />
+      )}
     </div>
   );
 };

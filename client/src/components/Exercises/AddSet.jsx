@@ -25,7 +25,7 @@ const AddExerciseModal = (props) => {
     <div>
       <div className="row row-cols-sm-2 my-2">
         <div className="col">
-          <div class="input-group flex-nowrap">
+          <div className="input-group flex-nowrap">
             <span className="input-group-text" id="addon-wrapping">
               Weight
             </span>
@@ -41,7 +41,7 @@ const AddExerciseModal = (props) => {
           </div>
         </div>
         <div className="col">
-          <div class="input-group flex-nowrap">
+          <div className="input-group flex-nowrap">
             <span className="input-group-text" id="addon-wrapping">
               Reps
             </span>
