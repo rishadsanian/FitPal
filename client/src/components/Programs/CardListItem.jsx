@@ -5,10 +5,22 @@ import { useNavigate } from "react-router";
 import DeletePopupModal from "../DeletePopupModal";
 import { programContext } from "../../contexts/ProgramProvider";
 
+const daysOfWeek = [
+  {day_val: 0, day: "Monday"},
+  {day_val: 1, day: "Tuesday"},
+  {day_val: 2, day: "Wednesday"},
+  {day_val: 3, day: "Thursday"},
+  {day_val: 4, day: "Friday"},
+  {day_val: 5, day: "Saturday"},
+  {day_val: 6, day: "Sunday"},
+]
+
 function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
-  const [newSessionName, setNewSessionName] = useState("");
+  const [newSessionName, setNewSessionName] = useState('');
+  const [newSessionDay, setNewSessionDay] = useState(0);
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+  const [potentialDays, setPotentialDays] = useState([]);
   // State for when editing a program
   const [programUpdate, setProgramUpdate] = useState({
     name: props.name,
@@ -26,14 +38,31 @@ function ProgramListItem(props) {
   // Get program functions from
   const { deleteProgram, updateProgram } = useContext(programContext);
 
-  useEffect(() => {
+  const setUpSessions = async () => {
     // Get the list of sessions based off of the program id
-    axios
+    let newPotentialDays = [];
+    await axios
       .get(`http://localhost:8080/sessions/program/${props.programId}`)
       .then((res) => {
         setSessions(res.data.sessions);
+        newPotentialDays = daysOfWeek.filter((day) => !res.data.sessions.map(session => session.day_of_week).includes(day.day_val));
       });
-  }, []);
+    setPotentialDays(newPotentialDays);
+    if(newPotentialDays.length){
+      setNewSessionDay(newPotentialDays[0].day_val)
+    }
+   
+  }
+
+  useEffect(() => {
+    // Update possible session days
+    let newPotentialDays = daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val));
+    setPotentialDays(newPotentialDays)
+    if(newPotentialDays.length){
+      setNewSessionDay(newPotentialDays[0].day_val)
+    }
+    setUpSessions();
+  }, [sessions.length]);
 
   const createNewSession = async (event, program_id) => {
     // prevent the default form action
@@ -42,11 +71,16 @@ function ProgramListItem(props) {
     if (newSessionName) {
       try {
         // Submit form data to the server
-        const response = await axios.post(`/sessions/program/${program_id}`, {
-          name: newSessionName,
-          program_id,
-        });
-        setSessions([...sessions, response.data]);
+        const response = await axios.post(
+          `/sessions/program/${program_id}`,
+          {
+            name: newSessionName,
+            day_of_week: newSessionDay,
+            program_id,
+          }
+          
+        );
+        setSessions([...sessions, response.data].sort((a,b) => a.day_of_week < b.day_of_week))
         setNewSessionName("");
         // reload the page after the session is created
         // Update the profile state with the newly created/updated profile data
@@ -92,8 +126,9 @@ function ProgramListItem(props) {
   const sessionsListItem = sessions.map((session, index) => {
     return (
       <tr key={index}>
-        <td role="button" onClick={() => navigateToSession(session)}>
-          {session.name}
+        <td className="d-flex justify-content-between" role="button" onClick={() => navigateToSession(session)}>
+          <span>{daysOfWeek[session.day_of_week].day.slice(0, 3)}</span> 
+          <span>{session.name}</span>
         </td>
       </tr>
     );
@@ -136,28 +171,41 @@ function ProgramListItem(props) {
           </div>
         )}
         {/* Add session form */}
-        {props.editable && (
-          <div className="card-body border-top border-color-white">
-            <form>
-              <div className="input-group flex-nowrap">
-                <input
-                  type="text"
-                  className="form-control bg-secondary opacity-75 text-white"
-                  placeholder="Add session"
-                  value={newSessionName}
-                  onChange={(e) => setNewSessionName(e.target.value)}
-                />
-                <button
-                  className="input-group-text btn btn-warning"
-                  id="addon-wrapping"
-                  onClick={(e) => createNewSession(e, props.programId)}
-                >
-                  <i className="fa-solid fa-plus"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
+        {props.editable && potentialDays.length && <div className="card-body border-top border-color-white">
+          <form>
+            <div className="input-group flex-nowrap">
+              <input
+                type="text"
+                className="form-control bg-secondary opacity-75 text-white"
+                placeholder="Add session"
+                value={newSessionName}
+                onChange={(e) => setNewSessionName(e.target.value)}
+              />
+              <button
+                className="input-group-text btn btn-warning"
+                id="addon-wrapping"
+                onClick={(e) => createNewSession(e, props.programId)}
+              >
+                <i className="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <div className="mb-3 pt-2">
+              <select
+                className="form-select"
+                id="day"
+                name="day"
+                value={newSessionDay}
+                onChange={(e) => {setNewSessionDay(e.target.value)}}
+              >
+                {potentialDays.map((day, index) => (
+                  <option key={index} value={day.day_val}>
+                    {day.day}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </form>
+        </div>}
         {/* Session list */}
         <div className="card-body d-flex justify-content-between text-white">
           <table className="table table-dark table-striped">
