@@ -27,7 +27,6 @@ const MUSCLE = {
 
 const MAX_SETS = 8;
 
-const API_KEY = '66MiBm26oAuvQnk8ovq1gQ==iBf7uenDV84EMsti';
 const API_URL = 'https://api.api-ninjas.com/v1/exercises';
 
 const AddExerciseModal = (props) => {
@@ -54,7 +53,7 @@ const AddExerciseModal = (props) => {
   const fetchExercisesByMuscle = async () => {
     try {
       const response = await axios.get(API_URL, {
-        headers: { 'X-Api-Key': API_KEY },
+        headers: { 'X-Api-Key': process.env.REACT_APP_EXERCISE_API_KEY },
         params: { muscle: selectedMuscleGroup },
       });
       setExercises(response.data);
