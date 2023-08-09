@@ -5,7 +5,6 @@ import { useState } from 'react';
 import Navbar from './components/Navbar-Footer/Navbar';
 
 import Main from "./components/Pages/Main";
-import ProgramDetail from './components/Programs/ProgramDetail';
 import Login from './components/Login-SignUp/Login';
 import LandingPage from './components/Pages/LandingPage';
 import Log from './components/Pages/Log';
@@ -19,6 +18,8 @@ import SignUp from './components/Login-SignUp/SignUp';
 import Profile from './components/Dashboard/Profile';
 import ProgramsPage from './components/Pages/ProgramsPage';
 import ChartWorkout from './components/Dashboard/ChartWorkout';
+
+import ProgramProvider from './providers/ProgramProvider';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(window.sessionStorage.getItem('isAuthenticated'));
@@ -37,9 +38,14 @@ function App() {
 
           {/* Page Routes */}
           <Route path="/dashboard" element={authenticated ? <Main /> : <Login/>} />
-          <Route path="/programs" element={authenticated ? <ProgramsPage userView={true}/> : <ProgramsPage userView={false}/>} 
+          <Route path="/programs" element={authenticated ? 
+            <ProgramProvider>
+              <ProgramsPage userView={true}/>
+            </ProgramProvider> : 
+            <ProgramProvider>
+              <ProgramsPage userView={false}/>
+            </ProgramProvider> } 
           />
-          <Route path="/programs/:program_id" element={authenticated ? <ProgramDetail /> :<Login/>} />
           <Route path="/programs/log" element={authenticated ? <Log /> : <Login/>} />
           <Route path="/profile/1" element={authenticated ? <Profile /> : <Login/>} />
           <Route path="/chartworkout/4" element={authenticated ? <ChartWorkout /> : <Login/>} />
