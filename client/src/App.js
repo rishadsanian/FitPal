@@ -48,7 +48,7 @@ function App() {
             element={
               authenticated ? (
                 <ProgramProvider>
-                  <ProgramsPage userView={false} />
+                  <ProgramsPage userView={true} />
                 </ProgramProvider>
               ) : (
                 <ProgramProvider>

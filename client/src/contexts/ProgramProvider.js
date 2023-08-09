@@ -1,4 +1,5 @@
-import {createContext, useState, useEffect} from 'react';
+import {createContext, useState, useEffect, useContext} from 'react';
+import {userContext} from "./UserContext";
 import axios from 'axios';
 // Create a Context
 export const programContext = createContext();
@@ -14,13 +15,16 @@ export default function ProgramProvider(props) {
     description: "",
   }); 
 
+  // ----------------CONTEXT PROVIDERS-------------------------------------//
+  const { userId } = useContext(userContext);
+
   // Use effect to fetch program data from the server
   useEffect(() => {
       // Get program data and update appropriate lists
       axios.get(`http://localhost:8080/programs`).then((res) => {
         setAllPrograms(res.data.program)
-        setUserPrograms(res.data.program.filter((program) => program.user_id === Number(window.sessionStorage.getItem('userId'))));
-        setNonUserPrograms(res.data.program.filter((program) => program.user_id !== Number(window.sessionStorage.getItem('userId'))));
+        setUserPrograms(res.data.program.filter((program) => program.user_id === userId));
+        setNonUserPrograms(res.data.program.filter((program) => program.user_id !== userId));
       });
   }, []);
 

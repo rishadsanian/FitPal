@@ -10,7 +10,7 @@ export const useProfileContext = () => {
 };
 
 export function ProfileProvider({ children }) {
-  // ----------------CONTEXT PROVIDERS-------------------------------------
+  // ----------------CONTEXT PROVIDERS-------------------------------------//
   const { userId } = useContext(userContext);
 
   //------------------------STATES------------------------------------------///
@@ -21,6 +21,8 @@ export function ProfileProvider({ children }) {
     gender: "Not Selected",
     fitness_level: "Not Selected",
     goal: "Not Set",
+    program_id: null,
+    name: null, //program name
   });
   const [editing, setEditing] = useState(false);
   //------------------------------------------------------------------------//
@@ -51,12 +53,14 @@ export function ProfileProvider({ children }) {
         weight: profile.weight,
         gender: profile.gender,
         fitness_level: profile.fitness_level,
+        program_id: profile.program_id,
         goal: profile.goal,
       });
 
       // Update the profile state with the newly created/updated profile data
       setProfile(response.data);
       setEditing(false); // Hide the form after submitting
+      fetchProfile();
     } catch (error) {
       console.error("Error creating/updating profile:", error);
     }
