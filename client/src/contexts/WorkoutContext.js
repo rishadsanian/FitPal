@@ -2,6 +2,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
+// import WorkoutHistory from "../components/Log/WorkoutHistory";
+// import WorkoutForm from "../components/Log/WorkoutForm";
 const WorkoutContext = createContext();
 
 export const useWorkoutContext = () => {
@@ -216,7 +218,9 @@ export function WorkoutProvider({ children }) {
     handleExerciseSelection,
     handleSubmit,
     API_KEY,
-    API_URL
+    API_URL,
+    // WorkoutHistory,
+    // WorkoutForm,
   };
 
   return (
