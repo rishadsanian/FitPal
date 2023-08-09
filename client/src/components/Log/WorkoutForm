@@ -26,15 +26,18 @@ const WorkoutForm = () => {
     <div className="container addlog bg-dark text-white rounded py-5 px-3">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
-        {!editingWorkout && selectedExercise && exercises.length > 0 && (
-          <div>
-            <p className="text-secondary">{selectedExerciseDescription}</p>
-            {/* ... Additional exercise details ... */}
-          </div>
-        )}
-        {editingWorkout && selectedExercise && (
-          <h4 className="text-secondary">{selectedExercise}</h4>
-        )}
+      {!editingWorkout && selectedExercise && exercises.length > 0 && (
+            <div>
+              <p className="text-secondary">{selectedExerciseDescription}</p>
+              <p className="text-secondary">
+                <strong>Difficulty:</strong>{" "}
+                {exercises[0].difficulty.toUpperCase()}
+              </p>
+              <p className="text-secondary">
+                <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+              </p>
+            </div>
+          )}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="text-start">
