@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
+import { userContext } from "../../contexts/UserContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -17,6 +18,8 @@ const WorkoutHistory = () => {
     editingWorkout,
     fetchWorkoutHistory,
   } = useWorkoutContext();
+
+  const { userId } = useContext(userContext);
 
   useEffect(() => {
     fetchWorkoutHistory();

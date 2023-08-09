@@ -7,6 +7,7 @@ import ChartWorkout from "../Dashboard/ChartWorkout";
 import TitleImage from "../TitleCards/TitleImage";
 import "../../styles/Main.css";
 import { ProfileProvider } from "../../contexts/ProfileContext";
+import { WorkoutProvider } from "../../contexts/WorkoutContext";
 //Dashboard/logged in main page
 
 const Main = () => {
@@ -49,7 +50,11 @@ const Main = () => {
       {/* delete slider-container */}
       <div className="bg-dark opacity-75 p-5">
         <h1 className="display-5 fw-light text-warning">Program Schedule</h1>
-        <SliderComponent />
+        <ProfileProvider>
+          <WorkoutProvider>
+          <SliderComponent />
+          </WorkoutProvider>
+        </ProfileProvider>
       </div>
 
       {/* Analytics Section */}

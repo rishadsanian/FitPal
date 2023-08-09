@@ -1,14 +1,19 @@
 // src/contexts/WorkoutContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import moment from "moment";
+import { userContext } from "./UserContext";
 import axios from "axios";
 import WorkoutHistory from "../components/Log/WorkoutHistory";
 import WorkoutForm from "../components/Log/WorkoutForm.jsx";
-const WorkoutContext = createContext();
 
+
+
+const WorkoutContext = createContext();
 export const useWorkoutContext = () => {
   return useContext(WorkoutContext);
 };
+
+
 
 const MUSCLE = {
   abdominals: "Abdominals",
@@ -30,11 +35,16 @@ const MUSCLE = {
 };
 
 //TODO MOVE API KEY TO .ENV / USE NEW KEY/DELETE THIS ONE
-const API_KEY = "Fj2LIBjGKtBSKvtmbX2ZASJH9NzxyqednyyPebSu";
+const API_KEY = process.env.REACT_APP_EXERCISE_API_KEY;
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 // Provider component
 export function WorkoutProvider({ children }) {
+
+    // ----------------CONTEXT PROVIDERS-------------------------------------
+    const { userId } = useContext(userContext);
+
+
   ////////////////////////////////STATES///////////////////////////////////////
   //  work out form
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
@@ -54,25 +64,19 @@ export function WorkoutProvider({ children }) {
   //Get history
   const fetchWorkoutHistory = async () => {
     try {
-      const response = await axios.get(`/api/history/4`, {
+      const response = await axios.get(`/api/history/${userId}`, {
         params: {
           date: currentDate, // Send the current date as a parameter for SQL
         },
-      }); // Replace 4 with the current user id
+      }); 
       console.log("fetchworkouthistory:", response.data);
-        setWorkoutHistory(response.data);
-  
+      setWorkoutHistory(response.data);
+
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
   };
-
-  
-  
-  
-  
-  
 
   //--------------------------------------------------------------------------//
   //Edit  workout
@@ -105,7 +109,7 @@ export function WorkoutProvider({ children }) {
         exercise_name: selectedExercise,
         reps,
         resistance: weightLoad,
-        user_id: 4, // replace with current user id prop
+        user_id: userId, // replace with current user id prop
       };
 
       if (editingWorkout) {
@@ -201,7 +205,7 @@ export function WorkoutProvider({ children }) {
     API_URL,
     WorkoutHistory,
     WorkoutForm,
-    setExercises
+    setExercises,
   };
 
   return (

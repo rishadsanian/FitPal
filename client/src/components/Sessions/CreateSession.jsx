@@ -48,8 +48,8 @@ const CreateSession = () => {
           </div>
 
           <div className="text-start py-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea onChange={handleChange} class="form-control" id="description" name="description" placeholder="description"required />
+            <label for="description" className="form-label">Description</label>
+            <textarea onChange={handleChange} className="form-control" id="description" name="description" placeholder="description"required />
           </div>
 
           <div className="d-grid pt-3">
