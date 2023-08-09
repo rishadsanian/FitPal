@@ -16,6 +16,7 @@ router.get('/:session_id', (req, res) => {
 });
 
 router.get("/program/:program_id", (req, res) => {
+  console.log("here")
   sets
     .getSetsByProgramId(req.params.program_id)
     .then((sets) => {
