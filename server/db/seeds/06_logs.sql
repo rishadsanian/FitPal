@@ -17,7 +17,7 @@ INSERT INTO log (exercise_name, exercise_id, session_id, user_id, resistance, re
   -- 4 days ago
   ('Decline Dumbbell Flyes', 6, 8, 4, 50, 10, NOW() - INTERVAL '4 days'),
   ('Kettlebell sumo deadlift high pull', 12, 8, 4, 40, 12, NOW() - INTERVAL '4 days'),
-  ('Standing dumbbell upright row', 10, 8, 4, 45, 8, NOW() - INTERVAL '4 days'),
+ 
 
   -- 3 days ago
   ('Dumbbell Bench Press', 1, 1, 4, 60, 10, NOW() - INTERVAL '3 days'),
@@ -27,7 +27,7 @@ INSERT INTO log (exercise_name, exercise_id, session_id, user_id, resistance, re
   -- 2 days ago
   ('Incline dumbbell bench press', 3, 2, 4, 55, 10, NOW() - INTERVAL '2 days'),
   ('Low-cable cross-over', 4, 2, 4, 50, 12, NOW() - INTERVAL '2 days'),
-  ('Leverage Shrug', 8, 2, 4, 90, 6, NOW() - INTERVAL '2 days'),
+
 
   -- 1 day ago
   ('Dumbbell Bench Press', 1, 3, 4, 65, 8, NOW() - INTERVAL '1 day'),
