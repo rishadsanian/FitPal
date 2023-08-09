@@ -18,12 +18,10 @@ const WorkoutHistory = () => {
     fetchWorkoutHistory,
   } = useWorkoutContext();
 
-
   useEffect(() => {
     fetchWorkoutHistory();
   }, [currentDate]);
 
- 
   return (
     <div
       className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
@@ -33,19 +31,23 @@ const WorkoutHistory = () => {
 
       <Slider
         dots={true}
-        infinite={false}
+        infinite={true}
+        arrows={true}
         slidesToShow={1}
         slidesToScroll={1}
         afterChange={(index) => handleSliderChange(index)}
       >
-        {workoutHistory
-          .filter((workout) =>
-            moment(workout.timestamp).isSame(currentDate, "date")
-          )
-          .map((workout) => (
+        {workoutHistory.length === 0 ? (
+          // Render a placeholder entry if workoutHistory is empty
+          <div className="workout-entry border rounded p-3 mb-2 slick-slide">
+            No workouts recorded
+          </div>
+        ) : (
+          // Render actual workout entries if workoutHistory is not empty
+          workoutHistory.map((workout) => (
             <div
               key={workout.id}
-              className="workout-entry border rounded p-3 mb-2 slick-slide "
+              className="workout-entry border rounded p-3 mb-2 slick-slide"
               style={{
                 margin: "0 10px",
                 backgroundColor: "rgba(52, 58, 64, 0.75)",
@@ -98,7 +100,8 @@ const WorkoutHistory = () => {
                 </tbody>
               </table>
             </div>
-          ))}
+          ))
+        )}
       </Slider>
     </div>
   );
