@@ -1,10 +1,12 @@
 import React from "react";
-import { useWorkoutContext } from "../../contexts/WorkoutContext";
+import {useWorkoutContext} from "../../contexts/WorkoutContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
+
+
 
 const WorkoutHistory = () => {
   const {
@@ -18,7 +20,10 @@ const WorkoutHistory = () => {
   } = useWorkoutContext();
 
   return (
-    <div className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3" style={{ width: "600px" }}>
+    <div
+      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
+      style={{ width: "600px" }}
+    >
       <h3 className="text-warning fw-bold">Daily Workout History</h3>
 
       <Slider

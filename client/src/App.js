@@ -17,7 +17,6 @@ import SignUp from "./components/Login-SignUp/SignUp";
 import Profile from "./components/Dashboard/Profile";
 import ProgramsPage from "./components/Pages/ProgramsPage";
 import ChartWorkout from "./components/Dashboard/ChartWorkout";
-import { WorkoutProvider } from "./contexts/WorkoutContext";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
@@ -60,15 +59,7 @@ function App() {
           />
           <Route
             path="/programs/log"
-            element={
-              authenticated ? (
-                <WorkoutProvider>
-                  <Log />
-                </WorkoutProvider>
-              ) : (
-                <Login />
-              )
-            }
+            element={authenticated ? <Log /> : <Login />}
           />
           <Route
             path="/profile/1"
