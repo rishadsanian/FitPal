@@ -30,7 +30,7 @@ const MUSCLE = {
 };
 
 //TODO MOVE API KEY TO .ENV / USE NEW KEY/DELETE THIS ONE
-const API_KEY = "Fj2LIBjGKtBSKvtmbX2ZASJH9NzxyqednyyPebSu";
+const API_KEY = process.env.REACT_APP_EXERCISE_API_KEY;
 const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 // Provider component
@@ -60,19 +60,13 @@ export function WorkoutProvider({ children }) {
         },
       }); // Replace 4 with the current user id
       console.log("fetchworkouthistory:", response.data);
-        setWorkoutHistory(response.data);
-  
+      setWorkoutHistory(response.data);
+
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
   };
-
-  
-  
-  
-  
-  
 
   //--------------------------------------------------------------------------//
   //Edit  workout
@@ -201,7 +195,7 @@ export function WorkoutProvider({ children }) {
     API_URL,
     WorkoutHistory,
     WorkoutForm,
-    setExercises
+    setExercises,
   };
 
   return (
