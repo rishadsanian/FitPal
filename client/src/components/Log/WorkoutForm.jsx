@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // WorkoutForm.js
 import { useEffect } from "react";
 import React from "react";

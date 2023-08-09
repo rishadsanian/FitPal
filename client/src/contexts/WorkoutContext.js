@@ -197,6 +197,7 @@ export function WorkoutProvider({ children }) {
     API_URL,
     WorkoutHistory,
     WorkoutForm,
+    setExercises
   };
 
   return (
