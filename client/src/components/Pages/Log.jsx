@@ -34,6 +34,8 @@ const API_URL = "https://api.api-ninjas.com/v1/exercises";
 
 //////////////////////////////////////////////////////////////////Set states
 const Log = () => {
+  ////////////////////////////////STATES///////////////////////////////////////
+  //  work out form
   const [muscleGroups, setMuscleGroups] = useState(Object.keys(MUSCLE));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -42,15 +44,13 @@ const Log = () => {
   const [weightLoad, setWeightLoad] = useState("");
   const [selectedExerciseDescription, setSelectedExerciseDescription] =
     useState("");
-
+  // history
   const [workoutHistory, setWorkoutHistory] = useState([]);
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
-  const [currentSlideindex, setCurrentSlideIndex] = useState(null);
 
-  ///////////////////////////////////////////////////////////////WORKOUT HISTORY
+  /////////////////////////////////CRUD Functions//////////////////////////////
   //Get history
-
   const fetchWorkoutHistory = async () => {
     try {
       const response = await axios.get(`/api/history/4`, {
@@ -59,41 +59,15 @@ const Log = () => {
         },
       }); // Replace 4 with the current user id
       console.log("fetchworkouthistory:", response.data);
-      // Check if response contains data
-
-      if (response.data.length === 0) {
-        handleSliderChange(currentSlideindex + 1);
-        // If no data, set workoutHistory to an array with a placeholder entry
-        const emptyWorkout = [
-          {
-            exercise_id: 999,
-            exercise_name: "No workouts for that day",
-            id: 99,
-            session_id: 0,
-            user_id: 4,
-            resistance: 0, // Default resistance value
-            reps: 0, // Default reps value
-            timestamp: moment(currentDate).format("YYYY-MM-DD HH:mm:ss"), // Set timestamp to current date
-          },
-        ];
-        // setWorkoutHistory(response.data);
-        // setCurrentSlideIndex(999);
-      } else {
-        // If there's data, set workoutHistory with the response data
-        setWorkoutHistory(response.data);
-      }
+     
+      setWorkoutHistory(response.data);
+      // }
 
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
   };
-
-  //--------------------------------------------------------------------------//
-  useEffect(() => {
-    fetchWorkoutHistory();
-  }, [currentDate]);
-  //////////////////////////////////////////////////////////////////////////////
 
   //--------------------------------------------------------------------------//
   //Edit  workout
@@ -106,15 +80,6 @@ const Log = () => {
     setEditingWorkout(workout);
   };
 
-  //--------------------------------------------------------------------------//
-  //Cancel Edit
-  const handleCancelEdit = () => {
-    setSelectedExercise("");
-    setReps("");
-    setWeightLoad("");
-    setEditingWorkout(null);
-  };
-  //--------------------------------------------------------------------------//
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
     try {
@@ -126,59 +91,8 @@ const Log = () => {
     }
   };
   //--------------------------------------------------------------------------//
-  // Slider handle to change to show different days
-  const handleSliderChange = (index) => {
-    setCurrentSlideIndex(index);
-    const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
-    setCurrentDate(newDate);
-    console.log("index:", index);
-  };
 
-  ///////////////////////////////////////////////////////////////WORKOUT LOG
-  useEffect(() => {
-    // Use Select Muscle group as the first option in dropdown menu
-    if (muscleGroups.length > 0) {
-      const firstMuscleGroup = "Select Muscle Group";
-      setSelectedMuscleGroup(firstMuscleGroup);
-    }
-  }, [muscleGroups]);
-  //--------------------------------------------------------------------------//
-  useEffect(() => {
-    // Fetch exercises from API based on the selected muscle group
-    const fetchExercisesByMuscle = async () => {
-      try {
-        const response = await axios.get(API_URL, {
-          headers: { "X-Api-Key": API_KEY },
-          params: { muscle: selectedMuscleGroup },
-        });
-        setExercises(response.data);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-
-    fetchExercisesByMuscle();
-  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
-  //---------------------------------------------------------------------------//
-  useEffect(() => {
-    //load exercise from api response and account for any changes
-    const exercise = exercises.find((ex) => ex.name === selectedExercise);
-    //Dynamic display to show instructions for each exercise or null if no exercise is selected
-    setSelectedExerciseDescription(exercise?.instructions || "");
-  }, [selectedExercise]);
-  //allow for browsing through different exercises
-  const handleMuscleGroupSelection = (e) => {
-    const selectedMuscle = e.target.value;
-    setSelectedMuscleGroup(selectedMuscle);
-  };
-  ////////////////////////////////////////////////////////////////////////////////
-
-  //set selected exercise to updated selection
-  const handleExerciseSelection = (e) => {
-    setSelectedExercise(e.target.value);
-  };
-  ////////////////////////////////////////////////////////////////////////
-  // On submit
+  // Post workout
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -214,7 +128,72 @@ const Log = () => {
       console.error("Error logging workout:", error);
     }
   };
-  ///////////////////////////////////////////////////////////////////////////////
+  //--------------------------------------------------------------------------//
+  //Other Functions
+
+  //Cancel Edit
+  const handleCancelEdit = () => {
+    setSelectedExercise("");
+    setReps("");
+    setWeightLoad("");
+    setEditingWorkout(null);
+  };
+  //--------------------------------------------------------------------------//
+  //allow for browsing through different exercises
+  const handleMuscleGroupSelection = (e) => {
+    const selectedMuscle = e.target.value;
+    setSelectedMuscleGroup(selectedMuscle);
+  };
+  //--------------------------------------------------------------------------//
+  // Slider handle to change to show different days
+  const handleSliderChange = (index) => {
+    const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
+    setCurrentDate(newDate);
+    console.log("index:", index);
+  };
+  //--------------------------------------------------------------------------//
+  //set selected exercise to updated selection
+  const handleExerciseSelection = (e) => {
+    setSelectedExercise(e.target.value);
+  };
+  /////////////////////////////////////////////Use effects/////////////////////
+  useEffect(() => {
+    fetchWorkoutHistory();
+  }, [currentDate]);
+
+  useEffect(() => {
+    // Use Select Muscle group as the first option in dropdown menu
+    if (muscleGroups.length > 0) {
+      const firstMuscleGroup = "Select Muscle Group";
+      setSelectedMuscleGroup(firstMuscleGroup);
+    }
+  }, [muscleGroups]);
+
+  useEffect(() => {
+    // Fetch exercises from API based on the selected muscle group
+    const fetchExercisesByMuscle = async () => {
+      try {
+        const response = await axios.get(API_URL, {
+          headers: { "X-Api-Key": API_KEY },
+          params: { muscle: selectedMuscleGroup },
+        });
+        setExercises(response.data);
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+      }
+    };
+
+    fetchExercisesByMuscle();
+  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
+
+  useEffect(() => {
+    //load exercise from api response and account for any changes
+    const exercise = exercises.find((ex) => ex.name === selectedExercise);
+    //Dynamic display to show instructions for each exercise or null if no exercise is selected
+    setSelectedExerciseDescription(exercise?.instructions || "");
+  }, [selectedExercise]);
+  //////////////////////////////////////////////////////////////////////////////
+
   return (
     <div className="log container m-auto p-auto">
       <div
@@ -348,76 +327,67 @@ const Log = () => {
           slidesToScroll={1}
           afterChange={(index) => handleSliderChange(index)}
         >
-          {currentSlideindex === 999 ? (
-            <p> No Workouts Found </p>
-          ) : (
-            workoutHistory
-              .filter((workout) =>
-                moment(workout.timestamp).isSame(currentDate, "date")
-              )
-              .map((workout) => (
-                <div
-                  key={workout.id}
-                  className="workout-entry border rounded p-3 mb-2 slick-slide"
-                  style={{
-                    margin: "0 10px",
-                    backgroundColor: "rgba(52, 58, 64, 0.75)",
-                  }}
-                >
-                  <table className="table table-dark table-striped mt-3">
-                    <tbody>
-                      <tr>
-                        <td colSpan="2">
-                          <p className="fw-bold">
-                            {moment(currentDate).format("MMMM D, YYYY")}
-                          </p>
-                        </td>
-                      </tr>
-                      {workoutHistory.map((workout) => (
-                        <tr key={workout.exercise_name}>
-                          <td
-                           
-                            className="d-flex flex-row  justify-content-between"
-                          >
-                            <div className="d-flex flex-column justify-content-start align-items-start">
-                              <div>{workout.exercise_name}</div>
-                              <div>
-                                <div className="badge text-bg-warning me-2">
-                                  {workout.resistance > 0 &&
-                                    `${workout.resistance} lbs`}
-                                </div>
-                                <div className="badge text-bg-warning">
-                                  {workout.reps > 0 && `${workout.reps} Reps`}
-                                </div>
+          {workoutHistory
+            .filter((workout) =>
+              moment(workout.timestamp).isSame(currentDate, "date")
+            )
+            .map((workout) => (
+              <div
+                key={workout.id}
+                className="workout-entry border rounded p-3 mb-2 slick-slide"
+                style={{
+                  margin: "0 10px",
+                  backgroundColor: "rgba(52, 58, 64, 0.75)",
+                }}
+              >
+                <table className="table table-dark table-striped mt-3">
+                  <tbody>
+                    <tr>
+                      <td colSpan="2">
+                        <p className="fw-bold">
+                          {moment(currentDate).format("MMMM D, YYYY")}
+                        </p>
+                      </td>
+                    </tr>
+                    {workoutHistory.map((workout) => (
+                      <tr key={workout.exercise_name}>
+                        <td className="d-flex flex-row  justify-content-between">
+                          <div className="d-flex flex-column justify-content-start align-items-start">
+                            <div>{workout.exercise_name}</div>
+                            <div>
+                              <div className="badge text-bg-warning me-2">
+                                {workout.resistance > 0 &&
+                                  `${workout.resistance} lbs`}
+                              </div>
+                              <div className="badge text-bg-warning">
+                                {workout.reps > 0 && `${workout.reps} Reps`}
                               </div>
                             </div>
-                            {workout.reps > 0 && (
-                              <div className="d-flex justify-content-end gap-3 p-2">
-                                <button
-                                  onClick={() => handleEditWorkout(workout)}
-                                  disabled={editingWorkout === workout}
-                                  className="btn btn-dark"
-                                >
-                                  <i className="far fa-pen-to-square fa-xl text-light"></i>
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    handleDeleteWorkout(workout.id)
-                                  }
-                                  className="btn btn-dark"
-                                >
-                                  <i className="far fa-trash-can fa-xl text-danger"></i>
-                                </button>
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ))
-          )}
+                          </div>
+                          {workout.reps > 0 && (
+                            <div className="d-flex justify-content-end gap-3 p-2">
+                              <button
+                                onClick={() => handleEditWorkout(workout)}
+                                disabled={editingWorkout === workout}
+                                className="btn btn-dark"
+                              >
+                                <i className="far fa-pen-to-square fa-xl text-light"></i>
+                              </button>
+                              <button
+                                onClick={() => handleDeleteWorkout(workout.id)}
+                                className="btn btn-dark"
+                              >
+                                <i className="far fa-trash-can fa-xl text-danger"></i>
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
         </Slider>
       </div>
     </div>
