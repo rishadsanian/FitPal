@@ -2,8 +2,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
-// import WorkoutHistory from "../components/Log/WorkoutHistory";
-// import WorkoutForm from "../components/Log/WorkoutForm";
+import WorkoutHistory from "../components/Log/WorkoutHistory";
+import WorkoutForm from "../components/Log/WorkoutForm.jsx";
 const WorkoutContext = createContext();
 
 export const useWorkoutContext = () => {
@@ -60,7 +60,7 @@ export function WorkoutProvider({ children }) {
         },
       }); // Replace 4 with the current user id
       console.log("fetchworkouthistory:", response.data);
-     
+
       setWorkoutHistory(response.data);
       // }
 
@@ -158,19 +158,11 @@ export function WorkoutProvider({ children }) {
     setSelectedExercise(e.target.value);
   };
 
-  
   useEffect(() => {
     // Initialize muscle groups here or fetch them from an API
     const initialMuscleGroups = Object.keys(MUSCLE);
     setMuscleGroups(initialMuscleGroups);
   }, []);
-  
-  useEffect(() => {
-    fetchWorkoutHistory();
-  }, [currentDate]);
-
- 
-
 
   // Define context values
   const contextValues = {
@@ -200,10 +192,11 @@ export function WorkoutProvider({ children }) {
     handleExerciseSelection,
     handleSubmit,
     handleSliderChange,
+    fetchWorkoutHistory,
     API_KEY,
     API_URL,
-    // WorkoutHistory,
-    // WorkoutForm,
+    WorkoutHistory,
+    WorkoutForm,
   };
 
   return (

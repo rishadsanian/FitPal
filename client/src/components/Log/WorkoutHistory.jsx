@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,13 +10,19 @@ const WorkoutHistory = () => {
   const {
     workoutHistory,
     handleSliderChange,
-    currentSlideindex,
     handleEditWorkout,
     handleDeleteWorkout,
     currentDate,
     editingWorkout,
+    fetchWorkoutHistory,
   } = useWorkoutContext();
 
+
+  useEffect(() => {
+    fetchWorkoutHistory();
+  }, [currentDate]);
+
+ 
   return (
     <div
       className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
