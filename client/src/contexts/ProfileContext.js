@@ -4,7 +4,7 @@ import axios from "axios";
 import moment from "moment";
 
 const ProfileContext = createContext();
-export const useWorkoutContext = () => {
+export const useProfileContext = () => {
   return useContext(ProfileContext);
 };
 
@@ -84,10 +84,6 @@ export function ProfileProvider({ children }) {
     : null;
   //--------------------------------------------------------------------//
 
-  // get logged in user's profile
-  useEffect(() => {
-    fetchProfile();
-  }, []);
 
   // on submit
 
