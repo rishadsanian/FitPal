@@ -45,7 +45,7 @@ const WorkoutHistory = () => {
           .map((workout) => (
             <div
               key={workout.id}
-              className="workout-entry border rounded p-3 mb-2 slick-slide"
+              className="workout-entry border rounded p-3 mb-2 slick-slide "
               style={{
                 margin: "0 10px",
                 backgroundColor: "rgba(52, 58, 64, 0.75)",
