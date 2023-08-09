@@ -60,4 +60,13 @@ router.post('/:id', (req, res) => {
     .catch((e) => res.send(e));
 });
 
+router.delete('/:id', (req, res) => {
+  sessions
+    .deleteSession(req.params.id)
+    .then(() => {
+      res.send({ message: 'session deleted' });
+    })
+    .catch((e) => res.send(e));
+});
+
 module.exports = router;
