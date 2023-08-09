@@ -22,8 +22,6 @@ const MUSCLE = {
   triceps: 'Triceps',
 };
 
-const API = 'Q+047KH3H18VkQk32d7afg==Yfc8QaQSMMleaAs9';
-
 const ExerciseList = () => {
   const [name, setName] = useState('');
   const [muscle, setMuscle] = useState('');
@@ -75,7 +73,7 @@ const ExerciseList = () => {
     }
     axios
       .get(urlAPI, {
-        headers: { 'X-Api-Key': API },
+        headers: { 'X-Api-Key': process.env.REACT_APP_EXERCISE_API_KEY },
         params: params,
       })
       .then((res) => {
