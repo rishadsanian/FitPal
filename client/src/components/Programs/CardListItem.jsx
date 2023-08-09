@@ -5,10 +5,22 @@ import { useNavigate } from 'react-router';
 import DeletePopupModal from '../DeletePopupModal';
 import { programContext } from '../../providers/ProgramProvider';
 
+const daysOfWeek = [
+  {day_val: 0, day: "Monday"},
+  {day_val: 1, day: "Tuesday"},
+  {day_val: 2, day: "Wednesday"},
+  {day_val: 3, day: "Thursday"},
+  {day_val: 4, day: "Friday"},
+  {day_val: 5, day: "Saturday"},
+  {day_val: 6, day: "Sunday"},
+]
+
 function ProgramListItem(props) {
   const [sessions, setSessions] = useState([]);
   const [newSessionName, setNewSessionName] = useState('');
+  const [newSessionDay, setNewSessionDay] = useState(0);
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+  const [potentialDays, setPotentialDays] = useState([]);
   // State for when editing a program
   const [programUpdate, setProgramUpdate] = useState({
     name: props.name,
@@ -32,6 +44,10 @@ function ProgramListItem(props) {
       .get(`http://localhost:8080/sessions/program/${props.programId}`)
       .then((res) => {
         setSessions(res.data.sessions);
+        setPotentialDays(daysOfWeek.filter((session, index) => !res.data.sessions.map(session => session.day_of_week).includes(index)))
+        if(potentialDays){
+          setNewSessionDay(potentialDays[0].day_val)
+        }
       });
   }, []);
 
@@ -46,11 +62,17 @@ function ProgramListItem(props) {
           `/sessions/program/${program_id}`,
           {
             name: newSessionName,
+            day_of_week: newSessionDay,
             program_id,
           }
           
         );
         setSessions([...sessions, response.data])
+        setPotentialDays(daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val)))
+        if(potentialDays){
+          setNewSessionDay(daysOfWeek[0].day_val)
+        }
+        
         setNewSessionName("");
         // reload the page after the session is created
         // Update the profile state with the newly created/updated profile data
@@ -93,8 +115,9 @@ function ProgramListItem(props) {
   const sessionsListItem = sessions.map((session, index) => {
     return (
       <tr key={index}>
-        <td role="button" onClick={() => navigateToSession(session)}>
-          {session.name}
+        <td className="d-flex justify-content-between" role="button" onClick={() => navigateToSession(session)}>
+          <span>{daysOfWeek[session.day_of_week].day.slice(0, 3)}</span> 
+          <span>{session.name}</span>
         </td>
       </tr>
     );
@@ -137,7 +160,7 @@ function ProgramListItem(props) {
           </div>
         )}
         {/* Add session form */}
-        {props.editable && <div className="card-body border-top border-color-white">
+        {props.editable && potentialDays.length && <div className="card-body border-top border-color-white">
           <form>
             <div className="input-group flex-nowrap">
               <input
@@ -154,6 +177,21 @@ function ProgramListItem(props) {
               >
                 <i className="fa-solid fa-plus"></i>
               </button>
+            </div>
+            <div className="mb-3 pt-2">
+              <select
+                className="form-select"
+                id="day"
+                name="day"
+                value={newSessionDay}
+                onChange={(e) => {setNewSessionDay(e.target.value)}}
+              >
+                {potentialDays.map((day, index) => (
+                  <option key={index} value={day.day_val}>
+                    {day.day}
+                  </option>
+                ))}
+              </select>
             </div>
           </form>
         </div>}
