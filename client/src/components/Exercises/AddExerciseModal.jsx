@@ -7,8 +7,10 @@ import { useParams } from 'react-router-dom';
 const MAX_SETS = 8;
 
 const AddExerciseModal = (props) => {
+
   const [sets, setSets] = useState([]);
   const { session_id } = useParams();
+
 
   useEffect(() => {
     const fetchSets = async () => {
@@ -28,6 +30,7 @@ const AddExerciseModal = (props) => {
     };
     fetchSets();
   }, [session_id, props.name]);
+
 
   const closeModal = (e) => {
     e.preventDefault();
