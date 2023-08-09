@@ -16,6 +16,18 @@ const deleteSetById = (id) => {
   });
 };
 
+const getSetsByProgramId = (program_id) => {
+  const url = `
+    SELECT sets.exercise_name AS name, sets.resistant AS resistant, sets.reps AS reps FROM sets
+    JOIN sessions ON sets.session_id = sessions.id
+    JOIN programs ON programs.id = sessions.program_id
+    WHERE programs.id = $1;
+  `;
+  return db.query(url, [program_id]).then((data) => {
+    return data.rows;
+  });
+};
+
 const getSetsBySessionAndExercise = (data) => {
   const queryString = `
     SELECT * FROM sets
@@ -51,6 +63,7 @@ const deleteAllSetsOfSessionAndExercise = (data) => {
 };
 module.exports = {
   getSetBySessionId,
+  getSetsByProgramId,
   deleteSetById,
   getSetsBySessionAndExercise,
   deleteAllSetsOfSessionAndExercise

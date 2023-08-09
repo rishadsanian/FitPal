@@ -1,14 +1,13 @@
 import "./styles/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Navbar from "./components/Navbar-Footer/Navbar";
 
 import Main from "./components/Pages/Main";
-import Login from './components/Login-SignUp/Login';
-import LandingPage from './components/Pages/LandingPage';
-import Log from './components/Pages/Log';
-import DevTest from './components/Pages/DevTest';
-
+import Login from "./components/Login-SignUp/Login";
+import LandingPage from "./components/Pages/LandingPage";
+import Log from "./components/Pages/Log";
+import DevTest from "./components/Pages/DevTest";
 
 import SessionDetail from "./components/Sessions/SessionDetail";
 import ExerciseLog from "./components/Exercises/ExerciseLog";
@@ -18,12 +17,11 @@ import Profile from "./components/Dashboard/Profile";
 import ProgramsPage from "./components/Pages/ProgramsPage";
 import ChartWorkout from "./components/Dashboard/ChartWorkout";
 
-import ProgramProvider from './providers/ProgramProvider';
+import ProgramProvider from "./contexts/ProgramProvider";
+import { userContext } from "./contexts/UserContext";
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(
-    window.sessionStorage.getItem("isAuthenticated")
-  );
+  const { authenticated } = useContext(userContext);
 
   return (
     <div className="App">
@@ -50,11 +48,11 @@ function App() {
             element={
               authenticated ? (
                 <ProgramProvider>
-                  <ProgramsPage userView={true}/>
+                  <ProgramsPage userView={true} />
                 </ProgramProvider>
               ) : (
                 <ProgramProvider>
-                  <ProgramsPage userView={false}/>
+                  <ProgramsPage userView={false} />
                 </ProgramProvider>
               )
             }

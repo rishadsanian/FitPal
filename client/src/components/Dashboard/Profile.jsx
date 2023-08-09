@@ -18,11 +18,11 @@ const Profile = () => {
     handleEdit,
     calculatedAge,
   } = useProfileContext();
-    // get logged in user's profile
-    useEffect(() => {
-      fetchProfile();
-    }, []);
-  
+  // get logged in user's profile
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <div className="p-5">
       <div className="row justify-content-center">
@@ -177,6 +177,17 @@ const Profile = () => {
                     <div className="profile-card p-3">
                       <div className="key">Goal</div>
                       <div className="value">{profile.goal}</div>
+                    </div>
+                  </div>
+                  {/* show program id here */}
+                  <div className="">
+                    <div className="profile-card p-3">
+                      <div className="key">Program Name</div>
+                      {profile.program_id ? (
+                        <div className="value">{profile.name}</div>
+                      ) : (
+                        <div className="value">No Program Selected</div>
+                      )}
                     </div>
                   </div>
                 </div>
