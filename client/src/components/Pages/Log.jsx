@@ -62,7 +62,7 @@ const Log = () => {
       // Check if response contains data
 
       if (response.data.length === 0) {
-        handleSliderChange(currentSlideindex+1);
+        handleSliderChange(currentSlideindex + 1);
         // If no data, set workoutHistory to an array with a placeholder entry
         const emptyWorkout = [
           {
@@ -129,7 +129,7 @@ const Log = () => {
   // Slider handle to change to show different days
   const handleSliderChange = (index) => {
     setCurrentSlideIndex(index);
-    const newDate = moment().subtract(index, "days").format("YYYY-MM-DD");
+    const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
     setCurrentDate(newDate);
     console.log("index:", index);
   };
@@ -353,7 +353,7 @@ const Log = () => {
           ) : (
             workoutHistory
               .filter((workout) =>
-                moment(workout.timestamp).isSame(currentDate, "day")
+                moment(workout.timestamp).isSame(currentDate, "date")
               )
               .map((workout) => (
                 <div
@@ -376,7 +376,7 @@ const Log = () => {
                       {workoutHistory.map((workout) => (
                         <tr key={workout.exercise_name}>
                           <td
-                            role="button"
+                           
                             className="d-flex flex-row  justify-content-between"
                           >
                             <div className="d-flex flex-column justify-content-start align-items-start">
