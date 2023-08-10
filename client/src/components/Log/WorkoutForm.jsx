@@ -88,44 +88,46 @@ const WorkoutForm = () => {
         )}
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="text-start mb-3">
-          <label htmlFor="muscleGroup" className="form-label text-secondary">
-            Muscle Group
-          </label>
-          <select
-            id="muscleGroup"
-            className="form-select btn-warning"
-            value={selectedMuscleGroup}
-            onChange={handleMuscleGroupSelection}
-          >
-            <option value="">Select Muscle Group</option>
-            {muscleGroups.map((group) => (
-              <option key={group} value={group}>
-                {MUSCLE[group]}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="text-start mb-3">
-          <label htmlFor="exercise" className="form-label text-secondary">
-            Exercise
-          </label>
-          <select
-            id="exercise"
-            className="form-select btn-warning"
-            value={selectedExercise}
-            onChange={handleExerciseSelection}
-          >
-            <option value="">Select Exercise</option>
-            {exercises.map((exercise) => (
-              <option key={exercise.name} value={exercise.name}>
-                {exercise.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
+        {!editingWorkout && (
+          <div className="text-start mb-3">
+            <label htmlFor="muscleGroup" className="form-label text-secondary">
+              Muscle Group
+            </label>
+            <select
+              id="muscleGroup"
+              className="form-select btn-warning"
+              value={selectedMuscleGroup}
+              onChange={handleMuscleGroupSelection}
+            >
+              <option value="">Select Muscle Group</option>
+              {muscleGroups.map((group) => (
+                <option key={group} value={group}>
+                  {MUSCLE[group]}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {!editingWorkout&& (
+          <div className="text-start mb-3">
+            <label htmlFor="exercise" className="form-label text-secondary">
+              Exercise
+            </label>
+            <select
+              id="exercise"
+              className="form-select btn-warning"
+              value={selectedExercise}
+              onChange={handleExerciseSelection}
+            >
+              <option value="">Select Exercise</option>
+              {exercises.map((exercise) => (
+                <option key={exercise.name} value={exercise.name}>
+                  {exercise.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="row row-cols-sm-2 pt-4">
           <div className="col">
             <div className="input-group flex-nowrap">
