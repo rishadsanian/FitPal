@@ -28,6 +28,19 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/program/:program_id/day/:day_of_week', (req, res) => {
+  sessions
+    .getSessionByProgramIdAndDay(req.params.program_id, req.params.day_of_week)
+    .then((session) => {
+      res.json({ session });
+    })
+    .catch((e) => {
+      res.status(500).json({
+        error: `error from get session by session_id: ${e.message}`,
+      });
+    });
+});
+
 // Route to handle the POST request to /programs
 router.post('/program/:id', async (req, res) => {
   try {

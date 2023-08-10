@@ -1,6 +1,6 @@
-import React from "react";
-import { useContext, useState } from "react";
-import { programContext } from "../../contexts/ProgramProvider";
+import React from "react"
+import { useContext, useState }  from "react"
+import { programContext } from '../../contexts/ProgramProvider';
 
 const CreateProgram = () => {
   const { createProgram, setNewProgram } = useContext(programContext);
@@ -48,9 +48,7 @@ const CreateProgram = () => {
           </div>
 
           <div className="d-grid pt-3">
-            <button onClick={() => createProgram()} className="btn btn-warning">
-              Create
-            </button>
+            <button onClick={() => createProgram()} className="btn btn-warning">Create</button>
           </div>
         </div>
       </form>

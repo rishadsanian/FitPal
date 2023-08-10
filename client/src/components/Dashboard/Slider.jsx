@@ -8,8 +8,6 @@ import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import { useProfileContext } from "../../contexts/ProfileContext";
 import axios from "axios";
 
-import ExerciseList from "../Exercises/ExerciseList";
-
 const daysOfWeek = {
   0: "Monday",
   1: "Tuesday",
@@ -27,6 +25,8 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
     ...new Set(workoutHistory.map((workout) => workout.exercise_name))]
   // console.log("Unique Exercises from workout history", uniqueExerciseNames);
 
+  const uniqueExercises = workoutHistory.filter(workout => workout.exercise_name === exercise)
+
   return (
     <div className="slider-item bg-dark border-warning mx-3">
       <div className="excercise-image">
@@ -35,11 +35,23 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
       <h3 className="exercise text-warning">{exercise}</h3>
       <div>
         {uniqueExerciseNames.includes(exercise) ? (
-          sets.filter((set) => exercise === set.name).map(set => 
-           <div className="badge text-bg-warning mx-2">
-            <span>{set.resistant} lbs/{set.reps} Reps</span>
+          <div>
+            <div>
+              {sets.filter((set) => exercise === set.name).map(set => 
+              <div className="badge text-bg-warning mx-2">
+                <span>{set.resistant} lbs/{set.reps} Reps</span>
+              </div>
+              )}
+            
+            </div>
+            <div>
+              {uniqueExercises.filter((set) => exercise === set.exercise_name).map(set => 
+              <div className="badge text-bg-success mx-2">
+                <span>{set.resistance} lbs/{set.reps} Reps</span>
+              </div>)}
           </div>
-          )
+          </div>
+          
         ) : (
           <button className="text-warning btn border-warning">
             <i className="fa-solid fa-plus"></i>
@@ -58,9 +70,11 @@ const SliderComponent = () => {
 
   const [userExercises, setUserExercises] = useState();
   const [sets, setSets] = useState([]);
+  const [dailySession, setDailySession] = useState({})
+
+  // USE CONTEXT
   const { profile, fetchProfile } = useProfileContext();
   const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
-
   const programName = profile.name;
 
 
@@ -68,10 +82,6 @@ const SliderComponent = () => {
 
   useEffect(() => {
     fetchWorkoutHistory();
-  }, []);
-
-
-  useEffect(() => {
     fetchProfile();
   }, []);
 
@@ -91,11 +101,14 @@ const SliderComponent = () => {
             exerciseList.push({ name: set.name, day_of_week: set.day_of_week });
           }
         }
-
-
       });
-      console.log("exercises", exerciseList);
       setUserExercises(exerciseList);
+    }
+
+    if (profile.program_id) {
+      axios.get(`http://localhost:8080/sessions/program/${profile.program_id}/day/${moment().day() - 1}`).then((res) => {
+        setDailySession(res.data.session)
+      });
     }
   }, [profile.user_id]);
 
@@ -151,6 +164,7 @@ const SliderComponent = () => {
 
   return (
     <div className="slider-container bg-dark p-5">
+      {dailySession &&  <h2 className="slider-title text-warning">{dailySession.name}</h2>}
       <h2 className="slider-title text-warning">{daysOfWeek[moment().day() - 1]}</h2>
       <Slider {...settings}>
         {userExercises && userExercises.map((workout, index) => (
