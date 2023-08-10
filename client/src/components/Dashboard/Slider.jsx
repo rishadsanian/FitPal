@@ -34,26 +34,22 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
       </div>
       <h3 className="exercise text-warning">{exercise}</h3>
       <div>
+        <div>
+          {sets.filter((set) => exercise === set.name).map(set => 
+          <div className="badge text-bg-light mx-2">
+            <span>{set.resistant} lbs/{set.reps} Reps</span>
+          </div>
+          )}
+        </div> 
         {uniqueExerciseNames.includes(exercise) && (
           <div>
-            <div>
-              {sets.filter((set) => exercise === set.name).map(set => 
-              <div className="badge text-bg-warning mx-2">
-                <span>{set.resistant} lbs/{set.reps} Reps</span>
-              </div>
-              )}
-            
-            </div>
-            <div>
-              {uniqueExercises.filter((set) => exercise === set.exercise_name).map(set => 
-              <div className="badge text-bg-success mx-2">
-                <span>{set.resistance} lbs/{set.reps} Reps</span>
-              </div>)}
+            {uniqueExercises.filter((set) => exercise === set.exercise_name).map(set => 
+            <div className="badge text-bg-warning mx-2">
+              <span>{set.resistance} lbs/{set.reps} Reps</span>
+            </div>)}
           </div>
-          </div>
-          
         )}
-        <button className="text-warning btn border-warning">
+        <button className="text-warning btn border-warning mt-3">
           <i className="fa-solid fa-plus"></i>
         </button>
         
