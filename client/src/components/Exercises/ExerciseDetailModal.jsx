@@ -5,12 +5,11 @@ const ExerciseDetailModal = (props) => {
     props.setExerciseDetailDisplay(false);
   };
   return (
-    <div>
+    <div className="">
       <div className="modal-background"></div>
-      <div className="modal-foreground position-fixed top-50 start-50 translate-middle">
+      <div className="modal-foreground position-fixed top-50 start-50 translate-middle col col-11 col-md-7 col-xl-5">
         <div
-          className="container bg-dark text-white rounded p-5"
-          style={{ width: '600px' }}
+          className="bg-dark text-white rounded p-5"
         >
           <div className="modal-header">
             <h3 className="text-warning">{exercise.name}</h3>

@@ -1,20 +1,20 @@
-import React from "react";
-import { useContext, useState, useEffect } from "react";
+import React from 'react';
+import { useContext, useState, useEffect } from 'react';
 
-import CardList from "../Programs/CardList";
-import CreateProgram from "../Programs/CreateProgram";
-import axios from "axios";
-import { programContext } from "../../contexts/ProgramProvider";
+import CardList from '../Programs/CardList';
+import CreateProgram from '../Programs/CreateProgram';
+import axios from 'axios';
+import { programContext } from '../../contexts/ProgramProvider';
 
 function ProgramsPage(props) {
   const [currentProfile, setCurrentProfile] = useState();
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     if (props.userView) {
       axios
         .get(
           `http://localhost:8080/api/profile/${window.sessionStorage.getItem(
-            "userId"
+            'userId'
           )}`
         )
         .then((res) => {
@@ -26,11 +26,34 @@ function ProgramsPage(props) {
   const { allPrograms, userPrograms, nonUserPrograms } =
     useContext(programContext);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Attach the event listener
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  const shouldShowLink = windowWidth <= 720;
+
   return (
     <div className="container-fluid">
       {props.userView ? (
         <div className="row">
           <div className="col col-12 col-md-6 col-lg-7 col-xl-8">
+            {shouldShowLink && (
+              <a
+                className="btn btn-outline-info mt-3 text-white"
+                href="#addProgram"
+              >
+                add program <i class="fa-solid fa-angle-down fa-beat"></i>
+              </a>
+            )}
             {userPrograms.length && (
               <CardList
                 cardData={userPrograms}
@@ -54,7 +77,7 @@ function ProgramsPage(props) {
           </div>
           <div
             className="col col-12 col-md-6 col-lg-5 col-xl-4 bg-dark opacity-75 p-0"
-            style={{ minHeight: "100vh" }}
+            id="addProgram"
           >
             <CreateProgram />
           </div>

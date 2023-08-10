@@ -12,6 +12,7 @@ const SessionDetail = () => {
   const [editMode, setEditmode] = useState(false);
   const [editSet, setEditSet] = useState(false);
   const [selectedEx, setSelectedEx] = useState('');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // get the session id from the url
   const { session_id } = useParams();
@@ -99,9 +100,26 @@ const SessionDetail = () => {
     );
   });
 
+  // For get window width
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Attach the event listener
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  const shouldShowLink = windowWidth <= 720;
+
   return (
     <div>
       <div className="row row-col-1 row-col-md-2">
+        {/* List of exercises in current session */}
         <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
             <form className="mb-5">
@@ -123,7 +141,17 @@ const SessionDetail = () => {
             </form>
           ) : (
             <div className="d-flex justify-content-between mb-5">
-              <h3 className="fw-bold text-warning">{title}</h3>
+              <div>
+                <h3 className="fw-bold text-warning">{title}</h3>
+                {shouldShowLink && (
+                  <a
+                    className="btn btn-link text-info p-0"
+                    href="#addExercise"
+                  >
+                    add exercise
+                  </a>
+                )}
+              </div>
               <div className="d-flex">
                 <button
                   className="btn btn-dark"
@@ -150,7 +178,9 @@ const SessionDetail = () => {
             )}
           </div>
         </div>
-        <div className="col col-12 col-md-6 col-xl-8">
+
+        {/* Add New Exercise Part */}
+        <div className="col col-12 col-md-6 col-xl-8" id="addExercise">
           <ExerciseList />
         </div>
       </div>
