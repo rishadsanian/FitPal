@@ -8,6 +8,7 @@ import TitleImage from "../TitleCards/TitleImage";
 import "../../styles/Main.css";
 import { ProfileProvider } from "../../contexts/ProfileContext";
 import { WorkoutProvider } from "../../contexts/WorkoutContext";
+import ChatGptDailySummary from "../Dashboard/ChatGptDailySummary";
 //Dashboard/logged in main page
 
 const Main = () => {
@@ -29,6 +30,9 @@ const Main = () => {
             <p className="col-md-8 fs-4 text-white">
               CHAT GPT generated motivation
             </p>
+            <ProfileProvider>
+              <ChatGptDailySummary />
+            </ProfileProvider>
           </div>
         </div>
 
@@ -52,7 +56,7 @@ const Main = () => {
         <h1 className="display-5 fw-light text-warning">Program Schedule</h1>
         <ProfileProvider>
           <WorkoutProvider>
-          <SliderComponent />
+            <SliderComponent />
           </WorkoutProvider>
         </ProfileProvider>
       </div>

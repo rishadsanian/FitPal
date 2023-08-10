@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfileContext } from "../../contexts/ProfileContext";
 //Chat GPT motivation message Broiler Pate
-const MotivationalMessage = () => {
+const ChatGptDailySummary = () => {
   const { profile, recentWorkout } = useProfileContext();
   const [motivationalMessage, setMotivationalMessage] = useState("");
   const [lastGeneratedDate, setLastGeneratedDate] = useState(null);
@@ -31,7 +31,7 @@ const MotivationalMessage = () => {
         setLastGeneratedDate(currentDate);
 
         // Generate a new motivational message
-        const prompt = `Generate a motivational message for our fitnes app for a user who is a ${profile.fitness_level} with a goal of ${profile.goal}. They recently completed a workout that included ${recentWorkout.exercise_name} with ${recentWorkout.resistance} lbs of resistance and ${recentWorkout.reps} reps.`; //to add session name,
+        const prompt = `Generate a motivational message for our fitnes app for a user who is a ${profile.fitness_level} with a goal of ${profile.goal}. They recently completed a workout that included ${recentWorkout.exercise_name} with ${recentWorkout.resistance} lbs of resistance and ${recentWorkout.reps} reps.`; //to add session name, list of exerciss.
 
         const response = await axios.post(
           // "https://api.openai.com/v1/engines/davinci-codex/completions",
@@ -40,7 +40,7 @@ const MotivationalMessage = () => {
             prompt: prompt, //different prompts can be passed depending on use cases
             max_tokens: 100, // need to adjust this for length of message
             temperature: 0.7,
-            api_key: "YOUR_OPENAI_API_KEY",
+            api_key: "YOUR_OPENAI_API_KEY", //need .env and .env example to be setup
           }
         );
 
@@ -66,4 +66,4 @@ const MotivationalMessage = () => {
   );
 };
 
-export default MotivationalMessage;
+export default ChatGptDailySummary;
