@@ -25,10 +25,10 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
     // Render actual workout entries if workoutHistory is not empty
     <div
       key={workout.id}
-      className="p-3 pt-4 border bg-dark border-secondary rounded flex-column border-3"
+      className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
       style={{
         margin: "0 10px",
-        maxHeight: "200px",
+        height: "293px",
         overflow: "hidden",
         overflowX: "auto",
         overflowY: "scroll",
@@ -38,7 +38,7 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
         <tbody>
           <tr>
             <td colSpan="2">
-              <p className="fw-bold">
+              <p className="fw-bold text-secondary">
                 {moment(currentDate).format("MMMM D, YYYY")}
               </p>
             </td>
