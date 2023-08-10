@@ -16,17 +16,17 @@ const deleteSetById = (id) => {
   });
 };
 
-const getSetsByProgramId = (program_id) => {
+const getSetsByProgramId = (program_id, day_of_week) => {
   const url = `
-    SELECT sets.exercise_name AS name, sets.resistant AS resistant, sets.reps AS reps FROM sets
+    SELECT sets.exercise_name AS name, sessions.day_of_week AS day_of_week, sets.resistant AS resistant, sets.reps AS reps FROM sets
     JOIN sessions ON sets.session_id = sessions.id
     JOIN programs ON programs.id = sessions.program_id
-    WHERE programs.id = $1;
+    WHERE programs.id = $1 AND sessions.day_of_week = $2;
   `;
-  return db.query(url, [program_id]).then((data) => {
+  return db.query(url, [program_id, day_of_week]).then((data) => {
     return data.rows;
   });
-};
+}; 
 
 const getSetsBySessionAndExercise = (data) => {
   const queryString = `
