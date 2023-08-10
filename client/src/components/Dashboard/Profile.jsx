@@ -153,8 +153,8 @@ const Profile = () => {
                     <div className="profile-card p-3">
                       <div className="key">Height</div>
                       {profile.height ? (
-                      <div className="value">{profile.height}</div>
-                        ) : (
+                        <div className="value">{profile.height}</div>
+                      ) : (
                         <div className="value">Not Set</div>
                       )}
                     </div>
@@ -200,13 +200,17 @@ const Profile = () => {
                     </div>
                   </div>
                   {/* show program id here */}
-                  <div className="">
+                  <div className="col-12">
                     <div className="profile-card p-3">
-                      <div className="key">Program Name</div>
+                      <div className="key">Program</div>
                       {profile.program_id ? (
                         <div className="value">{profile.name}</div>
                       ) : (
-                        <div className="value">No Program Selected</div>
+                        <span className="d-flex align-items-center justify-content-center p-3">
+                        <a href="/programs" className="text-decoration-none text-warning">
+                          <i className="fas fa-plus-circle fa-3x"></i>
+                        </a>
+                      </span>
                       )}
                     </div>
                   </div>
