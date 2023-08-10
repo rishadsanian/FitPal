@@ -30,7 +30,7 @@ const WorkoutHistory = () => {
       className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
       style={{ width: "600px" }}
     >
-      <h3 className="text-warning fw-bold">Daily Workout History</h3>
+      <h3 className="text-warning fw-bold pb-3">Daily Workout History</h3>
 
       <Slider
         dots={true}
@@ -42,7 +42,7 @@ const WorkoutHistory = () => {
       >
         {workoutHistory.length === 0 ? (
           // Render a placeholder entry if workoutHistory is empty
-          <div className="workout-entry border rounded p-3 mb-2 slick-slide">
+          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide">
             No workouts recorded
           </div>
         ) : (
@@ -50,7 +50,7 @@ const WorkoutHistory = () => {
           workoutHistory.map((workout) => (
             <div
               key={workout.id}
-              className="workout-entry border rounded p-3 mb-2 slick-slide"
+              className="workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide"
               style={{
                 margin: "0 10px",
                 backgroundColor: "rgba(52, 58, 64, 0.75)",
