@@ -28,7 +28,7 @@ const Main = () => {
             <h1 className="display-5 fw-bold text-warning">Welcome User</h1>
             <p className="col-md-8 text-white">{currentDate}</p>
             <p className="col-md-8 fs-4 text-white">
-              CHAT GPT generated motivation
+            <h1 className="display-5 fw-light text-warning">Daily Summary</h1> 
             </p>
             <ProfileProvider>
               <ChatGptDailySummary />

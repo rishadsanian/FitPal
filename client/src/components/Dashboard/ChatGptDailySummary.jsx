@@ -12,7 +12,7 @@ const ChatGptDailySummary = () => {
   //need program for user if they are enrolled in one
 
   useEffect(() => {
-    // Fetch the last generated date from storage (localStorage, AsyncStorage, etc.)
+    // Fetch the last generated date from storage
     const storedDate = localStorage.getItem("lastGeneratedDate");
     if (storedDate) {
       setLastGeneratedDate(new Date(storedDate));
@@ -20,7 +20,7 @@ const ChatGptDailySummary = () => {
 
     fetchMotivationalMessage();
   }, [profile]);
-  
+
   const fetchMotivationalMessage = async () => {
     try {
       const currentDate = new Date();
@@ -33,19 +33,24 @@ const ChatGptDailySummary = () => {
         setLastGeneratedDate(currentDate);
 
         // Generate a new motivational message
-        const prompt = `Generate a motivational message for our fitness app for a user who is a ${profile.fitness_level} with a goal of ${profile.goal}. Recommend exercises for the day and a weekly program`;
+        const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}. Suggest specific exercises and workouts for the day and a weekly program based on their goal. Senctence must end before tokens are finished.`;
 
         const key = process.env.REACT_APP_YOUR_OPENAI_API_KEY;
-        // const key = "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";
         console.log("open ai key:", key);
 
         const response = await axios.post(
           "https://api.openai.com/v1/chat/completions",
           {
-            max_tokens: 100,
+            max_tokens: 200,
             temperature: 0.7,
             model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: prompt }],
+            messages: [
+              {
+                role: "system",
+                content: "You are a personal fitness trainer.",
+              },
+              { role: "user", content: prompt },
+            ],
           },
           {
             headers: {
