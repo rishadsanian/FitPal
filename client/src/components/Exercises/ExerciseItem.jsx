@@ -25,7 +25,7 @@ const ExerciseItem = (props) => {
               {exercise.muscle}
             </h6>
           </div>
-          {!props.userExercises
+          {!props.browseMode && (!props.userExercises
             .map((exercise) => exercise.name)
             .includes(exercise.name) ? (
             <button className="btn btn-dark" onClick={handleOnClick}>
@@ -35,7 +35,7 @@ const ExerciseItem = (props) => {
             <button className="btn btn-dark" disabled>
               <i className="fa-solid fa-check text-info"></i>
             </button>
-          )}
+          ))}
         </div>
         <div className="card-body">
           <p className="card-text text-white">

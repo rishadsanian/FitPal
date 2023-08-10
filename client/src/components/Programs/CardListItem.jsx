@@ -92,7 +92,11 @@ function ProgramListItem(props) {
 
   // navigation for the session
   const navigateToSession = (session) => {
-    navigate(`/programs/${props.programId}/sessions/${session.id}`);
+    if(props.editable){
+      navigate(`/programs/${props.programId}/sessions/${session.id}`);
+    } else {
+      navigate(`/programs/${props.programId}/sessions/${session.id}/noedit`);
+    }
   };
 
   // function to toggle edit mode
