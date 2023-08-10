@@ -142,9 +142,9 @@ const SessionDetail = () => {
               </div>
             </form>
           ) : (
-            <div className="d-flex justify-content-between mb-5">
-              <div>
-                <h3 className="fw-bold text-warning">{title}</h3>
+            <div >
+                <h1 className="display-5 pt-3 fw-bold text-white">{title}</h1>
+              <div className="d-flex justify-content-between mb-5">
                 <a
                   className="btn btn-outline-info text-white"
                   href="#addExercise"
@@ -152,17 +152,17 @@ const SessionDetail = () => {
                 >
                   <i className="fa-solid fa-plus"></i> exercise
                 </a>
-              </div>
-              <div className="d-flex">
-                <button
-                  className="btn btn-dark"
-                  onClick={onEditSessionName}
-                >
-                  <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-                </button>
-                <button className="btn btn-dark" onClick={onDeleteSession}>
-                  <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-                </button>
+                <div className="d-flex">
+                  <button
+                    className="btn btn-dark"
+                    onClick={onEditSessionName}
+                  >
+                    <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+                  </button>
+                  <button className="btn btn-dark" onClick={onDeleteSession}>
+                    <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+                  </button>
+                </div>
               </div>
             </div>
           )}
