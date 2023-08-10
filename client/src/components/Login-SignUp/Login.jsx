@@ -83,7 +83,7 @@ const Login = () => {
           </div>
 
           <div className="d-grid pt-3">
-            <button className="btn btn-warning">Log-in</button>
+            <button className="btn btn-warning text-white">Log-in</button>
           </div>
         </div>
       </form>
