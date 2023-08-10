@@ -107,7 +107,7 @@ const ChatGptDailySummary = () => {
 
   return (
     <div className="motivational-message">
-      <p className="col-md-8 fs-4">{motivationalMessage}</p>
+      <p className="col-md-12 col-lg-8 fs-4">{motivationalMessage}</p>
     </div>
   );
 };
