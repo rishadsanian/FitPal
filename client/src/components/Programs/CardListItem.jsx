@@ -141,7 +141,7 @@ function ProgramListItem(props) {
     );
   });
   return (
-    <div className="col my-3">
+    <div className="col my-3" style={{minWidth: '23em'}}>
       <div className={cardClass}>
         {/* Program info */}
         {editMode ? (
