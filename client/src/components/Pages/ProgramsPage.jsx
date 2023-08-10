@@ -51,7 +51,7 @@ function ProgramsPage(props) {
                 className="btn btn-outline-info mt-3 text-white"
                 href="#addProgram"
               >
-                add program <i class="fa-solid fa-angle-down fa-beat"></i>
+                <i class="fa-solid fa-plus"></i> program
               </a>
             )}
             {userPrograms.length && (

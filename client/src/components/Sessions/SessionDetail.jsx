@@ -87,6 +87,10 @@ const SessionDetail = () => {
     return;
   }, []);
 
+  const onRowSelected = (exercise) => {
+   return (<div><h1>exercise.name</h1></div>)
+  };
+
   const exercisesListItem = exercises.map((exercise, index) => {
     return (
       <SessionItem
@@ -95,6 +99,9 @@ const SessionDetail = () => {
         exercise={exercise}
         onClick={() => {
           onEdit(exercise);
+        }}
+        onRowSelected={() => {
+          onRowSelected(exercise);
         }}
       />
     );
@@ -145,10 +152,10 @@ const SessionDetail = () => {
                 <h3 className="fw-bold text-warning">{title}</h3>
                 {shouldShowLink && (
                   <a
-                    className="btn btn-link text-info p-0"
+                    className="btn btn-outline-info text-white"
                     href="#addExercise"
                   >
-                    add exercise
+                    <i class="fa-solid fa-plus"></i> exercise
                   </a>
                 )}
               </div>

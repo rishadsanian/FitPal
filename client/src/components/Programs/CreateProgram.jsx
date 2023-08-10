@@ -20,7 +20,7 @@ const CreateProgram = () => {
         <div className="container bg-dark text-white rounded">
           <h3 className="text-warning fw-bold">Create Program</h3>
           <div className="text-start">
-            <label for="desciption" className="form-label">
+            <label htmlFor="desciption" className="form-label">
               Name
             </label>
             <input
@@ -34,12 +34,12 @@ const CreateProgram = () => {
           </div>
 
           <div className="text-start py-3">
-            <label for="description" class="form-label">
+            <label htmlFor="description" className="form-label">
               Description
             </label>
             <textarea
               onChange={handleChange}
-              class="form-control"
+              className="form-control"
               id="description"
               name="description"
               placeholder="description"
