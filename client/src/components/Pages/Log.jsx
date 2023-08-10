@@ -5,7 +5,7 @@ import { WorkoutProvider } from "../../contexts/WorkoutContext";
 
 const Log = () => {
   return (
-    <div className="log container m-auto p-auto">
+    <div className="log p-5">
       <WorkoutProvider>
         <WorkoutForm />
         <WorkoutHistory />

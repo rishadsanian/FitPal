@@ -15,10 +15,10 @@ const CreateProgram = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="px-3">
       <form id="create_program_form" className="">
         <div className="container bg-dark text-white rounded">
-          <h3 className="text-warning fw-bold">Create Program</h3>
+          <h1 className="display-5 pt-3 fw-bold text-white">Create Program</h1>
           <div className="text-start">
             <label htmlFor="desciption" className="form-label">
               Name

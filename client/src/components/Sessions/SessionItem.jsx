@@ -33,7 +33,7 @@ const SessionItem = (props) => {
       {!deleteMode ? (
         <td role="button" className="p-3 d-flex justify-content-between" onClick={props.onRowSelected}>
           <div>
-            <h6 className="">{props.exercise.name}</h6>
+            <h6 className="text-warning">{props.exercise.name}</h6>
             <div className="d-flex gap-2 flex-wrap">{setList}</div>
           </div>
           {/* {add edit - delete button} */}
