@@ -18,8 +18,8 @@ router.post("/", async(req, res) => {
 
     // queryString
     const queryString = `
-      INSERT INTO log (exercise_name, reps, resistance, user_id, session_id, exercise_id)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO log (exercise_name, reps, resistance, user_id)
+      VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
 
@@ -28,9 +28,7 @@ router.post("/", async(req, res) => {
       exercise_name,
       reps,
       resistance,
-      user_id,
-      session_id,
-      exercise_id,
+      user_id
     ]);
 
     res.status(201).json(result.rows[0]);

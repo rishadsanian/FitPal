@@ -79,7 +79,14 @@ const ExerciseLog = (props) => {
           exercise_name: props.name,
           user_id: window.sessionStorage.getItem('userId'),
         };
-        console.log(data);
+        axios
+          .post(`http://localhost:8080/log/`, data)
+          .then((result) => {
+            // do something when result save 
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       }
     }
   };

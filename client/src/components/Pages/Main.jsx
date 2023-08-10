@@ -25,7 +25,7 @@ const Main = () => {
             <h1 className="display-5 fw-bold text-warning mb-0">
               Welcome User
             </h1>
-            <p className="text-secondary">{currentDate}</p>
+            <p className="text-secondary fw-bold fs-5">{currentDate}</p>
           </div>
           <div className="p-3">
             <ProfileProvider>
