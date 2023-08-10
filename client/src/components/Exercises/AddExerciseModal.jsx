@@ -11,7 +11,6 @@ const AddExerciseModal = (props) => {
   const [sets, setSets] = useState([]);
   const { session_id } = useParams();
 
-
   useEffect(() => {
     const fetchSets = async () => {
       try {
@@ -73,6 +72,8 @@ const AddExerciseModal = (props) => {
     const updatedSets = sets.map((set) => (set.id === updatedSet.id ? updatedSet : set));
     setSets(updatedSets);
   };
+
+  
 
   return (
     <div>

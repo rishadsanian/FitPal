@@ -7,6 +7,7 @@ const ExerciseLog = (props) => {
   const [sets, setSets] = useState([]);
   const { session_id } = useParams();
   const [min, setMin] = useState(null);
+  const [records, setRecords] = useState([]);
   const max = 8;
   useEffect(() => {
     const fetchSets = async () => {
@@ -25,8 +26,37 @@ const ExerciseLog = (props) => {
     fetchSets();
   }, [props.name]);
 
+  const updateRecords = (updatedRecord) => {
+    setRecords((prevRecords) => {
+      const hasRecord = prevRecords.some(
+        (record) => record.id === updatedRecord.id
+      );
+
+      if (hasRecord) {
+        const updatedRecords = prevRecords.map((record) => {
+          if (record.id === updatedRecord.id) {
+            return { ...record, ...updatedRecord };
+          }
+          return record;
+        });
+        return updatedRecords;
+      } else {
+        return [...prevRecords, updatedRecord];
+      }
+    });
+    console.log(records);
+  };
+
   const listOfSetRecord = sets.map((set) => {
-    return <SetRecord set={set} key={set.id} />;
+    return (
+      <SetRecord
+        set={set}
+        key={set.id}
+        updateRecord={(re) => {
+          updateRecords(re);
+        }}
+      />
+    );
   });
 
   const addSet = () => {
@@ -40,9 +70,25 @@ const ExerciseLog = (props) => {
     setSets((prev) => [...prev.slice(0, sets.length - 1)]);
   };
 
+  const onSave = () => {
+    for (const re of records) {
+      if (re.reps > 0) {
+        const data = {
+          reps: re.reps,
+          resistance: re.resistance || 0,
+          exercise_name: props.name,
+          user_id: window.sessionStorage.getItem('userId'),
+        };
+        console.log(data);
+      }
+    }
+  };
+
   return (
-    <div className="pt-3" style={{ 'minHeight': '100vh' }}>
-      <h1 className="display-5 pt-3 fw-bold text-white mb-5">{props.name}</h1>
+    <div className="pt-3" style={{ minHeight: '100vh' }}>
+      <h1 className="display-5 pt-3 fw-bold text-white mb-5">
+        {props.name}
+      </h1>
       {listOfSetRecord}
       <div className="d-flex justify-content-between gap-3 mt-3 p-3">
         <button
@@ -70,7 +116,10 @@ const ExerciseLog = (props) => {
       </div>
 
       <div className="d-grid">
-        <button className="btn btn-warning btn-large text-white m-3 fill">
+        <button
+          className="btn btn-warning btn-large text-white m-3 fill"
+          onClick={onSave}
+        >
           Save
         </button>
       </div>

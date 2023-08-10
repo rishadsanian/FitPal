@@ -102,6 +102,8 @@ const SessionDetail = () => {
     setDisplayLog(false);
   };
 
+  
+
   const exercisesListItem = exercises.map((exercise, index) => {
     return (
       <SessionItem

@@ -20,7 +20,7 @@ const AddSet = (props) => {
       <div className="col">
         <div className="input-group flex-nowrap">
           <span className="input-group-text text-secondary fw-bold" id="addon-wrapping">
-          <i class="fa-solid fa-dumbbell fa-2xl"></i>
+          weight
           </span>
           <input
             type="number"

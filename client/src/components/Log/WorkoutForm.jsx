@@ -65,10 +65,9 @@ const WorkoutForm = () => {
 
   return (
     <div
-      className="container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
+      className="addlog bg-dark text-white rounded p-5 border border-warning border-3"
     >
-      <h3 className="text-warning fw-bold">Log Workout</h3>
+      <h1 className="text-warning fw-bold">Log Workout</h1>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (

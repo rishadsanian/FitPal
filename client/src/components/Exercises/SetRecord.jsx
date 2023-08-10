@@ -2,15 +2,28 @@ import { useState } from 'react';
 
 const SetRecord = (props) => {
   const [rep, setRep] = useState(null);
-  const [resistant, setResistant] = useState(null);
+  const [resistance, setResistance] = useState(null);
   const set = props.set;
+  const [record, setRecord] = useState({});
 
   const onChangeRep = (e) => {
-    setRep(e.target.value);
+    const newRep = e.target.value;
+    setRep(newRep);
+    const updatedRecord = { ...record, reps: newRep || 0, id: set.id };
+    setRecord(updatedRecord);
+    props.updateRecord(updatedRecord);
   };
 
   const onChangeResistant = (e) => {
-    setResistant(e.target.value);
+    const newResistance = e.target.value;
+    setResistance(newResistance);
+    const updatedRecord = {
+      ...record,
+      resistance: newResistance || 0,
+      id: set.id,
+    };
+    setRecord(updatedRecord);
+    props.updateRecord(updatedRecord);
   };
 
   return (
@@ -20,22 +33,30 @@ const SetRecord = (props) => {
           <div className="row row-cols-sm-2">
             <div className="col">
               <div className="input-group flex-nowrap">
-                <span className="input-group-text fw-bold text-secondary" id="addon-wrapping" style={{minWidth:'5em'}}>
-                  {set.resistant ? set.resistant + 'lbs' : <i class="fa-solid fa-dumbbell fa-2xl"></i>}
+                <span
+                  className="input-group-text fw-bold text-secondary"
+                  id="addon-wrapping"
+                  style={{ minWidth: '5em' }}
+                >
+                  {set.resistant ? set.resistant + 'lbs' : 'weight'}
                 </span>
                 <input
                   type="number"
                   className="form-control form-control-lg text-dark"
                   min="0"
                   onChange={onChangeResistant}
-                  value={resistant || ''}
+                  value={resistance || ''}
                 />
               </div>
             </div>
             <div className="col">
               <div className="input-group flex-nowrap">
-              <span className="input-group-text fw-bold text-secondary" id="addon-wrapping" style={{minWidth:'4em'}}>
-                  {set.reps ? 'x ' + set.reps : 'reps' }
+                <span
+                  className="input-group-text fw-bold text-secondary"
+                  id="addon-wrapping"
+                  style={{ minWidth: '4em' }}
+                >
+                  {set.reps ? 'x ' + set.reps : 'reps'}
                 </span>
                 <input
                   type="number"
