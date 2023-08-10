@@ -25,6 +25,19 @@ const getSessionById = (id) => {
     });
 };
 
+const getSessionByProgramIdAndDay = (program_id, day_of_week) => {
+  return db
+    .query(
+      `SELECT sessions.name AS name FROM sessions
+      JOIN programs ON sessions.program_id = programs.id
+      WHERE programs.id = $1 AND sessions.day_of_week = $2;`,
+      [program_id, day_of_week]
+    )
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
 const setNameForSession = (data) => {
   return db
     .query(`UPDATE sessions SET name = $1 WHERE id = $2`, [
@@ -49,6 +62,7 @@ const deleteSession = (id) => {
 module.exports = {
   getAllSessionByProgramId,
   getSessionById,
+  getSessionByProgramIdAndDay,
   setNameForSession,
   deleteSession,
 };
