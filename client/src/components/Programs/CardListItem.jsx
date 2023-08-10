@@ -224,7 +224,10 @@ function ProgramListItem(props) {
                 <i className="fa-regular fa-star fa-xl text-warning"></i>
               </button>
             ) : (
-              <button className="btn btn-dark" disabled>
+              <button  
+                className="btn btn-dark"
+                onClick={() => updateCurrentProgram(null)}
+              >
                 <i className="fa-solid fa-star fa-xl text-warning"></i>
               </button>
             )}
@@ -243,7 +246,7 @@ function ProgramListItem(props) {
                 onClick={() => toggleEditMode(props.programId)}
               >
                 {editMode ? (
-                  <i class="fa-solid fa-check fa-xl text-warning"></i>
+                  <i className="fa-solid fa-check fa-xl text-warning"></i>
                 ) : (
                   <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
                 )}
