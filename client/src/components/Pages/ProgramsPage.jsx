@@ -38,7 +38,7 @@ function ProgramsPage(props) {
       <div className="container-fluid">
         {props.userView ? <div className="row">
           <div className="col col-12 col-md-6 col-lg-9">
-            {userPrograms.length &&
+            {userPrograms.length > 0 &&
             <CardList
               cardData={userPrograms}
               title="My Programs"

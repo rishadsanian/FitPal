@@ -15,56 +15,54 @@ const Main = () => {
   // Formatted date for display
   const currentDate = moment().format('dddd, MMMM D');
 
-  return (
-    <div className="">
-      {/* <TitleImage icon={'fa-solid fa-table-columns'} /> */}
-      <div class="p-5 bg-dark opacity-75">
-        <div className="container-fluid py-5 px-3 text-white text-start">
-          <h1 className="display-5 fw-bold text-warning mb-0">
-            Welcome User
-          </h1>
-          <p className="text-secondary">{currentDate}</p>
-          <ProfileProvider>
-            <ChatGptDailySummary />
-          </ProfileProvider>
-        </div>
-      </div>
+  return (        
+    <ProfileProvider>
+      <WorkoutProvider>
+        <div className="">
+          {/* <TitleImage icon={'fa-solid fa-table-columns'} /> */}
+          <div class="p-5 bg-dark opacity-75">
+            <div className="container-fluid py-5 px-3 text-white text-start">
+              <h1 className="display-5 fw-bold text-warning mb-0">
+                Welcome User
+              </h1>
+              <p className="text-secondary">{currentDate}</p>
+                <ChatGptDailySummary />
+            </div>
+          </div>
+          
+          <div className="row row-cols-1 row-cols-md-2">
+            <div className="text-start col col-lg-5">
+                <Profile />
+            </div>
 
-      <div className="row row-cols-1 row-cols-md-2">
-        <div className="text-start col col-lg-5">
-          <ProfileProvider>
-            <Profile />
-          </ProfileProvider>
-        </div>
+            <div className="col col-lg-7">
+              <Log />
+            </div>
+          </div>
 
-        <div className="col col-lg-7">
-          <Log />
-        </div>
-      </div>
-
-      {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
-      {/* delete slider-container */}
-      <div className="bg-dark opacity-75 p-5">
-        <h1 className="display-5 fw-light text-warning">
-          Program Schedule
-        </h1>
-        <ProfileProvider>
-          <WorkoutProvider>
+          {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
+          {/* delete slider-container */}
+          
+          <div className="bg-dark opacity-75 p-5">
+            <h1 className="display-5 fw-light text-warning">
+              Program Schedule
+            </h1>
             <SliderComponent />
-          </WorkoutProvider>
-        </ProfileProvider>
-      </div>
+          </div>
+            
+          
+          {/* Analytics Section */}
+          <div className="container mt-5">
+            {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
 
-      {/* Analytics Section */}
-      <div className="container mt-5">
-        {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
-
-        <div className="analytics-container container mt-5">
-          {/* Exercise Tracker */}
-          <ChartWorkout />
+            <div className="analytics-container container mt-5">
+              {/* Exercise Tracker */}
+              <ChartWorkout />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </WorkoutProvider>
+    </ProfileProvider>
   );
 };
 

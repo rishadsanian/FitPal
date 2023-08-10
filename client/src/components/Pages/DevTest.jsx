@@ -6,22 +6,16 @@ import CardList from "../Programs/CardList";
 import CreateProgram from "../Programs/CreateProgram";
 import CreateSession from "../Sessions/CreateSession";
 import axios from "axios";
+import WorkoutHistoryCopy from "../Log/WorkoutHistoryCopy";
+import { WorkoutProvider } from "../../contexts/WorkoutContext";
 
  function DevTest(){
-  const [programs, setPrograms] = useState([]);
-  
-  useEffect(() => {
-    axios.get(`http://localhost:8080/programs`).then((res) => {
-      setPrograms(res.data.program);
-    });
- }, []);
 
   return (
     <div>
-      <TitleImage />
-      <CardList cardData={programs} title="Programs" path={`/programs/`}/>
-      <CreateProgram />
-      <CreateSession />
+      <WorkoutProvider>
+        <WorkoutHistoryCopy/>
+      </WorkoutProvider>
     </div>
   )
 }

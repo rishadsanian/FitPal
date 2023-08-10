@@ -9,17 +9,17 @@ import moment from "moment";
 import "../../styles/Log.css";
 
 const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout}) => {
-  // const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
+  const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
 
-  // useEffect(() => {
-  //   const exerciseList = [];
-  //   for(const workout of workoutHistory) {
-  //     if(!exerciseList.includes(workout.exercise_name)) {
-  //       exerciseList.push(workout.exercise_name)
-  //     }
-  //   }
-  //   setUniqueExerciseNames(exerciseList);
-  // }, [])
+  useEffect(() => {
+    const exerciseList = [];
+    for(const workout of workoutHistory) {
+      if(!exerciseList.includes(workout.exercise_name)) {
+        exerciseList.push(workout.exercise_name)
+      }
+    }
+    setUniqueExerciseNames(exerciseList);
+  }, [])
  
   return(
     // Render actual workout entries if workoutHistory is not empty
@@ -78,7 +78,7 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
   )
 }
 
-const WorkoutHistory = () => {
+const WorkoutHistoryCopy = () => {
   const {
     workoutHistory,
     handleSliderChange,
@@ -112,10 +112,9 @@ const WorkoutHistory = () => {
       >
         {workoutHistory.length === 0 ? (
           // Render a placeholder entry if workoutHistory is empty
-          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide">
             No workouts recorded
           </div>
-          
         ) : (
           // Render actual workout entries if workoutHistory is not empty
           workoutHistory.map((workout) => (
@@ -134,4 +133,4 @@ const WorkoutHistory = () => {
   );
 };
 
-export default WorkoutHistory;
+export default WorkoutHistoryCopy;
