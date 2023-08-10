@@ -48,7 +48,7 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
                   <div>
                     <div className="badge text-bg-warning me-2">
                       {workout.resistance > 0 &&
-                        `${workout.resistance} lbs/ ${workout.reps}`}
+                        `${workout.resistance} lbs / ${workout.reps} Reps`}
                     </div>
                   </div>
                 </div>
