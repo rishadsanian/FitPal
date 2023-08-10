@@ -17,6 +17,7 @@ import Profile from "./components/Dashboard/Profile";
 import ProgramsPage from "./components/Pages/ProgramsPage";
 import ChartWorkout from "./components/Dashboard/ChartWorkout";
 
+
 import ProgramProvider from "./contexts/ProgramProvider";
 import { userContext } from "./contexts/UserContext";
 
@@ -71,7 +72,11 @@ function App() {
           />
           <Route
             path="/programs/:program_id/sessions/:session_id"
-            element={authenticated ? <SessionDetail /> : <Login />}
+            element={authenticated ? <SessionDetail editable={true}/> : <Login />}
+          />
+          <Route
+            path="/programs/:program_id/sessions/:session_id/noedit"
+            element={authenticated ? <SessionDetail editable={false}/> : <Login />}
           />
           <Route
             path="/programs/1/sessions/1/exercise/1"
