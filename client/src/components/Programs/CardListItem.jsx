@@ -113,6 +113,13 @@ function ProgramListItem(props) {
     }
   };
 
+  const deleteAndUpdateCurrentProgram = (programId) => {
+    if(props.currentProfile.program_id === programId){
+      updateCurrentProgram(null);
+    }
+    deleteProgram(programId)
+  }
+
   // function to toggle edit mode
   const toggleEditMode = async (programId) => {
     if (editMode) {
@@ -267,7 +274,7 @@ function ProgramListItem(props) {
       {displayDeleteModal && (
         <DeletePopupModal
           modalToggle={setDisplayDeleteModal}
-          modalAction={deleteProgram}
+          modalAction={deleteAndUpdateCurrentProgram}
           modalParams={props.programId}
           message={`Deleting program ${props.name}`}
         />
