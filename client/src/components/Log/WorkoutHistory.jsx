@@ -25,11 +25,14 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
     // Render actual workout entries if workoutHistory is not empty
     <div
       key={workout.id}
-      className="h-100 slider-item p-3 border bg-dark border-secondary rounded border-3"
+      className="p-3 pt-4 border bg-dark border-secondary rounded flex-column border-3"
       style={{
         margin: "0 10px",
-       
-      }}
+        maxHeight: "200px",
+        overflow: "hidden",
+        overflowX: "auto",
+        overflowY: "scroll",
+      }}   
     >
       <table className="table table-dark table-striped mt-3">
         <tbody>
@@ -122,7 +125,7 @@ const WorkoutHistory = () => {
               workout={workout} 
               workoutHistory={workoutHistory}
               currentDate={currentDate}
-              handleEditWorkout={handleDeleteWorkout}
+              handleEditWorkout={handleEditWorkout}
               editingWorkout={editingWorkout}
               handleDeleteWorkout={handleDeleteWorkout}
             />
