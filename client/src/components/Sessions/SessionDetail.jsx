@@ -146,7 +146,7 @@ const SessionDetail = () => {
                 <h1 className="display-5 pt-3 fw-bold text-white">{title}</h1>
               <div className="d-flex justify-content-between mb-5">
                 <a
-                  className="btn btn-outline-info text-white"
+                  className="btn btn-warning text-white"
                   href="#addExercise"
                   onClick={onAddExerciseClick}
                 >

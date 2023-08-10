@@ -42,7 +42,7 @@ const ExerciseLog = (props) => {
 
   return (
     <div className="pt-3" style={{ 'minHeight': '100vh' }}>
-      <h1 className="text-warning pb-3">{props.name}</h1>
+      <h1 className="display-5 pt-3 fw-bold text-white mb-5">{props.name}</h1>
       {listOfSetRecord}
       <div className="d-flex justify-content-between gap-3 mt-3 p-3">
         <button
@@ -69,8 +69,8 @@ const ExerciseLog = (props) => {
         </button>
       </div>
 
-      <div className="d-grid gap-2 pb-3">
-        <button className="btn btn-warning btn-large m-3 fill">
+      <div className="d-grid">
+        <button className="btn btn-warning btn-large text-white m-3 fill">
           Save
         </button>
       </div>

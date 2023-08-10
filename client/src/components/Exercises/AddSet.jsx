@@ -28,7 +28,7 @@ const AddSet = (props) => {
             onChange={handleWeightChange}
             required
             min="0"
-            className="form-control form-control-lg bg-dark text-white"
+            className="form-control form-control-lg"
           />
         </div>
       </div>
@@ -43,7 +43,7 @@ const AddSet = (props) => {
             onChange={handleRepsChange}
             required
             min="1"
-            className="form-control form-control-lg bg-dark text-white"
+            className="form-control form-control-lg"
           />
         </div>
       </div>

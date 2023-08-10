@@ -14,14 +14,14 @@ const SetRecord = (props) => {
   };
 
   return (
-    <div className="p-1 text-white m-1 rounded-3">
+    <div className="px-3 text-white my-2">
       <div className="text-start">
         <form>
           <div className="row row-cols-sm-2">
             <div className="col">
               <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  {set.resistant ? set.resistant + 'lbs' : 'weight'}
+                <span className="input-group-text fw-bold text-secondary" id="addon-wrapping" style={{minWidth:'5em'}}>
+                  {set.resistant ? set.resistant + 'lbs' : <i class="fa-solid fa-dumbbell"></i>}
                 </span>
                 <input
                   type="number"
@@ -34,8 +34,8 @@ const SetRecord = (props) => {
             </div>
             <div className="col">
               <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  {set.reps} reps
+              <span className="input-group-text fw-bold text-secondary" id="addon-wrapping" style={{minWidth:'4em'}}>
+                  {set.reps ? 'x ' + set.reps : 'reps' }
                 </span>
                 <input
                   type="number"

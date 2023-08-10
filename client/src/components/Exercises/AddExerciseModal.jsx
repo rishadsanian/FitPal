@@ -96,15 +96,19 @@ const AddExerciseModal = (props) => {
               {sets.map((set) => (
                 <AddSet key={set.id} set={set} id={set.id} updateSetInSets={updateSetInSets} />
               ))}
-              <div className="d-flex justify-content-between gap-2 mt-3">
-                <button className="btn btn-outline-light flex-fill" onClick={addSet}>
+              <div className="d-flex justify-content-between gap-3 mt-3">
+                <button className={
+                    sets.length === MAX_SETS
+                      ? 'btn btn-secondary flex-fill'
+                      : 'btn btn-light flex-fill'
+                  } onClick={addSet}>
                   <i className="fa-solid fa-plus fa-xs"></i>
                 </button>
                 <button
                   className={
                     sets.length === 1
-                      ? 'btn btn-outline-secondary flex-fill'
-                      : 'btn btn-outline-light flex-fill'
+                      ? 'btn btn-secondary flex-fill'
+                      : 'btn btn-light flex-fill'
                   }
                   onClick={removeSet}
                   disabled={sets.length === 1}

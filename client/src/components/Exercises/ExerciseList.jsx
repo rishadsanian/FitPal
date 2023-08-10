@@ -85,10 +85,10 @@ const ExerciseList = () => {
 
   return (
     <div className="w-100 p-3">
-      <h1 className="text-warning fw-bold">Add New Exercise</h1>
-      <div className="p-3">
+      <h1 className="display-5 pt-3 fw-bold text-white">Add New Exercise</h1>
+      <div className="py-3">
         <form className="row row-cols-1 row-cols-md-2">
-          <div className="col col-md-3 p-1">
+          <div className="col col-md-3">
             <select
                 className="form-select col"
                 value={muscle}
@@ -98,7 +98,7 @@ const ExerciseList = () => {
               {muscleOptions}
             </select>
           </div>
-          <div className="col col-md-9 p-1">
+          <div className="col col-md-9">
             <input
               className="form-control"
               type="search"
