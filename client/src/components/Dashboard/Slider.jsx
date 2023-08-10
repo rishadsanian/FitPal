@@ -24,8 +24,14 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
   const uniqueExerciseNames = [
     ...new Set(workoutHistory.map((workout) => workout.exercise_name))]
   // console.log("Unique Exercises from workout history", uniqueExerciseNames);
+  const [uniqueExercises, setUniqueExercises] = useState(workoutHistory.filter(workout => workout.exercise_name === exercise))
 
-  const uniqueExercises = workoutHistory.filter(workout => workout.exercise_name === exercise)
+  useEffect(() => {
+    
+    setUniqueExercises(workoutHistory.filter(workout => workout.exercise_name === exercise))
+  }, [workoutHistory]);
+
+  
 
   return (
     <div className="slider-item bg-dark border-warning mx-3">
@@ -80,6 +86,7 @@ const SliderComponent = () => {
     fetchWorkoutHistory();
     fetchProfile();
   }, []);
+
 
   useEffect(() => {
     let exerciseList = []; //needs to be a state
