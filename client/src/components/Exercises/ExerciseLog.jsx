@@ -71,17 +71,23 @@ const ExerciseLog = (props) => {
   };
 
   const onSave = () => {
-    for (const re of records) {
-      if (re.reps > 0) {
-        const data = {
-          reps: re.reps,
-          resistance: re.resistance || 0,
-          exercise_name: props.name,
-          user_id: window.sessionStorage.getItem('userId'),
-        };
-        console.log(data);
-      }
-    }
+    // for (const re of records) {
+    //   if (re.reps > 0) {
+    //     const data = {
+    //       reps: re.reps,
+    //       resistance: re.resistance || 0,
+    //       exercise_name: props.name,
+    //       user_id: window.sessionStorage.getItem('userId'),
+    //     };
+    //     axios
+    //       .post(`http://localhost:8080/log/`, data)
+    //       .then((result) => {
+    //       })
+    //       .catch((e) => {
+    //         console.log(e);
+    //       });
+    //   }
+    // }
   };
 
   return (
