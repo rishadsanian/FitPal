@@ -10,15 +10,42 @@ import axios from "axios";
 
 import ExerciseList from "../Exercises/ExerciseList";
 
+const daysOfWeek = {
+  0: "Monday",
+  1: "Tuesday",
+  2: "Wednesday",
+  3: "Thursday",
+  4: "Friday",
+  5: "Saturday",
+  6: "Sunday"
+}
+
 //each slider item from mock data - could be moved to a different component
-const SliderItem = ({ exercise, date, icon }) => {
+const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
+
+  const uniqueExerciseNames = [
+    ...new Set(workoutHistory.map((workout) => workout.exercise_name))]
+  // console.log("Unique Exercises from workout history", uniqueExerciseNames);
+
   return (
     <div className="slider-item bg-dark border-warning mx-3">
       <div className="excercise-image">
         <i className="excercise-icon fa-solid fa-dumbbell"></i>
       </div>
       <h3 className="exercise text-warning">{exercise}</h3>
-      <p className="date text-light">{moment(date).format("dddd, MMMM D")}</p>
+      <div>
+        {uniqueExerciseNames.includes(exercise) ? (
+          sets.filter((set) => exercise === set.name).map(set => 
+           <div className="badge text-bg-warning mx-2">
+            <span>{set.resistant} lbs/{set.reps} Reps</span>
+          </div>
+          )
+        ) : (
+          <button className="text-warning btn border-warning">
+            <i className="fa-solid fa-plus"></i>
+          </button>
+        )}
+      </div>
     </div>
   );
 };
@@ -30,50 +57,49 @@ const SliderComponent = () => {
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   const [userExercises, setUserExercises] = useState();
+  const [sets, setSets] = useState([]);
   const { profile, fetchProfile } = useProfileContext();
   const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
- 
+
   const programName = profile.name;
 
-  let exerciseList = []; //needs to be a state
 
-  const uniqueExerciseNames = [
-    ...new Set(workoutHistory.map((workout) => workout.exercise.name))]
-  
-  const recommendedSessionExercises = exerciseList.map(
-    (exercise) => exercise.name
-  );
 
-  
- 
+
   useEffect(() => {
-    fetchProfile();  
+    fetchWorkoutHistory();
+  }, []);
+
+
+  useEffect(() => {
+    fetchProfile();
   }, []);
 
   useEffect(() => {
-    console.log("got profile", profile)
-    if(profile.program_id){
-      axios.get(`http://localhost:8080/sets/program/${profile.program_id}`).then((res) => {
-        
-      //Set up the list of exercises from sets
-        console.log(res.data);
+    let exerciseList = []; //needs to be a state
+    if (profile.program_id) {
+      axios.get(`http://localhost:8080/sets/program/${profile.program_id}/day/${moment().day() - 1}`).then((res) => {
+        setSets(res.data.sets);
+        //Set up the list of exercises from sets
         for (const set of res.data.sets) {
+          
           if (
             !exerciseList
               .map((exercise) => exercise.name)
-              .includes(set.exercise_name)
+              .includes(set.name)
           ) {
-            exerciseList.push({ name: set.exercise_name });
+            exerciseList.push({ name: set.name, day_of_week: set.day_of_week });
           }
         }
-        console.log(res.data.sets);
-        setUserExercises(exerciseList);
+
+
       });
+      console.log("exercises", exerciseList);
+      setUserExercises(exerciseList);
     }
   }, [profile.user_id]);
 
-  console.log("Exercise List", exerciseList);
-console.log("Workout History", workoutHistory);
+
   // const uniqueExercisesCompleted = workoutHistory.map((workout)=>{workout.exercise_name = })
 
   const getSlidesToShow = (windowWidth) => {
@@ -114,28 +140,31 @@ console.log("Workout History", workoutHistory);
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 1,
     // slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
 
   //current day as day of week
   const currentDate = moment();
-  const dayOfWeek = (currentDate.day() + 6) % 7;
-  
+  // const dayOfWeek = currentDate.format("ddd");
+
   return (
     <div className="slider-container bg-dark p-5">
-      {/* <h2 className="slider-title text-warning">Program Schedule</h2> */}
+      <h2 className="slider-title text-warning">{daysOfWeek[moment().day() - 1]}</h2>
       <Slider {...settings}>
-        {exerciseList.map((workout, index) => (
+        {userExercises && userExercises.map((workout, index) => (
+
           <SliderItem
             key={index}
-            exercise="{workout.exercise}"
+            exercise={workout.name}
             // exercise={workout.exercise}
-            day={moment().day()}
+            date={workout.day_of_week}
             icon={workout.icon}
+            workoutHistory={workoutHistory}
+            sets={sets}
           />
-         ))}
+        ))}
       </Slider>
     </div>
   );

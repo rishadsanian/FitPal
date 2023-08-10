@@ -15,10 +15,9 @@ router.get('/:session_id', (req, res) => {
     });
 });
 
-router.get("/program/:program_id", (req, res) => {
-  console.log("here")
+router.get("/program/:program_id/day/:day_of_week", (req, res) => {
   sets
-    .getSetsByProgramId(req.params.program_id)
+    .getSetsByProgramId(req.params.program_id, req.params.day_of_week)
     .then((sets) => {
       res.json({ sets });
     })
