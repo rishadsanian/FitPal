@@ -15,36 +15,36 @@ const Main = () => {
   // Formatted date for display
   const currentDate = moment().format('dddd, MMMM D');
 
-  return (        
+  return (
     <ProfileProvider>
       <WorkoutProvider>
         <div className="">
           {/* <TitleImage icon={'fa-solid fa-table-columns'} /> */}
-          <div class="p-5 bg-dark opacity-75">
-            <div className="container-fluid py-5 px-3 text-white text-start">
-              <h1 className="display-5 fw-bold text-warning mb-0">
-                Welcome User
-              </h1>
-              <p className="text-secondary">{currentDate}</p>
-                <ChatGptDailySummary />
-            </div>
-          </div>
-          
-          <div className="row row-cols-1 row-cols-md-2">
-            <div className="text-start col col-lg-5">
-                <Profile />
+
+          <div className="row row-cols-1 row-cols-md-2 bg-dark opacity-75">
+            <div class="p-3 text-start col col-sm-12 col-md-6 col-lg-7 text-white ">
+              <div className="container-fluid py-5 px-3">
+                <h1 className="display-5 fw-bold text-warning mb-0">
+                  Welcome User
+                </h1>
+                <p className="text-secondary fw-bold fs-5">{currentDate}</p>
+              </div>
+              <div className="p-3">
+                  <ChatGptDailySummary />
+              </div>
             </div>
 
-            <div className="col col-lg-7">
-              <Log />
+            <div className="text-start col col-sm-12 col-md-6 col-lg-5">
+                <Profile />
             </div>
           </div>
+
+          <Log />
 
           {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
           {/* delete slider-container */}
-          
           <div className="bg-dark opacity-75 p-5">
-            <h1 className="display-5 fw-light text-warning">
+            <h1 className="display-5 fw-bold text-warning">
               Program Schedule
             </h1>
             <SliderComponent />
