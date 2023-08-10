@@ -24,10 +24,10 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="py-5 ps-5 pe-2">
-      <div className="card bg-dark text-white">
-        <div className="card-header border-bottom border-white">
-          <h1 className="fw-bold text-warning">Profile</h1>
+    <div className="py-5 px-3">
+      <div className="card bg-dark text-white border border-3 border-white">
+        <div className="card-header border-bottom border-white text-center">
+          <h3 className="fw-bold text-warning">Profile</h3>
         </div>
         <div className="card-body p-3">
           {editing ? (
@@ -240,7 +240,7 @@ const Profile = () => {
             <div className="edit-button text-center w-100">
               <button
                 type="button"
-                className="btn btn-warning font-weight-bold"
+                className="btn btn-warning font-weight-bold text-white"
                 onClick={handleEdit}
               >
                 Edit Profile

@@ -65,9 +65,9 @@ const WorkoutForm = () => {
 
   return (
     <div
-      className="addlog bg-dark text-white rounded p-5 border border-warning border-3"
+      className="addlog bg-dark text-white"
     >
-      <h1 className="text-warning fw-bold">Log Workout</h1>
+      <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
@@ -163,7 +163,7 @@ const WorkoutForm = () => {
         </div>
 
         <div className="d-grid gap-2">
-          <button type="submit" className="btn btn-warning mt-4">
+          <button type="submit" className="btn btn-warning mt-4 text-white">
             {editingWorkout ? "Update" : "Log Workout"}
           </button>
           {editingWorkout && (

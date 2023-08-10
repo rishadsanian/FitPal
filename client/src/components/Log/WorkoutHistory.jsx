@@ -27,8 +27,7 @@ const WorkoutHistory = () => {
 
   return (
     <div
-      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
+      className="workout-history-slider container addlog bg-dark text-white rounded"
     >
       <h3 className="text-warning fw-bold pb-3">Daily Workout History</h3>
 
