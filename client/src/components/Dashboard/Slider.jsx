@@ -34,29 +34,25 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
       </div>
       <h3 className="exercise text-warning">{exercise}</h3>
       <div>
-        {uniqueExerciseNames.includes(exercise) ? (
+        <div>
+          {sets.filter((set) => exercise === set.name).map(set => 
+          <div className="badge text-bg-light mx-2">
+            <span>{set.resistant} lbs/{set.reps} Reps</span>
+          </div>
+          )}
+        </div> 
+        {uniqueExerciseNames.includes(exercise) && (
           <div>
-            <div>
-              {sets.filter((set) => exercise === set.name).map(set => 
-              <div className="badge text-bg-warning mx-2">
-                <span>{set.resistant} lbs/{set.reps} Reps</span>
-              </div>
-              )}
-            
-            </div>
-            <div>
-              {uniqueExercises.filter((set) => exercise === set.exercise_name).map(set => 
-              <div className="badge text-bg-success mx-2">
-                <span>{set.resistance} lbs/{set.reps} Reps</span>
-              </div>)}
+            {uniqueExercises.filter((set) => exercise === set.exercise_name).map(set => 
+            <div className="badge text-bg-warning mx-2">
+              <span>{set.resistance} lbs/{set.reps} Reps</span>
+            </div>)}
           </div>
-          </div>
-          
-        ) : (
-          <button className="text-warning btn border-warning">
-            <i className="fa-solid fa-plus"></i>
-          </button>
         )}
+        <button className="text-warning btn border-warning mt-3">
+          <i className="fa-solid fa-plus"></i>
+        </button>
+        
       </div>
     </div>
   );
@@ -68,7 +64,7 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
 const SliderComponent = () => {
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-  const [userExercises, setUserExercises] = useState();
+  const [userExercises, setUserExercises] = useState([]);
   const [sets, setSets] = useState([]);
   const [dailySession, setDailySession] = useState({})
 
@@ -163,23 +159,31 @@ const SliderComponent = () => {
   // const dayOfWeek = currentDate.format("ddd");
 
   return (
-    <div className="slider-container bg-dark p-5">
-      {dailySession &&  <h2 className="slider-title text-warning">{dailySession.name}</h2>}
-      <h2 className="slider-title text-warning">{daysOfWeek[moment().day() - 1]}</h2>
-      <Slider {...settings}>
-        {userExercises && userExercises.map((workout, index) => (
+    <div>
+      {!dailySession ? 
+      <div className="slider-container bg-dark p-5">
+        <h2 className="slider-title text-warning">Nothing for today</h2>
+      </div>
+      :
+      <div className=" slider-container bg-dark p-5">
+        <h2 className="slider-title text-warning">{dailySession.name}</h2>
+        <h2 className="slider-title text-warning">{daysOfWeek[moment().day() - 1]}</h2>
+        {!userExercises.length && <h2 className="slider-title text-warning">No exercises listed for todays program</h2>}
+        <Slider {...settings}>
+          {userExercises.length && userExercises.map((workout, index) => (
 
-          <SliderItem
-            key={index}
-            exercise={workout.name}
-            // exercise={workout.exercise}
-            date={workout.day_of_week}
-            icon={workout.icon}
-            workoutHistory={workoutHistory}
-            sets={sets}
-          />
-        ))}
-      </Slider>
+            <SliderItem
+              key={index}
+              exercise={workout.name}
+              // exercise={workout.exercise}
+              date={workout.day_of_week}
+              icon={workout.icon}
+              workoutHistory={workoutHistory}
+              sets={sets}
+            />
+          ))}
+        </Slider>
+      </div>}
     </div>
   );
 };

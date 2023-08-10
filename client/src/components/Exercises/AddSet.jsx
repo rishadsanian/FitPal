@@ -27,8 +27,8 @@ const AddSet = (props) => {
             value={set.resistant}
             onChange={handleWeightChange}
             required
-            min="1"
-            className="form-control form-control-lg"
+            min="0"
+            className="form-control form-control-lg bg-dark text-white"
           />
         </div>
       </div>
@@ -43,7 +43,7 @@ const AddSet = (props) => {
             onChange={handleRepsChange}
             required
             min="1"
-            className="form-control form-control-lg"
+            className="form-control form-control-lg bg-dark text-white"
           />
         </div>
       </div>
