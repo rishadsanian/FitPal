@@ -100,9 +100,9 @@ const Profile = () => {
                       value={profile.fitness_level}
                       onChange={handleChange}
                     >
-                      <option value="beginner">Beginner</option>
+                      <option value="Beginner">Beginner</option>
                       <option value="Intermediate">Intermediate</option>
-                      <option value="expert">Expert</option>
+                      <option value="Expert">Expert</option>
                     </select>
                   </div>
                   <div className="mb-3">
@@ -145,38 +145,58 @@ const Profile = () => {
                         {" "}
                         {calculatedAge !== null
                           ? `${calculatedAge}`
-                          : "Birth date not entered"}
+                          : "Not Set"}
                       </div>
                     </div>
                   </div>
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Height</div>
+                      {profile.height ? (
                       <div className="value">{profile.height}</div>
+                        ) : (
+                        <div className="value">Not Set</div>
+                      )}
                     </div>
                   </div>
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Weight</div>
-                      <div className="value">{profile.weight}</div>
+                      {profile.weight ? (
+                        <div className="value">{profile.weight}</div>
+                      ) : (
+                        <div className="value">Not Set</div>
+                      )}
                     </div>
                   </div>
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Gender</div>
-                      <div className="value">{profile.gender}</div>
+                      {profile.gender ? (
+                        <div className="value">{profile.gender}</div>
+                      ) : (
+                        <div className="value">Not Set</div>
+                      )}
                     </div>
                   </div>
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Fitness Level</div>
-                      <div className="value">{profile.fitness_level}</div>
+                      {profile.fitness_level ? (
+                        <div className="value">{profile.fitness_level}</div>
+                      ) : (
+                        <div className="value">Not Set</div>
+                      )}
                     </div>
                   </div>
                   <div className="col">
                     <div className="profile-card p-3">
                       <div className="key">Goal</div>
-                      <div className="value">{profile.goal}</div>
+                      {profile.goal ? (
+                        <div className="value">{profile.goal}</div>
+                      ) : (
+                        <div className="value">Not Set</div>
+                      )}
                     </div>
                   </div>
                   {/* show program id here */}

@@ -47,7 +47,7 @@ export function ProfileProvider({ children }) {
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
-        user_id: userId, // Replace '1' with user-id from current_user prop
+        user_id: userId, 
         date_of_birth: profile.date_of_birth,
         height: profile.height,
         weight: profile.weight,
