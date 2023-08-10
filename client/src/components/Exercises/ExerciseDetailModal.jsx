@@ -7,7 +7,7 @@ const ExerciseDetailModal = (props) => {
   return (
     <div className="">
       <div className="modal-background"></div>
-      <div className="modal-foreground position-fixed top-50 start-50 translate-middle col col-11 col-md-7 col-xl-5">
+      <div className="modal-foreground position-fixed top-50 start-50 translate-middle col col-11 col-md-7 col-xl-5 border border-warning rounded-3">
         <div
           className="bg-dark text-white rounded p-5"
         >
@@ -18,7 +18,7 @@ const ExerciseDetailModal = (props) => {
             </button>
           </div>
           <div className="text-start modal-body">
-            <p className="text-secondary p-0">
+            <p className="text-secondary p-0 mb-0">
               Muscle: {exercise.muscle} - Level: {exercise.difficulty}
             </p>
             <p className="text-secondary">

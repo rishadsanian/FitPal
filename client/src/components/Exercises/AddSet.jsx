@@ -19,8 +19,8 @@ const AddSet = (props) => {
     <div className="row row-cols-sm-2 my-2">
       <div className="col">
         <div className="input-group flex-nowrap">
-          <span className="input-group-text" id="addon-wrapping">
-            Weight
+          <span className="input-group-text text-secondary fw-bold" id="addon-wrapping">
+          <i class="fa-solid fa-dumbbell fa-2xl"></i>
           </span>
           <input
             type="number"
@@ -34,8 +34,8 @@ const AddSet = (props) => {
       </div>
       <div className="col">
         <div className="input-group flex-nowrap">
-          <span className="input-group-text" id="addon-wrapping">
-            Reps
+          <span className="input-group-text text-secondary fw-bold" id="addon-wrapping">
+            reps
           </span>
           <input
             type="number"

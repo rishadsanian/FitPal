@@ -21,7 +21,7 @@ const SetRecord = (props) => {
             <div className="col">
               <div className="input-group flex-nowrap">
                 <span className="input-group-text fw-bold text-secondary" id="addon-wrapping" style={{minWidth:'5em'}}>
-                  {set.resistant ? set.resistant + 'lbs' : <i class="fa-solid fa-dumbbell"></i>}
+                  {set.resistant ? set.resistant + 'lbs' : <i class="fa-solid fa-dumbbell fa-2xl"></i>}
                 </span>
                 <input
                   type="number"

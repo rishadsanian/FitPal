@@ -78,8 +78,8 @@ const AddExerciseModal = (props) => {
     <div>
       {/* Modal background and foreground elements */}
       <div className="modal-background"></div>
-      <div className="modal-foreground position-fixed top-50 start-50 translate-middle  col col-11 col-md-7 col-xl-5">
-        <div className="container bg-dark text-white rounded p-3">
+      <div className="modal-foreground position-fixed top-50 start-50 translate-middle  col col-11 col-md-7 col-xl-5 border border-warning rounded-3">
+        <div className="container bg-dark text-white rounded p-5">
           {/* Modal content */}
           <div className="d-flex justify-content-between">
             <h3 className="text-warning fw-bold">{props.name}</h3>
@@ -87,12 +87,9 @@ const AddExerciseModal = (props) => {
               <i className="fa-solid fa-x text-warning"></i>
             </button>
           </div>
-
-          <p className="text-secondary text-start">add set and weight for each set</p>
           <form onSubmit={handleSubmit}>
             {/* Sets section */}
             <div className="text-start">
-              <label className="form-label text-secondary">Sets</label>
               {sets.map((set) => (
                 <AddSet key={set.id} set={set} id={set.id} updateSetInSets={updateSetInSets} />
               ))}
