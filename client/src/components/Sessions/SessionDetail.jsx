@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ExerciseList from '../Exercises/ExerciseList';
 import SessionItem from './SessionItem';
 import AddExerciseModal from '../Exercises/AddExerciseModal';
-
+import ExerciseLog from '../Exercises/ExerciseLog';
 const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
@@ -12,7 +12,11 @@ const SessionDetail = () => {
   const [editMode, setEditmode] = useState(false);
   const [editSet, setEditSet] = useState(false);
   const [selectedEx, setSelectedEx] = useState('');
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const [displayLog, setDisplayLog] = useState(false);
+  const [displayExerciseList, setDisplayExerciseList] = useState(
+    !displayLog
+  );
 
   // get the session id from the url
   const { session_id } = useParams();
@@ -88,7 +92,14 @@ const SessionDetail = () => {
   }, []);
 
   const onRowSelected = (exercise) => {
-   return (<div><h1>exercise.name</h1></div>)
+    setDisplayLog(true);
+    setDisplayExerciseList(false);
+    setSelectedEx(exercise);
+  };
+
+  const onAddExerciseClick = () => {
+    setDisplayExerciseList(true);
+    setDisplayLog(false);
   };
 
   const exercisesListItem = exercises.map((exercise, index) => {
@@ -106,22 +117,6 @@ const SessionDetail = () => {
       />
     );
   });
-
-  // For get window width
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // Attach the event listener
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  const shouldShowLink = windowWidth <= 720;
 
   return (
     <div>
@@ -150,14 +145,13 @@ const SessionDetail = () => {
             <div className="d-flex justify-content-between mb-5">
               <div>
                 <h3 className="fw-bold text-warning">{title}</h3>
-                {shouldShowLink && (
-                  <a
-                    className="btn btn-outline-info text-white"
-                    href="#addExercise"
-                  >
-                    <i class="fa-solid fa-plus"></i> exercise
-                  </a>
-                )}
+                <a
+                  className="btn btn-outline-info text-white"
+                  href="#addExercise"
+                  onClick={onAddExerciseClick}
+                >
+                  <i className="fa-solid fa-plus"></i> exercise
+                </a>
               </div>
               <div className="d-flex">
                 <button
@@ -187,9 +181,17 @@ const SessionDetail = () => {
         </div>
 
         {/* Add New Exercise Part */}
-        <div className="col col-12 col-md-6 col-xl-8" id="addExercise">
-          <ExerciseList />
-        </div>
+        {displayExerciseList && (
+          <div className="col col-12 col-md-6 col-xl-8" id="addExercise">
+            <ExerciseList />
+          </div>
+        )}
+
+        {displayLog && (
+          <div className="col col-12 col-md-6 col-xl-8 px-0">
+            <ExerciseLog name={selectedEx.name}/>
+          </div>
+        )}
       </div>
 
       {editSet && (
