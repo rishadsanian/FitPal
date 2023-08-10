@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ExerciseList from '../Exercises/ExerciseList';
 import SessionItem from './SessionItem';
 import AddExerciseModal from '../Exercises/AddExerciseModal';
-
+import ExerciseLog from '../Exercises/ExerciseLog';
 const SessionDetail = () => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
@@ -12,6 +12,11 @@ const SessionDetail = () => {
   const [editMode, setEditmode] = useState(false);
   const [editSet, setEditSet] = useState(false);
   const [selectedEx, setSelectedEx] = useState('');
+
+  const [displayLog, setDisplayLog] = useState(false);
+  const [displayExerciseList, setDisplayExerciseList] = useState(
+    !displayLog
+  );
 
   // get the session id from the url
   const { session_id } = useParams();
@@ -86,6 +91,17 @@ const SessionDetail = () => {
     return;
   }, []);
 
+  const onRowSelected = (exercise) => {
+    setDisplayLog(true);
+    setDisplayExerciseList(false);
+    setSelectedEx(exercise);
+  };
+
+  const onAddExerciseClick = () => {
+    setDisplayExerciseList(true);
+    setDisplayLog(false);
+  };
+
   const exercisesListItem = exercises.map((exercise, index) => {
     return (
       <SessionItem
@@ -95,6 +111,9 @@ const SessionDetail = () => {
         onClick={() => {
           onEdit(exercise);
         }}
+        onRowSelected={() => {
+          onRowSelected(exercise);
+        }}
       />
     );
   });
@@ -102,6 +121,7 @@ const SessionDetail = () => {
   return (
     <div>
       <div className="row row-col-1 row-col-md-2">
+        {/* List of exercises in current session */}
         <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
             <form className="mb-5">
@@ -123,7 +143,16 @@ const SessionDetail = () => {
             </form>
           ) : (
             <div className="d-flex justify-content-between mb-5">
-              <h3 className="fw-bold text-warning">{title}</h3>
+              <div>
+                <h3 className="fw-bold text-warning">{title}</h3>
+                <a
+                  className="btn btn-outline-info text-white"
+                  href="#addExercise"
+                  onClick={onAddExerciseClick}
+                >
+                  <i className="fa-solid fa-plus"></i> exercise
+                </a>
+              </div>
               <div className="d-flex">
                 <button
                   className="btn btn-dark"
@@ -150,9 +179,19 @@ const SessionDetail = () => {
             )}
           </div>
         </div>
-        <div className="col col-12 col-md-6 col-xl-8">
-          <ExerciseList />
-        </div>
+
+        {/* Add New Exercise Part */}
+        {displayExerciseList && (
+          <div className="col col-12 col-md-6 col-xl-8" id="addExercise">
+            <ExerciseList />
+          </div>
+        )}
+
+        {displayLog && (
+          <div className="col col-12 col-md-6 col-xl-8 px-0">
+            <ExerciseLog name={selectedEx.name}/>
+          </div>
+        )}
       </div>
 
       {editSet && (
