@@ -1,7 +1,7 @@
 import React from 'react';
 import WorkoutForm from '../Log/WorkoutForm.jsx';
-import WorkoutHistory from '../Log/WorkoutHistory';
-import { WorkoutProvider } from '../../contexts/WorkoutContext';
+import WorkoutHistory from '../Log/WorkoutHistory.jsx';
+import { WorkoutProvider } from '../../contexts/WorkoutContext.js';
 
 const Log = () => {
   return (
