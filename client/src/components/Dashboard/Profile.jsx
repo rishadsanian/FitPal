@@ -25,8 +25,8 @@ const Profile = () => {
 
   return (
     <div className="py-5 px-3">
-      <div className="card bg-dark text-white border border-3 border-white">
-        <div className="card-header border-bottom border-white text-center">
+      <div className="card bg-dark text-white border border-3 border-secondary">
+        <div className="card-header border-bottom border-secondary text-center">
           <h3 className="fw-bold text-warning">Profile</h3>
         </div>
         <div className="card-body p-3">
