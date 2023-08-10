@@ -24,12 +24,10 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
   const uniqueExerciseNames = [
     ...new Set(workoutHistory.map((workout) => workout.exercise_name))]
   // console.log("Unique Exercises from workout history", uniqueExerciseNames);
-  const [uniqueExercises, setUniqueExercises] = useState(workoutHistory.filter(workout => workout.exercise_name === exercise))
-
+  const [uniqueExercises, setUniqueExercises] = useState(workoutHistory.filter(workout => workout.exercise_name === exercise));
   useEffect(() => {
-    
     setUniqueExercises(workoutHistory.filter(workout => workout.exercise_name === exercise))
-  }, [workoutHistory]);
+  }, [workoutHistory.length]);
 
   
 
@@ -77,16 +75,11 @@ const SliderComponent = () => {
   // USE CONTEXT
   const { profile, fetchProfile } = useProfileContext();
   const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
-  const programName = profile.name;
-
-
-
 
   useEffect(() => {
     fetchWorkoutHistory();
     fetchProfile();
   }, []);
-
 
   useEffect(() => {
     let exerciseList = []; //needs to be a state
@@ -167,17 +160,17 @@ const SliderComponent = () => {
 
   return (
     <div>
-      {!dailySession ? 
+      {!profile.program_id ? 
       <div className="slider-container bg-dark p-5">
-        <h2 className="slider-title text-warning">Nothing for today</h2>
+        <h2 className="slider-title text-warning">No program selected</h2>
       </div>
       :
       <div className=" slider-container bg-dark p-5">
-        <h2 className="slider-title text-warning">{dailySession.name}</h2>
+        {dailySession && <h2 className="slider-title text-warning">{dailySession.name}</h2>}
         <h2 className="slider-title text-warning">{daysOfWeek[moment().day() - 1]}</h2>
         {!userExercises.length && <h2 className="slider-title text-warning">No exercises listed for todays program</h2>}
         <Slider {...settings}>
-          {userExercises.length && userExercises.map((workout, index) => (
+          {userExercises.length  && userExercises.map((workout, index) => (
 
             <SliderItem
               key={index}
