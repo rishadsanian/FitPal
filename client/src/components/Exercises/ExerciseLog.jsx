@@ -44,7 +44,7 @@ const ExerciseLog = (props) => {
     <div className="pt-3" style={{ 'minHeight': '100vh' }}>
       <h1 className="text-warning pb-3">{props.name}</h1>
       {listOfSetRecord}
-      <div className="d-flex justify-content-between gap-2 mt-3 p-3">
+      <div className="d-flex justify-content-between gap-3 mt-3 p-3">
         <button
           className={
             sets.length === max
