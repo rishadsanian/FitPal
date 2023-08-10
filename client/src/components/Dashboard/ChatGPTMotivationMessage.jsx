@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfileContext } from "../../contexts/ProfileContext";
-
+//Chat GPT motivation message Broiler Pate
 const MotivationalMessage = () => {
   const { profile, recentWorkout } = useProfileContext();
   const [motivationalMessage, setMotivationalMessage] = useState("");
@@ -31,8 +31,8 @@ const MotivationalMessage = () => {
         const response = await axios.post(
           "https://api.openai.com/v1/engines/davinci-codex/completions",
           {
-            prompt: prompt,
-            max_tokens: 50,
+            prompt: prompt, //different prompts can be passed depending on use cases
+            max_tokens: 50, // need to adjust this for length of message
             temperature: 0.7,
             api_key: "YOUR_OPENAI_API_KEY",
           }
