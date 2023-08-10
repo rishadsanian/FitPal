@@ -115,9 +115,9 @@ const ChartWorkout = ({ userId }) => {
     <div className="chart-container">
       <div className="card bg-dark opacity-75 weekly-tracker-card mb-3">
         <div className="card-body">
-          <h3 className="text-warning fw-bold weekly-tracker-header">
+          <h1 className="text-white fw-bold weekly-tracker-header py-5">
             Weekly Exercise Tracker
-          </h3>
+          </h1>
           
             <div>
               <div className="chart-wrapper">

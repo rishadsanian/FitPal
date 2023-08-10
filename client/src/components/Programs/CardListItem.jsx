@@ -92,7 +92,11 @@ function ProgramListItem(props) {
 
   // navigation for the session
   const navigateToSession = (session) => {
-    navigate(`/programs/${props.programId}/sessions/${session.id}`);
+    if(props.editable){
+      navigate(`/programs/${props.programId}/sessions/${session.id}`);
+    } else {
+      navigate(`/programs/${props.programId}/sessions/${session.id}/noedit`);
+    }
   };
 
   // function to toggle edit mode
@@ -141,7 +145,7 @@ function ProgramListItem(props) {
     );
   });
   return (
-    <div className="col my-3">
+    <div className="col my-3" style={{minWidth: '23em'}}>
       <div className={cardClass}>
         {/* Program info */}
         {editMode ? (

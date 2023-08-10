@@ -5,7 +5,8 @@ import ExerciseList from '../Exercises/ExerciseList';
 import SessionItem from './SessionItem';
 import AddExerciseModal from '../Exercises/AddExerciseModal';
 import ExerciseLog from '../Exercises/ExerciseLog';
-const SessionDetail = () => {
+import SetProvider from '../../contexts/SetContext';
+const SessionDetail = (props) => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState([]);
   const [sets, setSets] = useState([]);
@@ -102,12 +103,15 @@ const SessionDetail = () => {
     setDisplayLog(false);
   };
 
+  
+
   const exercisesListItem = exercises.map((exercise, index) => {
     return (
       <SessionItem
         key={index}
         sets={sets}
         exercise={exercise}
+        editable={props.editable}
         onClick={() => {
           onEdit(exercise);
         }}
@@ -142,27 +146,27 @@ const SessionDetail = () => {
               </div>
             </form>
           ) : (
-            <div className="d-flex justify-content-between mb-5">
-              <div>
-                <h3 className="fw-bold text-warning">{title}</h3>
-                <a
-                  className="btn btn-outline-info text-white"
+            <div >
+              <h1 className="display-5 pt-3 fw-bold text-white">{title}</h1>
+              <div className="d-flex justify-content-between mb-5">
+                {props.editable && <a
+                  className="btn btn-warning text-white"
                   href="#addExercise"
                   onClick={onAddExerciseClick}
                 >
                   <i className="fa-solid fa-plus"></i> exercise
-                </a>
-              </div>
-              <div className="d-flex">
-                <button
-                  className="btn btn-dark"
-                  onClick={onEditSessionName}
-                >
-                  <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-                </button>
-                <button className="btn btn-dark" onClick={onDeleteSession}>
-                  <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-                </button>
+                </a>}
+                {props.editable && <div className="d-flex">
+                  <button
+                    className="btn btn-dark"
+                    onClick={onEditSessionName}
+                  >
+                    <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+                  </button>
+                  <button className="btn btn-dark" onClick={onDeleteSession}>
+                    <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+                  </button>
+                </div>}
               </div>
             </div>
           )}
@@ -183,7 +187,7 @@ const SessionDetail = () => {
         {/* Add New Exercise Part */}
         {displayExerciseList && (
           <div className="col col-12 col-md-6 col-xl-8" id="addExercise">
-            <ExerciseList />
+            <ExerciseList browseMode={!props.editable}/>
           </div>
         )}
 

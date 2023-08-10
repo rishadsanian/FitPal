@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExerciseItem from './ExerciseItem';
 import { useParams } from 'react-router';
+import { setContext } from '../../contexts/SetContext';
 
 const MUSCLE = {
   abdominals: 'Abdominals',
@@ -22,12 +23,13 @@ const MUSCLE = {
   triceps: 'Triceps',
 };
 
-const ExerciseList = () => {
+const ExerciseList = (props) => {
   const [name, setName] = useState('');
   const [muscle, setMuscle] = useState('');
   const [exercises, setExercies] = useState([]);
   const [userExercises, setUserExercises] = useState([]);
   const { session_id } = useParams();
+
 
   useEffect(() => {
     axios
@@ -80,15 +82,19 @@ const ExerciseList = () => {
   }, [name, muscle]);
 
   const exercisesListItem = exercises.map((exercise, index) => {
-    return <ExerciseItem key={index} exercise={exercise} userExercises={userExercises}/>;
+    return <ExerciseItem key={index} exercise={exercise} userExercises={userExercises} browseMode={props.browseMode}/>;
   });
 
   return (
     <div className="w-100 p-3">
-      <h1 className="text-warning fw-bold">Add New Exercise</h1>
+      {props.browseMode ? 
+        <h1 className="text-warning fw-bold text-white">Browse Exercises</h1>
+        :
+        <h1 className="text-warning fw-bold text-white">Add New Exercise</h1>
+      }
       <div className="p-3">
         <form className="row row-cols-1 row-cols-md-2">
-          <div className="col col-md-3 p-1">
+          <div className="col col-md-3">
             <select
                 className="form-select col"
                 value={muscle}
@@ -98,7 +104,7 @@ const ExerciseList = () => {
               {muscleOptions}
             </select>
           </div>
-          <div className="col col-md-9 p-1">
+          <div className="col col-md-9">
             <input
               className="form-control"
               type="search"

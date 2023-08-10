@@ -33,18 +33,21 @@ const SessionItem = (props) => {
       {!deleteMode ? (
         <td role="button" className="p-3 d-flex justify-content-between" onClick={props.onRowSelected}>
           <div>
-            <h6 className="">{props.exercise.name}</h6>
+            <h6 className="text-warning">{props.exercise.name}</h6>
             <div className="d-flex gap-2 flex-wrap">{setList}</div>
           </div>
           {/* {add edit - delete button} */}
-          <div className="d-flex align-self-center">
-            <button className="btn" onClick={props.onClick}>
-              <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-            </button>
-            <button className="btn" onClick={() => setDeleteMode(true)}>
-              <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-            </button>
-          </div>
+          {props.editable && <div>
+            <div className="d-flex align-self-center">
+              <button className="btn" onClick={props.onClick}>
+                <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+              </button>
+              <button className="btn" onClick={() => setDeleteMode(true)}>
+                <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+              </button>
+            </div>
+          </div>}
+          
         </td>
       ) : (
         <td
