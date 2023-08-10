@@ -34,7 +34,7 @@ const WorkoutHistory = () => {
 
       <Slider
         dots={true}
-        infinite={true}
+        infinite={false}
         arrows={true}
         slidesToShow={1}
         slidesToScroll={1}

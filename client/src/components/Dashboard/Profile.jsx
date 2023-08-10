@@ -39,7 +39,7 @@ const Profile = () => {
                       htmlFor="date_of_birth"
                       className="form-label text-secondary text-start"
                     >
-                      Date of Birth:
+                      Date of Birth
                     </label>
                     <input
                       type="date"
@@ -55,7 +55,7 @@ const Profile = () => {
                       htmlFor="height"
                       className="form-label text-secondary text-start"
                     >
-                      Height:
+                      Height
                     </label>
                     <input
                       type="number"
@@ -71,7 +71,7 @@ const Profile = () => {
                       htmlFor="weight"
                       className="form-label text-secondary text-start"
                     >
-                      Weight:
+                      Weight
                     </label>
                     <input
                       type="number"
@@ -106,7 +106,7 @@ const Profile = () => {
                       htmlFor="fitness_level"
                       className="form-label text-secondary text-start"
                     >
-                      Fitness Level:
+                      Fitness Level
                     </label>
                     <select
                       className="form-select"
@@ -125,7 +125,7 @@ const Profile = () => {
                       htmlFor="goal"
                       className="form-label text-secondary text-start"
                     >
-                      Goal:
+                      Goal
                     </label>
                     <input
                       type="text"
