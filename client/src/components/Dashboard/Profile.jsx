@@ -96,6 +96,7 @@ const Profile = () => {
                       value={profile.gender}
                       onChange={handleChange}
                     >
+                      <option value="">Select Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
@@ -115,6 +116,7 @@ const Profile = () => {
                       value={profile.fitness_level}
                       onChange={handleChange}
                     >
+                      <option value="">Select Fitness Level</option>
                       <option value="Beginner">Beginner</option>
                       <option value="Intermediate">Intermediate</option>
                       <option value="Expert">Expert</option>
