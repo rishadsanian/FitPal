@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import SliderComponent from '../Dashboard/Slider';
 import Profile from '../Dashboard/Profile';
-import Log from './Log';
+import Log from '../Dashboard/Log';
 import ChartWorkout from '../Dashboard/ChartWorkout';
 import TitleImage from '../TitleCards/TitleImage';
 import '../../styles/Main.css';
