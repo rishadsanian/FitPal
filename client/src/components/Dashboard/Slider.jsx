@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../styles/Slider.css";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import { useProfileContext } from "../../contexts/ProfileContext";
+import { userContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router";
 import axios from "axios";
 
 const daysOfWeek = {
@@ -18,28 +20,67 @@ const daysOfWeek = {
   6: "Sunday"
 }
 
+const MUSCLE_ICON = {
+  abdominals: "fa-child-reaching",
+  abductors: "fa-drumstick-bite",
+  adductors: "fa-drumstick-bite",
+  biceps: "fa-dumbbell",
+  calves: "fa-drumstick-bite",
+  chest: "fa-child-reaching",
+  forearms: "fa-dumbbell",
+  glutes: "fa-dumbbell",
+  hamstrings: "fa-drumstick-bite",
+  lats: "fa-child-reaching",
+  lower_back: "fa-child-reaching",
+  middle_back: "fa-child-reaching",
+  neck: "fa-user-xmark",
+  quadriceps: 'fa-drumstick-bite',
+  traps: "fa-child-reaching",
+  triceps: "fa-dumbbell",
+};
+
 //each slider item from mock data - could be moved to a different component
-const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
+const SliderItem = ({ exercise, date, icon, workoutHistory, sets, profile }) => {
+  console.log(workoutHistory);
+  const navigate = useNavigate();
+
+  const { userId } = useContext(userContext)
 
   const uniqueExerciseNames = [
     ...new Set(workoutHistory.map((workout) => workout.exercise_name))]
   // console.log("Unique Exercises from workout history", uniqueExerciseNames);
   const [uniqueExercises, setUniqueExercises] = useState(workoutHistory.filter(workout => workout.exercise_name === exercise));
+  const [currentSets, setCurrentSets] = useState(sets.filter((set) => exercise === set.name));
+
   useEffect(() => {
     setUniqueExercises(workoutHistory.filter(workout => workout.exercise_name === exercise))
   }, [workoutHistory.length]);
 
-  
+  const exerciseIcon = "excercise-icon fa-solid " + MUSCLE_ICON[currentSets[0].muscle_group]; 
+
+  const navigateToSession = () => {
+    console.log(currentSets[0])
+    const setReference = currentSets[0];
+    const programId = setReference.program_id;
+    const programUserId = setReference.user_id;
+    const sessionId = setReference.session_id;
+    if(userId === programUserId){
+      navigate(`/programs/${programId}/sessions/${sessionId}`);
+    } else {
+      navigate(`/programs/${programId}/sessions/${sessionId}/noedit`);
+    }
+  }
 
   return (
     <div className="slider-item bg-dark border-warning mx-3">
       <div className="excercise-image">
-        <i className="excercise-icon fa-solid fa-dumbbell"></i>
+        <i className={exerciseIcon}></i>
       </div>
       <h3 className="exercise text-warning">{exercise}</h3>
+      <h3 className="exercise text-warning">{currentSets[0].muscle_group}</h3>
       <div>
         <div>
-          {sets.filter((set) => exercise === set.name).map(set => 
+          {currentSets.map(set => 
           <div className="badge text-bg-light mx-2">
             <span>{set.resistant} lbs/{set.reps} Reps</span>
           </div>
@@ -53,8 +94,8 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
             </div>)}
           </div>
         )}
-        <button className="text-warning btn border-warning mt-3">
-          <i className="fa-solid fa-plus"></i>
+        <button className="text-warning btn border-warning mt-3" onClick={navigateToSession}>
+          <i className="fa-solid fa-eye"></i>
         </button>
         
       </div>
@@ -180,6 +221,7 @@ const SliderComponent = () => {
               icon={workout.icon}
               workoutHistory={workoutHistory}
               sets={sets}
+              profile={profile}
             />
           ))}
         </Slider>
