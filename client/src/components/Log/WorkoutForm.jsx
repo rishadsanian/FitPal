@@ -83,7 +83,7 @@ const WorkoutForm = () => {
                 </p>
                 <p className="text-secondary text-end">
                   <span
-                    className="badge text-bg-warning me-2"
+                    className="badge text-bg-warning me-2 pt-1"
                     onClick={() => setReadMore(false)}
                     style={{cursor: 'pointer'}}
                   >
@@ -152,7 +152,7 @@ const WorkoutForm = () => {
           )}
         </p>
 
-        <div className="row row-cols-sm-2 pt-4">
+        <div className="row row-cols-sm-2 pt-0">
           <div className="col">
             <div className="input-group flex-nowrap">
               <span className="input-group-text" id="addon-wrapping">
