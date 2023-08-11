@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // WorkoutForm.js
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-
 import "../../styles/Log.css";
 import axios from "axios";
 
@@ -28,8 +27,10 @@ const WorkoutForm = () => {
     API_KEY,
     API_URL,
     setExercises,
-    setSelectedExerciseDescription
+    setSelectedExerciseDescription,
   } = useWorkoutContext();
+
+  const [readMore, setReadMore] = useState(false);
 
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -63,25 +64,34 @@ const WorkoutForm = () => {
     setSelectedExerciseDescription(exercise?.instructions || "");
   }, [selectedExercise]);
 
-
   return (
-    <div
-      className="container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
-    >
+    <div className="addlog bg-dark text-white">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            <p className="text-secondary">{selectedExerciseDescription}</p>
-            <p className="text-secondary">
-              <strong>Difficulty:</strong>{" "}
-              {exercises[0].difficulty.toUpperCase()}
-            </p>
-            <p className="text-secondary">
-              <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-            </p>
+            {readMore && (
+              <div>
+                <p className="text-secondary">{selectedExerciseDescription}</p>
+                <p className="text-secondary">
+                  <strong>Difficulty:</strong>{" "}
+                  {exercises[0].difficulty.toUpperCase()}
+                </p>
+                <p className="text-secondary">
+                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+                </p>
+                <p className="text-secondary text-end">
+                  <span
+                    className="badge text-bg-warning me-2 pt-1"
+                    onClick={() => setReadMore(false)}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Hide Deails
+                  </span>
+                </p>
+              </div>
+            )}
           </div>
         )}
         {editingWorkout && selectedExercise && (
@@ -89,47 +99,60 @@ const WorkoutForm = () => {
         )}
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="text-start">
-          <label htmlFor="muscleGroup" className="form-label text-secondary">
-            Muscle Group
-          </label>
-          <select
-            id="muscleGroup"
-            className="form-select"
-            value={selectedMuscleGroup}
-            onChange={handleMuscleGroupSelection}
-            // required
-          >
-            <option value="">Select Muscle Group</option>
-            {muscleGroups.map((group) => (
-              <option key={group} value={group}>
-                {MUSCLE[group]}
-              </option>
-            ))}
-          </select>
-        </div>
+        {!editingWorkout && (
+          <div className="text-start mb-3">
+            <label htmlFor="muscleGroup" className="form-label text-secondary">
+              Muscle Group
+            </label>
+            <select
+              id="muscleGroup"
+              className="form-select btn-warning"
+              value={selectedMuscleGroup}
+              onChange={handleMuscleGroupSelection}
+            >
+              <option value="">Select Muscle Group</option>
+              {muscleGroups.map((group) => (
+                <option key={group} value={group}>
+                  {MUSCLE[group]}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {!editingWorkout && (
+          <div className="text-start mb-3">
+            <label htmlFor="exercise" className="form-label text-secondary">
+              Exercise
+            </label>
+            <select
+              id="exercise"
+              className="form-select btn-warning"
+              value={selectedExercise}
+              onChange={handleExerciseSelection}
+            >
+              <option value="">Select Exercise</option>
+              {exercises.map((exercise) => (
+                <option key={exercise.name} value={exercise.name}>
+                  {exercise.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
-        <div className="text-start">
-          <label htmlFor="exercise" className="form-label text-secondary">
-            Exercise
-          </label>
-          <select
-            id="exercise"
-            className="form-select"
-            value={selectedExercise}
-            onChange={handleExerciseSelection}
-            // required
-          >
-            <option value="">Select Exercise</option>
-            {exercises.map((exercise) => (
-              <option key={exercise.name} value={exercise.name}>
-                {exercise.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <p className="text-secondary text-end">
+          {!readMore && selectedExerciseDescription.length > 100 && (
+            <span
+              className="badge text-bg-warning me-2 pt-1"
+              onClick={() => setReadMore(true)}
+              style={{ cursor: 'pointer' }}
+            >
+              Show Details
+            </span>
+          )}
+        </p>
 
-        <div className="row row-cols-sm-2 pt-4">
+        <div className="row row-cols-sm-2 pt-0">
           <div className="col">
             <div className="input-group flex-nowrap">
               <span className="input-group-text" id="addon-wrapping">
@@ -163,16 +186,15 @@ const WorkoutForm = () => {
             </div>
           </div>
         </div>
-        {/* submit - depend on edit or log mode */}
-        <div className="form-buttons-container">
-          <button type="submit" className="btn btn-warning">
+
+        <div className="d-grid gap-2">
+          <button type="submit" className="btn btn-warning mt-4 text-white">
             {editingWorkout ? "Update" : "Log Workout"}
           </button>
-          {/* Button for cancelling edit mode */}
           {editingWorkout && (
             <button
               type="button"
-              className="btn btn-warning"
+              className="btn btn-secondary mt-2"
               onClick={handleCancelEdit}
             >
               Cancel

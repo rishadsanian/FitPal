@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar-Footer/Navbar";
 import Main from "./components/Pages/Main";
 import Login from "./components/Login-SignUp/Login";
 import LandingPage from "./components/Pages/LandingPage";
-import Log from "./components/Pages/Log";
 import DevTest from "./components/Pages/DevTest";
 
 import SessionDetail from "./components/Sessions/SessionDetail";
@@ -16,6 +15,8 @@ import SignUp from "./components/Login-SignUp/SignUp";
 import Profile from "./components/Dashboard/Profile";
 import ProgramsPage from "./components/Pages/ProgramsPage";
 import ChartWorkout from "./components/Dashboard/ChartWorkout";
+import LogPage from "./components/Pages/LogPage";
+
 
 import ProgramProvider from "./contexts/ProgramProvider";
 import { userContext } from "./contexts/UserContext";
@@ -59,7 +60,7 @@ function App() {
           />
           <Route
             path="/programs/log"
-            element={authenticated ? <Log /> : <Login />}
+            element={authenticated ? <LogPage /> : <Login />}
           />
           <Route
             path="/profile/1"
@@ -71,7 +72,11 @@ function App() {
           />
           <Route
             path="/programs/:program_id/sessions/:session_id"
-            element={authenticated ? <SessionDetail /> : <Login />}
+            element={authenticated ? <SessionDetail editable={true}/> : <Login />}
+          />
+          <Route
+            path="/programs/:program_id/sessions/:session_id/noedit"
+            element={authenticated ? <SessionDetail editable={false}/> : <Login />}
           />
           <Route
             path="/programs/1/sessions/1/exercise/1"

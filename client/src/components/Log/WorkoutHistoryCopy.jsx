@@ -8,65 +8,34 @@ import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
 
-const SliderItem = ({
-  workout,
-  workoutHistory,
-  currentDate,
-  handleDeleteWorkout,
-  editingWorkout,
-  handleEditWorkout,
-}) => {
-  // const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
+const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout}) => {
+  const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
 
-  // useEffect(() => {
-  //   const exerciseList = [];
-  //   for(const workout of workoutHistory) {
-  //     if(!exerciseList.includes(workout.exercise_name)) {
-  //       exerciseList.push(workout.exercise_name)
-  //     }
-  //   }
-  //   setUniqueExerciseNames(exerciseList);
-  // }, [])
-
-  return (
+  useEffect(() => {
+    const exerciseList = [];
+    for(const workout of workoutHistory) {
+      if(!exerciseList.includes(workout.exercise_name)) {
+        exerciseList.push(workout.exercise_name)
+      }
+    }
+    setUniqueExerciseNames(exerciseList);
+  }, [])
+ 
+  return(
+    // Render actual workout entries if workoutHistory is not empty
     <div
       key={workout.id}
-      className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
+      className="h-100 slider-item p-3 border border-secondary rounded border-3"
       style={{
         margin: "0 10px",
-        height: "293px",
-        overflow: "hidden",
-        overflowX: "auto",
-        overflowY: "scroll",
+        backgroundColor: "rgba(52, 58, 64, 0.75)",
       }}
     >
-      <style>
-        {`
-      /* Scrollbar Styles for the specific div */
-      div::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-
-      div::-webkit-scrollbar-track {
-        background: #333333;
-      }
-
-      div::-webkit-scrollbar-thumb {
-        background-color: #666666;
-        border-radius: 4px;
-      }
-
-      div::-webkit-scrollbar-thumb:hover {
-        background-color: #ffc107;
-      }
-    `}
-      </style>
       <table className="table table-dark table-striped mt-3">
         <tbody>
           <tr>
             <td colSpan="2">
-              <p className="fw-bold text-secondary">
+              <p className="fw-bold">
                 {moment(currentDate).format("MMMM D, YYYY")}
               </p>
             </td>
@@ -79,7 +48,7 @@ const SliderItem = ({
                   <div>
                     <div className="badge text-bg-warning me-2">
                       {workout.resistance > 0 &&
-                        `${workout.resistance} lbs / ${workout.reps} Reps`}
+                        `${workout.resistance} lbs/ ${workout.reps}`}
                     </div>
                   </div>
                 </div>
@@ -106,10 +75,10 @@ const SliderItem = ({
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
-const WorkoutHistory = () => {
+const WorkoutHistoryCopy = () => {
   const {
     workoutHistory,
     handleSliderChange,
@@ -123,13 +92,14 @@ const WorkoutHistory = () => {
   const { userId } = useContext(userContext);
 
   useEffect(() => {
-    console.log("Fetching hitory");
     fetchWorkoutHistory();
-    // console.log("history in table");
   }, [currentDate]);
 
   return (
-    <div className="workout-history-slider container addlog bg-dark text-white rounded">
+    <div
+      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
+      style={{ width: "600px" }}
+    >
       <h3 className="text-warning fw-bold pb-3">Daily Workout History</h3>
 
       <Slider
@@ -142,17 +112,17 @@ const WorkoutHistory = () => {
       >
         {workoutHistory.length === 0 ? (
           // Render a placeholder entry if workoutHistory is empty
-          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide">
             No workouts recorded
           </div>
         ) : (
           // Render actual workout entries if workoutHistory is not empty
           workoutHistory.map((workout) => (
-            <SliderItem
-              workout={workout}
+            <SliderItem 
+              workout={workout} 
               workoutHistory={workoutHistory}
               currentDate={currentDate}
-              handleEditWorkout={handleEditWorkout}
+              handleEditWorkout={handleDeleteWorkout}
               editingWorkout={editingWorkout}
               handleDeleteWorkout={handleDeleteWorkout}
             />
@@ -163,4 +133,4 @@ const WorkoutHistory = () => {
   );
 };
 
-export default WorkoutHistory;
+export default WorkoutHistoryCopy;

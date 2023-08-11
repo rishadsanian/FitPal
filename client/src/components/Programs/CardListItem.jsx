@@ -92,7 +92,11 @@ function ProgramListItem(props) {
 
   // navigation for the session
   const navigateToSession = (session) => {
-    navigate(`/programs/${props.programId}/sessions/${session.id}`);
+    if(props.editable){
+      navigate(`/programs/${props.programId}/sessions/${session.id}`);
+    } else {
+      navigate(`/programs/${props.programId}/sessions/${session.id}/noedit`);
+    }
   };
 
   // function to toggle edit mode
@@ -112,6 +116,13 @@ function ProgramListItem(props) {
       console.error("Error creating session:", error);
     }
   };
+
+  const deleteAndUpdateCurrentProgram = (programId) => {
+    if(props.currentProfile.program_id === programId){
+      updateCurrentProgram(null);
+    }
+    deleteProgram(programId)
+  }
 
   // function to toggle edit mode
   const toggleEditMode = async (programId) => {
@@ -134,7 +145,7 @@ function ProgramListItem(props) {
     );
   });
   return (
-    <div className="col my-3">
+    <div className="col my-3" style={{minWidth: '23em'}}>
       <div className={cardClass}>
         {/* Program info */}
         {editMode ? (
@@ -224,7 +235,10 @@ function ProgramListItem(props) {
                 <i className="fa-regular fa-star fa-xl text-warning"></i>
               </button>
             ) : (
-              <button className="btn btn-dark" disabled>
+              <button  
+                className="btn btn-dark"
+                onClick={() => updateCurrentProgram(null)}
+              >
                 <i className="fa-solid fa-star fa-xl text-warning"></i>
               </button>
             )}
@@ -243,7 +257,7 @@ function ProgramListItem(props) {
                 onClick={() => toggleEditMode(props.programId)}
               >
                 {editMode ? (
-                  <i class="fa-solid fa-check fa-xl text-warning"></i>
+                  <i className="fa-solid fa-check fa-xl text-warning"></i>
                 ) : (
                   <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
                 )}
@@ -264,7 +278,7 @@ function ProgramListItem(props) {
       {displayDeleteModal && (
         <DeletePopupModal
           modalToggle={setDisplayDeleteModal}
-          modalAction={deleteProgram}
+          modalAction={deleteAndUpdateCurrentProgram}
           modalParams={props.programId}
           message={`Deleting program ${props.name}`}
         />
