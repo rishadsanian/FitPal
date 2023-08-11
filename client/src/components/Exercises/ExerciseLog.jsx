@@ -40,8 +40,6 @@ const ExerciseLog = (props) => {
       }
     };
 
-    
-
     fetchSets();
     fecthLogs();
   }, [props.name]);
@@ -64,7 +62,6 @@ const ExerciseLog = (props) => {
         return [...prevRecords, updatedRecord];
       }
     });
-    console.log(records);
   };
 
   const listOfSetRecord = sets.map((set) => {
@@ -109,7 +106,8 @@ const ExerciseLog = (props) => {
       await Promise.all(promises);
 
       console.log('All data saved successfully');
-      fecthLogs();
+      // fecthLogs();
+      window.location.reload();
     } catch (error) {
       console.log('Error saving data:', error);
     }
@@ -120,6 +118,9 @@ const ExerciseLog = (props) => {
       <h1 className="display-5 pt-3 fw-bold text-white mb-5">
         {props.name}
       </h1>
+
+      {/* Display history here */}
+      <RecordHistory logs={logs} />
 
       {listOfSetRecord}
       <div className="d-flex justify-content-between gap-3 mt-3 p-3">
@@ -156,8 +157,7 @@ const ExerciseLog = (props) => {
         </button>
       </div>
 
-      {/* Display history here */}
-      <RecordHistory logs={logs} />
+      
     </div>
   );
 };

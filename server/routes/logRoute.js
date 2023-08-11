@@ -38,16 +38,24 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/:user_id/:exercise_name', (req, res) => {
+router.get('/:user_id/', (req, res) => {
   logs
-    .getLogByExercise(req.params)
+    .getLogByUserId(req.params)
     .then((logs) => {
-      // console.log('here');
-      // console.log(data);
       res.json({logs});
     })
     .catch((e) => {
-      // console.log('err');
+      res.send(e);
+    });
+});
+
+router.get('/:user_id/:exercise_name', (req, res) => {
+  logs
+    .getLogByUserIdAndExercise(req.params)
+    .then((logs) => {
+      res.json({logs});
+    })
+    .catch((e) => {
       res.send(e);
     });
 });
