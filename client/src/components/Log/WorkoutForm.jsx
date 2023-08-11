@@ -47,10 +47,11 @@ const WorkoutForm = () => {
       const firstMuscleGroup = "Select Muscle Group";
       setSelectedMuscleGroup(firstMuscleGroup);
     }
-    
   }, [muscleGroups]);
 
-  if (muscleGroups.length === 0){setExercises([""])}
+  if (muscleGroups.length === 0) {
+    setExercises([""]);
+  }
 
   useEffect(() => {
     // Fetch exercises from API based on the selected muscle group
@@ -85,7 +86,9 @@ const WorkoutForm = () => {
           <div>
             {readMore && selectedExercise && (
               <div>
-                <p className="text-secondary ">{selectedExercise.instructions}</p>
+                <p className="text-secondary ">
+                  {selectedExercise.instructions}
+                </p>
                 <p className="text-secondary">
                   <strong>Difficulty:</strong>{" "}
                   {selectedExercise.difficulty.toUpperCase()}
@@ -106,7 +109,7 @@ const WorkoutForm = () => {
             )}
           </div>
         )}
-        <p className="text-secondary text-end">
+        {/* <p className="text-secondary text-end">
           {!readMore && selectedExercise && (
             <span
               className="badge text-bg-warning me-2 pt-1"
@@ -116,7 +119,7 @@ const WorkoutForm = () => {
               Show Details
             </span>
           )}
-        </p>
+        </p> */}
         {editingWorkout && selectedExercise && (
           <h4 className="text-secondary">{selectedExercise}</h4>
         )}
@@ -132,7 +135,9 @@ const WorkoutForm = () => {
                 )}
                 value={selectedMuscleGroup || ""}
                 onChange={(_, newValue) =>
-                  setSelectedMuscleGroup(newValue === "Select Muscle Group" ? null : newValue)
+                  setSelectedMuscleGroup(
+                    newValue === "Select Muscle Group" ? null : newValue
+                  )
                 }
                 getOptionLabel={(group) => group}
                 // isOptionEqualToValue={(option, value) => option === value}
@@ -196,7 +201,19 @@ const WorkoutForm = () => {
               />
             </div>
           )}
-
+          {!editingWorkout && selectedExercise && exercises.length > 0 && (
+            <p className="text-secondary text-end">
+              {!readMore && selectedExercise && (
+                <span
+                  className="badge text-bg-warning me-2 pt-1"
+                  onClick={() => setReadMore(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Show Details
+                </span>
+              )}
+            </p>
+          )}
           <div className="row row-cols-sm-2 pt-0">
             <div className="col">
               <div className="input-group flex-nowrap">
