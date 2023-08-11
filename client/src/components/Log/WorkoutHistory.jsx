@@ -29,9 +29,8 @@ const SliderItem = ({
   // }, [])
 
   return (
-    // Render actual workout entries if workoutHistory is not empty
     <div
-      key={workout.id}
+      key={workout.exercise_name}
       className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
       style={{
         margin: "0 10px",

@@ -22,7 +22,7 @@ const Main = () => {
           {/* <TitleImage icon={'fa-solid fa-table-columns'} /> */}
 
           <div className="row row-cols-1 row-cols-md-2 bg-dark opacity-75">
-            <div class="p-3 text-start col col-sm-12 col-md-6 col-lg-7 text-white ">
+            <div className="p-3 text-start col col-sm-12 col-md-6 col-lg-7 text-white ">
               <div className="container-fluid py-5 px-3">
                 <h1 className="display-5 fw-bold text-warning mb-0">
                   Welcome User

@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // WorkoutForm.js
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-
 import "../../styles/Log.css";
 import axios from "axios";
 
@@ -30,6 +29,8 @@ const WorkoutForm = () => {
     setExercises,
     setSelectedExerciseDescription,
   } = useWorkoutContext();
+
+  const [readMore, setReadMore] = useState(false);
 
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -72,15 +73,32 @@ const WorkoutForm = () => {
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            <p className="text-secondary">{selectedExerciseDescription}</p>
+          <p className="text-secondary">
+            {selectedExerciseDescription.length > 100
+              ? selectedExerciseDescription.slice(0, 100) + "..."
+              : selectedExerciseDescription}
+            {selectedExerciseDescription.length > 100 && (
+              <span
+                className="text-warning cursor-pointer"
+                onClick={() => setReadMore(!readMore)}
+              >
+                {readMore ? " Read Less" : " Read More"}
+              </span>
+            )}
+          </p>
+          {readMore && (
             <p className="text-secondary">
-              <strong>Difficulty:</strong>{" "}
-              {exercises[0].difficulty.toUpperCase()}
+              <strong>Full Description:</strong> {selectedExerciseDescription}
             </p>
-            <p className="text-secondary">
-              <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-            </p>
-          </div>
+          )}
+          <p className="text-secondary">
+            <strong>Difficulty:</strong> {exercises[0].difficulty.toUpperCase()}
+          </p>
+          <p className="text-secondary">
+            <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+          </p>
+        </div>
+        
         )}
         {editingWorkout && selectedExercise && (
           <h4 className="text-secondary">{selectedExercise}</h4>
