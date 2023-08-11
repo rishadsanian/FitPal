@@ -13,6 +13,7 @@ const SessionDetail = (props) => {
   const [editMode, setEditmode] = useState(false);
   const [editSet, setEditSet] = useState(false);
   const [selectedEx, setSelectedEx] = useState('');
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const [displayLog, setDisplayLog] = useState(false);
   const [displayExerciseList, setDisplayExerciseList] = useState(
@@ -82,7 +83,7 @@ const SessionDetail = (props) => {
             .map((exercise) => exercise.name)
             .includes(set.exercise_name)
         ) {
-          exerciseList.push({ name: set.exercise_name });
+          exerciseList.push({ name: set.exercise_name, muscle: set.muscle_group});
         }
       }
       setSets(res.data.sets);
@@ -157,15 +158,28 @@ const SessionDetail = (props) => {
                   <i className="fa-solid fa-plus"></i> exercise
                 </a>}
                 {props.editable && <div className="d-flex">
-                  <button
+                  
+                  {deleteMode ?
+                  <div className="border border-danger rounded"> 
+                    <button className="btn btn-dark" onClick={onDeleteSession}>
+                      <i className="fa-solid fa-check fa-xl text-danger"></i>
+                    </button>
+                    <button className="btn btn-dark" onClick={() => setDeleteMode(false)}>
+                      <i className="fa-regular fa-x fa-xl text-white"></i>
+                    </button>
+                  </div>
+                  :
+                  <div>
+                    <button
                     className="btn btn-dark"
                     onClick={onEditSessionName}
                   >
-                    <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-                  </button>
-                  <button className="btn btn-dark" onClick={onDeleteSession}>
-                    <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-                  </button>
+                      <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+                    </button>
+                    <button className="btn btn-dark" onClick={() => setDeleteMode(true)}>
+                      <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+                    </button>
+                  </div>}
                 </div>}
               </div>
             </div>
@@ -202,6 +216,7 @@ const SessionDetail = (props) => {
         <AddExerciseModal
           setModalDisplay={setEditSet}
           name={selectedEx.name}
+          muscle={selectedEx.muscle}
         />
       )}
     </div>

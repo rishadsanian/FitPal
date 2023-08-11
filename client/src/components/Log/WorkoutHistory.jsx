@@ -122,7 +122,7 @@ const WorkoutHistory = () => {
               workout={workout} 
               workoutHistory={workoutHistory}
               currentDate={currentDate}
-              handleEditWorkout={handleDeleteWorkout}
+              handleEditWorkout={handleEditWorkout}
               editingWorkout={editingWorkout}
               handleDeleteWorkout={handleDeleteWorkout}
             />

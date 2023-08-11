@@ -58,7 +58,7 @@ const SessionItem = (props) => {
             <h6 className="">Deleting {props.exercise.name}</h6>
           </div>
           {/* {add edit - delete button} */}
-          <div className="align-self-center">
+          <div className="align-self-center border border-danger rounded">
             <button className="btn" onClick={() => deleteItem()}>
               <i className="fa-solid fa-check fa-xl text-danger"></i>
             </button>
