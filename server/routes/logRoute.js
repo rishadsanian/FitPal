@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 
-const pool = require("../configs/db.config");
-const express = require("express");
+const pool = require('../configs/db.config');
+const express = require('express');
 const router = express.Router();
-
+const logs = require('../db/queries/logs');
 // Route to handle the POST request to /log
-router.post("/", async(req, res) => {
+router.post('/', async (req, res) => {
   try {
     const {
       exercise_name,
@@ -28,14 +28,28 @@ router.post("/", async(req, res) => {
       exercise_name,
       reps,
       resistance,
-      user_id
+      user_id,
     ]);
 
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error("Error inserting data:", error);
-    res.status(500).json({ error: "Error inserting data" });
+    console.error('Error inserting data:', error);
+    res.status(500).json({ error: 'Error inserting data' });
   }
+});
+
+router.get('/:user_id/:exercise_name', (req, res) => {
+  logs
+    .getLogByExercise(req.params)
+    .then((logs) => {
+      // console.log('here');
+      // console.log(data);
+      res.json({logs});
+    })
+    .catch((e) => {
+      // console.log('err');
+      res.send(e);
+    });
 });
 
 module.exports = router;

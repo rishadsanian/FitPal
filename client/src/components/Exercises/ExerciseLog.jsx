@@ -2,13 +2,29 @@ import { useEffect, useState } from 'react';
 import SetRecord from './SetRecord';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import RecordHistory from './RecordHistory';
 const ExerciseLog = (props) => {
   const [sets, setSets] = useState([]);
   const { session_id } = useParams();
   const [min, setMin] = useState(null);
   const [records, setRecords] = useState([]);
   const max = 8;
+  const [logs, setLogs] = useState([]);
+  const user_id = window.sessionStorage.getItem('userId');
+
+  const fecthLogs = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/log/${user_id}/${props.name}`
+      );
+      if (!res.error) {
+        setLogs(res.data.logs);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     const fetchSets = async () => {
       try {
@@ -23,7 +39,11 @@ const ExerciseLog = (props) => {
         console.error(error);
       }
     };
+
+    
+
     fetchSets();
+    fecthLogs();
   }, [props.name]);
 
   const updateRecords = (updatedRecord) => {
@@ -70,32 +90,37 @@ const ExerciseLog = (props) => {
     setSets((prev) => [...prev.slice(0, sets.length - 1)]);
   };
 
-  const onSave = () => {
-    for (const re of records) {
-      if (re.reps > 0) {
-        const data = {
-          reps: re.reps,
-          resistance: re.resistance || 0,
-          exercise_name: props.name,
-          user_id: window.sessionStorage.getItem('userId'),
-        };
-        axios
-          .post(`http://localhost:8080/log/`, data)
-          .then((result) => {
-            // do something when result save 
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+  const onSave = async () => {
+    try {
+      const promises = [];
+
+      for (const re of records) {
+        if (re.reps > 0) {
+          const data = {
+            reps: re.reps,
+            resistance: re.resistance || 0,
+            exercise_name: props.name,
+            user_id: window.sessionStorage.getItem('userId'),
+          };
+          promises.push(axios.post(`http://localhost:8080/log/`, data));
+        }
       }
+
+      await Promise.all(promises);
+
+      console.log('All data saved successfully');
+      fecthLogs();
+    } catch (error) {
+      console.log('Error saving data:', error);
     }
   };
 
   return (
-    <div className="pt-3" style={{ minHeight: '100vh' }}>
+    <div className="pt-3 px-3" style={{ minHeight: '100vh' }}>
       <h1 className="display-5 pt-3 fw-bold text-white mb-5">
         {props.name}
       </h1>
+
       {listOfSetRecord}
       <div className="d-flex justify-content-between gap-3 mt-3 p-3">
         <button
@@ -124,12 +149,15 @@ const ExerciseLog = (props) => {
 
       <div className="d-grid">
         <button
-          className="btn btn-warning btn-large text-white m-3 fill"
+          className="btn btn-warning btn-large m-3 fill"
           onClick={onSave}
         >
           Save
         </button>
       </div>
+
+      {/* Display history here */}
+      <RecordHistory logs={logs} />
     </div>
   );
 };
