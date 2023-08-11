@@ -2,7 +2,6 @@ import React from "react";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import DeletePopupModal from "../DeletePopupModal";
 import { programContext } from "../../contexts/ProgramProvider";
 
 const daysOfWeek = [
@@ -20,13 +19,17 @@ function ProgramListItem(props) {
   const [newSessionName, setNewSessionName] = useState('');
   const [newSessionDay, setNewSessionDay] = useState(0);
   const [potentialDays, setPotentialDays] = useState([]);
-  const [deleteMode, setDeleteMode] = useState(false);
+  
   // State for when editing a program
   const [programUpdate, setProgramUpdate] = useState({
     name: props.name,
     description: props.description,
   });
+  
+  // Modes for edit and delete
+  const [deleteMode, setDeleteMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  
   // Toggle the class on the card when the program is the current program for the user
   const cardClass =
     props.currentProfile && props.currentProfile.program_id === props.programId
