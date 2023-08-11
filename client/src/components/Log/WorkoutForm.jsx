@@ -15,9 +15,12 @@ import {
   Autocomplete,
 } from "@mui/material";
 
+import AddExerciseModal from '../Exercises/AddExerciseModal';
+import ExerciseDetailModal from '../Exercises/ExerciseDetailModal';
+
+
 const WorkoutForm = () => {
   const {
-    MUSCLE,
     muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
@@ -28,7 +31,6 @@ const WorkoutForm = () => {
     setReps,
     weightLoad,
     setWeightLoad,
-    handleMuscleGroupSelection,
     handleExerciseSelection,
     handleSubmit,
     editingWorkout,
@@ -36,10 +38,14 @@ const WorkoutForm = () => {
     API_KEY,
     API_URL,
     setExercises,
-    setSelectedExerciseDescription,
   } = useWorkoutContext();
 
   const [readMore, setReadMore] = useState(false);
+  
+  const [modalDisplay, setModalDisplay] = useState(false);
+  const [exerciseDetailDisplay, setExerciseDetailDisplay] =
+    useState(false);
+
 
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu

@@ -20,7 +20,7 @@ const SliderItem = ({
   return (
     <div
       key={workout.id}
-      className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
+      className="pt-0 pb-0 m-0 border bg-dark border-dark bs-border-opacity-75 rounded flex-column border-3"
       style={{
         margin: "0 10px",
         height: "307px",
@@ -131,7 +131,7 @@ const WorkoutHistory = () => {
       >
         {workoutHistory.length === 0 ? (
           // Render a placeholder entry if workoutHistory is empty
-          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+          <div className="workout-entry workout-entry profile-card p-3  rounded ">
             No workouts recorded
           </div>
         ) : (

@@ -4,13 +4,14 @@ const ExerciseDetailModal = (props) => {
     e.preventDefault();
     props.setExerciseDetailDisplay(false);
   };
+  const capitalizeFirstLetter = (str)=> {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
   return (
     <div className="">
       <div className="modal-background"></div>
       <div className="modal-foreground position-fixed top-50 start-50 translate-middle col col-11 col-md-7 col-xl-5 border border-warning rounded-3">
-        <div
-          className="bg-dark text-white rounded p-5"
-        >
+        <div className="bg-dark text-white rounded p-5">
           <div className="modal-header">
             <h3 className="text-warning">{exercise.name}</h3>
             <button className="btn btn-dark end-0" onClick={closeModal}>
@@ -19,10 +20,10 @@ const ExerciseDetailModal = (props) => {
           </div>
           <div className="text-start modal-body">
             <p className="text-secondary p-0 mb-0">
-              Muscle: {exercise.muscle} - Level: {exercise.difficulty}
+              Muscle: {capitalizeFirstLetter(exercise.muscle)} | Level: {capitalizeFirstLetter(exercise.difficulty)}
             </p>
             <p className="text-secondary">
-              Type: {exercise.type} - Equipment: {exercise.equipment}
+              Type: {capitalizeFirstLetter(exercise.type)} | Equipment: {capitalizeFirstLetter(exercise.equipment)}
             </p>
             <p>{exercise.instructions}</p>
           </div>
