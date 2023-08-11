@@ -16,6 +16,7 @@
 .profile-container {
   margin-top: 20px;
   padding:10px;
+  padding-top: 20px;
   animation: fadeIn 2s;
 }
 

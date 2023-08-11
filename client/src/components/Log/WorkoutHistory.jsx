@@ -8,7 +8,14 @@ import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
 
-const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout}) => {
+const SliderItem = ({
+  workout,
+  workoutHistory,
+  currentDate,
+  handleDeleteWorkout,
+  editingWorkout,
+  handleEditWorkout,
+}) => {
   // const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
 
   // useEffect(() => {
@@ -20,22 +27,46 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
   //   }
   //   setUniqueExerciseNames(exerciseList);
   // }, [])
- 
-  return(
-    // Render actual workout entries if workoutHistory is not empty
+
+  return (
     <div
       key={workout.id}
-      className="h-100 slider-item p-3 border border-secondary rounded border-3"
+      className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
       style={{
         margin: "0 10px",
-        backgroundColor: "rgba(52, 58, 64, 0.75)",
+        height: "293px",
+        overflow: "hidden",
+        overflowX: "auto",
+        overflowY: "scroll",
       }}
     >
+      <style>
+        {`
+      /* Scrollbar Styles for the specific div */
+      div::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      div::-webkit-scrollbar-track {
+        background: #333333;
+      }
+
+      div::-webkit-scrollbar-thumb {
+        background-color: #666666;
+        border-radius: 4px;
+      }
+
+      div::-webkit-scrollbar-thumb:hover {
+        background-color: #ffc107;
+      }
+    `}
+      </style>
       <table className="table table-dark table-striped mt-3">
         <tbody>
           <tr>
             <td colSpan="2">
-              <p className="fw-bold">
+              <p className="fw-bold text-secondary">
                 {moment(currentDate).format("MMMM D, YYYY")}
               </p>
             </td>
@@ -48,7 +79,7 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
                   <div>
                     <div className="badge text-bg-warning me-2">
                       {workout.resistance > 0 &&
-                        `${workout.resistance} lbs/ ${workout.reps}`}
+                        `${workout.resistance} lbs / ${workout.reps} Reps`}
                     </div>
                   </div>
                 </div>
@@ -75,8 +106,8 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 const WorkoutHistory = () => {
   const {
@@ -92,13 +123,13 @@ const WorkoutHistory = () => {
   const { userId } = useContext(userContext);
 
   useEffect(() => {
+    console.log("Fetching hitory");
     fetchWorkoutHistory();
+    // console.log("history in table");
   }, [currentDate]);
 
   return (
-    <div
-      className="workout-history-slider container addlog bg-dark text-white rounded"
-    >
+    <div className="workout-history-slider container addlog bg-dark text-white rounded">
       <h3 className="text-warning fw-bold pb-3">Daily Workout History</h3>
 
       <Slider
@@ -114,13 +145,11 @@ const WorkoutHistory = () => {
           <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
             No workouts recorded
           </div>
-
-          
         ) : (
           // Render actual workout entries if workoutHistory is not empty
           workoutHistory.map((workout) => (
-            <SliderItem 
-              workout={workout} 
+            <SliderItem
+              workout={workout}
               workoutHistory={workoutHistory}
               currentDate={currentDate}
               handleEditWorkout={handleEditWorkout}

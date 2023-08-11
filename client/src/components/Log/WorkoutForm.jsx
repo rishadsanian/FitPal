@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // WorkoutForm.js
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-
 import "../../styles/Log.css";
 import axios from "axios";
 
@@ -30,6 +29,8 @@ const WorkoutForm = () => {
     setExercises,
     setSelectedExerciseDescription,
   } = useWorkoutContext();
+
+  const [readMore, setReadMore] = useState(false);
 
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -64,22 +65,33 @@ const WorkoutForm = () => {
   }, [selectedExercise]);
 
   return (
-    <div
-      className="addlog bg-dark text-white"
-    >
+    <div className="addlog bg-dark text-white">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            <p className="text-secondary">{selectedExerciseDescription}</p>
-            <p className="text-secondary">
-              <strong>Difficulty:</strong>{" "}
-              {exercises[0].difficulty.toUpperCase()}
-            </p>
-            <p className="text-secondary">
-              <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-            </p>
+            {readMore && (
+              <div>
+                <p className="text-secondary">{selectedExerciseDescription}</p>
+                <p className="text-secondary">
+                  <strong>Difficulty:</strong>{" "}
+                  {exercises[0].difficulty.toUpperCase()}
+                </p>
+                <p className="text-secondary">
+                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+                </p>
+                <p className="text-secondary text-end">
+                  <span
+                    className="badge text-bg-warning me-2 pt-1"
+                    onClick={() => setReadMore(false)}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Hide Deails
+                  </span>
+                </p>
+              </div>
+            )}
           </div>
         )}
         {editingWorkout && selectedExercise && (
@@ -107,7 +119,7 @@ const WorkoutForm = () => {
             </select>
           </div>
         )}
-        {!editingWorkout&& (
+        {!editingWorkout && (
           <div className="text-start mb-3">
             <label htmlFor="exercise" className="form-label text-secondary">
               Exercise
@@ -127,7 +139,20 @@ const WorkoutForm = () => {
             </select>
           </div>
         )}
-        <div className="row row-cols-sm-2 pt-4">
+
+        <p className="text-secondary text-end">
+          {!readMore && selectedExerciseDescription.length > 100 && (
+            <span
+              className="badge text-bg-warning me-2 pt-1"
+              onClick={() => setReadMore(true)}
+              style={{ cursor: 'pointer' }}
+            >
+              Show Details
+            </span>
+          )}
+        </p>
+
+        <div className="row row-cols-sm-2 pt-0">
           <div className="col">
             <div className="input-group flex-nowrap">
               <span className="input-group-text" id="addon-wrapping">

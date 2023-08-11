@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const sets = require('../db/queries/sets');
-const pool = require('../configs/db.config');
+const router = require("express").Router();
+const sets = require("../db/queries/sets");
+const pool = require("../configs/db.config");
 
-router.get('/:session_id', (req, res) => {
+router.get("/:session_id", (req, res) => {
   sets
     .getSetBySessionId(req.params.session_id)
     .then((sets) => {
@@ -29,7 +29,7 @@ router.get("/program/:program_id/day/:day_of_week", (req, res) => {
 });
 
 // Route to handle the POST request to /programs
-router.post('/session/:id', async (req, res) => {
+router.post("/session/:id", async (req, res) => {
   try {
     const { set, sessionId, exerciseName, muscleGroup } = req.body;
 
@@ -50,13 +50,13 @@ router.post('/session/:id', async (req, res) => {
 
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error('Error inserting program data:', error);
-    res.status(500).json({ error: 'Error inserting program data' });
+    console.error("Error inserting program data:", error);
+    res.status(500).json({ error: "Error inserting program data" });
   }
 });
 
 // Route to handle the POST request to /:id/delete
-router.post('/:id/delete', async (req, res) => {
+router.post("/:id/delete", async (req, res) => {
   sets
     .deleteSetById(req.params.id)
     .then((sets) => {
@@ -67,7 +67,7 @@ router.post('/:id/delete', async (req, res) => {
     });
 });
 
-router.get('/:session_id/:exercise_name', (req, res) => {
+router.get("/:session_id/:exercise_name", (req, res) => {
   sets
     .getSetsBySessionAndExercise(req.params)
     .then((sets) => {
@@ -78,11 +78,13 @@ router.get('/:session_id/:exercise_name', (req, res) => {
     });
 });
 
-router.delete('/:session_id/:exercise_name', (req, res) => {
-  sets.deleteAllSetsOfSessionAndExercise(req.params).then((data) => {
-    res.json({ message: 'deleted' });
-  }).catch(E=>res.json({error: error.message}));
+router.delete("/:session_id/:exercise_name", (req, res) => {
+  sets
+    .deleteAllSetsOfSessionAndExercise(req.params)
+    .then((data) => {
+      res.json({ message: "deleted" });
+    })
+    .catch((E) => res.json({ error: error.message }));
 });
 
 module.exports = router;
-
