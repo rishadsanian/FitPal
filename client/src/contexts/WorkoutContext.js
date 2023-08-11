@@ -122,7 +122,7 @@ export function WorkoutProvider({ children }) {
       } else {
         // create operation
         const response = await axios.post("/log", logData);
-        console.log("Workout logged successfully:", response.data);
+        console.log("Workout logged successfully:", response.data)
       }
 
       // Clear form and editingWorkout state
