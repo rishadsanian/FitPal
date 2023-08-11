@@ -22,10 +22,10 @@ const SessionItem = (props) => {
   };
 
   const getCompletionVal = () => {
-    if(props.completedVal > props.setLength) {
+    if(props.exerciseLogs.length > props.sets.length) {
       return 100;
     } else {
-      return props.completedVal / props.setLength * 100
+      return props.exerciseLogs.length / props.sets.length * 100
     }
     
   }
@@ -37,6 +37,12 @@ const SessionItem = (props) => {
         {set.resistant}lbs/{set.reps}
       </span>
     ));
+
+  const logList = props.exerciseLogs.map((exercise, index) =>
+      <span className="badge text-bg-warning" key={index}>
+        {exercise.resistance}lbs/{exercise.reps}
+      </span>
+    )
 
   return (
     <tr>
@@ -55,6 +61,7 @@ const SessionItem = (props) => {
               
             </div>
             <div className="d-flex gap-2 flex-wrap">{setList}</div>
+            <div className="d-flex gap-2 flex-wrap pt-2">{logList}</div>
           </div>
           {/* {add edit - delete button} */}
           {props.editable && (
@@ -74,7 +81,7 @@ const SessionItem = (props) => {
           )}
           </div>
           <div className="w-100">
-            <LinearProgress color="success" variant="determinate" value={getCompletionVal()}sx={{marginTop: 1, width: "100%"}}/>
+            <LinearProgress color="success" variant="determinate" value={getCompletionVal()}sx={{ width: "100%"}}/>
           </div>
           
         </td>

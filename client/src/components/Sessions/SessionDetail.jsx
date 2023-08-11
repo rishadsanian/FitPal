@@ -95,24 +95,24 @@ const SessionDetail = (props) => {
 
   const exercisesListItem = exercises.map((exercise, index) => {
     
-    const exerciseSets = sets.filter((set) => set.exercise_name === exercise.name).length;
+    const exerciseSets = sets.filter((set) => set.exercise_name === exercise.name);
     const exerciseLogs = logs.filter(
       (log) =>
         log.exercise_name === exercise.name &&
         (moment(log.timestamp).day() - 1) === session.day_of_week &&
         moment(log.timestamp).isSame(new Date(), 'week')
-    ).length;
+    );
     return (
       <SessionItem
         key={index}
-        sets={sets}
+        sets={exerciseSets}
         exercise={exercise}
         editable={props.editable}
         onClick={() => onEdit(exercise)}
         onRowSelected={() => onRowSelected(exercise)}
-        isDone={exerciseLogs >= exerciseSets}
-        completedVal={exerciseLogs}
-        setLength={exerciseSets}
+        isDone={exerciseLogs.length >= exerciseSets.length}
+        exerciseLogs={exerciseLogs}
+        
       />
     );
   });
