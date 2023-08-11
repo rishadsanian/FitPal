@@ -9,6 +9,7 @@ import '../../styles/Main.css';
 import { ProfileProvider } from '../../contexts/ProfileContext';
 import { WorkoutProvider } from '../../contexts/WorkoutContext';
 import ChatGptDailySummary from '../Dashboard/ChatGptDailySummary';
+import Statistics from '../Dashboard/Statistics';
 //Dashboard/logged in main page
 
 const Main = () => {
@@ -60,6 +61,15 @@ const Main = () => {
               <ChartWorkout />
             </div>
           </div>
+
+          {/* Statistics */}
+          <div className="bg-dark opacity-75 p-5">
+            <h1 className="display-5 fw-bold text-warning">
+              Statistics
+            </h1>
+            <Statistics />
+          </div>
+
         </div>
       </WorkoutProvider>
     </ProfileProvider>

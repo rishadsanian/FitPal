@@ -159,6 +159,7 @@ function ProgramListItem(props) {
                 })
               }
             />
+            
             <textarea
               type="text"
               value={programUpdate.description}
@@ -178,6 +179,10 @@ function ProgramListItem(props) {
             <p className="text-white">{programUpdate.description}</p>
           </div>
         )}
+        
+          
+        
+        
         {/* Add session form */}
         {props.editable && potentialDays.length && <div className="card-body border-top border-color-white">
           <form>
