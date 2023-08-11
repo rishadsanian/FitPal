@@ -108,7 +108,7 @@ const SignUp = () => {
           )}
 
           <div className="d-grid pt-3">
-            <button className="btn btn-warning text-white">Sign-up</button>
+            <button className="btn btn-warning">Sign-up</button>
           </div>
         </div>
       </form>

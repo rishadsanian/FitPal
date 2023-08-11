@@ -141,7 +141,7 @@ const SessionDetail = (props) => {
                   id="addon-wrapping"
                   onClick={onSaveSessionName}
                 >
-                  <i className="fa-solid fa-check fa-xl text-white"></i>
+                  <i className="fa-solid fa-check fa-xl"></i>
                 </button>
               </div>
             </form>
@@ -150,7 +150,7 @@ const SessionDetail = (props) => {
               <h1 className="display-5 pt-3 fw-bold text-white">{title}</h1>
               <div className="d-flex justify-content-between mb-5">
                 {props.editable && <a
-                  className="btn btn-warning text-white"
+                  className="btn btn-warning"
                   href="#addExercise"
                   onClick={onAddExerciseClick}
                 >
@@ -173,7 +173,7 @@ const SessionDetail = (props) => {
 
           <div className="row row-cols-1 ">
             {exercises.length > 0 ? (
-              <table className="table table-dark table-striped">
+              <table className="table table-dark table-striped table-hover">
                 <tbody>{exercisesListItem}</tbody>
               </table>
             ) : (
