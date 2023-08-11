@@ -86,7 +86,7 @@ export function WorkoutProvider({ children }) {
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
     try {
-      await axios.delete(`/delete/log/${workoutId}`);
+      await axios.delete(`/delet/log/${workoutId}`);
       // update workout history after deleting
       fetchWorkoutHistory();
     } catch (error) {
