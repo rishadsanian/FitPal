@@ -83,11 +83,11 @@ const WorkoutForm = () => {
                 </p>
                 <p className="text-secondary text-end">
                   <span
-                    className="text-warning cursor-pointer"
+                    className="badge text-bg-warning me-2"
                     onClick={() => setReadMore(false)}
                     style={{cursor: 'pointer'}}
                   >
-                    Hide Instructions
+                    Hide Deails
                   </span>
                 </p>
               </div>
@@ -143,7 +143,7 @@ const WorkoutForm = () => {
         <p className="text-secondary text-end">
           {!readMore && selectedExerciseDescription.length > 100 && (
             <span
-              className="text-warning pt-1"
+              className="badge text-bg-warning me-2 pt-1"
               onClick={() => setReadMore(true)}
               style={{ cursor: 'pointer' }}
             >
