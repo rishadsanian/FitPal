@@ -30,7 +30,7 @@ const SliderItem = ({
 
   return (
     <div
-      key={workout.exercise_name}
+      key={workout.id}
       className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
       style={{
         margin: "0 10px",
@@ -124,6 +124,7 @@ const WorkoutHistory = () => {
 
   useEffect(() => {
     fetchWorkoutHistory();
+    console.log("history in table");
   }, [currentDate]);
 
   return (

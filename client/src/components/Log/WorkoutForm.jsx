@@ -65,40 +65,34 @@ const WorkoutForm = () => {
   }, [selectedExercise]);
 
   return (
-    <div
-      className="addlog bg-dark text-white"
-    >
+    <div className="addlog bg-dark text-white">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-          <p className="text-secondary">
-            {selectedExerciseDescription.length > 100
-              ? selectedExerciseDescription.slice(0, 100) + "..."
-              : selectedExerciseDescription}
-            {selectedExerciseDescription.length > 100 && (
-              <span
-                className="text-warning cursor-pointer"
-                onClick={() => setReadMore(!readMore)}
-              >
-                {readMore ? " Read Less" : " Read More"}
-              </span>
+            {readMore && (
+              <div>
+                <p className="text-secondary">{selectedExerciseDescription}</p>
+                <p className="text-secondary">
+                  <strong>Difficulty:</strong>{" "}
+                  {exercises[0].difficulty.toUpperCase()}
+                </p>
+                <p className="text-secondary">
+                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+                </p>
+                <p className="text-secondary text-end">
+                  <span
+                    className="text-warning cursor-pointer"
+                    onClick={() => setReadMore(false)}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Hide Instructions
+                  </span>
+                </p>
+              </div>
             )}
-          </p>
-          {readMore && (
-            <p className="text-secondary">
-              <strong>Full Description:</strong> {selectedExerciseDescription}
-            </p>
-          )}
-          <p className="text-secondary">
-            <strong>Difficulty:</strong> {exercises[0].difficulty.toUpperCase()}
-          </p>
-          <p className="text-secondary">
-            <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-          </p>
-        </div>
-        
+          </div>
         )}
         {editingWorkout && selectedExercise && (
           <h4 className="text-secondary">{selectedExercise}</h4>
@@ -125,7 +119,7 @@ const WorkoutForm = () => {
             </select>
           </div>
         )}
-        {!editingWorkout&& (
+        {!editingWorkout && (
           <div className="text-start mb-3">
             <label htmlFor="exercise" className="form-label text-secondary">
               Exercise
@@ -145,6 +139,19 @@ const WorkoutForm = () => {
             </select>
           </div>
         )}
+
+        <p className="text-secondary text-end">
+          {!readMore && selectedExerciseDescription.length > 100 && (
+            <span
+              className="text-warning pt-1"
+              onClick={() => setReadMore(true)}
+              style={{ cursor: 'pointer' }}
+            >
+              Show Details
+            </span>
+          )}
+        </p>
+
         <div className="row row-cols-sm-2 pt-4">
           <div className="col">
             <div className="input-group flex-nowrap">
