@@ -132,11 +132,10 @@ const WorkoutForm = () => {
                 )}
                 value={selectedMuscleGroup || ""}
                 onChange={(_, newValue) =>
-                  setSelectedMuscleGroup(
-                    newValue.charAt(0).toUpperCase() + newValue.slice(1)
-                  )
+                  setSelectedMuscleGroup(newValue === "Select Muscle Group" ? null : newValue)
                 }
                 getOptionLabel={(group) => group}
+                // isOptionEqualToValue={(option, value) => option === value}
                 fullWidth
                 sx={{
                   bgcolor: "background.paper",
