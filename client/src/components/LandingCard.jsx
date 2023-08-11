@@ -2,7 +2,7 @@ import React from "react";
 
  function LandingCard(props){
   const cardBodyClass = props.id % 2 ? "row flex-row-reverse g-0" : "row reverse g-0" ;
-  const cardColorClass = props.id % 2 ? "card mx-auto bg-dark opacity-75" : "card mx-auto bg-dark" ;
+  const cardColorClass = props.id % 2 ? "card mx-auto bg-dark-75" : "card mx-auto bg-dark" ;
   const textClass = props.id % 2 ? "p-3 text-end" : "p-3 text-start";
   
   const textCol = props.id % 2 ? "d-flex justify-content-end" : "d-flex justify-content-start";

@@ -65,7 +65,7 @@ const WorkoutForm = () => {
   }, [selectedExercise]);
 
   return (
-    <div className="addlog bg-dark text-white">
+    <div className="addlog text-white">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
@@ -188,7 +188,7 @@ const WorkoutForm = () => {
         </div>
 
         <div className="d-grid gap-2">
-          <button type="submit" className="btn btn-warning mt-4 text-white">
+          <button type="submit" className="btn btn-warning mt-4">
             {editingWorkout ? "Update" : "Log Workout"}
           </button>
           {editingWorkout && (
