@@ -114,6 +114,7 @@ const WorkoutHistory = () => {
           <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
             No workouts recorded
           </div>
+
           
         ) : (
           // Render actual workout entries if workoutHistory is not empty
