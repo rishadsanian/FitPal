@@ -28,7 +28,7 @@ const SessionDetail = (props) => {
     const setsResponse = await axios.get(`http://localhost:8080/sets/${session_id}`);
     const exerciseList = setsResponse.data.sets.reduce((list, set) => {
       if (!list.some((exercise) => exercise.name === set.exercise_name)) {
-        list.push({ name: set.exercise_name });
+        list.push({ name: set.exercise_name, muscle: set.muscle_group });
       }
       return list;
     }, []);
@@ -80,32 +80,6 @@ const SessionDetail = (props) => {
     setEditSet(true);
     setSelectedEx(exercise);
   };
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8080/sessions/${session_id}`)
-      .then((res) => {
-        setTitle(res.data.sessions[0].name);
-      });
-
-    axios.get(`http://localhost:8080/sets/${session_id}`).then((res) => {
-      //Set up the list of exercises from sets
-      let exerciseList = [];
-      for (const set of res.data.sets) {
-        if (
-          !exerciseList
-            .map((exercise) => exercise.name)
-            .includes(set.exercise_name)
-        ) {
-          exerciseList.push({ name: set.exercise_name, muscle: set.muscle_group});
-        }
-      }
-      setSets(res.data.sets);
-      setExercises(exerciseList);
-    });
-
-    return;
-  }, []);
 
   const onRowSelected = (exercise) => {
     setDisplayLog(true);

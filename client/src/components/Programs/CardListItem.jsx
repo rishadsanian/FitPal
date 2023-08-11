@@ -43,27 +43,25 @@ function ProgramListItem(props) {
 
   const setUpSessions = async () => {
     // Get the list of sessions based off of the program id
-    let newPotentialDays = [];
     await axios
       .get(`http://localhost:8080/sessions/program/${props.programId}`)
       .then((res) => {
         setSessions(res.data.sessions);
-        newPotentialDays = daysOfWeek.filter((day) => !res.data.sessions.map(session => session.day_of_week).includes(day.day_val));
+        setUpPotentialDays()
       });
-    setPotentialDays(newPotentialDays);
-    if(newPotentialDays.length){
-      setNewSessionDay(newPotentialDays[0].day_val)
-    }
-   
   }
 
-  useEffect(() => {
-    // Update possible session days
+  // Set up the list of potential days to choose from
+  const setUpPotentialDays = () => {
+     // Update possible session days
     let newPotentialDays = daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val));
     setPotentialDays(newPotentialDays)
     if(newPotentialDays.length){
       setNewSessionDay(newPotentialDays[0].day_val)
     }
+  }
+
+  useEffect(() => {
     setUpSessions();
   }, [sessions.length]);
 
@@ -85,8 +83,6 @@ function ProgramListItem(props) {
         );
         setSessions([...sessions, response.data].sort((a,b) => a.day_of_week < b.day_of_week))
         setNewSessionName("");
-        // reload the page after the session is created
-        // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error("Error creating session:", error);
       }
@@ -120,7 +116,7 @@ function ProgramListItem(props) {
     }
   };
 
-  // Delete the current program and update the page
+  // Delete the current program and reload the page
   const deleteAndUpdateCurrentProgram = (programId) => {
     if(props.currentProfile.program_id === programId){
       updateCurrentProgram(null);
