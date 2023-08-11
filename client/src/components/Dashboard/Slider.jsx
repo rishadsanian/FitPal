@@ -25,8 +25,11 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
     );
   }, [workoutHistory.length]);
 
+  const isDone =
+    uniqueExercises.filter((set) => exercise === set.exercise_name)
+      .length >= sets.filter((set) => exercise === set.name).length;
   return (
-    <div className=" card bg-dark m-3 rounded border-secondary">
+    <div className={isDone ? "card bg-dark m-3 rounded border-warning border-3" : "card bg-dark m-3 rounded border-secondary"}>
       {/* Logo icon */}
 
       <div className="card-header d-flex justify-content-center gap-2 align-items-center bg-dark-75 border-bottom">
@@ -35,7 +38,8 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
       </div>
 
       <div className="card-body px-0">
-          <p className="fw-bold text-white">Recomended: </p>
+        <p className="fw-bold text-white">Recomended: </p>
+        {/* RECOMMENDED SETS */}
         <div className="d-flex flex-wrap gap-2 justify-content-center ps-3">
           {sets
             .filter((set) => exercise === set.name)
@@ -47,6 +51,8 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
               </div>
             ))}
         </div>
+
+        {/* RECORD */}
         <div className="card-body border-top border-bottom border-white mt-3">
           <p className="fw-bold text-warning">
             {uniqueExercises.filter(
@@ -70,8 +76,8 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
           )}
         </div>
 
-        <button className="text-warning btn border-warning mt-3">
-          <i className="fa-solid fa-plus"></i>
+        <button className="text-warning btn btn-warning mt-3" disabled={isDone}>
+          {isDone ? <i class="fa-solid fa-check text-dark"></i> : <i className="fa-solid fa-plus text-dark"></i>}
         </button>
       </div>
     </div>
