@@ -65,7 +65,7 @@ const WorkoutForm = () => {
   }, [selectedExercise]);
 
   return (
-    <div className="addlog text-white">
+    <div className="addlog text-white bg-dark-50 p-5 rounded">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
@@ -101,7 +101,7 @@ const WorkoutForm = () => {
       <form onSubmit={handleSubmit}>
         {!editingWorkout && (
           <div className="text-start mb-3">
-            <label htmlFor="muscleGroup" className="form-label text-secondary">
+            <label htmlFor="muscleGroup" className="form-label text-white">
               Muscle Group
             </label>
             <select
@@ -121,7 +121,7 @@ const WorkoutForm = () => {
         )}
         {!editingWorkout && (
           <div className="text-start mb-3">
-            <label htmlFor="exercise" className="form-label text-secondary">
+            <label htmlFor="exercise" className="form-label text-white">
               Exercise
             </label>
             <select

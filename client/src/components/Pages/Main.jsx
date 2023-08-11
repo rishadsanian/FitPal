@@ -10,7 +10,15 @@ import { ProfileProvider } from '../../contexts/ProfileContext';
 import { WorkoutProvider } from '../../contexts/WorkoutContext';
 import ChatGptDailySummary from '../Dashboard/ChatGptDailySummary';
 //Dashboard/logged in main page
-
+const daysOfWeek = {
+  0: "Monday",
+  1: "Tuesday",
+  2: "Wednesday",
+  3: "Thursday",
+  4: "Friday",
+  5: "Saturday",
+  6: "Sunday"
+}
 const Main = () => {
   // Formatted date for display
   const currentDate = moment().format('dddd, MMMM D');
@@ -43,10 +51,11 @@ const Main = () => {
 
           {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
           {/* delete slider-container */}
-          <div className="bg-dark-75 p-5">
-            <h1 className="display-5 fw-bold text-warning">
+          <div className="bg-dark p-5">
+            <h1 className="display-5 fw-bold text-warning mb-2">
               Program Schedule
             </h1>
+            <h2 className="slider-title text-white">{currentDate}</h2>
             <SliderComponent />
           </div>
             
