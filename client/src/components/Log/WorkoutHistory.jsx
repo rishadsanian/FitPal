@@ -123,8 +123,9 @@ const WorkoutHistory = () => {
   const { userId } = useContext(userContext);
 
   useEffect(() => {
+    console.log("Fetching hitory");
     fetchWorkoutHistory();
-    console.log("history in table");
+    // console.log("history in table");
   }, [currentDate]);
 
   return (
