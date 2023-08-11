@@ -1,14 +1,13 @@
 const db = require('../../configs/db.config');
 
-const getLogByExercise = (data) => {
+const getLogByUserId = (data) => {
   const queryString = `
   SELECT * FROM log
-  WHERE user_id = $1 AND exercise_name = $2
+  WHERE user_id = $1 
   `;
   return db
-    .query(queryString, [data.user_id, data.exercise_name])
+    .query(queryString, [data.user_id])
     .then((data) => {
-      // console.log(data.rows);
       return data.rows;
     })
     .catch((e) => {
@@ -16,4 +15,19 @@ const getLogByExercise = (data) => {
     });
 };
 
-module.exports = { getLogByExercise };
+const getLogByUserIdAndExercise = (data) => {
+  const queryString = `
+  SELECT * FROM log
+  WHERE user_id = $1 AND exercise_name = $2
+  `;
+  return db
+    .query(queryString, [data.user_id, data.exercise_name])
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+module.exports = { getLogByUserId, getLogByUserIdAndExercise };
