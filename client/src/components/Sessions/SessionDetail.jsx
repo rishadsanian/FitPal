@@ -5,10 +5,12 @@ import SessionItem from '../Sessions/SessionItem';
 import ExerciseList from '../Exercises/ExerciseList';
 import ExerciseLog from '../Exercises/ExerciseLog';
 import AddExerciseModal from '../Exercises/AddExerciseModal';
+var moment = require('moment');
 
 const SessionDetail = (props) => {
   const [exercises, setExercises] = useState([]);
   const [title, setTitle] = useState('');
+  const [session, setCurrentSession] = useState(null);
   const [sets, setSets] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editSet, setEditSet] = useState(false);
@@ -24,6 +26,7 @@ const SessionDetail = (props) => {
   const fetchSessionData = async () => {
     const sessionResponse = await axios.get(`http://localhost:8080/sessions/${session_id}`);
     setTitle(sessionResponse.data.sessions[0].name);
+    setCurrentSession(sessionResponse.data.sessions[0]);
 
     const setsResponse = await axios.get(`http://localhost:8080/sets/${session_id}`);
     const exerciseList = setsResponse.data.sets.reduce((list, set) => {
@@ -91,11 +94,13 @@ const SessionDetail = (props) => {
   };
 
   const exercisesListItem = exercises.map((exercise, index) => {
+    
     const exerciseSets = sets.filter((set) => set.exercise_name === exercise.name).length;
     const exerciseLogs = logs.filter(
       (log) =>
         log.exercise_name === exercise.name &&
-        new Date(log.timestamp).toLocaleDateString() === new Date().toLocaleDateString()
+        (moment(log.timestamp).day() - 1) === session.day_of_week &&
+        moment(log.timestamp).isSame(new Date(), 'week')
     ).length;
     return (
       <SessionItem
@@ -106,6 +111,8 @@ const SessionDetail = (props) => {
         onClick={() => onEdit(exercise)}
         onRowSelected={() => onRowSelected(exercise)}
         isDone={exerciseLogs >= exerciseSets}
+        completedVal={exerciseLogs}
+        setLength={exerciseSets}
       />
     );
   });

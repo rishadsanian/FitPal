@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { LinearProgress } from '@mui/material';
 
 const SessionItem = (props) => {
   const [deleteMode, setDeleteMode] = useState();
@@ -20,6 +21,15 @@ const SessionItem = (props) => {
     window.location.reload();
   };
 
+  const getCompletionVal = () => {
+    if(props.completedVal > props.setLength) {
+      return 100;
+    } else {
+      return props.completedVal / props.setLength * 100
+    }
+    
+  }
+
   const setList = props.sets
     .filter((set) => set.exercise_name === props.exercise.name)
     .map((set) => (
@@ -33,15 +43,16 @@ const SessionItem = (props) => {
       {!deleteMode ? (
         <td
           role="button"
-          className="p-3 d-flex justify-content-between"
           onClick={props.onRowSelected}
         >
+          <div className="p-3 d-flex justify-content-between">
           <div>
             <div className="d-flex gap-3">
               <h6 className="text-warning">{props.exercise.name}</h6>
               {isCompleted && (
                 <i className="fa-solid fa-check text-success"></i>
               )}
+              
             </div>
             <div className="d-flex gap-2 flex-wrap">{setList}</div>
           </div>
@@ -61,6 +72,11 @@ const SessionItem = (props) => {
               </div>
             </div>
           )}
+          </div>
+          <div className="w-100">
+            <LinearProgress color="success" variant="determinate" value={getCompletionVal()}sx={{marginTop: 1, width: "100%"}}/>
+          </div>
+          
         </td>
       ) : (
         <td role="button" className="p-3 d-flex justify-content-between">
