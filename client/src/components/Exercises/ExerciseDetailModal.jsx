@@ -10,7 +10,7 @@ const ExerciseDetailModal = (props) => {
   return (
     <div className="">
       <div className="modal-background"></div>
-      <div className="modal-foreground position-fixed top-50 start-50 translate-middle col col-11 col-md-7 col-xl-5 border border-warning rounded-3">
+      <div className="modal-foreground position-fixed top-50 start-50 translate-middle col col-11 col-md-7 col-xl-5 border border-warning border-3 rounded-3">
         <div className="bg-dark text-white rounded p-5">
           <div className="modal-header">
             <h3 className="text-warning">{exercise.name}</h3>

@@ -15,7 +15,6 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import AddExerciseModal from '../Exercises/AddExerciseModal';
 import ExerciseDetailModal from '../Exercises/ExerciseDetailModal';
 
 
@@ -41,10 +40,8 @@ const WorkoutForm = () => {
   } = useWorkoutContext();
 
   const [readMore, setReadMore] = useState(false);
-  
+
   const [modalDisplay, setModalDisplay] = useState(false);
-  const [exerciseDetailDisplay, setExerciseDetailDisplay] =
-    useState(false);
 
 
   useEffect(() => {
@@ -90,7 +87,7 @@ const WorkoutForm = () => {
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            {readMore && selectedExercise && (
+            {/* {readMore && selectedExercise && (
               <div>
                 <p className="text-secondary ">
                   {selectedExercise.instructions}
@@ -112,7 +109,7 @@ const WorkoutForm = () => {
                   </span>
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         )}
         {/* <p className="text-secondary text-end">
@@ -212,7 +209,7 @@ const WorkoutForm = () => {
               {!readMore && selectedExercise && (
                 <span
                   className="badge text-bg-warning me-2 pt-1"
-                  onClick={() => setReadMore(true)}
+                  onClick={() => setModalDisplay(true)}
                   style={{ cursor: "pointer" }}
                 >
                   Show Details
@@ -271,6 +268,11 @@ const WorkoutForm = () => {
           </div>
         </form>
       </Container>
+      {modalDisplay && (
+        <ExerciseDetailModal exercise={selectedExercise} setExerciseDetailDisplay={setModalDisplay} />
+      )}
+
+   
     </div>
   );
 };
