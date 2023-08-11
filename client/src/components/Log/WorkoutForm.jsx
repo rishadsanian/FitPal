@@ -69,12 +69,12 @@ const WorkoutForm = () => {
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
 
-  useEffect(() => {
-    //load exercise from api response and account for any changes
-    const exercise = exercises.find((ex) => ex.name === selectedExercise);
-    //Dynamic display to show instructions for each exercise or null if no exercise is selected
-    setSelectedExerciseDescription(exercise?.instructions || "");
-  }, [selectedExercise]);
+  // useEffect(() => {
+  //   //load exercise from api response and account for any changes
+  //   const exercise = exercises.find((ex) => ex.name === selectedExercise);
+  //   //Dynamic display to show instructions for each exercise or null if no exercise is selected
+  //   setSelectedExerciseDescription(exercise?.instructions || "");
+  // }, [selectedExercise]);
 
   return (
     <div className="addlog bg-dark text-white">
@@ -83,15 +83,15 @@ const WorkoutForm = () => {
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            {readMore && (
+            {readMore && selectedExercise && (
               <div>
-                <p className="text-secondary">{selectedExerciseDescription}</p>
+                <p className="text-secondary ">{selectedExercise.instructions}</p>
                 <p className="text-secondary">
                   <strong>Difficulty:</strong>{" "}
-                  {exercises[0].difficulty.toUpperCase()}
+                  {selectedExercise.difficulty.toUpperCase()}
                 </p>
                 <p className="text-secondary">
-                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+                  <strong>Type:</strong> {selectedExercise.type.toUpperCase()}
                 </p>
                 <p className="text-secondary text-end">
                   <span
@@ -107,7 +107,7 @@ const WorkoutForm = () => {
           </div>
         )}
         <p className="text-secondary text-end">
-          {!readMore && selectedExerciseDescription.length > 100 && (
+          {!readMore && selectedExercise && (
             <span
               className="badge text-bg-warning me-2 pt-1"
               onClick={() => setReadMore(true)}
@@ -233,7 +233,7 @@ const WorkoutForm = () => {
           </div>
 
           <div className="d-grid gap-2">
-            <button type="submit" className="btn btn-warning mt-4 text-white">
+            <button type="submit" className="btn btn-warning mt-4 text-dark">
               {editingWorkout ? "Update" : "Log Workout"}
             </button>
             {editingWorkout && (
