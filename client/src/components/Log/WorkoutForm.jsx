@@ -15,7 +15,6 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-
 const WorkoutForm = () => {
   const {
     MUSCLE,
@@ -48,7 +47,10 @@ const WorkoutForm = () => {
       const firstMuscleGroup = "Select Muscle Group";
       setSelectedMuscleGroup(firstMuscleGroup);
     }
+    
   }, [muscleGroups]);
+
+  if (muscleGroups.length === 0){setExercises([""])}
 
   useEffect(() => {
     // Fetch exercises from API based on the selected muscle group
@@ -75,45 +77,51 @@ const WorkoutForm = () => {
   }, [selectedExercise]);
 
   return (
-   
-
-
-    <Container maxWidth="sm">
-      <div className="addlog bg-dark text-white">
-        <h3 className="text-warning fw-bold">Log Workout</h3>
-        <div>
-          {/* Exercise Details Section */}
-          {!editingWorkout && selectedExercise && exercises.length > 0 && (
-            <div>
-              {readMore && (
-                <div>
-                  <p className="text-secondary">
-                    {selectedExerciseDescription}
-                  </p>
-                  <p className="text-secondary">
-                    <strong>Difficulty:</strong>{" "}
-                    {exercises[0].difficulty.toUpperCase()}
-                  </p>
-                  <p className="text-secondary">
-                    <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-                  </p>
-                  <p className="text-secondary text-end">
-                    <span
-                      className="badge text-bg-warning me-2 pt-1"
-                      onClick={() => setReadMore(false)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      Hide Deails
-                    </span>
-                  </p>
-                </div>
-              )}
-            </div>
+    <div className="addlog bg-dark text-white">
+      <h3 className="text-warning fw-bold">Log Workout</h3>
+      <div>
+        {/* Exercise Details Section */}
+        {!editingWorkout && selectedExercise && exercises.length > 0 && (
+          <div>
+            {readMore && (
+              <div>
+                <p className="text-secondary">{selectedExerciseDescription}</p>
+                <p className="text-secondary">
+                  <strong>Difficulty:</strong>{" "}
+                  {exercises[0].difficulty.toUpperCase()}
+                </p>
+                <p className="text-secondary">
+                  <strong>Type:</strong> {exercises[0].type.toUpperCase()}
+                </p>
+                <p className="text-secondary text-end">
+                  <span
+                    className="badge text-bg-warning me-2 pt-1"
+                    onClick={() => setReadMore(false)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Hide Deails
+                  </span>
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+        <p className="text-secondary text-end">
+          {!readMore && selectedExerciseDescription.length > 100 && (
+            <span
+              className="badge text-bg-warning me-2 pt-1"
+              onClick={() => setReadMore(true)}
+              style={{ cursor: "pointer" }}
+            >
+              Show Details
+            </span>
           )}
-          {editingWorkout && selectedExercise && (
-            <h4 className="text-secondary">{selectedExercise}</h4>
-          )}
-        </div>
+        </p>
+        {editingWorkout && selectedExercise && (
+          <h4 className="text-secondary">{selectedExercise}</h4>
+        )}
+      </div>
+      <Container maxWidth="sm">
         <form onSubmit={handleSubmit}>
           {!editingWorkout && (
             <div className="text-start mb-3">
@@ -128,6 +136,7 @@ const WorkoutForm = () => {
                     newValue.charAt(0).toUpperCase() + newValue.slice(1)
                   )
                 }
+                getOptionLabel={(group) => group}
                 fullWidth
                 sx={{
                   bgcolor: "background.paper",
@@ -164,7 +173,9 @@ const WorkoutForm = () => {
                 onChange={(_, newValue) =>
                   handleExerciseSelection({ target: { value: newValue } })
                 }
-                getOptionLabel={(exercise) => exercise.name}
+                getOptionLabel={(exercises) =>
+                  exercises.name || "Select Exercise"
+                }
                 fullWidth
                 sx={{
                   bgcolor: "background.paper",
@@ -186,18 +197,6 @@ const WorkoutForm = () => {
               />
             </div>
           )}
-
-          <p className="text-secondary text-end">
-            {!readMore && selectedExerciseDescription.length > 100 && (
-              <span
-                className="badge text-bg-warning me-2 pt-1"
-                onClick={() => setReadMore(true)}
-                style={{ cursor: "pointer" }}
-              >
-                Show Details
-              </span>
-            )}
-          </p>
 
           <div className="row row-cols-sm-2 pt-0">
             <div className="col">
@@ -249,9 +248,9 @@ const WorkoutForm = () => {
             )}
           </div>
         </form>
-      </div>
-    </Container>
-  )
+      </Container>
+    </div>
+  );
 };
 
 export default WorkoutForm;
