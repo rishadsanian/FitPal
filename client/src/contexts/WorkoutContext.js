@@ -86,7 +86,8 @@ export function WorkoutProvider({ children }) {
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
     try {
-      await axios.delete(`/delet/log/${workoutId}`);
+      console.log("Delete id:", workoutId);
+      await axios.delete(`/delete/log/${workoutId}`);
       // update workout history after deleting
       fetchWorkoutHistory();
     } catch (error) {
@@ -110,6 +111,7 @@ export function WorkoutProvider({ children }) {
       };
 
       if (editingWorkout) {
+        console.log("Editing workout id in put", editingWorkout.id);
         // If edit mode, perform an update operation
         const response = await axios.put(
           `/update/log/${editingWorkout.id}`,

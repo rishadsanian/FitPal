@@ -16,17 +16,6 @@ const SliderItem = ({
   editingWorkout,
   handleEditWorkout,
 }) => {
-  // const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
-
-  // useEffect(() => {
-  //   const exerciseList = [];
-  //   for(const workout of workoutHistory) {
-  //     if(!exerciseList.includes(workout.exercise_name)) {
-  //       exerciseList.push(workout.exercise_name)
-  //     }
-  //   }
-  //   setUniqueExerciseNames(exerciseList);
-  // }, [])
 
   return (
     <div
@@ -34,7 +23,7 @@ const SliderItem = ({
       className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
       style={{
         margin: "0 10px",
-        height: "293px",
+        height: "307px",
         overflow: "hidden",
         overflowX: "auto",
         overflowY: "scroll",
