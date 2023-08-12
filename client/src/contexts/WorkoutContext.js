@@ -101,8 +101,10 @@ export function WorkoutProvider({ children }) {
     try {
       console.log("Delete id:", workoutId);
       await axios.delete(`/delete/log/${workoutId}`);
+
       // update workout history after deleting
-      fetchWorkoutHistory();
+      setAllWorkoutHistory([...allWorkoutHistory.filter(workout => workout.id != workoutId)])
+      setWorkoutHistory([...workoutHistory.filter(workout => workout.id != workoutId)])
     } catch (error) {
       console.error("Error deleting workout:", error);
     }
@@ -145,6 +147,7 @@ export function WorkoutProvider({ children }) {
 
       // Refresh workout history
       fetchWorkoutHistory();
+      fetchAllWorkoutHistory();
     } catch (error) {
       console.error("Error logging workout:", error);
     }

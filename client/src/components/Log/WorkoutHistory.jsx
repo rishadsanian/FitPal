@@ -119,7 +119,7 @@ const WorkoutHistory = () => {
 
   useEffect(() => {
     fetchAllWorkoutHistory();
-  }, [workoutHistory]);
+  }, []);
 
   //the below is being used to fetch all workout history for now/demo purposes and resolve bugs for demo day. Should be switched to less server and data intensive approach for the functionality.
 
@@ -130,18 +130,17 @@ const WorkoutHistory = () => {
       workoutHistorySorted[i] = [];
     }
     for (let i = 0; i < allWorkoutHistory.length; i++) {
-      let dayToCheck = moment(new Date()).diff(
-        allWorkoutHistory[i].timestamp,
-        "day"
-      );
+      let currentDate = moment(new Date()).startOf("day");
+      let workoutDate = moment(new Date(allWorkoutHistory[i].timestamp)).startOf("day");
+      let offest = 7 - workoutDate.day();
+      let dayToCheck = currentDate.diff(workoutDate, "days");
       if (dayToCheck < 7) {
         workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
     }
     // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
-    console.log(workoutHistorySorted);
-  }, [allWorkoutHistory.length]);
+  }, [allWorkoutHistory]);
 
   return (
     <div className="workout-history-slider container addlog text-white pb-5">

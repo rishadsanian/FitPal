@@ -112,8 +112,6 @@ const WorkoutHistoryCopy = () => {
 
   useEffect(() => {
     fetchAllWorkoutHistory();
-    
-    
   }, []);
 
   /// NEWLY ADDED STUFF -------------------------------
@@ -124,14 +122,20 @@ const WorkoutHistoryCopy = () => {
       workoutHistorySorted[i] = [];
     }
     for(let i = 0; i < allWorkoutHistory.length; i++){
-      let dayToCheck = moment(new Date()).diff(allWorkoutHistory[i].timestamp, "day");
+      
+      let currentDate = moment(new Date());
+      let workoutDate = moment(new Date(allWorkoutHistory[i].timestamp));
+      let offest = 7 - workoutDate.day();
+      console.log(new Date(currentDate), new Date(workoutDate))
+      let dayToCheck = currentDate.diff(workoutDate, "days");
+      console.log(workoutDate.day())
+      console.log(dayToCheck)
       if(dayToCheck < 7){
         workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
     }
     // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
-    console.log(workoutHistorySorted);
   }, [allWorkoutHistory.length])
   // -------------------------------------------------
 
