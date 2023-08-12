@@ -10,7 +10,6 @@ const cors = require('cors');
 const session = require('express-session');
 
 //routes import
-
 const logRoute = require('./routes/logRoute.js');
 const profileRoute = require('./routes/profileRoute');
 const progamsRoutes = require('./routes/programsRoutes');

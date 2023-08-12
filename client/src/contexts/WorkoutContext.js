@@ -14,7 +14,6 @@ export const useWorkoutContext = () => {
 const MUSCLE = {
   abdominals: "Abdominals",
   abductors: "Abductors",
-  adductors: "Adductors",
   biceps: "Biceps",
   calves: "Calves",
   chest: "Chest",
@@ -26,6 +25,7 @@ const MUSCLE = {
   middle_back: "Middle Back",
   neck: "Neck",
   quadriceps: "Quadriceps",
+  shoulders: "Shoulders",
   traps: "Traps",
   triceps: "Triceps",
 };

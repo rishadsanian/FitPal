@@ -93,7 +93,7 @@ const SliderItem = ({
       className={
         isDone
           ? "card bg-dark m-3 rounded border-warning border-3"
-          : "card bg-dark m-3 rounded border-secondary"
+          : "card bg-dark m-3 rounded border-secondary border-3"
       }
     >
       {/* Logo icon */}
@@ -256,9 +256,13 @@ const SliderComponent = () => {
     centerMode: true,
     infinite: true,
     centerPadding: "60px",
-    slidesToShow: slidesToShow,
+    slidesToShow:
+    userExercises.length < slidesToShow
+      ? userExercises.length
+      : slidesToShow,
     speed: 500,
     dots: true,
+    
   };
 
   return (
@@ -268,7 +272,7 @@ const SliderComponent = () => {
           <h2 className="slider-title text-warning">No program selected</h2>
           <span className="d-flex align-items-center justify-content-center p-3">
             <a href="/programs" className="text-decoration-none text-warning">
-              <i className="fas fa-plus-circle fa-3x"></i>
+              <i className="circle-add-icon fas fa-plus-circle fa-3x"></i>
             </a>
           </span>
         </div>

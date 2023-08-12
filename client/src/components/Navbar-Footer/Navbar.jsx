@@ -60,10 +60,10 @@ const Navbar = () => {
 
             {!window.sessionStorage.getItem('isAuthenticated') ? (
               <div className="d-flex gap-3 align-items-center">
-                <a href="/login" className="btn btn-warning">
+                <a href="/login" className="btn btn-warning fw-bold opacity-75 text-dark">
                   Log in
                 </a>
-                <a href="/signup" className="btn btn-warning">
+                <a href="/signup" className="btn btn-warning fw-bold opacity-75 text-dark">
                   Register
                 </a>
               </div>
@@ -73,7 +73,7 @@ const Navbar = () => {
                 <ProfileLogo
                   email={window.sessionStorage.getItem('email')}
                 />
-                <button className="btn btn-warning" onClick={logOut}>
+                <button className="btn btn-warning fw-bold opacity-75 text-dark" onClick={logOut}>
                   Log out
                 </button>
               </div>

@@ -35,10 +35,19 @@ body::-webkit-scrollbar-thumb {
 }
 
 body::-webkit-scrollbar-thumb:hover {
-  background-color: #ffc107;
+  background-color: rgba(255, 193, 7, 0.50);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.circle-add-icon:hover {
+  /* background-color: rgba(255, 193, 7, 1); Change background color on hover */
+}
+
+.bg-dark-75 {
+  background-color: #123123;
+
 }
