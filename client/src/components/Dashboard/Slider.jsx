@@ -32,7 +32,7 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
     <div className={isDone ? "card bg-dark m-3 rounded border-warning border-3" : "card bg-dark m-3 rounded border-secondary"}>
       {/* Logo icon */}
 
-      <div className="card-header d-flex justify-content-center gap-2 align-items-center bg-dark-75 border-bottom">
+      <div className="card-header d-flex justify-content-center gap-2 align-items-center border-bottom">
         <i className=" bg-dark-50 p-3 rounded-circle fa-solid fa-dumbbell text-warning"></i>
         <h5 className="text-white card-title">{exercise}</h5>
       </div>

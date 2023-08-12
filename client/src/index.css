@@ -14,7 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #414353;
+  background-color: #27374D;
   padding-top: 93px;
   animation: fadeIn 1s ease-in;
 
@@ -41,13 +41,4 @@ body::-webkit-scrollbar-thumb:hover {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.bg-dark-75 {
-  background-color: #2C2E36;
-}
-
-.bg-dark-50 {
-  
-  background-color: #414650;
 }

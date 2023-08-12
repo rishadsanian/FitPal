@@ -112,7 +112,7 @@ const SessionDetail = (props) => {
   return (
     <div>
       <div className="row row-col-1 row-col-md-2">
-        <div className="col col-12 col-md-6 col-xl-4 bg-dark-75 text-start py-3 px-5">
+        <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
             <form className="mb-5">
               <div className="input-group">
