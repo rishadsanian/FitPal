@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
+import "../../styles/WorkoutHistory.css";
+
 
 const SliderItem = ({
   workoutHistory,
@@ -152,6 +154,7 @@ const WorkoutHistory = () => {
         dots={true}
         infinite={true}
         arrows={true}
+        dotsClass={`slick-dots`}
         slidesToShow={1}
         slidesToScroll={1}
         afterChange={(index) => handleSliderChange(index)}
