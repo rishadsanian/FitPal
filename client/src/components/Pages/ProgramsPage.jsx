@@ -46,9 +46,15 @@ function ProgramsPage(props) {
   const shouldShowLink = windowWidth <= 720;
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid p-0">
       {shouldShowLink && (
-        <a href='#addProgram' className="btn btn-outline-info m-3">add program</a>
+        <a
+          href="#addProgram"
+          className="btn bg-dark w-100 mt-0 ms-0  me-0 opacity-75  p-3 text-info m-3 fw-bold"
+        >
+          {' '}
+          add program
+        </a>
       )}
       {props.userView ? (
         <div className="row">
