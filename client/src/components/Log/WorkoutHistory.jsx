@@ -144,12 +144,14 @@ const WorkoutHistory = () => {
   }, [allWorkoutHistory.length]);
 
   return (
-    <div className="workout-history-slider container addlog text-white rounded ">
+    <div className="workout-history-slider container addlog text-white pb-5">
       {/* <div
       className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
       style={{ width: "600px" }}
     ></div> */}
+
       <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">Daily Workout History</h3>
+
 
       <Slider
         dots={true}

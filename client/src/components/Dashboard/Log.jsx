@@ -4,12 +4,12 @@ import WorkoutHistory from '../Log/WorkoutHistory.jsx';
 
 const Log = () => {
   return (
-    <div className="log bg-dark">
+    <div className="log bg-dark p-3">
       <div className="row row-sm-12 row-md-2">
-        <div className="col col-sm-12 col-md-6 p-5">
+        <div className="col col-sm-12 col-md-6">
           <WorkoutHistory />
         </div>
-        <div className="col col-sm-12 col-md-6 p-5">
+        <div className="col col-sm-12 col-md-6">
           <WorkoutForm />
         </div>
       </div>

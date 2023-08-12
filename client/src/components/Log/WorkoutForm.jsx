@@ -240,6 +240,7 @@ const WorkoutForm = () => {
                       id="addon-wrapping"
                       style={{ flex: "0.2", minWidth: "100px" }}
                     >
+
                       Reps
                     </span>
                     <input
