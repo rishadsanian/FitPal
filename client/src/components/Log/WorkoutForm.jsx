@@ -15,8 +15,9 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import ExerciseDetailModal from '../Exercises/ExerciseDetailModal';
-
+import ExerciseDetailModal from "../Exercises/ExerciseDetailModal";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const WorkoutForm = () => {
   const {
@@ -43,6 +44,11 @@ const WorkoutForm = () => {
 
   const [modalDisplay, setModalDisplay] = useState(false);
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
 
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -79,159 +85,185 @@ const WorkoutForm = () => {
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
-          <div>
-          </div>
+          <div></div>
         )}
         {editingWorkout && selectedExercise && (
           <h4 className="text-secondary">{selectedExercise}</h4>
         )}
       </div>
-      <Container maxWidth="sm">
-        <form onSubmit={handleSubmit}>
-          {!editingWorkout && (
-            <div className="text-start mb-3">
-              <Autocomplete
-                id="muscleGroup"
-                options={muscleGroups.map(
-                  (group) => group.charAt(0).toUpperCase() + group.slice(1)
-                )}
-                value={selectedMuscleGroup || ""}
-                onChange={(_, newValue) =>
-                  setSelectedMuscleGroup(
-                    newValue === "Select Muscle Group" ? null : newValue
-                  )
-                }
-                getOptionLabel={(group) => group}
-                // isOptionEqualToValue={(option, value) => option === value}
-                fullWidth
-                sx={{
-                  bgcolor: "background.paper",
-                  text: "warning",
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Muscle Group"
-                    variant="outlined"
-                    placeholder="Select Muscle Group"
+      <div
+        pt-0
+        pb-0
+        m-0
+        border
+        bg-dark
+        border-secondary
+        bs-border-opacity-75
+        rounded
+        flex-column
+        border-3
+      >
+        <ThemeProvider theme={darkTheme}>
+          <Container maxWidth="sm">
+            <form onSubmit={handleSubmit}>
+              {!editingWorkout && (
+                <div className="text-start mb-3">
+                  <Autocomplete
+                    id="muscleGroup"
+                    options={muscleGroups.map(
+                      (group) => group.charAt(0).toUpperCase() + group.slice(1)
+                    )}
+                    value={selectedMuscleGroup || ""}
+                    onChange={(_, newValue) =>
+                      setSelectedMuscleGroup(
+                        newValue === "Select Muscle Group" ? null : newValue
+                      )
+                    }
+                    getOptionLabel={(group) => group}
+                    // isOptionEqualToValue={(option, value) => option === value}
+                    fullWidth
                     sx={{
-                      color: "white",
-                      bgcolor: "background.paper",
-                      "&:hover": {
-                        borderColor: "#ffc107", // Change the border color on hover
-                      },
+                      // backgroundColor: '#343a40',
+                      // text: "warning",
+                      // boxShadow: 1,
+                      borderRadius: 2,
+                      p: 0,
+                      minWidth: 100,
                     }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Muscle Group"
+                        variant="outlined"
+                        placeholder="Select Muscle Group"
+                        sx={{
+                          color: "white",
+                          borderColor: "#ffc107",
+                          bgcolor: "rgba(52, 58, 64, 0.75)",
+                          "&:hover": {
+                            borderColor: "#ffc107", // Change the border color on hover
+                          },
+                        }}
+                      />
+                    )}
                   />
-                )}
-              />
-            </div>
-          )}
-          {!editingWorkout && (
-            <div className="text-start mb-3">
-              <Autocomplete
-                id="exercise"
-                options={exercises}
-                value={selectedExercise || ""}
-                onChange={(_, newValue) =>
-                  handleExerciseSelection({ target: { value: newValue } })
-                }
-                getOptionLabel={(exercises) =>
-                  exercises.name || "Select Exercise"
-                }
-                fullWidth
-                sx={{
-                  bgcolor: "background.paper",
-                  text: "warning",
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Exercise"
-                    variant="outlined"
-                    placeholder="Select Exercise"
-                    sx={{}}
-                  />
-                )}
-              />
-            </div>
-          )}
-          {!editingWorkout && selectedExercise && exercises.length > 0 && (
-            <p className="text-secondary text-end">
-              {!readMore && selectedExercise && (
-                <span
-                  className="badge text-bg-warning me-2 pt-1"
-                  onClick={() => setModalDisplay(true)}
-                  style={{ cursor: "pointer" }}
-                >
-                  Show Details
-                </span>
+                </div>
               )}
-            </p>
-          )}
-          <div className="row row-cols-sm-2 pt-0">
-            <div className="col">
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  Weight
-                </span>
-                <input
-                  type="number"
-                  id="weightLoad"
-                  value={weightLoad}
-                  onChange={(e) => setWeightLoad(e.target.value)}
-                  required
-                  min="1"
-                  className="form-control form-control-lg"
-                />
+              {!editingWorkout && (
+                <div className="text-start mb-3">
+                  <Autocomplete
+                    id="exercise"
+                    options={exercises}
+                    value={selectedExercise || ""}
+                    onChange={(_, newValue) =>
+                      handleExerciseSelection({ target: { value: newValue } })
+                    }
+                    getOptionLabel={(exercises) =>
+                      exercises.name || "Select Exercise"
+                    }
+                    fullWidth
+                    sx={{
+                      // bgcolor: "background.paper",
+                      // text: "warning",
+                      // boxShadow: 1,
+                      borderRadius: 2,
+                      p: 0,
+                      minWidth: 100,
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Exercise"
+                        variant="outlined"
+                        placeholder="Select Exercise"
+                        sx={{
+                          color: "white",
+                          borderColor: "#ffc107",
+                          bgcolor: "rgba(52, 58, 64, 0.75)",
+                          "&:hover": {
+                            borderColor: "#ffc107", // Change the border color on hover
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+              {!editingWorkout && selectedExercise && exercises.length > 0 && (
+                <p className="text-secondary text-end">
+                  {!readMore && selectedExercise && (
+                    <span
+                      className="badge text-bg-warning me-2 pt-1"
+                      onClick={() => setModalDisplay(true)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Show Details
+                    </span>
+                  )}
+                </p>
+              )}
+              <div className="row row-cols-sm-2 pt-0">
+                <div className="col">
+                  <div className="input-group flex-nowrap">
+                    <span className="input-group-text" id="addon-wrapping">
+                      Weight
+                    </span>
+                    <input
+                      type="number"
+                      id="weightLoad"
+                      value={weightLoad}
+                      onChange={(e) => setWeightLoad(e.target.value)}
+                      required
+                      min="1"
+                      className="form-control form-control-lg"
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="input-group flex-nowrap">
+                    <span className="input-group-text" id="addon-wrapping">
+                      Reps
+                    </span>
+                    <input
+                      type="number"
+                      id="reps"
+                      value={reps}
+                      onChange={(e) => setReps(e.target.value)}
+                      required
+                      min="1"
+                      className="form-control form-control-lg"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="col">
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  Reps
-                </span>
-                <input
-                  type="number"
-                  id="reps"
-                  value={reps}
-                  onChange={(e) => setReps(e.target.value)}
-                  required
-                  min="1"
-                  className="form-control form-control-lg"
-                />
-              </div>
-            </div>
-          </div>
 
-          <div className="d-grid gap-2">
-            <button type="submit" className="btn btn-warning mt-4 text-dark">
-              {editingWorkout ? "Update" : "Log Workout"}
-            </button>
-            {editingWorkout && (
-              <button
-                type="button"
-                className="btn btn-secondary mt-2"
-                onClick={handleCancelEdit}
-              >
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </Container>
+              <div className="d-grid gap-2">
+                <button
+                  type="submit"
+                  className="btn btn-warning mt-4 text-dark"
+                >
+                  {editingWorkout ? "Update" : "Log Workout"}
+                </button>
+                {editingWorkout && (
+                  <button
+                    type="button"
+                    className="btn btn-secondary mt-2"
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </form>
+          </Container>
+        </ThemeProvider>
+      </div>
       {modalDisplay && (
-        <ExerciseDetailModal exercise={selectedExercise} setExerciseDetailDisplay={setModalDisplay} />
+        <ExerciseDetailModal
+          exercise={selectedExercise}
+          setExerciseDetailDisplay={setModalDisplay}
+        />
       )}
-
-   
     </div>
   );
 };
