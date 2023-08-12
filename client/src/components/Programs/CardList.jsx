@@ -34,11 +34,11 @@ function CardList(props) {
   ));
 
   return (
-      <div className="min-vh-100">
+      <div className="min-vh-100 px-3">
         <h1 className="display-5 pt-3 fw-bold text-white">{props.title}</h1>
         {!props.editable && <div>
           <input
-            className="form-control "
+            className="form-control mb-3"
             type="search"
             placeholder="type a program name or description"
             onChange={(e) => searchProgramsByText(e.target.value)}

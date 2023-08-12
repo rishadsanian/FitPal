@@ -51,6 +51,7 @@ export function WorkoutProvider({ children }) {
     useState("");
   // history
   const [workoutHistory, setWorkoutHistory] = useState([]);
+  const [allWorkoutHistory, setAllWorkoutHistory] = useState([]);
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
 
@@ -65,6 +66,18 @@ export function WorkoutProvider({ children }) {
       });
       console.log("fetchworkouthistory:", response.data);
       setWorkoutHistory(response.data);
+
+      console.log("current date after fetchWorkout history:", currentDate);
+    } catch (error) {
+      console.error("Error fetching workout history:", error);
+    }
+  };
+
+  const fetchAllWorkoutHistory = async () => {
+    try {
+      const response = await axios.get(`/log/${userId}`);
+      console.log("fetchworkouthistory:", response.data);
+      setAllWorkoutHistory(response.data.logs);
 
       console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
@@ -188,6 +201,8 @@ export function WorkoutProvider({ children }) {
     setSelectedExerciseDescription,
     workoutHistory,
     setWorkoutHistory,
+    allWorkoutHistory,
+    fetchAllWorkoutHistory,
     editingWorkout,
     setEditingWorkout,
     currentDate,

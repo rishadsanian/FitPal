@@ -57,8 +57,8 @@ const SliderItem = ({
           )}
           {/* ----------------------------------------------- */}
           {/* CHANGE THE LINE BELOW THIS*/}
-          {workoutDay.map((workout) => (
-            <tr key={workout.exercise_name}>
+          {workoutDay.map((workout, index) => (
+            <tr key={index}>
               <td className="d-flex flex-row  justify-content-between">
                 <div className="d-flex flex-column justify-content-start align-items-start">
                   <div>{workout.exercise_name}</div>
@@ -104,32 +104,35 @@ const WorkoutHistoryCopy = () => {
     currentDate,
     editingWorkout,
     fetchWorkoutHistory,
+    allWorkoutHistory,
+    fetchAllWorkoutHistory
   } = useWorkoutContext();
 
   const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([]);
 
   useEffect(() => {
-    fetchWorkoutHistory();
+    fetchAllWorkoutHistory();
+    
+    
   }, []);
 
   /// NEWLY ADDED STUFF -------------------------------
   useEffect(() => {
     let workoutHistorySorted = [];
-    for (let i = 0; i < 7; i++) {
+    console.log("all workout history", allWorkoutHistory)
+    for(let i = 0; i < 7; i++){
       workoutHistorySorted[i] = [];
     }
-    for (let i = 0; i < workoutHistory.length; i++) {
-      let dayToCheck = moment(new Date()).diff(
-        workoutHistory[i].timestamp,
-        "days"
-      );
-      if (moment(new Date()).diff(workoutHistory[i].timestamp, "days") < 7) {
-        workoutHistorySorted[dayToCheck].push(workoutHistory[i]);
+    for(let i = 0; i < allWorkoutHistory.length; i++){
+      let dayToCheck = moment(new Date()).day() - moment(allWorkoutHistory[i].timestamp).day();
+      if(dayToCheck < 7){
+        workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
     }
     // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
-  }, [workoutHistory.length]);
+    console.log(workoutHistorySorted);
+  }, [allWorkoutHistory.length])
   // -------------------------------------------------
 
   return (
@@ -156,8 +159,9 @@ const WorkoutHistoryCopy = () => {
           // Render actual workout entries if workoutHistory is not empty
           // CHANGED THIS ------------------------------------------
           workoutHistoryByday.map((workoutDay, index) => (
-            <SliderItem
-              workoutDay={workoutDay}
+            <SliderItem 
+              key={index}
+              workoutDay={workoutDay} 
               workoutHistory={workoutDay}
               currentDate={index}
               handleEditWorkout={handleDeleteWorkout}

@@ -50,57 +50,61 @@ const Statistics = () => {
   }
 
   return(
-    <div className="table-responsive card text-white bg-dark border-warning col-12 text-start">
-      <table className="table table-bordered border-warning table-striped col-12">
-        <tr>
-          <th scope="row">
-            Total Reps Completed
-          </th>
-          <td>
-            {totalReps}
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            Average Weight Per Rep
-          </th>
-          <td>
-            {Math.round(totalWeight/totalReps)}lbs
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            Total Sets Completed
-          </th>
-          <td>
-            {totalSets}
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            Average Weight Per Set:
-          </th>
-          <td>
-            {Math.round(totalWeight/totalSets)}lbs
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            Total Weight Moved:
-          </th>
-          <td>
-            {totalWeight}lbs
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">
-            Favourite Exercise:
-          </th>
-          <td>
-            {getFavouriteWorkout()}
-          </td>
-        </tr>
-      </table>
+    <div className="d-flex justify-content-center">
+      <div className="table-responsive card text-white bg-dark border-secondary border-3 col-6 text-start">
+        <table className="table table-bordered table-dark border-secondary table-striped col-6">
+          <tbody>
+            <tr>
+              <th scope="row">
+                Total Reps Completed
+              </th>
+              <td>
+                {totalReps}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Average Weight Per Rep
+              </th>
+              <td>
+                {Math.round(totalWeight/totalReps)}lbs
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Total Sets Completed
+              </th>
+              <td>
+                {totalSets}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Average Weight Per Set:
+              </th>
+              <td>
+                {Math.round(totalWeight/totalSets)}lbs
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Total Weight Moved:
+              </th>
+              <td>
+                {totalWeight}lbs
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Favourite Exercise:
+              </th>
+              <td>
+                {getFavouriteWorkout()}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

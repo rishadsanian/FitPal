@@ -102,11 +102,9 @@ const ChartWorkout = () => {
   }, [workoutData.length]);
 
   useEffect(() => {
-    if (chartRef.current) {
       chartRef.current.data.datasets[0].data = processWorkoutData();
       chartRef.current.update();
-    }
-  }, [workoutData]);
+  }, [workoutData.length]);
 
   //TODO show data on dates for whcih workouts are listed
   const currentDate = moment();

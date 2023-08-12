@@ -110,31 +110,33 @@ const WorkoutHistory = () => {
     currentDate,
     editingWorkout,
     fetchWorkoutHistory,
+    allWorkoutHistory,
+    fetchAllWorkoutHistory,
   } = useWorkoutContext();
 
   const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([]);
 
   useEffect(() => {
-    fetchWorkoutHistory();
+    fetchAllWorkoutHistory();
   }, []);
 
   useEffect(() => {
     let workoutHistorySorted = [];
+    console.log("all workout history", allWorkoutHistory);
     for (let i = 0; i < 7; i++) {
       workoutHistorySorted[i] = [];
     }
-    for (let i = 0; i < workoutHistory.length; i++) {
-      let dayToCheck = moment(new Date()).diff(
-        workoutHistory[i].timestamp,
-        "days"
-      );
-      if (moment(new Date()).diff(workoutHistory[i].timestamp, "days") < 7) {
-        workoutHistorySorted[dayToCheck].push(workoutHistory[i]);
+    for (let i = 0; i < allWorkoutHistory.length; i++) {
+      let dayToCheck =
+        moment(new Date()).day() - moment(allWorkoutHistory[i].timestamp).day();
+      if (dayToCheck < 7) {
+        workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
     }
-    console.log(workoutHistorySorted);
+    // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
-  }, [workoutHistory.length]);
+    console.log(workoutHistorySorted);
+  }, [allWorkoutHistory.length]);
 
   return (
     <div className="workout-history-slider container addlog text-white rounded ">

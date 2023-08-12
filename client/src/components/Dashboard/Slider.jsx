@@ -143,14 +143,14 @@ const SliderItem = ({
         </div>
 
         <button
-          className="text-warning btn btn-warning mt-3"
+          className="text-warning btn btn-outline-warning mt-3"
           disabled={isDone}
           onClick={navigateToSession}
         >
           {isDone ? (
-            <i class="fa-solid fa-check text-dark"></i>
+            <i class="fa-solid fa-check text-info"></i>
           ) : (
-            <i className="fa-solid fa-plus text-dark"></i>
+            <i className="fa-solid fa-plus text-white"></i>
           )}
         </button>
       </div>
