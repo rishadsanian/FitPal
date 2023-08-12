@@ -31,17 +31,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.get("/:user_id/", (req, res) => {
-//   logs
-//     .getLogByUserId(req.params)
-//     .then((logs) => {
-//       res.json({ logs });
-//     })
-//     .catch((e) => {
-//       res.send(e);
-//     });
-// });
-
 router.get("/:user_id/:exercise_name", (req, res) => {
   logs
     .getLogByUserIdAndExercise(req.params)

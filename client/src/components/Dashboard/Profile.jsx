@@ -53,7 +53,7 @@ const Profile = () => {
                   htmlFor="height"
                   className="form-label text-secondary text-start"
                 >
-                  Height
+                  Height (cm)
                 </label>
                 <input
                   type="number"
@@ -69,7 +69,7 @@ const Profile = () => {
                   htmlFor="weight"
                   className="form-label text-secondary text-start"
                 >
-                  Weight
+                  Weight (lbs)
                 </label>
                 <input
                   type="number"
@@ -139,14 +139,14 @@ const Profile = () => {
               <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button
                   type="submit"
-                  className="btn btn-warning me-md-2 mb-2"
+                  className="btn btn-warning me-md-2 mb-2 fw-bold opacity-75 "
                   onClick={handleSubmit}
                 >
                   Save Profile
                 </button>
                 <button
                   type="button"
-                  className="btn btn-secondary mb-2"
+                  className="btn btn-secondary me-md-2 mb-2 fw-bold opacity-75"
                   onClick={handleCancel}
                 >
                   Cancel
@@ -168,7 +168,7 @@ const Profile = () => {
               </div>
               <div className="col">
                 <div className="profile-card p-3 border border-secondary rounded border-3">
-                  <div className="key text-warning">Height</div>
+                  <div className="key text-warning">Height (cm)</div>
                   {profile.height ? (
                     <div className="value">{profile.height}</div>
                   ) : (
@@ -178,7 +178,7 @@ const Profile = () => {
               </div>
               <div className="col">
                 <div className="profile-card p-3 border border-secondary rounded border-3">
-                  <div className="key text-warning">Weight</div>
+                  <div className="key text-warning">Weight (lbs)</div>
                   {profile.weight ? (
                     <div className="value">{profile.weight}</div>
                   ) : (
