@@ -205,7 +205,7 @@ const WorkoutForm = () => {
               <div className="row row-cols-sm-2 pt-0">
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text" id="addon-wrapping">
+                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
                       Weight
                     </span>
                     <input
@@ -215,13 +215,13 @@ const WorkoutForm = () => {
                       onChange={(e) => setWeightLoad(e.target.value)}
                       required
                       min="1"
-                      className="form-control form-control-lg"
+                      className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />
                   </div>
                 </div>
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text" id="addon-wrapping">
+                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
                       Reps
                     </span>
                     <input
@@ -231,7 +231,7 @@ const WorkoutForm = () => {
                       onChange={(e) => setReps(e.target.value)}
                       required
                       min="1"
-                      className="form-control form-control-lg"
+                      className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />
                   </div>
                 </div>
@@ -240,7 +240,7 @@ const WorkoutForm = () => {
               <div className="d-grid gap-2">
                 <button
                   type="submit"
-                  className="btn btn-warning mt-4 text-dark"
+                  className="btn btn-warning mt-4 text-dark fw-bold"
                 >
                   {editingWorkout ? "Update" : "Log Workout"}
                 </button>
