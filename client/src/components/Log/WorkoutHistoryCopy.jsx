@@ -8,24 +8,31 @@ import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
 
-const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout, workoutDay}) => {
+const SliderItem = ({
+  workout,
+  workoutHistory,
+  currentDate,
+  handleDeleteWorkout,
+  editingWorkout,
+  handleEditWorkout,
+  workoutDay,
+}) => {
   const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
 
   useEffect(() => {
     const exerciseList = [];
-    for(const workout of workoutHistory) {
-      if(!exerciseList.includes(workout.exercise_name)) {
-        exerciseList.push(workout.exercise_name)
+    for (const workout of workoutHistory) {
+      if (!exerciseList.includes(workout.exercise_name)) {
+        exerciseList.push(workout.exercise_name);
       }
     }
     setUniqueExerciseNames(exerciseList);
-  }, [])
- 
-  return(
+  }, []);
+
+  return (
     // Render actual workout entries if workoutHistory is not empty
-    /* REMOVED ID SHOULD READD AS SOMETHING ELSE*/   
+    /* REMOVED ID SHOULD READD AS SOMETHING ELSE*/
     <div
-      
       className="h-100 slider-item p-3 border border-secondary rounded border-3"
       style={{
         margin: "0 10px",
@@ -43,10 +50,11 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
             </td>
           </tr>
           {/* Add this in ------------------------------------*/}
-          {!workoutDay.length &&
-          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
-            No workouts recorded
-          </div> }
+          {!workoutDay.length && (
+            <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+              No workouts recorded
+            </div>
+          )}
           {/* ----------------------------------------------- */}
           {/* CHANGE THE LINE BELOW THIS*/}
           {workoutDay.map((workout) => (
@@ -84,8 +92,8 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 const WorkoutHistoryCopy = () => {
   const {
@@ -98,30 +106,30 @@ const WorkoutHistoryCopy = () => {
     fetchWorkoutHistory,
   } = useWorkoutContext();
 
-
-  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([])
-  const { userId } = useContext(userContext);
+  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([]);
 
   useEffect(() => {
     fetchWorkoutHistory();
-    
-    
   }, []);
 
   /// NEWLY ADDED STUFF -------------------------------
   useEffect(() => {
     let workoutHistorySorted = [];
-    for(let i = 0; i < 7; i++){
+    for (let i = 0; i < 7; i++) {
       workoutHistorySorted[i] = [];
     }
-    for(let i = 0; i < workoutHistory.length; i++){
-      let dayToCheck = moment(new Date()).diff(workoutHistory[i].timestamp, 'days');
-      if(moment(new Date()).diff(workoutHistory[i].timestamp, 'days') < 7){
+    for (let i = 0; i < workoutHistory.length; i++) {
+      let dayToCheck = moment(new Date()).diff(
+        workoutHistory[i].timestamp,
+        "days"
+      );
+      if (moment(new Date()).diff(workoutHistory[i].timestamp, "days") < 7) {
         workoutHistorySorted[dayToCheck].push(workoutHistory[i]);
       }
     }
+    // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
-  }, [workoutHistory.length])
+  }, [workoutHistory.length]);
   // -------------------------------------------------
 
   return (
@@ -148,8 +156,8 @@ const WorkoutHistoryCopy = () => {
           // Render actual workout entries if workoutHistory is not empty
           // CHANGED THIS ------------------------------------------
           workoutHistoryByday.map((workoutDay, index) => (
-            <SliderItem 
-              workoutDay={workoutDay} 
+            <SliderItem
+              workoutDay={workoutDay}
               workoutHistory={workoutDay}
               currentDate={index}
               handleEditWorkout={handleDeleteWorkout}

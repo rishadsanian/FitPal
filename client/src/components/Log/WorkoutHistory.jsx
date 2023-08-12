@@ -1,31 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from 'react';
-import { useWorkoutContext } from '../../contexts/WorkoutContext';
-import { userContext } from '../../contexts/UserContext';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import moment from 'moment';
-import '../../styles/Log.css';
+import React, { useContext, useEffect, useState } from "react";
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
+import { userContext } from "../../contexts/UserContext";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import moment from "moment";
+import "../../styles/Log.css";
 
 const SliderItem = ({
-  workout,
   workoutHistory,
   currentDate,
   handleDeleteWorkout,
   editingWorkout,
   handleEditWorkout,
+  workoutDay,
 }) => {
   return (
     <div
-      key={workout.id}
       className="pt-0 pb-0 m-0 border bg-dark border-secondary bs-border-opacity-75 rounded flex-column border-3"
       style={{
-        margin: '0 10px',
-        height: '307px',
-        overflow: 'hidden',
-        overflowX: 'auto',
-        overflowY: 'scroll',
+        margin: "0 10px",
+        height: "307px",
+        overflow: "hidden",
+        overflowX: "auto",
+        overflowY: "scroll",
       }}
     >
       <style>
@@ -55,11 +54,16 @@ const SliderItem = ({
           <tr>
             <td colSpan="2">
               <p className="fw-bold text-secondary">
-                {moment(currentDate).format('MMMM D, YYYY')}
+                {moment().subtract(currentDate, "day").format("MMMM DD, YYYY")}
               </p>
             </td>
           </tr>
-          {workoutHistory.map((workout) => (
+          {!workoutDay.length && (
+            <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+              No workouts recorded
+            </div>
+          )}
+          {workoutDay.map((workout) => (
             <tr key={workout.exercise_name}>
               <td className="d-flex flex-row  justify-content-between">
                 <div className="d-flex flex-column justify-content-start align-items-start">
@@ -108,19 +112,37 @@ const WorkoutHistory = () => {
     fetchWorkoutHistory,
   } = useWorkoutContext();
 
-  const { userId } = useContext(userContext);
+  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([]);
 
   useEffect(() => {
-    console.log('Fetching hitory');
     fetchWorkoutHistory();
-    // console.log("history in table");
-  }, [currentDate]);
+  }, []);
+
+  useEffect(() => {
+    let workoutHistorySorted = [];
+    for (let i = 0; i < 7; i++) {
+      workoutHistorySorted[i] = [];
+    }
+    for (let i = 0; i < workoutHistory.length; i++) {
+      let dayToCheck = moment(new Date()).diff(
+        workoutHistory[i].timestamp,
+        "days"
+      );
+      if (moment(new Date()).diff(workoutHistory[i].timestamp, "days") < 7) {
+        workoutHistorySorted[dayToCheck].push(workoutHistory[i]);
+      }
+    }
+    console.log(workoutHistorySorted);
+    setWorkoutHistoryByDay(workoutHistorySorted);
+  }, [workoutHistory.length]);
 
   return (
     <div className="workout-history-slider container addlog text-white rounded ">
-      <h3 className="text-warning fw-bold pb-3 pt-5">
-        Daily Workout History
-      </h3>
+      {/* <div
+      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
+      style={{ width: "600px" }}
+    ></div> */}
+      <h3 className="text-warning fw-bold pb-3 pt-5">Daily Workout History</h3>
 
       <Slider
         dots={true}
@@ -130,24 +152,16 @@ const WorkoutHistory = () => {
         slidesToScroll={1}
         afterChange={(index) => handleSliderChange(index)}
       >
-        {workoutHistory.length === 0 ? (
-          // Render a placeholder entry if workoutHistory is empty
-          <div className="workout-entry workout-entry profile-card p-3  rounded ">
-            No workouts recorded
-          </div>
-        ) : (
-          // Render actual workout entries if workoutHistory is not empty
-          workoutHistory.map((workout) => (
-            <SliderItem
-              workout={workout}
-              workoutHistory={workoutHistory}
-              currentDate={currentDate}
-              handleEditWorkout={handleEditWorkout}
-              editingWorkout={editingWorkout}
-              handleDeleteWorkout={handleDeleteWorkout}
-            />
-          ))
-        )}
+        {workoutHistoryByday.map((workoutDay, index) => (
+          <SliderItem
+            workoutDay={workoutDay}
+            workoutHistory={workoutDay}
+            currentDate={index}
+            handleEditWorkout={handleEditWorkout}
+            editingWorkout={editingWorkout}
+            handleDeleteWorkout={handleDeleteWorkout}
+          />
+        ))}
       </Slider>
     </div>
   );
