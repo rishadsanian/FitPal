@@ -127,8 +127,6 @@ const WorkoutHistory = () => {
     fetchAllWorkoutHistory();
   }, []);
 
-  //the below is being used to fetch all workout history for now/demo purposes and resolve bugs for demo day. Should be switched to less server and data intensive approach for the functionality.
-
   useEffect(() => {
     let workoutHistorySorted = [];
     // console.log("all workout history", allWorkoutHistory);
@@ -152,12 +150,7 @@ const WorkoutHistory = () => {
 
   return (
     <div className="workout-history-slider container addlog text-white pb-5">
-      {/* <div
-      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
-    ></div> */}
-
-      <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">
+        <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">
         Daily Workout History
       </h3>
 
