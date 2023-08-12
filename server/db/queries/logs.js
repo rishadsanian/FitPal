@@ -4,6 +4,7 @@ const getLogByUserId = (data) => {
   const queryString = `
   SELECT * FROM log
   WHERE user_id = $1 
+  ORDER BY timestamp DESC
   `;
   return db
     .query(queryString, [data.user_id])
