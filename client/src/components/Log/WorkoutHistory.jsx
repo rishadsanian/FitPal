@@ -35,18 +35,18 @@ const SliderItem = ({
         width: 8px;
         height: 8px;
       }
-
+      
       div::-webkit-scrollbar-track {
         background: #333333;
       }
-
+      
       div::-webkit-scrollbar-thumb {
-        background-color: #666666;
+        background-color: rgba(102, 102, 102, 0.75); /* Opacity 75% */
         border-radius: 4px;
       }
-
+      
       div::-webkit-scrollbar-thumb:hover {
-        background-color: #ffc107;
+        background-color: rgba(255, 193, 7, 0.50);
       }
     `}
       </style>
