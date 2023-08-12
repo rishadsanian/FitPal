@@ -21,6 +21,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 const WorkoutForm = () => {
   const {
+    MUSCLE,
     muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
@@ -66,9 +67,18 @@ const WorkoutForm = () => {
     // Fetch exercises from API based on the selected muscle group
     const fetchExercisesByMuscle = async () => {
       try {
+        const params = {};
+        if (selectedExercise) {
+          params.search = selectedExercise;
+        }
+
+        if (selectedMuscleGroup) {
+          params.search = selectedMuscleGroup;
+        }
+
         const response = await axios.get(API_URL, {
           headers: { "X-Api-Key": API_KEY },
-          params: { muscle: selectedMuscleGroup },
+          params: params,
         });
         setExercises(response.data);
       } catch (error) {
@@ -80,8 +90,8 @@ const WorkoutForm = () => {
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
 
   return (
-    <div className="addlog text-white">
-      <h3 className="text-warning fw-bold">Log Workout</h3>
+    <div className="addlog text-white bg-dark-50 p-5 rounded">
+      <h3 className="text-warning fw-bold opacity-75">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
@@ -110,8 +120,8 @@ const WorkoutForm = () => {
                 <div className="text-start mb-3 mt-4">
                   <Autocomplete
                     id="muscleGroup"
-                    options={muscleGroups.map(
-                      (group) => group.charAt(0).toUpperCase() + group.slice(1)
+                    options={ Object.values(MUSCLE).map(
+                      (muscle) => muscle.charAt(0).toUpperCase() + muscle.slice(1)
                     )}
                     value={selectedMuscleGroup || ""}
                     onChange={(_, newValue) =>
@@ -193,7 +203,7 @@ const WorkoutForm = () => {
                 <p className="text-secondary text-end">
                   {!readMore && selectedExercise && (
                     <span
-                      className="badge text-bg-warning me-2 pt-1"
+                      className="badge text-bg-warning me-2 pt-1 opacity-75"
                       onClick={() => setModalDisplay(true)}
                       style={{ cursor: "pointer" }}
                     >
@@ -205,7 +215,11 @@ const WorkoutForm = () => {
               <div className="row row-cols-sm-2 pt-0">
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
+                    <span
+                      className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
+                      id="addon-wrapping"
+                      style={{ flex: "0.3", minWidth: "100px" }}
+                    >
                       Weight
                     </span>
                     <input
@@ -216,13 +230,17 @@ const WorkoutForm = () => {
                       required
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
-                      
                     />
                   </div>
                 </div>
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
+                    <span
+                      className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
+                      id="addon-wrapping"
+                      style={{ flex: "0.2", minWidth: "100px" }}
+                    >
+
                       Reps
                     </span>
                     <input
@@ -234,14 +252,15 @@ const WorkoutForm = () => {
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />
-                  </div> 
+                  </div>
                 </div>
               </div>
 
               <div className="d-grid gap-2">
                 <button
                   type="submit"
-                  className="btn btn-warning mt-4 text-dark fw-bold"
+                  className="btn btn-warning mt-4 text-dark fw-bold opacity-75"
+                  
                 >
                   {editingWorkout ? "Update" : "Log Workout"}
                 </button>

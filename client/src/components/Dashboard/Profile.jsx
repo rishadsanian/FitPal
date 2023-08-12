@@ -227,7 +227,7 @@ const Profile = () => {
                         href="/programs"
                         className="text-decoration-none text-warning"
                       >
-                        <i className="fas fa-plus-circle fa-3x"></i>
+                        <i className="circle-add-icon fas fa-plus-circle fa-3x"></i>
                       </a>
                     </span>
                   )}

@@ -1,10 +1,9 @@
-.slick-dots {
-  li {
-    margin: 0 0 3rem !important;
-  }
+.slick-active li {
+  margin: 0 0 3rem !important;
+  opacity: 0.75;
+}
 
-  button::before {
-    font-size: 2rem !important;
-    color: #ffc107 !important;
-  }
+.slick-active button::before {
+  font-size: 0.4rem !important;
+  color: #ffc107 !important;
 }
