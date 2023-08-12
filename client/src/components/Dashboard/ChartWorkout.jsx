@@ -11,14 +11,15 @@ import {
 } from "chart.js";
 import moment from "moment";
 import { userContext } from "../../contexts/UserContext";
-
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
 
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = () => {
-  const { userId } = useContext(userContext); 
+  const { userId } = useContext(userContext);
   //state
   const [workoutData, setWorkoutData] = useState([]);
+  const { WorkoutHistory } = useWorkoutContext();
   //useref needed to fix canvas clash bug
   const chartRef = useRef(null);
 
@@ -34,7 +35,7 @@ const ChartWorkout = () => {
       }
     };
     fetchData();
-  }, [userId]);
+  }, [WorkoutHistory.length]);
 
   //extract and process needed data
   const processWorkoutData = () => {
@@ -99,7 +100,13 @@ const ChartWorkout = () => {
     }
   }, [workoutData]);
 
- 
+  useEffect(() => {
+    if (chartRef.current) {
+      chartRef.current.data.datasets[0].data = processWorkoutData();
+      chartRef.current.update();
+    }
+  }, [workoutData]);
+
   //TODO show data on dates for whcih workouts are listed
   const currentDate = moment();
   const startDate = moment(currentDate)
@@ -114,17 +121,18 @@ const ChartWorkout = () => {
           <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5">
             Weekly Exercise Tracker
           </h3>
-          <p className="text-secondary pb-3">{startDate}-{endDate}</p>
-            <div>
-              <div className="chart-wrapper">
-                {/* Put the canvas inside a div with fixed width of 400px */}
-                <div className="chart-container-400">
-                  <canvas id="workoutChart" height="100%" width="100%" />
-                </div>
+          <p className="text-secondary pb-3">
+            {startDate}-{endDate}
+          </p>
+          <div>
+            <div className="chart-wrapper">
+              {/* Put the canvas inside a div with fixed width of 400px */}
+              <div className="chart-container-400">
+                <canvas id="workoutChart" height="100%" width="100%" />
               </div>
             </div>
-            {/* Add more weeks here if desired */}
-        
+          </div>
+          {/* Add more weeks here if desired */}
         </div>
       </div>
     </div>

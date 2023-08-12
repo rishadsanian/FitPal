@@ -15,9 +15,11 @@ import {
   Autocomplete,
 } from "@mui/material";
 
+import ExerciseDetailModal from '../Exercises/ExerciseDetailModal';
+
+
 const WorkoutForm = () => {
   const {
-    MUSCLE,
     muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
@@ -28,7 +30,6 @@ const WorkoutForm = () => {
     setReps,
     weightLoad,
     setWeightLoad,
-    handleMuscleGroupSelection,
     handleExerciseSelection,
     handleSubmit,
     editingWorkout,
@@ -36,10 +37,12 @@ const WorkoutForm = () => {
     API_KEY,
     API_URL,
     setExercises,
-    setSelectedExerciseDescription,
   } = useWorkoutContext();
 
   const [readMore, setReadMore] = useState(false);
+
+  const [modalDisplay, setModalDisplay] = useState(false);
+
 
   useEffect(() => {
     // Use Select Muscle group as the first option in dropdown menu
@@ -84,7 +87,7 @@ const WorkoutForm = () => {
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            {readMore && selectedExercise && (
+            {/* {readMore && selectedExercise && (
               <div>
                 <p className="text-secondary ">
                   {selectedExercise.instructions}
@@ -106,7 +109,7 @@ const WorkoutForm = () => {
                   </span>
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         )}
         {/* <p className="text-secondary text-end">
@@ -206,7 +209,7 @@ const WorkoutForm = () => {
               {!readMore && selectedExercise && (
                 <span
                   className="badge text-bg-warning me-2 pt-1"
-                  onClick={() => setReadMore(true)}
+                  onClick={() => setModalDisplay(true)}
                   style={{ cursor: "pointer" }}
                 >
                   Show Details
@@ -265,6 +268,11 @@ const WorkoutForm = () => {
           </div>
         </form>
       </Container>
+      {modalDisplay && (
+        <ExerciseDetailModal exercise={selectedExercise} setExerciseDetailDisplay={setModalDisplay} />
+      )}
+
+   
     </div>
   );
 };
