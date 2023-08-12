@@ -14,7 +14,6 @@ const Statistics = () => {
 
 
   useEffect(() => {
-    console.log("workout history", workoutHistory)
     setTotalReps(0);
     setTotalWeight(0);
     for(const workout of workoutHistory) {

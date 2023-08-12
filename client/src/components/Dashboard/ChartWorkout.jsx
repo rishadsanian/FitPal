@@ -11,12 +11,13 @@ import {
 } from "chart.js";
 import moment from "moment";
 import { userContext } from "../../contexts/UserContext";
-
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
 
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = () => {
   const { userId } = useContext(userContext); 
+  const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
   //state
   const [workoutData, setWorkoutData] = useState([]);
   //useref needed to fix canvas clash bug
@@ -34,7 +35,7 @@ const ChartWorkout = () => {
       }
     };
     fetchData();
-  }, [userId]);
+  }, [workoutHistory.length]);
 
   //extract and process needed data
   const processWorkoutData = () => {
@@ -97,7 +98,7 @@ const ChartWorkout = () => {
       chartRef.current.data.datasets[0].data = processWorkoutData();
       chartRef.current.update();
     }
-  }, [workoutData]);
+  }, [workoutData.length]);
 
  
   //TODO show data on dates for whcih workouts are listed
