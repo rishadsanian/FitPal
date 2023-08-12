@@ -143,7 +143,7 @@ const WorkoutHistory = () => {
   }, [allWorkoutHistory.length]);
 
   return (
-    <div className="workout-history-slider container addlog text-white">
+    <div className="workout-history-slider container addlog text-white pb-5">
       {/* <div
       className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
       style={{ width: "600px" }}
