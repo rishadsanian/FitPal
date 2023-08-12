@@ -10,14 +10,25 @@ function ProgramsPage(props) {
   const [currentProfile, setCurrentProfile] = useState();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
-    if(props.userView){
-      axios.get(`http://localhost:8080/api/profile/${window.sessionStorage.getItem('userId')}`).then((res) => {
-       setCurrentProfile(res.data);
-      });
+    if (props.userView) {
+      axios
+        .get(
+          `http://localhost:8080/api/profile/${window.sessionStorage.getItem(
+            'userId'
+          )}`
+        )
+        .then((res) => {
+          setCurrentProfile(res.data);
+        });
     }
   }, []);
 
-  const {allPrograms, allSearchablePrograms, userPrograms, nonUserPrograms} = useContext(programContext);
+  const {
+    allPrograms,
+    allSearchablePrograms,
+    userPrograms,
+    nonUserPrograms,
+  } = useContext(programContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,29 +46,33 @@ function ProgramsPage(props) {
   const shouldShowLink = windowWidth <= 720;
 
   return (
-      <div className="container-fluid">
-        {props.userView ? <div className="row">
+    <div className="container-fluid">
+      {shouldShowLink && (
+        <a href='#addProgram' className="btn btn-outline-info m-3">add program</a>
+      )}
+      {props.userView ? (
+        <div className="row">
           <div className="col col-12 col-md-6 col-lg-9">
-            {userPrograms.length > 0 &&
+            {userPrograms.length > 0 && (
+              <CardList
+                cardData={userPrograms}
+                title="My Programs"
+                path={`/programs/`}
+                editable={true}
+                userView={props.userView}
+                currentProfile={currentProfile}
+                setCurrentProfile={setCurrentProfile}
+              />
+            )}
             <CardList
-              cardData={userPrograms}
-              title="My Programs"
+              cardData={nonUserPrograms}
+              title="Public Programs"
               path={`/programs/`}
-              editable={true}
+              editable={false}
               userView={props.userView}
               currentProfile={currentProfile}
               setCurrentProfile={setCurrentProfile}
             />
-            }
-            <CardList
-            cardData={nonUserPrograms}
-            title="Public Programs"
-            path={`/programs/`}
-            editable={false}
-            userView={props.userView}
-            currentProfile={currentProfile}
-            setCurrentProfile={setCurrentProfile}
-          />
           </div>
 
           <div
@@ -67,7 +82,7 @@ function ProgramsPage(props) {
             <CreateProgram />
           </div>
         </div>
-        : 
+      ) : (
         <CardList
           cardData={allSearchablePrograms}
           title="Programs"
@@ -75,8 +90,8 @@ function ProgramsPage(props) {
           editable={false}
           userView={props.userView}
         />
-        }
-      </div>
+      )}
+    </div>
   );
 }
 
