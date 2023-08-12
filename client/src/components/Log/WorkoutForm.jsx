@@ -92,22 +92,22 @@ const WorkoutForm = () => {
         )}
       </div>
       <div
-        pt-0
-        pb-0
+        pt-3
+        pb-3
         m-0
         border
         bg-dark
         border-secondary
-        bs-border-opacity-75
+        // bs-border-opacity-75
         rounded
         flex-column
         border-3
       >
         <ThemeProvider theme={darkTheme}>
-          <Container maxWidth="sm">
+          <Container maxWidth="mg">
             <form onSubmit={handleSubmit}>
               {!editingWorkout && (
-                <div className="text-start mb-3">
+                <div className="text-start mb-3 mt-4">
                   <Autocomplete
                     id="muscleGroup"
                     options={muscleGroups.map(
@@ -125,7 +125,7 @@ const WorkoutForm = () => {
                     sx={{
                       // backgroundColor: '#343a40',
                       // text: "warning",
-                      // boxShadow: 1,
+                      boxShadow: 1,
                       borderRadius: 2,
                       p: 0,
                       minWidth: 100,
@@ -205,7 +205,7 @@ const WorkoutForm = () => {
               <div className="row row-cols-sm-2 pt-0">
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
+                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping" style={{ flex: '0.3', minWidth: '100px' }}>
                       Weight
                     </span>
                     <input
@@ -216,12 +216,13 @@ const WorkoutForm = () => {
                       required
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
+                      
                     />
                   </div>
                 </div>
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
+                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping" style={{ flex: '0.2', minWidth: '100px' }}>
                       Reps
                     </span>
                     <input
@@ -233,7 +234,7 @@ const WorkoutForm = () => {
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />
-                  </div>
+                  </div> 
                 </div>
               </div>
 
