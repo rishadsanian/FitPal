@@ -8,24 +8,31 @@ import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
 
-const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout, workoutDay}) => {
+const SliderItem = ({
+  workout,
+  workoutHistory,
+  currentDate,
+  handleDeleteWorkout,
+  editingWorkout,
+  handleEditWorkout,
+  workoutDay,
+}) => {
   const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
 
   useEffect(() => {
     const exerciseList = [];
-    for(const workout of workoutHistory) {
-      if(!exerciseList.includes(workout.exercise_name)) {
-        exerciseList.push(workout.exercise_name)
+    for (const workout of workoutHistory) {
+      if (!exerciseList.includes(workout.exercise_name)) {
+        exerciseList.push(workout.exercise_name);
       }
     }
     setUniqueExerciseNames(exerciseList);
-  }, [])
- 
-  return(
+  }, []);
+
+  return (
     // Render actual workout entries if workoutHistory is not empty
-    /* REMOVED ID SHOULD READD AS SOMETHING ELSE*/   
+    /* REMOVED ID SHOULD READD AS SOMETHING ELSE*/
     <div
-      
       className="h-100 slider-item p-3 border border-secondary rounded border-3"
       style={{
         margin: "0 10px",
@@ -43,10 +50,11 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
             </td>
           </tr>
           {/* Add this in ------------------------------------*/}
-          {!workoutDay.length &&
-          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
-            No workouts recorded
-          </div> }
+          {!workoutDay.length && (
+            <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+              No workouts recorded
+            </div>
+          )}
           {/* ----------------------------------------------- */}
           {/* CHANGE THE LINE BELOW THIS*/}
           {workoutDay.map((workout, index) => (
@@ -84,8 +92,8 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 const WorkoutHistoryCopy = () => {
   const {
@@ -100,9 +108,7 @@ const WorkoutHistoryCopy = () => {
     fetchAllWorkoutHistory
   } = useWorkoutContext();
 
-
-  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([])
-  const { userId } = useContext(userContext);
+  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([]);
 
   useEffect(() => {
     fetchAllWorkoutHistory();
@@ -118,11 +124,12 @@ const WorkoutHistoryCopy = () => {
       workoutHistorySorted[i] = [];
     }
     for(let i = 0; i < allWorkoutHistory.length; i++){
-      let dayToCheck = moment(new Date()).day() - moment(allWorkoutHistory[i].timestamp).day();
+      let dayToCheck = moment(new Date()).diff(allWorkoutHistory[i].timestamp, "day");
       if(dayToCheck < 7){
         workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
     }
+    // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
     console.log(workoutHistorySorted);
   }, [allWorkoutHistory.length])
