@@ -80,7 +80,7 @@ const WorkoutForm = () => {
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
 
   return (
-    <div className="addlog text-white bg-dark-50 p-5 rounded">
+    <div className="addlog text-white">
       <h3 className="text-warning fw-bold">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
@@ -205,7 +205,7 @@ const WorkoutForm = () => {
               <div className="row row-cols-sm-2 pt-0">
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping" style={{ flex: '0.3', minWidth: '100px' }}>
+                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
                       Weight
                     </span>
                     <input
@@ -222,7 +222,7 @@ const WorkoutForm = () => {
                 </div>
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping" style={{ flex: '0.2', minWidth: '100px' }}>
+                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping">
                       Reps
                     </span>
                     <input
