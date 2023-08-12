@@ -67,10 +67,10 @@ const SliderItem = ({
           {workoutDay.reverse().map((workout) => (
             <tr key={workout.exercise_name}>
               <td className="d-flex flex-row  justify-content-between">
-                <div className="d-flex flex-column justify-content-start align-items-start">
+                <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
                   <div>{workout.exercise_name}</div>
                   <div>
-                    <div className="badge text-bg-warning me-2">
+                    <div className="badge text-bg-warning me-2 opacity-75">
                       {workout.resistance > 0 &&
                         `${workout.resistance} lbs / ${workout.reps} Reps`}
                     </div>
@@ -83,13 +83,13 @@ const SliderItem = ({
                       disabled={editingWorkout === workout}
                       className="btn"
                     >
-                      <i className="far fa-pen-to-square fa-xl text-light"></i>
+                      <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
                     </button>
                     <button
                       onClick={() => handleDeleteWorkout(workout.id)}
                       className="btn "
                     >
-                      <i className="far fa-trash-can fa-xl text-danger"></i>
+                      <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
                     </button>
                   </div>
                 )}
@@ -149,7 +149,7 @@ const WorkoutHistory = () => {
       className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
       style={{ width: "600px" }}
     ></div> */}
-      <h3 className="text-warning fw-bold pb-3 pt-5">Daily Workout History</h3>
+      <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">Daily Workout History</h3>
 
       <Slider
         dots={true}

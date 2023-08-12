@@ -91,7 +91,7 @@ const WorkoutForm = () => {
 
   return (
     <div className="addlog text-white bg-dark-50 p-5 rounded">
-      <h3 className="text-warning fw-bold">Log Workout</h3>
+      <h3 className="text-warning fw-bold opacity-75">Log Workout</h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
@@ -203,7 +203,7 @@ const WorkoutForm = () => {
                 <p className="text-secondary text-end">
                   {!readMore && selectedExercise && (
                     <span
-                      className="badge text-bg-warning me-2 pt-1"
+                      className="badge text-bg-warning me-2 pt-1 opacity-75"
                       onClick={() => setModalDisplay(true)}
                       style={{ cursor: "pointer" }}
                     >
@@ -258,7 +258,8 @@ const WorkoutForm = () => {
               <div className="d-grid gap-2">
                 <button
                   type="submit"
-                  className="btn btn-warning mt-4 text-dark fw-bold"
+                  className="btn btn-warning mt-4 text-dark fw-bold opacity-75"
+                  
                 >
                   {editingWorkout ? "Update" : "Log Workout"}
                 </button>

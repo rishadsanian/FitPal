@@ -1,5 +1,6 @@
 .slick-active li {
   margin: 0 0 3rem !important;
+  opacity: 0.75;
 }
 
 .slick-active button::before {
