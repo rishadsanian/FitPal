@@ -240,7 +240,8 @@ const Profile = () => {
             <div className="edit-button text-center w-100">
               <button
                 type="button"
-                className="btn btn-warning font-weight-bold"
+                className="btn btn-warning font-weight-bold text-dark"
+
                 onClick={handleEdit}
               >
                 Edit Profile
