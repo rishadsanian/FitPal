@@ -16,7 +16,8 @@ import { useWorkoutContext } from "../../contexts/WorkoutContext";
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = () => {
-  const { userId } = useContext(userContext);
+  const { userId } = useContext(userContext); 
+  const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
   //state
   const [workoutData, setWorkoutData] = useState([]);
   const { WorkoutHistory } = useWorkoutContext();
@@ -98,7 +99,7 @@ const ChartWorkout = () => {
       chartRef.current.data.datasets[0].data = processWorkoutData();
       chartRef.current.update();
     }
-  }, [workoutData]);
+  }, [workoutData.length]);
 
   useEffect(() => {
     if (chartRef.current) {
