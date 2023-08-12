@@ -21,7 +21,6 @@ export default function ProgramProvider(props) {
 
   // Use effect to fetch program data from the server
   useEffect(() => {
-    
       // Get program data and update appropriate lists
       axios.get(`http://localhost:8080/programs`).then((res) => {
         setAllPrograms(res.data.program)
@@ -30,6 +29,11 @@ export default function ProgramProvider(props) {
         setNonUserPrograms(res.data.program.filter((program) => program.user_id !== userId));
       });
   }, []);
+
+  useEffect(() => {
+    // if a program is created or destroyed update the user programs as it is the only list to update
+    setUserPrograms(allPrograms.filter((program) => program.user_id === userId));
+  }, [allPrograms.length]);
 
   const setNonUserProgramsByText = (checkString) => {
     setNonUserPrograms(allPrograms.filter((program) => 
@@ -50,22 +54,30 @@ export default function ProgramProvider(props) {
   const deleteProgram = async (programId) => {
     try {
       // Submit form data to the server
-      await axios.post(`/programs/${programId}/delete`);
+      const response = await axios.post(`/programs/${programId}/delete`);
+      if (response.status === 200) {
+        setAllPrograms([...allPrograms.filter(program => program.id !== programId)])
+      }
     } catch (error) {
       console.error('Error deleting program:', error);
     }
   };
 
-  const createProgram = async () => {
+  const createProgram = async (event) => {
     if(newProgram.name && newProgram.description){
       try {
         // Submit form data to the server
-        const response = await axios.post("/programs", {
-          userId: window.sessionStorage.getItem('userId'),
+        const createdProgram = {
+          user_id: userId,
           name: newProgram.name,
           description: newProgram.description
-        });
-
+        }
+        const response = await axios.post("/programs", createdProgram);
+        if (response.status === 200) {
+          
+          setAllPrograms([response.data, ...allPrograms]);
+          setNewProgram({name: "", description: ""});
+        }
         // Update the profile state with the newly created/updated profile data
       } catch (error) {
         console.error("Error creating/updating profile:", error);
@@ -87,6 +99,15 @@ export default function ProgramProvider(props) {
     }
   }
 
+  // Function to handle form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setNewProgram((prevProgram) => ({
+      ...prevProgram,
+      [name]: value,
+    }));
+  };
+
 
   // This list can get long with a lot of functions.  Reducer may be a better choice
   const providerData = { 
@@ -94,10 +115,12 @@ export default function ProgramProvider(props) {
     allSearchablePrograms,
     userPrograms, 
     nonUserPrograms, 
+    newProgram,
     deleteProgram, 
     createProgram, 
     setNewProgram, 
     updateProgram,
+    handleChange,
     setNonUserProgramsByText,
     setAllSearchableProgramsByText
    };

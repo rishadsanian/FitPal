@@ -9,6 +9,7 @@ import { useProfileContext } from "../../contexts/ProfileContext";
 import { userContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { LinearProgress } from "@mui/material";
 
 const daysOfWeek = {
   0: "Monday",
@@ -62,6 +63,9 @@ const SliderItem = ({
   const [currentSets, setCurrentSets] = useState(
     sets.filter((set) => exercise === set.name)
   );
+  const [userWorkouts, setUserWorkouts] = useState(
+    uniqueExercises.filter((set) => exercise === set.exercise_name)
+  )
 
   useEffect(() => {
     setUniqueExercises(
@@ -71,7 +75,18 @@ const SliderItem = ({
 
   const isDone =
     uniqueExercises.filter((set) => exercise === set.exercise_name).length >=
-    sets.filter((set) => exercise === set.name).length;
+    currentSets.length;
+
+  const getCompletionVal = () => {
+    const percentComplete = uniqueExercises.filter((set) => exercise === set.exercise_name).length /
+    currentSets.length * 100;
+    if(percentComplete > 100) {
+      return 100;
+    } else {
+      return percentComplete; 
+    }
+  }
+  
 
   const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
 
@@ -106,8 +121,9 @@ const SliderItem = ({
           }
         ></i>
         <h5 className="text-white card-title">{exercise}</h5>
+        
       </div>
-
+      
       <div className="card-body px-0">
         <p className="fw-bold text-white">Recomended: </p>
         {/* RECOMMENDED SETS */}
@@ -142,8 +158,9 @@ const SliderItem = ({
                 ))}
             </div>
           )}
+          
         </div>
-
+        <LinearProgress color="success" variant="determinate" value={getCompletionVal()}sx={{ width: "100%"}}/>
         <button
           className="text-warning btn btn-outline-warning mt-3"
           disabled={isDone}

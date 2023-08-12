@@ -24,7 +24,6 @@ function ProgramsPage(props) {
   }, []);
 
   const {
-    allPrograms,
     allSearchablePrograms,
     userPrograms,
     nonUserPrograms,

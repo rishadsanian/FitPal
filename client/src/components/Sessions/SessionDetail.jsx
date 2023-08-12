@@ -178,12 +178,16 @@ const SessionDetail = (props) => {
             </div>
           )}
           <div className="row row-cols-1 ">
+            
             {exercises.length > 0 ? (
-              <table className="table table-dark table-striped table-hover">
-                <tbody>{exercisesListItem}</tbody>
-              </table>
+              <div>
+                <h6 className="text-warning">Tap below to add a workout!</h6>
+                <table className="table table-dark table-striped table-hover">
+                  <tbody>{exercisesListItem}</tbody>
+                </table>
+              </div>
             ) : (
-              <p className="display-6 fw-light text-white">no exercises added yet</p>
+              <p className="display-6 fw-light text-white">No exercises added yet</p>
             )}
           </div>
         </div>

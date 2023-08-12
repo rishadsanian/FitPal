@@ -122,7 +122,6 @@ function ProgramListItem(props) {
       updateCurrentProgram(null);
     }
     deleteProgram(programId)
-    window.location.reload();
   }
 
   // Set the program and clear edit mode
@@ -186,6 +185,7 @@ function ProgramListItem(props) {
         {/* Add session form */}
         {props.editable && potentialDays.length && <div className="card-body border-top border-color-white">
           <form>
+            
             <div className="input-group flex-nowrap">
               <input
                 type="text"
@@ -220,11 +220,15 @@ function ProgramListItem(props) {
           </form>
         </div>}
         {/* Session list */}
-        <div className="card-body d-flex justify-content-between text-white">
-          <table className="table table-dark table-striped">
-            <tbody>{sessionsListItem}</tbody>
-          </table>
-        </div>
+        {sessions.length > 0 && <div>
+          <h6 className="text-warning px-4">Tap below to view more!</h6>
+          <div className="card-body d-flex justify-content-between text-white">
+
+            <table className="table table-dark table-striped">
+              <tbody>{sessionsListItem}</tbody>
+            </table>
+          </div>
+        </div>}
         {props.userView && (
           <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
             {/* Toggle star Icon when the current program is the users selected program*/}
