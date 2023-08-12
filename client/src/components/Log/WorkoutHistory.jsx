@@ -63,7 +63,7 @@ const SliderItem = ({
               No workouts recorded
             </div>
           )}
-          {workoutDay.map((workout) => (
+          {workoutDay.reverse().map((workout) => (
             <tr key={workout.exercise_name}>
               <td className="d-flex flex-row  justify-content-between">
                 <div className="d-flex flex-column justify-content-start align-items-start">
@@ -80,13 +80,13 @@ const SliderItem = ({
                     <button
                       onClick={() => handleEditWorkout(workout)}
                       disabled={editingWorkout === workout}
-                      className="btn btn-dark"
+                      className="btn"
                     >
                       <i className="far fa-pen-to-square fa-xl text-light"></i>
                     </button>
                     <button
                       onClick={() => handleDeleteWorkout(workout.id)}
-                      className="btn btn-dark"
+                      className="btn "
                     >
                       <i className="far fa-trash-can fa-xl text-danger"></i>
                     </button>
@@ -118,7 +118,7 @@ const WorkoutHistory = () => {
 
   useEffect(() => {
     fetchAllWorkoutHistory();
-  }, []);
+  }, [workoutHistory]);
 
   useEffect(() => {
     let workoutHistorySorted = [];
@@ -127,8 +127,10 @@ const WorkoutHistory = () => {
       workoutHistorySorted[i] = [];
     }
     for (let i = 0; i < allWorkoutHistory.length; i++) {
-      let dayToCheck =
-        moment(new Date()).day() - moment(allWorkoutHistory[i].timestamp).day();
+      let dayToCheck = moment(new Date()).diff(
+        allWorkoutHistory[i].timestamp,
+        "day"
+      );
       if (dayToCheck < 7) {
         workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }

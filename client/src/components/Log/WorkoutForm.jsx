@@ -73,13 +73,6 @@ const WorkoutForm = () => {
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
 
-  // useEffect(() => {
-  //   //load exercise from api response and account for any changes
-  //   const exercise = exercises.find((ex) => ex.name === selectedExercise);
-  //   //Dynamic display to show instructions for each exercise or null if no exercise is selected
-  //   setSelectedExerciseDescription(exercise?.instructions || "");
-  // }, [selectedExercise]);
-
   return (
     <div className="addlog text-white bg-dark-50 p-5 rounded">
       <h3 className="text-warning fw-bold">Log Workout</h3>
@@ -87,42 +80,8 @@ const WorkoutForm = () => {
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
           <div>
-            {/* {readMore && selectedExercise && (
-              <div>
-                <p className="text-secondary ">
-                  {selectedExercise.instructions}
-                </p>
-                <p className="text-secondary">
-                  <strong>Difficulty:</strong>{" "}
-                  {selectedExercise.difficulty.toUpperCase()}
-                </p>
-                <p className="text-secondary">
-                  <strong>Type:</strong> {selectedExercise.type.toUpperCase()}
-                </p>
-                <p className="text-secondary text-end">
-                  <span
-                    className="badge text-bg-warning me-2 pt-1"
-                    onClick={() => setReadMore(false)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    Hide Deails
-                  </span>
-                </p>
-              </div>
-            )} */}
           </div>
         )}
-        {/* <p className="text-secondary text-end">
-          {!readMore && selectedExercise && (
-            <span
-              className="badge text-bg-warning me-2 pt-1"
-              onClick={() => setReadMore(true)}
-              style={{ cursor: "pointer" }}
-            >
-              Show Details
-            </span>
-          )}
-        </p> */}
         {editingWorkout && selectedExercise && (
           <h4 className="text-secondary">{selectedExercise}</h4>
         )}

@@ -124,7 +124,7 @@ const WorkoutHistoryCopy = () => {
       workoutHistorySorted[i] = [];
     }
     for(let i = 0; i < allWorkoutHistory.length; i++){
-      let dayToCheck = moment(new Date()).day() - moment(allWorkoutHistory[i].timestamp).day();
+      let dayToCheck = moment(new Date()).diff(allWorkoutHistory[i].timestamp, "day");
       if(dayToCheck < 7){
         workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
