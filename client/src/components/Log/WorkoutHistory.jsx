@@ -59,7 +59,7 @@ const SliderItem = ({
               </p>
             </td>
           </tr>
-          {!workoutDay.length && (
+          {!workoutDay.length ? (
             <tr>
               <td
                 colSpan="2"
@@ -68,37 +68,40 @@ const SliderItem = ({
                 No workouts recorded
               </td>
             </tr>
-          )}
-          {workoutDay.reverse().map((workout) => (
-            <tr key={workout.id}>
-              <td className="d-flex flex-row justify-content-between">
-                <td className="d-flex flex-column justify-content-start align-items-start opacity-75">
-                  <p>{workout.exercise_name}</p>
-                  <p className="badge text-bg-warning me-2 opacity-75">
-                    {workout.resistance > 0 &&
-                      `${workout.resistance} lbs / ${workout.reps} Reps`}
-                  </p>
+          ) : (
+            workoutDay.reverse().map((workout) => (
+              <tr key={workout.id}>
+                <td>
+                  <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
+                      <p>{workout.exercise_name}</p>
+                      <p className="badge text-bg-warning me-2 opacity-75">
+                        {workout.resistance > 0 &&
+                          `${workout.resistance} lbs / ${workout.reps} Reps`}
+                      </p>
+                    </div>
+                    {workout.reps > 0 && (
+                      <div className="d-flex justify-content-end gap-3 p-2">
+                        <button
+                          onClick={() => handleEditWorkout(workout)}
+                          disabled={editingWorkout === workout}
+                          className="btn"
+                        >
+                          <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteWorkout(workout.id)}
+                          className="btn"
+                        >
+                          <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </td>
-                {workout.reps > 0 && (
-                  <td className="d-flex justify-content-end gap-3 p-2">
-                    <button
-                      onClick={() => handleEditWorkout(workout)}
-                      disabled={editingWorkout === workout}
-                      className="btn"
-                    >
-                      <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
-                    </button>
-                    <button
-                      onClick={() => handleDeleteWorkout(workout.id)}
-                      className="btn"
-                    >
-                      <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
-                    </button>
-                  </td>
-                )}
-              </td>
-            </tr>
-          ))}
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>
@@ -128,7 +131,7 @@ const WorkoutHistory = () => {
 
   useEffect(() => {
     let workoutHistorySorted = [];
-    console.log("all workout history", allWorkoutHistory);
+    // console.log("all workout history", allWorkoutHistory);
     for (let i = 0; i < 7; i++) {
       workoutHistorySorted[i] = [];
     }
@@ -169,6 +172,7 @@ const WorkoutHistory = () => {
       >
         {workoutHistoryByday.map((workoutDay, index) => (
           <SliderItem
+            key={index}
             workoutDay={workoutDay}
             workoutHistory={workoutDay}
             currentDate={index}

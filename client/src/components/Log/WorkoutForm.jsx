@@ -102,16 +102,16 @@ const WorkoutForm = () => {
         )}
       </div>
       <div
+        className="
         pt-3
         pb-3
         m-0
         border
         bg-dark
         border-secondary
-        // bs-border-opacity-75
         rounded
         flex-column
-        border-3
+        border-3"
       >
         <ThemeProvider theme={darkTheme}>
           <Container maxWidth="mg">
@@ -120,8 +120,9 @@ const WorkoutForm = () => {
                 <div className="text-start mb-3 mt-4">
                   <Autocomplete
                     id="muscleGroup"
-                    options={ Object.values(MUSCLE).map(
-                      (muscle) => muscle.charAt(0).toUpperCase() + muscle.slice(1)
+                    options={Object.values(MUSCLE).map(
+                      (muscle) =>
+                        muscle.charAt(0).toUpperCase() + muscle.slice(1)
                     )}
                     value={selectedMuscleGroup || ""}
                     onChange={(_, newValue) =>
@@ -150,9 +151,6 @@ const WorkoutForm = () => {
                           color: "white",
                           borderColor: "#ffc107",
                           bgcolor: "rgba(52, 58, 64, 0.75)",
-                          "&:hover": {
-                            borderColor: "#ffc107", // Change the border color on hover
-                          },
                         }}
                       />
                     )}
@@ -240,7 +238,6 @@ const WorkoutForm = () => {
                       id="addon-wrapping"
                       style={{ flex: "0.2", minWidth: "100px" }}
                     >
-
                       Reps
                     </span>
                     <input
@@ -260,7 +257,6 @@ const WorkoutForm = () => {
                 <button
                   type="submit"
                   className="btn btn-warning mt-4 text-dark fw-bold opacity-75"
-                  
                 >
                   {editingWorkout ? "Update" : "Log Workout"}
                 </button>
