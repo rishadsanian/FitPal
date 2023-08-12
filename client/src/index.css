@@ -46,3 +46,8 @@ code {
 .circle-add-icon:hover {
   /* background-color: rgba(255, 193, 7, 1); Change background color on hover */
 }
+
+.bg-dark-75 {
+  background-color: #123123;
+
+}
