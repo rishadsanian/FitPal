@@ -1,22 +1,68 @@
 import moment from 'moment';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useContext } from 'react';
 import Slider from 'react-slick';
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-// import "../../styles/Slider.css";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import '../../styles/Slider.css';
 import { useWorkoutContext } from '../../contexts/WorkoutContext';
 import { useProfileContext } from '../../contexts/ProfileContext';
+import { userContext } from '../../contexts/UserContext';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 
+const daysOfWeek = {
+  0: 'Monday',
+  1: 'Tuesday',
+  2: 'Wednesday',
+  3: 'Thursday',
+  4: 'Friday',
+  5: 'Saturday',
+  6: 'Sunday',
+};
+
+const MUSCLE_ICON = {
+  abdominals: 'fa-child-reaching',
+  abductors: 'fa-drumstick-bite',
+  adductors: 'fa-drumstick-bite',
+  biceps: 'fa-dumbbell',
+  calves: 'fa-drumstick-bite',
+  chest: 'fa-child-reaching',
+  forearms: 'fa-dumbbell',
+  glutes: 'fa-dumbbell',
+  hamstrings: 'fa-drumstick-bite',
+  lats: 'fa-child-reaching',
+  lower_back: 'fa-child-reaching',
+  middle_back: 'fa-child-reaching',
+  neck: 'fa-user-xmark',
+  quadriceps: 'fa-drumstick-bite',
+  traps: 'fa-child-reaching',
+  triceps: 'fa-dumbbell',
+};
+
 //each slider item from mock data - could be moved to a different component
-const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
+const SliderItem = ({
+  exercise,
+  date,
+  icon,
+  workoutHistory,
+  sets,
+  profile,
+}) => {
+  const navigate = useNavigate();
+
+  const { userId } = useContext(userContext);
+
   const uniqueExerciseNames = [
     ...new Set(workoutHistory.map((workout) => workout.exercise_name)),
   ];
-  // console.log("Unique Exercises from workout history", uniqueExerciseNames);
+
   const [uniqueExercises, setUniqueExercises] = useState(
     workoutHistory.filter((workout) => workout.exercise_name === exercise)
   );
+  const [currentSets, setCurrentSets] = useState(
+    sets.filter((set) => exercise === set.name)
+  );
+
   useEffect(() => {
     setUniqueExercises(
       workoutHistory.filter(
@@ -28,12 +74,34 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
   const isDone =
     uniqueExercises.filter((set) => exercise === set.exercise_name)
       .length >= sets.filter((set) => exercise === set.name).length;
+
+  const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
+
+  const navigateToSession = () => {
+    console.log(currentSets[0]);
+    const setReference = currentSets[0];
+    const programId = setReference.program_id;
+    const programUserId = setReference.user_id;
+    const sessionId = setReference.session_id;
+    if (userId === programUserId) {
+      navigate(`/programs/${programId}/sessions/${sessionId}`);
+    } else {
+      navigate(`/programs/${programId}/sessions/${sessionId}/noedit`);
+    }
+  };
+
   return (
-    <div className={isDone ? "card bg-dark m-3 rounded border-warning border-3" : "card bg-dark m-3 rounded border-secondary"}>
+    <div
+      className={
+        isDone
+          ? 'card bg-dark m-3 rounded border-warning border-3'
+          : 'card bg-dark m-3 rounded border-secondary'
+      }
+    >
       {/* Logo icon */}
 
       <div className="card-header d-flex justify-content-center gap-2 align-items-center border-bottom">
-        <i className=" bg-dark-50 p-3 rounded-circle fa-solid fa-dumbbell text-warning"></i>
+        <i className={"bg-secondary p-3 rounded-circle text-warning fa-solid " + exerciseIcon}></i>
         <h5 className="text-white card-title">{exercise}</h5>
       </div>
 
@@ -41,15 +109,13 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
         <p className="fw-bold text-white">Recomended: </p>
         {/* RECOMMENDED SETS */}
         <div className="d-flex flex-wrap gap-2 justify-content-center ps-3">
-          {sets
-            .filter((set) => exercise === set.name)
-            .map((set) => (
-              <div className="badge text-bg-light">
-                <span>
-                  {set.resistant} lbs/{set.reps} Reps
-                </span>
-              </div>
-            ))}
+          {currentSets.map((set) => (
+            <div className="badge text-bg-light">
+              <span>
+                {set.resistant} lbs/{set.reps} Reps
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* RECORD */}
@@ -76,8 +142,16 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
           )}
         </div>
 
-        <button className="text-warning btn btn-warning mt-3" disabled={isDone}>
-          {isDone ? <i class="fa-solid fa-check text-dark"></i> : <i className="fa-solid fa-plus text-dark"></i>}
+        <button
+          className="text-warning btn btn-warning mt-3"
+          disabled={isDone}
+          onClick={navigateToSession}
+        >
+          {isDone ? (
+            <i class="fa-solid fa-check text-dark"></i>
+          ) : (
+            <i className="fa-solid fa-plus text-dark"></i>
+          )}
         </button>
       </div>
     </div>
@@ -218,6 +292,7 @@ const SliderComponent = () => {
                   icon={workout.icon}
                   workoutHistory={workoutHistory}
                   sets={sets}
+                  profile={profile}
                 />
               ))}
           </Slider>

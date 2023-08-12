@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
-import { useWorkoutContext } from "../../contexts/WorkoutContext";
-import { userContext } from "../../contexts/UserContext";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import moment from "moment";
-import "../../styles/Log.css";
+import React, { useContext, useEffect, useState } from 'react';
+import { useWorkoutContext } from '../../contexts/WorkoutContext';
+import { userContext } from '../../contexts/UserContext';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import moment from 'moment';
+import '../../styles/Log.css';
 
 const SliderItem = ({
   workout,
@@ -16,28 +16,16 @@ const SliderItem = ({
   editingWorkout,
   handleEditWorkout,
 }) => {
-  // const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
-
-  // useEffect(() => {
-  //   const exerciseList = [];
-  //   for(const workout of workoutHistory) {
-  //     if(!exerciseList.includes(workout.exercise_name)) {
-  //       exerciseList.push(workout.exercise_name)
-  //     }
-  //   }
-  //   setUniqueExerciseNames(exerciseList);
-  // }, [])
-
   return (
     <div
       key={workout.id}
       className="pt-0 pb-0 m-0 border bg-dark border-secondary rounded flex-column border-3"
       style={{
-        margin: "0 10px",
-        height: "293px",
-        overflow: "hidden",
-        overflowX: "auto",
-        overflowY: "scroll",
+        margin: '0 10px',
+        height: '307px',
+        overflow: 'hidden',
+        overflowX: 'auto',
+        overflowY: 'scroll',
       }}
     >
       <style>
@@ -67,7 +55,7 @@ const SliderItem = ({
           <tr>
             <td colSpan="2">
               <p className="fw-bold text-secondary">
-                {moment(currentDate).format("MMMM D, YYYY")}
+                {moment(currentDate).format('MMMM D, YYYY')}
               </p>
             </td>
           </tr>
@@ -123,14 +111,16 @@ const WorkoutHistory = () => {
   const { userId } = useContext(userContext);
 
   useEffect(() => {
-    console.log("Fetching hitory");
+    console.log('Fetching hitory');
     fetchWorkoutHistory();
     // console.log("history in table");
   }, [currentDate]);
 
   return (
     <div className="workout-history-slider container addlog text-white rounded ">
-      <h3 className="text-warning fw-bold pb-3 pt-5">Daily Workout History</h3>
+      <h3 className="text-warning fw-bold pb-3 pt-5">
+        Daily Workout History
+      </h3>
 
       <Slider
         dots={true}
