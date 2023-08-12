@@ -42,3 +42,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-dark-75 {
+  background-color: #123123;
+}
