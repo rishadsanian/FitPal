@@ -145,6 +145,7 @@ export function WorkoutProvider({ children }) {
 
       // Refresh workout history
       fetchWorkoutHistory();
+      fetchAllWorkoutHistory();
     } catch (error) {
       console.error("Error logging workout:", error);
     }

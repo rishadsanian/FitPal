@@ -1,42 +1,42 @@
-import moment from 'moment';
-import { useRef, useEffect, useState, useContext } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import '../../styles/Slider.css';
-import { useWorkoutContext } from '../../contexts/WorkoutContext';
-import { useProfileContext } from '../../contexts/ProfileContext';
-import { userContext } from '../../contexts/UserContext';
-import { useNavigate } from 'react-router';
-import axios from 'axios';
+import moment from "moment";
+import { useRef, useEffect, useState, useContext } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "../../styles/Slider.css";
+import { useWorkoutContext } from "../../contexts/WorkoutContext";
+import { useProfileContext } from "../../contexts/ProfileContext";
+import { userContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const daysOfWeek = {
-  0: 'Monday',
-  1: 'Tuesday',
-  2: 'Wednesday',
-  3: 'Thursday',
-  4: 'Friday',
-  5: 'Saturday',
-  6: 'Sunday',
+  0: "Monday",
+  1: "Tuesday",
+  2: "Wednesday",
+  3: "Thursday",
+  4: "Friday",
+  5: "Saturday",
+  6: "Sunday",
 };
 
 const MUSCLE_ICON = {
-  abdominals: 'fa-child-reaching',
-  abductors: 'fa-drumstick-bite',
-  adductors: 'fa-drumstick-bite',
-  biceps: 'fa-dumbbell',
-  calves: 'fa-drumstick-bite',
-  chest: 'fa-child-reaching',
-  forearms: 'fa-dumbbell',
-  glutes: 'fa-dumbbell',
-  hamstrings: 'fa-drumstick-bite',
-  lats: 'fa-child-reaching',
-  lower_back: 'fa-child-reaching',
-  middle_back: 'fa-child-reaching',
-  neck: 'fa-user-xmark',
-  quadriceps: 'fa-drumstick-bite',
-  traps: 'fa-child-reaching',
-  triceps: 'fa-dumbbell',
+  abdominals: "fa-child-reaching",
+  abductors: "fa-drumstick-bite",
+  adductors: "fa-drumstick-bite",
+  biceps: "fa-dumbbell",
+  calves: "fa-drumstick-bite",
+  chest: "fa-child-reaching",
+  forearms: "fa-dumbbell",
+  glutes: "fa-dumbbell",
+  hamstrings: "fa-drumstick-bite",
+  lats: "fa-child-reaching",
+  lower_back: "fa-child-reaching",
+  middle_back: "fa-child-reaching",
+  neck: "fa-user-xmark",
+  quadriceps: "fa-drumstick-bite",
+  traps: "fa-child-reaching",
+  triceps: "fa-dumbbell",
 };
 
 //each slider item from mock data - could be moved to a different component
@@ -65,15 +65,13 @@ const SliderItem = ({
 
   useEffect(() => {
     setUniqueExercises(
-      workoutHistory.filter(
-        (workout) => workout.exercise_name === exercise
-      )
+      workoutHistory.filter((workout) => workout.exercise_name === exercise)
     );
   }, [workoutHistory.length]);
 
   const isDone =
-    uniqueExercises.filter((set) => exercise === set.exercise_name)
-      .length >= sets.filter((set) => exercise === set.name).length;
+    uniqueExercises.filter((set) => exercise === set.exercise_name).length >=
+    sets.filter((set) => exercise === set.name).length;
 
   const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
 
@@ -94,14 +92,19 @@ const SliderItem = ({
     <div
       className={
         isDone
-          ? 'card bg-dark m-3 rounded border-warning border-3'
-          : 'card bg-dark m-3 rounded border-secondary'
+          ? "card bg-dark m-3 rounded border-warning border-3"
+          : "card bg-dark m-3 rounded border-secondary"
       }
     >
       {/* Logo icon */}
 
       <div className="card-header d-flex justify-content-center gap-2 align-items-center border-bottom">
-        <i className={"bg-secondary p-3 rounded-circle text-warning fa-solid " + exerciseIcon}></i>
+        <i
+          className={
+            "bg-secondary p-3 rounded-circle text-warning fa-solid " +
+            exerciseIcon
+          }
+        ></i>
         <h5 className="text-white card-title">{exercise}</h5>
       </div>
 
@@ -121,11 +124,10 @@ const SliderItem = ({
         {/* RECORD */}
         <div className="card-body border-top border-bottom border-white mt-3">
           <p className="fw-bold text-warning">
-            {uniqueExercises.filter(
-              (set) => exercise === set.exercise_name
-            ).length >= 1
-              ? 'Your Record:'
-              : 'Start your workout'}
+            {uniqueExercises.filter((set) => exercise === set.exercise_name)
+              .length >= 1
+              ? "Your Record:"
+              : "Start your workout"}
           </p>
           {uniqueExerciseNames.includes(exercise) && (
             <div className="d-flex flex-wrap gap-2 justify-content-center">
@@ -191,9 +193,7 @@ const SliderComponent = () => {
           //Set up the list of exercises from sets
           for (const set of res.data.sets) {
             if (
-              !exerciseList
-                .map((exercise) => exercise.name)
-                .includes(set.name)
+              !exerciseList.map((exercise) => exercise.name).includes(set.name)
             ) {
               exerciseList.push({
                 name: set.name,
@@ -208,9 +208,9 @@ const SliderComponent = () => {
     if (profile.program_id) {
       axios
         .get(
-          `http://localhost:8080/sessions/program/${
-            profile.program_id
-          }/day/${moment().day() - 1}`
+          `http://localhost:8080/sessions/program/${profile.program_id}/day/${
+            moment().day() - 1
+          }`
         )
         .then((res) => {
           setDailySession(res.data.session);
@@ -244,18 +244,18 @@ const SliderComponent = () => {
         console.log(newWindowWidth);
       }
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const settings = {
-    className: 'center',
+    className: "center",
     centerMode: true,
     infinite: true,
-    centerPadding: '60px',
+    centerPadding: "60px",
     slidesToShow: slidesToShow,
     speed: 500,
     dots: true,
@@ -264,10 +264,13 @@ const SliderComponent = () => {
   return (
     <div>
       {!profile.program_id ? (
-        <div className="bg-dark p-5">
-          <h2 className="slider-title text-warning">
-            No program selected
-          </h2>
+        <div className="bg-dark p-5 border border-secondary border-3">
+          <h2 className="slider-title text-warning">No program selected</h2>
+          <span className="d-flex align-items-center justify-content-center p-3">
+            <a href="/programs" className="text-decoration-none text-warning">
+              <i className="fas fa-plus-circle fa-3x"></i>
+            </a>
+          </span>
         </div>
       ) : (
         <div className="">
