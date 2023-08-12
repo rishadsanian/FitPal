@@ -59,43 +59,49 @@ const SliderItem = ({
               </p>
             </td>
           </tr>
-          {!workoutDay.length && (
-            <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
-              No workouts recorded
-            </div>
-          )}
-          {workoutDay.reverse().map((workout) => (
-            <tr key={workout.exercise_name}>
-              <td className="d-flex flex-row  justify-content-between">
-                <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
-                  <div>{workout.exercise_name}</div>
-                  <div>
-                    <div className="badge text-bg-warning me-2 opacity-75">
-                      {workout.resistance > 0 &&
-                        `${workout.resistance} lbs / ${workout.reps} Reps`}
-                    </div>
-                  </div>
-                </div>
-                {workout.reps > 0 && (
-                  <div className="d-flex justify-content-end gap-3 p-2">
-                    <button
-                      onClick={() => handleEditWorkout(workout)}
-                      disabled={editingWorkout === workout}
-                      className="btn"
-                    >
-                      <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
-                    </button>
-                    <button
-                      onClick={() => handleDeleteWorkout(workout.id)}
-                      className="btn "
-                    >
-                      <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
-                    </button>
-                  </div>
-                )}
+          {!workoutDay.length ? (
+            <tr>
+              <td
+                colSpan="2"
+                className="workout-entry profile-card p-3 border border-secondary rounded border-3"
+              >
+                No workouts recorded
               </td>
             </tr>
-          ))}
+          ) : (
+            workoutDay.reverse().map((workout) => (
+              <tr key={workout.id}>
+                <td>
+                  <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
+                      <p>{workout.exercise_name}</p>
+                      <p className="badge text-bg-warning me-2 opacity-75">
+                        {workout.resistance > 0 &&
+                          `${workout.resistance} lbs / ${workout.reps} Reps`}
+                      </p>
+                    </div>
+                    {workout.reps > 0 && (
+                      <div className="d-flex justify-content-end gap-3 p-2">
+                        <button
+                          onClick={() => handleEditWorkout(workout)}
+                          disabled={editingWorkout === workout}
+                          className="btn"
+                        >
+                          <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteWorkout(workout.id)}
+                          className="btn"
+                        >
+                          <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>
@@ -121,17 +127,17 @@ const WorkoutHistory = () => {
     fetchAllWorkoutHistory();
   }, []);
 
-  //the below is being used to fetch all workout history for now/demo purposes and resolve bugs for demo day. Should be switched to less server and data intensive approach for the functionality.
-
   useEffect(() => {
     let workoutHistorySorted = [];
-    console.log("all workout history", allWorkoutHistory);
+    // console.log("all workout history", allWorkoutHistory);
     for (let i = 0; i < 7; i++) {
       workoutHistorySorted[i] = [];
     }
     for (let i = 0; i < allWorkoutHistory.length; i++) {
       let currentDate = moment(new Date()).startOf("day");
-      let workoutDate = moment(new Date(allWorkoutHistory[i].timestamp)).startOf("day");
+      let workoutDate = moment(
+        new Date(allWorkoutHistory[i].timestamp)
+      ).startOf("day");
       let offest = 7 - workoutDate.day();
       let dayToCheck = currentDate.diff(workoutDate, "days");
       if (dayToCheck < 7) {
@@ -144,13 +150,9 @@ const WorkoutHistory = () => {
 
   return (
     <div className="workout-history-slider container addlog text-white pb-5">
-      {/* <div
-      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
-    ></div> */}
-
-      <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">Daily Workout History</h3>
-
+        <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">
+        Daily Workout History
+      </h3>
 
       <Slider
         dots={true}
@@ -163,6 +165,7 @@ const WorkoutHistory = () => {
       >
         {workoutHistoryByday.map((workoutDay, index) => (
           <SliderItem
+            key={index}
             workoutDay={workoutDay}
             workoutHistory={workoutDay}
             currentDate={index}
