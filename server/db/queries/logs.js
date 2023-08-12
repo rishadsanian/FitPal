@@ -1,20 +1,20 @@
 const db = require('../../configs/db.config');
 
-const getLogByUserId = (data) => {
-  const queryString = `
-  SELECT * FROM log
-  WHERE user_id = $1 
-  ORDER BY timestamp DESC
-  `;
-  return db
-    .query(queryString, [data.user_id])
-    .then((data) => {
-      return data.rows;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
+// const getLogByUserId = (data) => {
+//   const queryString = `
+//   SELECT * FROM log
+//   WHERE user_id = $1 
+//   ORDER BY timestamp DESC
+//   `;
+//   return db
+//     .query(queryString, [data.user_id])
+//     .then((data) => {
+//       return data.rows;
+//     })
+//     .catch((e) => {
+//       console.log(e);
+//     });
+// };
 
 const getLogByUserIdAndExercise = (data) => {
   const queryString = `
@@ -31,4 +31,5 @@ const getLogByUserIdAndExercise = (data) => {
     });
 };
 
-module.exports = { getLogByUserId, getLogByUserIdAndExercise };
+// module.exports = { getLogByUserId, getLogByUserIdAndExercise };
+module.exports = { getLogByUserIdAndExercise };
