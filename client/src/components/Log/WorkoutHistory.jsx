@@ -20,7 +20,7 @@ const SliderItem = ({
   return (
     <div
       key={workout.id}
-      className="pt-0 pb-0 m-0 border bg-dark border-dark bs-border-opacity-75 rounded flex-column border-3"
+      className="pt-0 pb-0 m-0 border bg-dark border-secondary bs-border-opacity-75 rounded flex-column border-3"
       style={{
         margin: "0 10px",
         height: "307px",
