@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
 
-const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout}) => {
+const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout, editingWorkout, handleEditWorkout, workoutDay}) => {
   const [uniqueExerciseNames, setUniqueExerciseNames] = useState([]);
 
   useEffect(() => {
@@ -23,8 +23,9 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
  
   return(
     // Render actual workout entries if workoutHistory is not empty
+    /* REMOVED ID SHOULD READD AS SOMETHING ELSE*/   
     <div
-      key={workout.id}
+      
       className="h-100 slider-item p-3 border border-secondary rounded border-3"
       style={{
         margin: "0 10px",
@@ -36,11 +37,19 @@ const SliderItem = ({ workout, workoutHistory, currentDate, handleDeleteWorkout,
           <tr>
             <td colSpan="2">
               <p className="fw-bold">
-                {moment(currentDate).format("MMMM D, YYYY")}
+                {/* CHANGED THIS*/}
+                {moment().subtract(currentDate, "day").format("MMMM DD, YYYY")}
               </p>
             </td>
           </tr>
-          {workoutHistory.map((workout) => (
+          {/* Add this in ------------------------------------*/}
+          {!workoutDay.length &&
+          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3">
+            No workouts recorded
+          </div> }
+          {/* ----------------------------------------------- */}
+          {/* CHANGE THE LINE BELOW THIS*/}
+          {workoutDay.map((workout) => (
             <tr key={workout.exercise_name}>
               <td className="d-flex flex-row  justify-content-between">
                 <div className="d-flex flex-column justify-content-start align-items-start">
@@ -89,11 +98,31 @@ const WorkoutHistoryCopy = () => {
     fetchWorkoutHistory,
   } = useWorkoutContext();
 
+
+  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([])
   const { userId } = useContext(userContext);
 
   useEffect(() => {
     fetchWorkoutHistory();
-  }, [currentDate]);
+    
+    
+  }, []);
+
+  /// NEWLY ADDED STUFF -------------------------------
+  useEffect(() => {
+    let workoutHistorySorted = [];
+    for(let i = 0; i < 7; i++){
+      workoutHistorySorted[i] = [];
+    }
+    for(let i = 0; i < workoutHistory.length; i++){
+      let dayToCheck = moment(new Date()).diff(workoutHistory[i].timestamp, 'days');
+      if(moment(new Date()).diff(workoutHistory[i].timestamp, 'days') < 7){
+        workoutHistorySorted[dayToCheck].push(workoutHistory[i]);
+      }
+    }
+    setWorkoutHistoryByDay(workoutHistorySorted);
+  }, [workoutHistory.length])
+  // -------------------------------------------------
 
   return (
     <div
@@ -110,23 +139,25 @@ const WorkoutHistoryCopy = () => {
         slidesToScroll={1}
         afterChange={(index) => handleSliderChange(index)}
       >
-        {workoutHistory.length === 0 ? (
+        {workoutHistoryByday.length === 0 ? (
           // Render a placeholder entry if workoutHistory is empty
           <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide">
             No workouts recorded
           </div>
         ) : (
           // Render actual workout entries if workoutHistory is not empty
-          workoutHistory.map((workout) => (
+          // CHANGED THIS ------------------------------------------
+          workoutHistoryByday.map((workoutDay, index) => (
             <SliderItem 
-              workout={workout} 
-              workoutHistory={workoutHistory}
-              currentDate={currentDate}
+              workoutDay={workoutDay} 
+              workoutHistory={workoutDay}
+              currentDate={index}
               handleEditWorkout={handleDeleteWorkout}
               editingWorkout={editingWorkout}
               handleDeleteWorkout={handleDeleteWorkout}
             />
           ))
+          // ---------------------------------------------------------
         )}
       </Slider>
     </div>
