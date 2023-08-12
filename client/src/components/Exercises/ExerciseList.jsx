@@ -92,11 +92,11 @@ const ExerciseList = (props) => {
         :
         <h1 className="text-warning fw-bold text-white">Add New Exercise</h1>
       }
-      <div className="p-3">
+      <div className="py-3">
         <form className="row row-cols-1 row-cols-md-2">
           <div className="col col-md-3">
             <select
-                className="form-select col"
+                className="form-select col mb-2"
                 value={muscle}
                 onChange={handleMuscleChange}
               >
