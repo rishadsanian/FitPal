@@ -21,6 +21,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 const WorkoutForm = () => {
   const {
+    MUSCLE,
     muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
@@ -66,9 +67,18 @@ const WorkoutForm = () => {
     // Fetch exercises from API based on the selected muscle group
     const fetchExercisesByMuscle = async () => {
       try {
+        const params = {};
+        if (selectedExercise) {
+          params.search = selectedExercise;
+        }
+
+        if (selectedMuscleGroup) {
+          params.search = selectedMuscleGroup;
+        }
+
         const response = await axios.get(API_URL, {
           headers: { "X-Api-Key": API_KEY },
-          params: { muscle: selectedMuscleGroup },
+          params: params,
         });
         setExercises(response.data);
       } catch (error) {
@@ -110,8 +120,8 @@ const WorkoutForm = () => {
                 <div className="text-start mb-3 mt-4">
                   <Autocomplete
                     id="muscleGroup"
-                    options={muscleGroups.map(
-                      (group) => group.charAt(0).toUpperCase() + group.slice(1)
+                    options={ Object.values(MUSCLE).map(
+                      (muscle) => muscle.charAt(0).toUpperCase() + muscle.slice(1)
                     )}
                     value={selectedMuscleGroup || ""}
                     onChange={(_, newValue) =>
@@ -217,6 +227,7 @@ const WorkoutForm = () => {
                       id="weightLoad"
                       value={weightLoad}
                       onChange={(e) => setWeightLoad(e.target.value)}
+                      required
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />

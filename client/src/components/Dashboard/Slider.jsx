@@ -93,7 +93,7 @@ const SliderItem = ({
       className={
         isDone
           ? "card bg-dark m-3 rounded border-warning border-3"
-          : "card bg-dark m-3 rounded border-secondary"
+          : "card bg-dark m-3 rounded border-secondary border-3"
       }
     >
       {/* Logo icon */}
@@ -256,9 +256,13 @@ const SliderComponent = () => {
     centerMode: true,
     infinite: true,
     centerPadding: "60px",
-    slidesToShow: slidesToShow,
+    slidesToShow:
+    userExercises.length < slidesToShow
+      ? userExercises.length
+      : slidesToShow,
     speed: 500,
     dots: true,
+    
   };
 
   return (

@@ -1,15 +1,15 @@
-import React from 'react';
-import moment from 'moment';
-import SliderComponent from '../Dashboard/Slider';
-import Profile from '../Dashboard/Profile';
-import Log from '../Dashboard/Log';
-import ChartWorkout from '../Dashboard/ChartWorkout';
-import TitleImage from '../TitleCards/TitleImage';
-import '../../styles/Main.css';
-import { ProfileProvider } from '../../contexts/ProfileContext';
-import { WorkoutProvider } from '../../contexts/WorkoutContext';
-import ChatGptDailySummary from '../Dashboard/ChatGptDailySummary';
-import Statistics from '../Dashboard/Statistics';
+import React from "react";
+import moment from "moment";
+import SliderComponent from "../Dashboard/Slider";
+import Profile from "../Dashboard/Profile";
+import Log from "../Dashboard/Log";
+import ChartWorkout from "../Dashboard/ChartWorkout";
+import TitleImage from "../TitleCards/TitleImage";
+import "../../styles/Main.css";
+import { ProfileProvider } from "../../contexts/ProfileContext";
+import { WorkoutProvider } from "../../contexts/WorkoutContext";
+import ChatGptDailySummary from "../Dashboard/ChatGptDailySummary";
+import Statistics from "../Dashboard/Statistics";
 //Dashboard/logged in main page
 const daysOfWeek = {
   0: "Monday",
@@ -18,11 +18,11 @@ const daysOfWeek = {
   3: "Thursday",
   4: "Friday",
   5: "Saturday",
-  6: "Sunday"
-}
+  6: "Sunday",
+};
 const Main = () => {
   // Formatted date for display
-  const currentDate = moment().format('dddd, MMMM D');
+  const currentDate = moment().format("dddd, MMMM D");
 
   return (
     <ProfileProvider>
@@ -39,28 +39,30 @@ const Main = () => {
                 <p className="text-secondary fw-bold fs-5">{currentDate}</p>
               </div>
               <div className="p-3">
-                  <ChatGptDailySummary />
+                <ChatGptDailySummary />
               </div>
             </div>
 
-            <div className="text-start col col-sm-12 col-md-6 col-lg-5">
-                <Profile />
+            <div
+              id="profile"
+              className="text-start col col-sm-12 col-md-6 col-lg-5"
+            >
+              <Profile />
             </div>
           </div>
-
-          <Log />
-
+          <div id="log">
+            <Log />
+          </div>
           {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
           {/* delete slider-container */}
-          <div className="bg-dark opacity-75 p-5">
+          <div id="program-schedule" className="bg-dark opacity-75 p-5">
             <h1 className="display-5 fw-bold text-warning mb-2">
               Program Schedule
             </h1>
             <h2 className="slider-title text-white">{currentDate}</h2>
             <SliderComponent />
           </div>
-            
-          
+
           {/* Analytics Section */}
           <div className="container mt-5">
             {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
@@ -72,13 +74,10 @@ const Main = () => {
           </div>
 
           {/* Statistics */}
-          <div className="bg-dark opacity-75 p-5">
-            <h1 className="display-5 fw-bold text-warning">
-              Statistics
-            </h1>
+          <div id ="statistics" className="bg-dark opacity-75 p-5">
+            <h1 className="display-5 fw-bold text-warning">Statistics</h1>
             <Statistics />
           </div>
-
         </div>
       </WorkoutProvider>
     </ProfileProvider>
