@@ -42,3 +42,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.circle-add-icon:hover {
+  /* background-color: rgba(255, 193, 7, 1); Change background color on hover */
+}

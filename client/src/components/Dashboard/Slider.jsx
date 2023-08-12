@@ -272,7 +272,7 @@ const SliderComponent = () => {
           <h2 className="slider-title text-warning">No program selected</h2>
           <span className="d-flex align-items-center justify-content-center p-3">
             <a href="/programs" className="text-decoration-none text-warning">
-              <i className="fas fa-plus-circle fa-3x"></i>
+              <i className="circle-add-icon fas fa-plus-circle fa-3x"></i>
             </a>
           </span>
         </div>
