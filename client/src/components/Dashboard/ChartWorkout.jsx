@@ -109,7 +109,7 @@ const ChartWorkout = () => {
 
   return (
     <div className="chart-container">
-      <div className="card bg-dark opacity-75 weekly-tracker-card mb-3">
+      <div className="card bg-dark weekly-tracker-card mb-3">
         <div className="card-body">
           <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5">
             Weekly Exercise Tracker
