@@ -205,7 +205,11 @@ const WorkoutForm = () => {
               <div className="row row-cols-sm-2 pt-0">
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping" style={{ flex: '0.3', minWidth: '100px' }}>
+                    <span
+                      className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
+                      id="addon-wrapping"
+                      style={{ flex: "0.3", minWidth: "100px" }}
+                    >
                       Weight
                     </span>
                     <input
@@ -213,16 +217,18 @@ const WorkoutForm = () => {
                       id="weightLoad"
                       value={weightLoad}
                       onChange={(e) => setWeightLoad(e.target.value)}
-                      required
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
-                      
                     />
                   </div>
                 </div>
                 <div className="col">
                   <div className="input-group flex-nowrap">
-                    <span className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3" id="addon-wrapping" style={{ flex: '0.2', minWidth: '100px' }}>
+                    <span
+                      className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
+                      id="addon-wrapping"
+                      style={{ flex: "0.2", minWidth: "100px" }}
+                    >
                       Reps
                     </span>
                     <input
@@ -234,7 +240,7 @@ const WorkoutForm = () => {
                       min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />
-                  </div> 
+                  </div>
                 </div>
               </div>
 

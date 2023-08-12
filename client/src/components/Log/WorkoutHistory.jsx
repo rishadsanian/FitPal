@@ -9,7 +9,6 @@ import moment from "moment";
 import "../../styles/Log.css";
 import "../../styles/WorkoutHistory.css";
 
-
 const SliderItem = ({
   workoutHistory,
   currentDate,
@@ -121,6 +120,8 @@ const WorkoutHistory = () => {
   useEffect(() => {
     fetchAllWorkoutHistory();
   }, [workoutHistory]);
+
+  //the below is being used to fetch all workout history for now/demo purposes and resolve bugs for demo day. Should be switched to less server and data intensive approach for the functionality.
 
   useEffect(() => {
     let workoutHistorySorted = [];
