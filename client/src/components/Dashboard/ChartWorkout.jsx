@@ -15,8 +15,8 @@ import { useWorkoutContext } from "../../contexts/WorkoutContext";
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = () => {
-  const { userId } = useContext(userContext); 
-  const { workoutHistory} = useWorkoutContext();
+  const { userId } = useContext(userContext);
+  const { workoutHistory } = useWorkoutContext();
   //state
   const [workoutData, setWorkoutData] = useState([]);
   //useref needed to fix canvas clash bug
@@ -26,7 +26,7 @@ const ChartWorkout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/chartworkout/${userId}`);
+        const response = await axios.get(`/api/chartworkout/${userId}`); //hard-coded change to current user
         console.log(response.data);
         setWorkoutData(response.data);
       } catch (error) {
@@ -100,8 +100,8 @@ const ChartWorkout = () => {
   }, [workoutData.length]);
 
   useEffect(() => {
-      chartRef.current.data.datasets[0].data = processWorkoutData();
-      chartRef.current.update();
+    chartRef.current.data.datasets[0].data = processWorkoutData();
+    chartRef.current.update();
   }, [workoutData.length]);
 
   const currentDate = moment();
@@ -112,7 +112,7 @@ const ChartWorkout = () => {
 
   return (
     <div className="chart-container">
-      <div className="card bg-dark weekly-tracker-card mb-3">
+      <div className="card bg-dark weekly-tracker-card mb-3 p-3 border border-secondary rounded border-3 ">
         <div className="card-body">
           <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5 opacity-75">
             Weekly Exercise Tracker

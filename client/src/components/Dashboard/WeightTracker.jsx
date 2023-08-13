@@ -8,9 +8,9 @@ const WeightTracker = () => {
   const { userId } = useContext(userContext);
 
   return (
-    <div className="card bg-dark weekly-tracker-card mb-3 pt-5">
+    <div className="card bg-dark weekly-tracker-card mb-3 p-3 border border-secondary rounded border-3 ">
       
-      <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5 opacity-75">Weight Tracker</h3>
+      <h3 className="pt-4 pb-2 text-warning fw-bold weekly-tracker-header py-5 opacity-75">Weight Tracker</h3>
       <div className="pt-3 pb-3">
         <span
           className="badge bg-dark me-2 pt-1 opacity-75 text-warning"

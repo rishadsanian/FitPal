@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import "../../styles/Log.css";
-import axios from "axios";
 import { Container, TextField, Autocomplete } from "@mui/material";
 
 import ExerciseDetailModal from "../Exercises/ExerciseDetailModal";
@@ -13,12 +12,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 const WorkoutForm = () => {
   const {
     MUSCLE,
-    muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
     exercises,
     selectedExercise,
-    selectedExerciseDescription,
     reps,
     setReps,
     weightLoad,
@@ -27,9 +24,6 @@ const WorkoutForm = () => {
     handleSubmit,
     editingWorkout,
     handleCancelEdit,
-    API_KEY,
-    API_URL,
-    setExercises,
     fetchExercises,
   } = useWorkoutContext();
 

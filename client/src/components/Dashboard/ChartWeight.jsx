@@ -60,10 +60,11 @@ const WeightChart = ({ userId, selectedInterval }) => {
         beginAtZero: false,
         title: {
           display: true,
-          text: "Weight",
+          text: "Weight (lbs)",
         },
       },
     },
+    
   };
 
   return loading ? <div>Loading...</div> : <Line data={chartData} options={options} />;

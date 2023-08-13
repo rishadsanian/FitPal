@@ -3,15 +3,12 @@ import moment from "moment";
 import SliderComponent from "../Dashboard/Slider";
 import Profile from "../Dashboard/Profile";
 import Log from "../Dashboard/Log";
-import ChartWorkout from "../Dashboard/ChartWorkout";
-import WeightTracker from "../Dashboard/WeightTracker";
-
 import "../../styles/Main.css";
 import { ProfileProvider } from "../../contexts/ProfileContext";
 import { WorkoutProvider } from "../../contexts/WorkoutContext";
 import ChatGptDailySummary from "../Dashboard/ChatGptDailySummary";
 import Statistics from "../Dashboard/Statistics";
-
+import ChartSlider from "../Dashboard/ChartSlider";
 const Main = () => {
   // Formatted date for display
   const currentDate = moment().format("dddd, MMMM D");
@@ -56,23 +53,19 @@ const Main = () => {
           </div>
 
           {/* Analytics Section */}
-          <div className="analytics-container mt-5">
-            {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
+          <div
+            className="analytics-container mt-5"
+            style={{ backgroundColor: "#212529" }}
+          >
+            <h3 className="display-5 fw-bold text-warning opacity-75">
+              Analytics
+            </h3>
 
-            <div className="workout-tracker-container container mt-5">
-              {/* Exercise Tracker */}
-              <ChartWorkout />
-            </div>
-            <div className="Weight-tracker-container container mt-5">
-              {/* Weight Tracker */}
-              <WeightTracker />
-            </div>
-
-
+            <ChartSlider />
           </div>
 
           {/* Statistics */}
-          <div id ="statistics" className="bg-dark opacity-75 p-5">
+          <div id="statistics" className="bg-dark opacity-75 p-5">
             <h1 className="display-5 fw-bold text-warning">Statistics</h1>
             <Statistics />
           </div>
