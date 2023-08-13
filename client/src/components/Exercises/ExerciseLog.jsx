@@ -11,7 +11,7 @@ const ExerciseLog = (props) => {
   const [records, setRecords] = useState([]);
   const [logs, setLogs] = useState([]);
   const user_id = window.sessionStorage.getItem('userId');
-
+  const [isSave, setIsSave] = useState(false);
   // Get min anx max set for exercise
   const max = 8;
   const [min, setMin] = useState(null);
@@ -30,7 +30,7 @@ const ExerciseLog = (props) => {
     }
   };
 
-  // Get Sets of this exercise of this Session  
+  // Get Sets of this exercise of this Session
   const fetchSets = async () => {
     try {
       const res = await axios.get(
@@ -49,9 +49,10 @@ const ExerciseLog = (props) => {
   useEffect(() => {
     fetchSets();
     fecthLogs();
-  }, [props.name]);
+    setIsSave(false);
+  }, [props.name, isSave]);
 
-  // 
+  //
   const updateRecords = (updatedRecord) => {
     setRecords((prevRecords) => {
       // Check if Records contain this record
@@ -92,7 +93,7 @@ const ExerciseLog = (props) => {
   const addSet = () => {
     setSets((prev) => [
       ...prev,
-      { id: sets.length, resistant: 5 , reps: 10 },
+      { id: sets.length, resistant: 5, reps: 10 },
     ]);
   };
 
@@ -118,8 +119,7 @@ const ExerciseLog = (props) => {
       }
 
       await Promise.all(promises);
-      console.log('All data saved successfully');
-      window.location.reload();
+      setIsSave(true);
     } catch (error) {
       console.log('Error saving data:', error);
     }
@@ -140,7 +140,8 @@ const ExerciseLog = (props) => {
 
       {/* [+] [-] button */}
       <div className="d-flex justify-content-between gap-3 mt-3 p-3">
-        <button className={
+        <button
+          className={
             sets.length === max
               ? 'btn btn-secondary flex-fill'
               : 'btn btn-light flex-fill'
