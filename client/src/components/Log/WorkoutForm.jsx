@@ -94,9 +94,11 @@ const WorkoutForm = () => {
       </div>
       <div
         className="
-        pt-3
-        pb-3
         m-0
+        mt-3
+        pt-3
+        pb-4
+       
         border
         bg-dark
         border-secondary
@@ -122,7 +124,7 @@ const WorkoutForm = () => {
                       )
                     }
                     getOptionLabel={(group) => group}
-                    // isOptionEqualToValue={(option, value) => option === value}
+                    isOptionEqualToValue={(option, value) => option === value}
                     fullWidth
                     sx={{
                       // backgroundColor: '#343a40',

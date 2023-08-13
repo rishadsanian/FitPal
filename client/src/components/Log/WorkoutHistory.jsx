@@ -134,24 +134,21 @@ const WorkoutHistory = () => {
     fetchAllWorkoutHistory();
   }, []);
 
-  useEffect(() => {
-    let workoutHistorySorted = [];
-    // console.log("all workout history", allWorkoutHistory);
-    for (let i = 0; i < 7; i++) {
-      workoutHistorySorted[i] = [];
+ useEffect(() => {
+  const workoutHistorySorted = Array.from({ length: 7 }, () => []);
+  
+  const currentDate = moment(new Date()).startOf("day");
+
+  allWorkoutHistory.forEach((workout) => {
+    const workoutDate = moment(workout.timestamp).startOf("day");
+    const dayToCheck = currentDate.diff(workoutDate, "days");
+    if (dayToCheck < 7) {
+      workoutHistorySorted[dayToCheck].push(workout);
     }
-    for (let i = 0; i < allWorkoutHistory.length; i++) {
-      let currentDate = moment(new Date()).startOf("day");
-      let workoutDate = moment(
-        new Date(allWorkoutHistory[i].timestamp)
-      ).startOf("day");
-      let dayToCheck = currentDate.diff(workoutDate, "days");
-      if (dayToCheck < 7) {
-        workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
-      }
-    }
-    setWorkoutHistoryByDay(workoutHistorySorted);
-  }, [allWorkoutHistory]);
+  });
+
+  setWorkoutHistoryByDay(workoutHistorySorted);
+}, [allWorkoutHistory]);
 
   return (
     <div className="workout-history-slider container addlog text-white pb-5">
