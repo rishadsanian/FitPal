@@ -47,7 +47,6 @@ const Main = () => {
             <Log />
           </div>
           {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
-          {/* delete slider-container */}
           <div id="program-schedule" className="bg-dark opacity-75 p-5">
             <h1 className="display-5 fw-bold text-warning mb-2">
               Program Schedule
