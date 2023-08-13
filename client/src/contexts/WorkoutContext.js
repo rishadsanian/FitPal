@@ -111,10 +111,12 @@ export function WorkoutProvider({ children }) {
     e.preventDefault();
 
     try {
+
+      const parsedWeightLoad = weightLoad === "" ? null : parseInt(weightLoad, 10);
       const logData = {
         exercise_name: selectedExercise.name,
         reps,
-        resistance: weightLoad,
+        resistance: parsedWeightLoad,
         user_id: userId, // replace with current user id prop
       };
 
@@ -124,9 +126,11 @@ export function WorkoutProvider({ children }) {
           `/update/log/${editingWorkout.id}`,
           logData
         );
+        console.log("Workout updated successfully:", response.data);
       } else {
         // create operation
         const response = await axios.post("/log", logData);
+        console.log("Workout logged successfully:", response.data);
       }
 
       // Clear form and editingWorkout state
@@ -157,12 +161,14 @@ export function WorkoutProvider({ children }) {
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
+    console.log("selected muscle",selectedMuscle);
   };
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
   const handleSliderChange = (index) => {
     const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
     setCurrentDate(newDate);
+    console.log("index:", index);
   };
   //--------------------------------------------------------------------------//
   // Fetch exercises from API based on the selected muscle group

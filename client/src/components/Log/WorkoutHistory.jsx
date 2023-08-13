@@ -75,8 +75,12 @@ const SliderItem = ({
                     <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
                       <p>{workout.exercise_name}</p>
                       <p className="badge text-bg-warning me-2 opacity-75">
-                        {workout.resistance > 0 &&
-                          `${workout.resistance} lbs / ${workout.reps} Reps`}
+                        {workout.resistance === null
+                          ? "0 lbs / " + workout.reps + " Reps"
+                          : workout.resistance +
+                            " lbs / " +
+                            workout.reps +
+                            " Reps"}
                       </p>
                     </div>
                     {workout.reps > 0 && (
@@ -86,7 +90,7 @@ const SliderItem = ({
                           disabled={editingWorkout === workout}
                           className="btn"
                           style={{
-                            transition: "background-color 0.3s", 
+                            transition: "background-color 0.3s",
                             outline: "none",
                           }}
                         >
@@ -96,7 +100,7 @@ const SliderItem = ({
                           onClick={() => handleDeleteWorkout(workout.id)}
                           className="btn"
                           style={{
-                            transition: "background-color 0.3s", 
+                            transition: "background-color 0.3s",
                             outline: "none",
                           }}
                         >
@@ -131,21 +135,21 @@ const WorkoutHistory = () => {
     fetchAllWorkoutHistory();
   }, []);
 
- useEffect(() => {
-  const workoutHistorySorted = Array.from({ length: 7 }, () => []);
-  
-  const currentDate = moment(new Date()).startOf("day");
+  useEffect(() => {
+    const workoutHistorySorted = Array.from({ length: 7 }, () => []);
 
-  allWorkoutHistory.forEach((workout) => {
-    const workoutDate = moment(workout.timestamp).startOf("day");
-    const dayToCheck = currentDate.diff(workoutDate, "days");
-    if (dayToCheck < 7) {
-      workoutHistorySorted[dayToCheck].push(workout);
-    }
-  });
+    const currentDate = moment(new Date()).startOf("day");
 
-  setWorkoutHistoryByDay(workoutHistorySorted);
-}, [allWorkoutHistory]);
+    allWorkoutHistory.forEach((workout) => {
+      const workoutDate = moment(workout.timestamp).startOf("day");
+      const dayToCheck = currentDate.diff(workoutDate, "days");
+      if (dayToCheck < 7) {
+        workoutHistorySorted[dayToCheck].push(workout);
+      }
+    });
+
+    setWorkoutHistoryByDay(workoutHistorySorted);
+  }, [allWorkoutHistory]);
 
   return (
     <div className="workout-history-slider container addlog text-white p-5">
