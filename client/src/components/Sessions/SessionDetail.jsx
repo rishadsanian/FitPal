@@ -99,7 +99,7 @@ const SessionDetail = (props) => {
     const exerciseLogs = logs.filter(
       (log) =>
         log.exercise_name === exercise.name &&
-        (moment(log.timestamp).day() - 1) === session.day_of_week &&
+        (moment(log.timestamp).day()) === session.day_of_week &&
         moment(log.timestamp).isSame(new Date(), 'week')
     );
     return (

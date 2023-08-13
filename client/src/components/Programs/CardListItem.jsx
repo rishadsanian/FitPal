@@ -1,134 +1,37 @@
 import React from "react";
-import { useContext, useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router";
-import { programContext } from "../../contexts/ProgramProvider";
+import { useContext } from "react";
 
-const daysOfWeek = [
-  {day_val: 0, day: "Monday"},
-  {day_val: 1, day: "Tuesday"},
-  {day_val: 2, day: "Wednesday"},
-  {day_val: 3, day: "Thursday"},
-  {day_val: 4, day: "Friday"},
-  {day_val: 5, day: "Saturday"},
-  {day_val: 6, day: "Sunday"},
-]
+import { userContext } from "../../contexts/UserContext";
+import { sessionsContext } from "../../contexts/SessionsProvider";
 
 function ProgramListItem(props) {
-  const [sessions, setSessions] = useState([]);
-  const [newSessionName, setNewSessionName] = useState('');
-  const [newSessionDay, setNewSessionDay] = useState(0);
-  const [potentialDays, setPotentialDays] = useState([]);
-  
-  // State for when editing a program
-  const [programUpdate, setProgramUpdate] = useState({
-    name: props.name,
-    description: props.description,
-  });
-  
-  // Modes for edit and delete
-  const [deleteMode, setDeleteMode] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  
-  // Toggle the class on the card when the program is the current program for the user
-  const cardClass =
-    props.currentProfile && props.currentProfile.program_id === props.programId
-      ? "card bg-dark text-start border-warning"
-      : "card bg-dark text-start";
+  // Get user functions from user provider
+  const { authenticated } = useContext(userContext);
 
-  const navigate = useNavigate();
-
-  // Get program functions from
-  const { deleteProgram, updateProgram } = useContext(programContext);
-
-  const setUpSessions = async () => {
-    // Get the list of sessions based off of the program id
-    await axios
-      .get(`http://localhost:8080/sessions/program/${props.programId}`)
-      .then((res) => {
-        setSessions(res.data.sessions);
-        setUpPotentialDays()
-      });
-  }
-
-  // Set up the list of potential days to choose from
-  const setUpPotentialDays = () => {
-     // Update possible session days
-    let newPotentialDays = daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val));
-    setPotentialDays(newPotentialDays)
-    if(newPotentialDays.length){
-      setNewSessionDay(newPotentialDays[0].day_val)
-    }
-  }
-
-  useEffect(() => {
-    setUpSessions();
-  }, [sessions.length]);
-
-  const createNewSession = async (event, program_id) => {
-    // prevent the default form action
-    event.preventDefault();
-    // check if the session name field is not blank
-    if (newSessionName) {
-      try {
-        // Submit form data to the server
-        const response = await axios.post(
-          `/sessions/program/${program_id}`,
-          {
-            name: newSessionName,
-            day_of_week: newSessionDay,
-            program_id,
-          }
-          
-        );
-        setSessions([...sessions, response.data].sort((a,b) => a.day_of_week < b.day_of_week))
-        setNewSessionName("");
-      } catch (error) {
-        console.error("Error creating session:", error);
-      }
-    }
-  };
-
-  // navigation for the session
-  const navigateToSession = (session) => {
-    if(props.editable){
-      navigate(`/programs/${props.programId}/sessions/${session.id}`);
-    } else {
-      navigate(`/programs/${props.programId}/sessions/${session.id}/noedit`);
-    }
-  };
-
-  // function to toggle edit mode
-  const updateCurrentProgram = async (programId) => {
-    try {
-      // Submit form data to the server
-      const response = await axios.post(`/profile/`, {
-        ...props.currentProfile,
-        program_id: programId,
-      });
-      props.setCurrentProfile({
-        ...props.currentProfile,
-        program_id: programId,
-      });
-      // Update the profile state with the newly created/updated profile data
-    } catch (error) {
-      console.error("Error creating session:", error);
-    }
-  };
-
-  // Delete the current program and reload the page
-  const deleteAndUpdateCurrentProgram = (programId) => {
-    if(props.currentProfile.program_id === programId){
-      updateCurrentProgram(null);
-    }
-    deleteProgram(programId)
-  }
-
-  // Set the program and clear edit mode
-  const setProgramAndEditMode = () => {
-    updateProgram(props.programId, programUpdate);
-    setEditMode(false);
-  }
+  const { 
+    sessions,
+    programId,
+    newSessionName,
+    setNewSessionName,
+    newSessionDay,
+    setNewSessionDay,
+    createNewSession,
+    editMode,
+    setEditMode,
+    deleteMode,
+    setDeleteMode,
+    potentialDays,
+    programUpdate,
+    setProgramUpdate,
+    updateCurrentProgram,
+    setProgramAndEditMode,
+    deleteAndUpdateCurrentProgram,
+    navigateToSession,
+    daysOfWeek,
+    editable,
+    cardClass,
+    currentProfile
+  } = useContext(sessionsContext);
 
   const sessionsListItem = sessions.map((session, index) => {
     return (
@@ -158,7 +61,6 @@ function ProgramListItem(props) {
                 })
               }
             />
-            
             <textarea
               type="text"
               value={programUpdate.description}
@@ -178,12 +80,8 @@ function ProgramListItem(props) {
             <p className="text-white">{programUpdate.description}</p>
           </div>
         )}
-        
-          
-        
-        
         {/* Add session form */}
-        {props.editable && potentialDays.length && <div className="card-body border-top border-color-white">
+        {editable && potentialDays.length && <div className="card-body border-top border-color-white">
           <form>
             
             <div className="input-group flex-nowrap">
@@ -197,7 +95,7 @@ function ProgramListItem(props) {
               <button
                 className="input-group-text btn btn-warning"
                 id="addon-wrapping"
-                onClick={(e) => createNewSession(e, props.programId)}
+                onClick={(e) => createNewSession(e)}
               >
                 <i className="fa-solid fa-plus"></i>
               </button>
@@ -229,14 +127,14 @@ function ProgramListItem(props) {
             </table>
           </div>
         </div>}
-        {props.userView && (
+        {authenticated && (
           <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
             {/* Toggle star Icon when the current program is the users selected program*/}
-            {props.currentProfile &&
-            props.currentProfile.program_id !== props.programId ? (
+            {currentProfile &&
+            currentProfile.program_id !== programId ? (
               <button
                 className="btn btn-dark"
-                onClick={() => updateCurrentProgram(props.programId)}
+                onClick={() => updateCurrentProgram()}
               >
                 <i className="fa-regular fa-star fa-xl text-warning"></i>
               </button>
@@ -249,7 +147,7 @@ function ProgramListItem(props) {
               </button>
             )}
             {/* Edit - Delete */}
-            {props.editable && <div>
+            {editable && <div>
               {editMode ? 
                 <div className="border border-white rounded">
                   <button
@@ -273,15 +171,14 @@ function ProgramListItem(props) {
                 >
                   <i className="fa-regular fa-edit fa-xl text-light"></i>
                 </button> 
-
               }
               </div>}
-              {props.editable && <div>
+              {editable && <div>
               {(deleteMode) ? 
                 <div className="border border-danger rounded">
                   <button
                     className="btn btn-dark"
-                    onClick={() => deleteAndUpdateCurrentProgram(props.programId)}
+                    onClick={() => deleteAndUpdateCurrentProgram()}
                   >
                     <i className="fa-solid fa-check fa-xl text-danger"></i>
                   </button> 
@@ -293,14 +190,12 @@ function ProgramListItem(props) {
                   </button> 
                 </div>
                 :
-                
                 <button
                   className="btn btn-dark"
                   onClick={() => setDeleteMode(true)}
                 >
                   <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
                 </button> 
-
               }
               </div>}
           </div>

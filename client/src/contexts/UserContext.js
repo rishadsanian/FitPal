@@ -12,7 +12,7 @@ export default function UserProvider(props) {
   const [userId, setUserId] = useState(Number(window.sessionStorage.getItem("userId")));
   // This list can get long with a lot of functions.  Reducer may be a better choice
 
-  const providerData = { authenticated, userId };
+  const providerData = { authenticated, setAuthenticated, userId, setUserId };
 
   // We can now use this as a component to wrap anything
   // that needs our state

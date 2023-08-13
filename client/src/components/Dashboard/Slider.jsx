@@ -12,13 +12,13 @@ import axios from "axios";
 import { LinearProgress } from "@mui/material";
 
 const daysOfWeek = {
-  0: "Monday",
-  1: "Tuesday",
-  2: "Wednesday",
-  3: "Thursday",
-  4: "Friday",
-  5: "Saturday",
-  6: "Sunday",
+  0: "Sunday",
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
 };
 
 const MUSCLE_ICON = {
@@ -202,7 +202,7 @@ const SliderComponent = () => {
       axios
         .get(
           `http://localhost:8080/sets/program/${profile.program_id}/day/${
-            moment().day() - 1
+            moment().day()
           }`
         )
         .then((res) => {
@@ -226,7 +226,7 @@ const SliderComponent = () => {
       axios
         .get(
           `http://localhost:8080/sessions/program/${profile.program_id}/day/${
-            moment().day() - 1
+            moment().day()
           }`
         )
         .then((res) => {

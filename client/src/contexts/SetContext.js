@@ -1,6 +1,4 @@
-import {createContext, useState, useEffect, useContext} from 'react';
-import {userContext} from "./UserContext";
-import axios from 'axios';
+import {createContext } from 'react';
 // Create a Context
 export const setContext = createContext();
 

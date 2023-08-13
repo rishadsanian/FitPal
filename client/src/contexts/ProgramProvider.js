@@ -17,7 +17,9 @@ export default function ProgramProvider(props) {
   }); 
 
   // ----------------CONTEXT PROVIDERS-------------------------------------//
-  const { userId } = useContext(userContext);
+  const { authenticated, userId } = useContext(userContext);
+
+  const programId = props.programId;
 
   // Use effect to fetch program data from the server
   useEffect(() => {
@@ -108,6 +110,16 @@ export default function ProgramProvider(props) {
     }));
   };
 
+  // function to handle searching programs
+  const searchProgramsByText =(searchText, editable) => {
+    if(!editable) {
+      if(authenticated){
+        setNonUserProgramsByText(searchText)
+      } else {
+        setAllSearchableProgramsByText(searchText)
+      }
+    }
+  }
 
   // This list can get long with a lot of functions.  Reducer may be a better choice
   const providerData = { 
@@ -122,7 +134,8 @@ export default function ProgramProvider(props) {
     updateProgram,
     handleChange,
     setNonUserProgramsByText,
-    setAllSearchableProgramsByText
+    setAllSearchableProgramsByText,
+    searchProgramsByText
    };
 
   // We can now use this as a component to wrap anything
