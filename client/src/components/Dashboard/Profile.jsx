@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
-import '../../styles/Profile.css';
-import { useProfileContext } from '../../contexts/ProfileContext';
+import React, { useEffect } from "react";
+import "../../styles/Profile.css";
+import { useProfileContext } from "../../contexts/ProfileContext";
 
 //State
 const Profile = () => {
@@ -157,9 +157,9 @@ const Profile = () => {
                 <div className="profile-card p-3 border border-secondary rounded border-3">
                   <div className="key text-warning">Age</div>
                   <div className="value">
-                    {calculatedAge !== null
-                      ? `${calculatedAge}`
-                      : 'Not Set'}
+                    {isNaN(calculatedAge) || calculatedAge === null
+                      ? "Not Set"
+                      : `${calculatedAge}`}
                   </div>
                 </div>
               </div>
@@ -238,7 +238,6 @@ const Profile = () => {
               <button
                 type="button"
                 className="btn btn-warning font-weight-bold text-dark fw-bold"
-
                 onClick={handleEdit}
               >
                 Edit Profile
