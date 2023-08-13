@@ -6,7 +6,7 @@ CREATE TABLE Profile (
   date_of_birth DATE,
   height FLOAT,
   weight FLOAT,
-  gender VARCHAR(10),
+  gender VARCHAR(20),
   fitness_level VARCHAR(20), 
   goal VARCHAR(100),          
   program_id INTEGER REFERENCES programs(id),
