@@ -5,19 +5,10 @@ import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import "../../styles/Log.css";
 import axios from "axios";
-import {
-  Container,
-  TextField,
-  Select,
-  MenuItem,
-  Button,
-  Grid,
-  Autocomplete,
-} from "@mui/material";
+import { Container, TextField, Autocomplete } from "@mui/material";
 
 import ExerciseDetailModal from "../Exercises/ExerciseDetailModal";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 
 const WorkoutForm = () => {
   const {
@@ -69,11 +60,11 @@ const WorkoutForm = () => {
       try {
         const params = {};
         if (selectedExercise) {
-          params.search = selectedExercise;
+          params.name = selectedExercise;
         }
 
         if (selectedMuscleGroup) {
-          params.search = selectedMuscleGroup;
+          params.muscle = selectedMuscleGroup;
         }
 
         const response = await axios.get(API_URL, {
@@ -171,9 +162,6 @@ const WorkoutForm = () => {
                     }
                     fullWidth
                     sx={{
-                      // bgcolor: "background.paper",
-                      // text: "warning",
-                      // boxShadow: 1,
                       borderRadius: 2,
                       p: 0,
                       minWidth: 100,
@@ -225,8 +213,6 @@ const WorkoutForm = () => {
                       id="weightLoad"
                       value={weightLoad}
                       onChange={(e) => setWeightLoad(e.target.value)}
-                      required
-                      min="1"
                       className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
                     />
                   </div>

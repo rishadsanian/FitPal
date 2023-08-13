@@ -103,8 +103,8 @@ export function WorkoutProvider({ children }) {
       await axios.delete(`/delete/log/${workoutId}`);
 
       // update workout history after deleting
-      setAllWorkoutHistory([...allWorkoutHistory.filter(workout => workout.id != workoutId)])
-      setWorkoutHistory([...workoutHistory.filter(workout => workout.id != workoutId)])
+      setAllWorkoutHistory([...allWorkoutHistory.filter(workout => workout.id !== workoutId)])
+      setWorkoutHistory([...workoutHistory.filter(workout => workout.id !== workoutId)])
     } catch (error) {
       console.error("Error deleting workout:", error);
     }
@@ -167,6 +167,7 @@ export function WorkoutProvider({ children }) {
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
+    console.log("selected muscle",selectedMuscle);
   };
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
