@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import moment from 'moment';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import '../../styles/Profile.css';
 import { useProfileContext } from '../../contexts/ProfileContext';
 
@@ -8,9 +7,7 @@ import { useProfileContext } from '../../contexts/ProfileContext';
 const Profile = () => {
   const {
     profile,
-    setProfile,
     editing,
-    setEditing,
     fetchProfile,
     handleSubmit,
     handleCancel,

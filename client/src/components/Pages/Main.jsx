@@ -3,23 +3,12 @@ import moment from "moment";
 import SliderComponent from "../Dashboard/Slider";
 import Profile from "../Dashboard/Profile";
 import Log from "../Dashboard/Log";
-import ChartWorkout from "../Dashboard/ChartWorkout";
-import TitleImage from "../TitleCards/TitleImage";
 import "../../styles/Main.css";
 import { ProfileProvider } from "../../contexts/ProfileContext";
 import { WorkoutProvider } from "../../contexts/WorkoutContext";
 import ChatGptDailySummary from "../Dashboard/ChatGptDailySummary";
 import Statistics from "../Dashboard/Statistics";
-//Dashboard/logged in main page
-const daysOfWeek = {
-  0: "Monday",
-  1: "Tuesday",
-  2: "Wednesday",
-  3: "Thursday",
-  4: "Friday",
-  5: "Saturday",
-  6: "Sunday",
-};
+import ChartSlider from "../Dashboard/ChartSlider";
 const Main = () => {
   // Formatted date for display
   const currentDate = moment().format("dddd, MMMM D");
@@ -50,7 +39,11 @@ const Main = () => {
               <Profile />
             </div>
           </div>
-          <div id="log">
+          {/* Log Section */}
+          <div id="log" className="log-container bg-dark">
+          <h3 className="display-5 m-0  fw-bold text-warning opacity-75 pt-4"> 
+              Workout
+            </h3>  
             <Log />
           </div>
           {/* Program Schedule Section USE SLIDER OR CAROUSEL*/}
@@ -64,13 +57,15 @@ const Main = () => {
           </div>
 
           {/* Analytics Section */}
-          <div className="container mt-5">
-            {/* <h3 className="display-5 fw-bold text-warning">Analytics</h3> */}
+          <div
+            className="analytics-container mt-0"
+            style={{ backgroundColor: "#212529" }}
+          >
+            <h3 className="display-5 fw-bold text-warning opacity-75">
+              Analytics
+            </h3>
 
-            <div className="analytics-container container mt-5">
-              {/* Exercise Tracker */}
-              <ChartWorkout />
-            </div>
+            <ChartSlider />
           </div>
 
           {/* Statistics */}

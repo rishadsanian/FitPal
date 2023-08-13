@@ -116,6 +116,7 @@ const SessionDetail = (props) => {
   };
 
   const exercisesListItem = exercises.map((exercise, index) => {
+
     const exerciseSets = sets.filter(
       (set) => set.exercise_name === exercise.name
     );
@@ -125,6 +126,7 @@ const SessionDetail = (props) => {
         moment(log.timestamp).day() === session.day_of_week &&
         moment(log.timestamp).isSame(new Date(), 'week')
     );
+
     return (
       <SessionItem
         key={index}

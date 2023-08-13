@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
-import Slider from "react-slick";
 import {
   Chart,
   LinearScale,
@@ -104,7 +103,6 @@ const ChartWorkout = () => {
     }
   }, [allWorkoutHistory.length]);
 
-  //TODO show data on dates for whcih workouts are listed
   const currentDate = moment();
   const startDate = moment(currentDate)
     .startOf("isoWeek")
@@ -113,23 +111,21 @@ const ChartWorkout = () => {
 
   return (
     <div className="chart-container">
-      <div className="card bg-dark weekly-tracker-card mb-3">
+      <div className="card bg-dark weekly-tracker-card mb-3 p-3 border border-secondary rounded border-3 ">
         <div className="card-body">
-          <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5">
+          <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5 opacity-75">
             Weekly Exercise Tracker
           </h3>
           <p className="text-secondary pb-3">
-            {startDate}-{endDate}
+            {startDate} - {endDate}
           </p>
           <div>
             <div className="chart-wrapper">
-              {/* Put the canvas inside a div with fixed width of 400px */}
-              <div className="chart-container-400">
-                <canvas id="workoutChart" height="100%" width="100%"/>
+              <div className="chart-container">
+                <canvas id="workoutChart" height="100%" width="100%" />
               </div>
             </div>
           </div>
-          {/* Add more weeks here if desired */}
         </div>
       </div>
     </div>

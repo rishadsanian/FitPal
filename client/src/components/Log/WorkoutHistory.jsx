@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-import { userContext } from "../../contexts/UserContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -86,12 +85,20 @@ const SliderItem = ({
                           onClick={() => handleEditWorkout(workout)}
                           disabled={editingWorkout === workout}
                           className="btn"
+                          style={{
+                            transition: "background-color 0.3s", 
+                            outline: "none",
+                          }}
                         >
                           <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
                         </button>
                         <button
                           onClick={() => handleDeleteWorkout(workout.id)}
                           className="btn"
+                          style={{
+                            transition: "background-color 0.3s", 
+                            outline: "none",
+                          }}
                         >
                           <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
                         </button>
@@ -110,13 +117,10 @@ const SliderItem = ({
 
 const WorkoutHistory = () => {
   const {
-    workoutHistory,
     handleSliderChange,
     handleEditWorkout,
     handleDeleteWorkout,
-    currentDate,
     editingWorkout,
-    fetchWorkoutHistory,
     allWorkoutHistory,
     fetchAllWorkoutHistory,
   } = useWorkoutContext();
@@ -127,30 +131,25 @@ const WorkoutHistory = () => {
     fetchAllWorkoutHistory();
   }, []);
 
-  useEffect(() => {
-    let workoutHistorySorted = [];
-    // console.log("all workout history", allWorkoutHistory);
-    for (let i = 0; i < 7; i++) {
-      workoutHistorySorted[i] = [];
+ useEffect(() => {
+  const workoutHistorySorted = Array.from({ length: 7 }, () => []);
+  
+  const currentDate = moment(new Date()).startOf("day");
+
+  allWorkoutHistory.forEach((workout) => {
+    const workoutDate = moment(workout.timestamp).startOf("day");
+    const dayToCheck = currentDate.diff(workoutDate, "days");
+    if (dayToCheck < 7) {
+      workoutHistorySorted[dayToCheck].push(workout);
     }
-    for (let i = 0; i < allWorkoutHistory.length; i++) {
-      let currentDate = moment(new Date()).startOf("day");
-      let workoutDate = moment(
-        new Date(allWorkoutHistory[i].timestamp)
-      ).startOf("day");
-      let offest = 7 - workoutDate.day();
-      let dayToCheck = currentDate.diff(workoutDate, "days");
-      if (dayToCheck < 7) {
-        workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
-      }
-    }
-    // console.log("Sorted H"workoutHistorySorted);
-    setWorkoutHistoryByDay(workoutHistorySorted);
-  }, [allWorkoutHistory]);
+  });
+
+  setWorkoutHistoryByDay(workoutHistorySorted);
+}, [allWorkoutHistory]);
 
   return (
-    <div className="workout-history-slider container addlog text-white pb-5">
-        <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">
+    <div className="workout-history-slider container addlog text-white p-5">
+      <h3 className="text-warning fw-bold pb-3 pt-3 opacity-75">
         Daily Workout History
       </h3>
 

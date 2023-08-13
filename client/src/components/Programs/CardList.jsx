@@ -2,7 +2,6 @@ import React from 'react';
 import CardListItem from './CardListItem';
 import { useContext } from 'react';
 import { programContext } from '../../contexts/ProgramProvider';
-import { userContext } from '../../contexts/UserContext';
 import SessionsProvider from '../../contexts/SessionsProvider';
 
 function CardList(props) {

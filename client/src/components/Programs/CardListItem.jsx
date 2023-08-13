@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { userContext } from "../../contexts/UserContext";
 import { sessionsContext } from "../../contexts/SessionsProvider";
 
-function ProgramListItem(props) {
+function ProgramListItem() {
   // Get user functions from user provider
   const { authenticated } = useContext(userContext);
 

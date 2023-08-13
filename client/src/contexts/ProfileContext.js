@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //State
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { userContext } from "./UserContext";
@@ -25,6 +26,9 @@ export function ProfileProvider({ children }) {
     name: null, //program name
   });
   const [editing, setEditing] = useState(false);
+
+  const [profileHistory, setProfileHistory] = useState(null);
+  const [selectedInterval, setSelectedInterval] = useState('7d');
   //------------------------------------------------------------------------//
   //---------------------FUNCTIONS---------------------------------------//
 
@@ -40,6 +44,20 @@ export function ProfileProvider({ children }) {
     }
   };
 
+  //--------------------------------------------------------------------//
+  const fetchHistoricalProfileData = async () => {
+    try {
+      const response = await axios.get(`/api/profile/${userId}/${selectedInterval}`);
+      setProfileHistory(response.data);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+    fetchHistoricalProfileData();
+  }, [userId, selectedInterval]);
   //--------------------------------------------------------------------//
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -106,6 +124,12 @@ export function ProfileProvider({ children }) {
     handleChange,
     handleEdit,
     calculatedAge,
+
+    profileHistory,
+    setProfileHistory,
+    selectedInterval,
+    setSelectedInterval,
+    fetchHistoricalProfileData
   };
 
   return (
