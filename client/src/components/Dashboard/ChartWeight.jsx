@@ -36,9 +36,9 @@ const WeightChart = ({ userId, selectedInterval }) => {
         label: "Average Weight",
         data: yValues,
         fill: false,
-        borderColor: "rgba(75, 192, 192, 1)",
+        borderColor: "#ffc107",
         pointRadius: 5,
-        pointBackgroundColor: "rgba(75, 192, 192, 1)",
+        pointBackgroundColor: "#ffc107",
       },
     ],
   };
