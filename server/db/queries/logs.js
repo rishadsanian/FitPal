@@ -18,7 +18,6 @@ const getLogByUserId = (data) => {
     });
 };
 
-
 // not used for demo
 const getLogByUserIdAndInterval = (user_id, interval) => {
   const intervalQuery = {
@@ -43,15 +42,11 @@ const getLogByUserIdAndInterval = (user_id, interval) => {
     });
 };
 
-
-
-
-
-
 const getLogByUserIdAndExercise = (data) => {
   const queryString = `
   SELECT * FROM log
   WHERE user_id = $1 AND exercise_name = $2
+  ORDER BY timestamp DESC
   `;
   return db
     .query(queryString, [data.user_id, data.exercise_name])
@@ -62,9 +57,4 @@ const getLogByUserIdAndExercise = (data) => {
       console.log(e);
     });
 };
-
-
-
-
-
-module.exports = { getLogByUserId, getLogByUserIdAndExercise, getLogByUserIdAndInterval };
+module.exports = { getLogByUserIdAndExercise, getLogByUserIdAndInterval, getLogByUserId };
