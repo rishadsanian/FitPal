@@ -41,7 +41,9 @@ const WorkoutForm = () => {
 
   return (
     <div className="addlog text-white bg-dark-50 p-5 rounded">
-      <h3 className="text-warning fw-bold opacity-75">Log Workout</h3>
+      <h3 className="text-warning fw-bold opacity-75 pb-3 pt-3 ">
+        Log Workout
+      </h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
@@ -53,17 +55,7 @@ const WorkoutForm = () => {
       </div>
       <div
         className="
-        m-0
-        mt-4
-        mb-1
-        pt-1
-        pb-4
-        border
-        bg-dark
-        border-secondary
-        rounded
-        flex-column
-        border-3"
+        m-0 mt-0 mb-1 pt-1 pb-4 border bg-dark border-secondary rounded flex-column border-3" 
       >
         <ThemeProvider theme={darkTheme}>
           <Container maxWidth="mg">
@@ -90,7 +82,7 @@ const WorkoutForm = () => {
                       borderRadius: 2,
                       p: 0,
                       minWidth: 100,
-                    }} 
+                    }}
                     renderInput={(params) => (
                       <TextField
                         {...params}

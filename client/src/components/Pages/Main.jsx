@@ -54,7 +54,7 @@ const Main = () => {
 
           {/* Analytics Section */}
           <div
-            className="analytics-container mt-5"
+            className="analytics-container mt-0"
             style={{ backgroundColor: "#212529" }}
           >
             <h3 className="display-5 fw-bold text-warning opacity-75">
