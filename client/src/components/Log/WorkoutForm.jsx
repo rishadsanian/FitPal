@@ -131,7 +131,7 @@ const WorkoutForm = () => {
                       )
                     }
                     getOptionLabel={(group) => group}
-                    // isOptionEqualToValue={(option, value) => option === value}
+                    //isOptionEqualToValue={(option, value) => option.value === value.value}
                     fullWidth
                     sx={{
                       // backgroundColor: '#343a40',
@@ -169,6 +169,7 @@ const WorkoutForm = () => {
                     getOptionLabel={(exercises) =>
                       exercises.name || "Select Exercise"
                     }
+                    //isOptionEqualToValue={(option, value) => option.value === value.value}
                     fullWidth
                     sx={{
                       // bgcolor: "background.paper",

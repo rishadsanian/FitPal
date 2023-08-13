@@ -128,8 +128,8 @@ const SliderItem = ({
         <p className="fw-bold text-white">Recomended: </p>
         {/* RECOMMENDED SETS */}
         <div className="d-flex flex-wrap gap-2 justify-content-center ps-3">
-          {currentSets.map((set) => (
-            <div className="badge text-bg-light">
+          {currentSets.map((set, index) => (
+            <div key={index} className="badge text-bg-light">
               <span>
                 {set.resistant} lbs/{set.reps} Reps
               </span>
@@ -149,8 +149,8 @@ const SliderItem = ({
             <div className="d-flex flex-wrap gap-2 justify-content-center">
               {uniqueExercises
                 .filter((set) => exercise === set.exercise_name)
-                .map((set) => (
-                  <div className="badge text-bg-warning">
+                .map((set, index) => (
+                  <div key={index} className="badge text-bg-warning">
                     <span>
                       {set.resistance} lbs/{set.reps} Reps
                     </span>
