@@ -29,6 +29,7 @@ const getLogByUserIdAndExercise = (data) => {
   const queryString = `
   SELECT * FROM log
   WHERE user_id = $1 AND exercise_name = $2
+  ORDER BY timestamp DESC
   `;
   return db
     .query(queryString, [data.user_id, data.exercise_name])
