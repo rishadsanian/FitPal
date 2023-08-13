@@ -15,26 +15,26 @@ import { useWorkoutContext } from "../../contexts/WorkoutContext";
 Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = () => {
-  const { userId } = useContext(userContext); 
+  const { userId } = useContext(userContext);
+  const { workoutHistory } = useWorkoutContext();
   //state
   const [workoutData, setWorkoutData] = useState([]);
-  const { workoutHistory, allWorkoutHistory } = useWorkoutContext();
   //useref needed to fix canvas clash bug
   const chartRef = useRef(null);
 
   // get data from db
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`/api/chartworkout/${userId}`); //hard-coded change to current user
-  //       console.log(response.data);
-  //       setWorkoutData(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching workout data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [workoutHistory.length]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/chartworkout/${userId}`); //hard-coded change to current user
+        console.log(response.data);
+        setWorkoutData(response.data);
+      } catch (error) {
+        console.error("Error fetching workout data:", error);
+      }
+    };
+    fetchData();
+  }, [workoutHistory]);
 
   //extract and process needed data
   const processWorkoutData = () => {
@@ -43,7 +43,7 @@ const ChartWorkout = () => {
     const startDate = moment(currentDate).startOf("isoWeek");
     const endDate = moment(currentDate).endOf("isoWeek");
     //Filter log data for one week
-    const workoutsThisWeek = allWorkoutHistory.filter((workout) => {
+    const workoutsThisWeek = workoutData.filter((workout) => {
       const workoutDate = moment(workout.timestamp);
       return workoutDate.isBetween(startDate, endDate, null, "[]");
     });
@@ -101,7 +101,12 @@ const ChartWorkout = () => {
       console.log(chartRef.current.data.datasets[0].data)
       chartRef.current.update();
     }
-  }, [allWorkoutHistory.length]);
+  }, [workoutData.length]);
+
+  useEffect(() => {
+    chartRef.current.data.datasets[0].data = processWorkoutData();
+    chartRef.current.update();
+  }, [workoutData.length]);
 
   const currentDate = moment();
   const startDate = moment(currentDate)
