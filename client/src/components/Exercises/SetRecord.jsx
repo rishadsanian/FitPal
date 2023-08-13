@@ -36,7 +36,6 @@ const SetRecord = (props) => {
                 <span
                   className="input-group-text fw-bold text-secondary"
                   id="addon-wrapping"
-                  style={{ minWidth: '5em' }}
                 >
                   {set.resistant ? set.resistant + 'lbs' : 'weight'}
                 </span>
@@ -54,7 +53,6 @@ const SetRecord = (props) => {
                 <span
                   className="input-group-text fw-bold text-secondary"
                   id="addon-wrapping"
-                  style={{ minWidth: '4em' }}
                 >
                   {set.reps ? 'x ' + set.reps : 'reps'}
                 </span>
