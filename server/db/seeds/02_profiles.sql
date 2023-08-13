@@ -30,3 +30,17 @@ VALUES ('4', '1992-08-06', 160.8, 118.60, 'Female', NOW() - INTERVAL '9 months')
 
 INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, timestamp)
 VALUES ('4', '1992-08-06', 160.8, 116.00, 'Female', NOW() - INTERVAL '6 months');
+
+
+--user 1
+INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, timestamp)
+VALUES ('1', '1992-08-06', 160.8, 116.00, 'Male', NOW() - INTERVAL '6 months');
+
+
+--user 2
+INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, timestamp)
+VALUES ('2', '1992-08-06', 160.8, 116.00, 'Male', NOW() - INTERVAL '6 months');
+
+--user 3
+INSERT INTO Profile (user_id, date_of_birth, height, weight, gender, timestamp)
+VALUES ('3', '1992-08-06', 160.8, 116.00, 'Male', NOW() - INTERVAL '6 months');
