@@ -3,16 +3,7 @@ import { useContext, useState }  from "react"
 import { programContext } from '../../contexts/ProgramProvider';
 
 const CreateProgram = () => {
-  const { createProgram, setNewProgram } = useContext(programContext);
-
-  // Function to handle form input changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setNewProgram((prevProgram) => ({
-      ...prevProgram,
-      [name]: value,
-    }));
-  };
+  const { createProgram, newProgram, handleChange } = useContext(programContext);
 
   return (
     <div className="px-3">
@@ -25,6 +16,7 @@ const CreateProgram = () => {
             </label>
             <input
               onChange={handleChange}
+              value={newProgram.name}
               className="form-control"
               id="name"
               name="name"
@@ -39,6 +31,7 @@ const CreateProgram = () => {
             </label>
             <textarea
               onChange={handleChange}
+              value={newProgram.description}
               className="form-control"
               id="description"
               name="description"
@@ -48,7 +41,7 @@ const CreateProgram = () => {
           </div>
 
           <div className="d-grid pt-3">
-            <button onClick={() => createProgram()} className="btn btn-warning">Create</button>
+            <button onClick={(e) => createProgram(e)} className="btn btn-warning">Create</button>
           </div>
         </div>
       </form>

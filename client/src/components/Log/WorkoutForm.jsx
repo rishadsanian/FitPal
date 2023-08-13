@@ -75,7 +75,7 @@ const WorkoutForm = () => {
                       )
                     }
                     getOptionLabel={(group) => group || "Select Muscle Group"}
-                    isOptionEqualToValue={(option, value) => option === value}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
                     fullWidth
                     sx={{
                       boxShadow: 1,
@@ -111,6 +111,7 @@ const WorkoutForm = () => {
                     getOptionLabel={(exercises) =>
                       exercises.name || "Select Exercise"
                     }
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
                     fullWidth
                     sx={{
                       borderRadius: 2,

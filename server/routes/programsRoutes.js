@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 // Route to handle the POST request to /programs
 router.post("/", async(req, res) => {
   try {
-    const { name, description, userId } = req.body;
+    const { name, description, user_id } = req.body;
 
     // queryString
     const queryString = `
@@ -55,10 +55,10 @@ router.post("/", async(req, res) => {
 
     // SQL to db
     const result = await pool.query(queryString, [
-      userId, name, description
+      user_id, name, description
     ]);
 
-    res.status(201).json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error("Error inserting program data:", error);
     res.status(500).json({ error: "Error inserting program data" });
@@ -69,6 +69,9 @@ router.post("/", async(req, res) => {
 router.post('/:id/delete', (req, res) => {
   programs
     .deleteProgramById(req.params.id)
+    .then((program) => {
+      res.json({ program });
+    })
     .catch((e) => {
       res
         .status(500)
