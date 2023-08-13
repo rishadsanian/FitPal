@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
-import Slider from "react-slick";
 import {
   Chart,
   LinearScale,
@@ -17,10 +16,9 @@ Chart.register(LinearScale, BarController, CategoryScale, BarElement);
 
 const ChartWorkout = () => {
   const { userId } = useContext(userContext); 
-  const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
+  const { workoutHistory} = useWorkoutContext();
   //state
   const [workoutData, setWorkoutData] = useState([]);
-  const { WorkoutHistory } = useWorkoutContext();
   //useref needed to fix canvas clash bug
   const chartRef = useRef(null);
 
