@@ -85,12 +85,20 @@ const SliderItem = ({
                           onClick={() => handleEditWorkout(workout)}
                           disabled={editingWorkout === workout}
                           className="btn"
+                          style={{
+                            transition: "background-color 0.3s", // Add a smooth transition effect
+                            outline: "none",
+                          }}
                         >
                           <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
                         </button>
                         <button
                           onClick={() => handleDeleteWorkout(workout.id)}
                           className="btn"
+                          style={{
+                            transition: "background-color 0.3s", // Add a smooth transition effect
+                            outline: "none",
+                          }}
                         >
                           <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
                         </button>
@@ -137,19 +145,17 @@ const WorkoutHistory = () => {
       let workoutDate = moment(
         new Date(allWorkoutHistory[i].timestamp)
       ).startOf("day");
-      let offest = 7 - workoutDate.day();
       let dayToCheck = currentDate.diff(workoutDate, "days");
       if (dayToCheck < 7) {
         workoutHistorySorted[dayToCheck].push(allWorkoutHistory[i]);
       }
     }
-    // console.log("Sorted H"workoutHistorySorted);
     setWorkoutHistoryByDay(workoutHistorySorted);
   }, [allWorkoutHistory]);
 
   return (
     <div className="workout-history-slider container addlog text-white pb-5">
-        <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">
+      <h3 className="text-warning fw-bold pb-3 pt-5 opacity-75">
         Daily Workout History
       </h3>
 
