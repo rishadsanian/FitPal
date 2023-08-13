@@ -69,11 +69,11 @@ const WorkoutForm = () => {
       try {
         const params = {};
         if (selectedExercise) {
-          params.search = selectedExercise;
+          params.name = selectedExercise;
         }
 
         if (selectedMuscleGroup) {
-          params.search = selectedMuscleGroup;
+          params.muscle = selectedMuscleGroup;
         }
 
         const response = await axios.get(API_URL, {
@@ -85,7 +85,7 @@ const WorkoutForm = () => {
         console.error("Error fetching exercises:", error);
       }
     };
-
+    
     fetchExercisesByMuscle();
   }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
 
@@ -131,7 +131,7 @@ const WorkoutForm = () => {
                       )
                     }
                     getOptionLabel={(group) => group}
-                    //isOptionEqualToValue={(option, value) => option.value === value.value}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
                     fullWidth
                     sx={{
                       // backgroundColor: '#343a40',
@@ -169,7 +169,7 @@ const WorkoutForm = () => {
                     getOptionLabel={(exercises) =>
                       exercises.name || "Select Exercise"
                     }
-                    //isOptionEqualToValue={(option, value) => option.value === value.value}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
                     fullWidth
                     sx={{
                       // bgcolor: "background.paper",
