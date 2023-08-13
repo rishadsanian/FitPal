@@ -226,8 +226,6 @@ const SliderComponent = () => {
     } else {
       return 3;
     }
-
-    // 1 <=500;
   };
 
   const [slidesToShow, setSlidesToShow] = useState(

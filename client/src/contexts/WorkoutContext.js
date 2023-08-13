@@ -103,8 +103,8 @@ export function WorkoutProvider({ children }) {
       await axios.delete(`/delete/log/${workoutId}`);
 
       // update workout history after deleting
-      setAllWorkoutHistory([...allWorkoutHistory.filter(workout => workout.id != workoutId)])
-      setWorkoutHistory([...workoutHistory.filter(workout => workout.id != workoutId)])
+      setAllWorkoutHistory([...allWorkoutHistory.filter(workout => workout.id !== workoutId)])
+      setWorkoutHistory([...workoutHistory.filter(workout => workout.id !== workoutId)])
     } catch (error) {
       console.error("Error deleting workout:", error);
     }
@@ -167,6 +167,7 @@ export function WorkoutProvider({ children }) {
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
+    console.log("selected muscle",selectedMuscle);
   };
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
@@ -176,9 +177,32 @@ export function WorkoutProvider({ children }) {
     console.log("index:", index);
   };
   //--------------------------------------------------------------------------//
+  // Fetch exercises from API based on the selected muscle group
+  const fetchExercises = async () => {
+    try {
+      const params = {};
+      if (selectedExercise) {
+        params.name = selectedExercise;
+      }
+
+      if (selectedMuscleGroup) {
+        params.muscle = selectedMuscleGroup;
+      }
+
+      const response = await axios.get(API_URL, {
+        headers: { "X-Api-Key": API_KEY },
+        params: params,
+      });
+      setExercises(response.data);
+    } catch (error) {
+      console.error("Error fetching exercises:", error);
+    }
+  };
+  //--------------------------------------------------------------------------//
   //set selected exercise to updated selection
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
+    // fetchExercises();
   };
 
   useEffect(() => {
@@ -223,6 +247,7 @@ export function WorkoutProvider({ children }) {
     WorkoutHistory,
     WorkoutForm,
     setExercises,
+    fetchExercises
   };
 
   return (

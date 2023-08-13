@@ -33,7 +33,7 @@ function ProgramListItem(props) {
   // Toggle the class on the card when the program is the current program for the user
   const cardClass =
     props.currentProfile && props.currentProfile.program_id === props.programId
-      ? "card bg-dark text-start border-warning"
+      ? "card bg-dark text-start border-warning border-3"
       : "card bg-dark text-start";
 
   const navigate = useNavigate();
