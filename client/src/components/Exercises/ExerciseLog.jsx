@@ -132,9 +132,6 @@ const ExerciseLog = (props) => {
         {props.name}
       </h1>
 
-      {/* Display Record history (Logs) here */}
-      <RecordHistory logs={logs} />
-
       {/* SetRecords list */}
       {listOfSetRecord}
 
@@ -173,6 +170,9 @@ const ExerciseLog = (props) => {
           Save
         </button>
       </div>
+
+      {/* Display Record history (Logs) here */}
+      <RecordHistory logs={logs} />
     </div>
   );
 };
