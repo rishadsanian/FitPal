@@ -36,7 +36,7 @@ const ChartWorkout = () => {
       }
     };
     fetchData();
-  }, [WorkoutHistory.length]);
+  }, [workoutHistory]);
 
   //extract and process needed data
   const processWorkoutData = () => {

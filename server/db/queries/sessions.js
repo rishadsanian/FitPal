@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const db = require('../../configs/db.config');
 
 const getAllSessionByProgramId = (id) => {
