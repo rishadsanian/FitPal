@@ -23,6 +23,7 @@
     "react-slick": "^0.29.0",
     "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
+    "timeago-react": "^3.0.6",
     "web-vitals": "^2.1.4"
   },
   "proxy": "http://localhost:8080",

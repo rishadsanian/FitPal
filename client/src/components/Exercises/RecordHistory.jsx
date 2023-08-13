@@ -1,5 +1,6 @@
 import React from 'react';
-
+import '../../index.css'
+import TimeAgo from 'timeago-react';
 const RecordHistory = (props) => {
   const logs = props.logs;
   const daysArray = [
@@ -9,7 +10,6 @@ const RecordHistory = (props) => {
       )
     ),
   ];
-
   const logsByDay = (day) => {
     return logs.filter(
       (log) => new Date(log.timestamp).toISOString().split('T')[0] === day
@@ -19,16 +19,19 @@ const RecordHistory = (props) => {
   return (
     <div className="accordion p-3">
       {daysArray.map((day, index) => (
-        <div className="accordion-item p-0" key={index}>
+        <div className="accordion-item bg-dark p-0" key={index}>
           <h2 className="accordion-header">
             <button
-              className="accordion-button bg-light text-secondary fw-bold"
+              className="btn btn-dark w-100"
               data-bs-toggle="collapse"
               data-bs-target={`#collapse${index}`}
               aria-expanded="true"
               aria-controls={`collapse${index}`}
             >
-              {day}
+              <div className='d-flex justify-content-between align-items-center p-1'>
+                <p className='text-warning fw-bold m-0'>{day}</p> 
+                <TimeAgo datetime={day}/>
+              </div>
             </button>
           </h2>
           <div
@@ -37,7 +40,7 @@ const RecordHistory = (props) => {
             data-bs-parent="#accordionExample"
           >
             <div className="accordion-body text-white p-0">
-              <table className="table table-light table-striped">
+              <table className="table table-dark table-striped">
                 <thead>
                   <tr>
                     <th scope="col">Weight</th>
