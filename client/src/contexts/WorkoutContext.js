@@ -177,9 +177,32 @@ export function WorkoutProvider({ children }) {
     console.log("index:", index);
   };
   //--------------------------------------------------------------------------//
+  // Fetch exercises from API based on the selected muscle group
+  const fetchExercises = async () => {
+    try {
+      const params = {};
+      if (selectedExercise) {
+        params.name = selectedExercise;
+      }
+
+      if (selectedMuscleGroup) {
+        params.muscle = selectedMuscleGroup;
+      }
+
+      const response = await axios.get(API_URL, {
+        headers: { "X-Api-Key": API_KEY },
+        params: params,
+      });
+      setExercises(response.data);
+    } catch (error) {
+      console.error("Error fetching exercises:", error);
+    }
+  };
+  //--------------------------------------------------------------------------//
   //set selected exercise to updated selection
   const handleExerciseSelection = (e) => {
     setSelectedExercise(e.target.value);
+    // fetchExercises();
   };
 
   useEffect(() => {
@@ -224,6 +247,7 @@ export function WorkoutProvider({ children }) {
     WorkoutHistory,
     WorkoutForm,
     setExercises,
+    fetchExercises
   };
 
   return (

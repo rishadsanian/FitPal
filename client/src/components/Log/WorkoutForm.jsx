@@ -30,8 +30,8 @@ const WorkoutForm = () => {
     API_KEY,
     API_URL,
     setExercises,
+    fetchExercises,
   } = useWorkoutContext();
-
 
   const [modalDisplay, setModalDisplay] = useState(false);
 
@@ -42,42 +42,8 @@ const WorkoutForm = () => {
   });
 
   useEffect(() => {
-    // Use Select Muscle group as the first option in dropdown menu
-    if (muscleGroups.length > 0) {
-      const firstMuscleGroup = "Select Muscle Group";
-      setSelectedMuscleGroup(firstMuscleGroup);
-    }
-  }, [muscleGroups]);
-
-  if (muscleGroups.length === 0) {
-    setExercises([""]);
-  }
-
-  useEffect(() => {
-    // Fetch exercises from API based on the selected muscle group
-    const fetchExercisesByMuscle = async () => {
-      try {
-        const params = {};
-        if (selectedExercise) {
-          params.name = selectedExercise;
-        }
-
-        if (selectedMuscleGroup) {
-          params.muscle = selectedMuscleGroup;
-        }
-
-        const response = await axios.get(API_URL, {
-          headers: { "X-Api-Key": API_KEY },
-          params: params,
-        });
-        setExercises(response.data);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-
-    fetchExercisesByMuscle();
-  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
+    fetchExercises();
+  }, [selectedMuscleGroup, selectedExercise]);
 
   return (
     <div className="addlog text-white bg-dark-50 p-5 rounded">
@@ -94,10 +60,10 @@ const WorkoutForm = () => {
       <div
         className="
         m-0
-        mt-3
-        pt-3
+        mt-4
+        mb-1
+        pt-1
         pb-4
-       
         border
         bg-dark
         border-secondary
@@ -122,7 +88,7 @@ const WorkoutForm = () => {
                         newValue === "Select Muscle Group" ? null : newValue
                       )
                     }
-                    getOptionLabel={(group) => group}
+                    getOptionLabel={(group) => group || "Select Muscle Group"}
                     isOptionEqualToValue={(option, value) => option === value}
                     fullWidth
                     sx={{
@@ -130,7 +96,7 @@ const WorkoutForm = () => {
                       borderRadius: 2,
                       p: 0,
                       minWidth: 100,
-                    }}
+                    }} 
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -200,7 +166,6 @@ const WorkoutForm = () => {
                     <span
                       className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
                       id="addon-wrapping"
-                      style={{ flex: "0.3", minWidth: "100px" }}
                     >
                       Weight
                     </span>
@@ -218,7 +183,6 @@ const WorkoutForm = () => {
                     <span
                       className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
                       id="addon-wrapping"
-                      style={{ flex: "0.2", minWidth: "100px" }}
                     >
                       Reps
                     </span>
