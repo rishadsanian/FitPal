@@ -1,6 +1,23 @@
 /* eslint-disable camelcase */
 const db = require('../../configs/db.config');
 
+const getLogByUserId = (data) => {
+  const queryString = `
+    SELECT * FROM log
+    WHERE user_id = $1 AND timestamp >= now() - interval '7 days'
+    ORDER BY timestamp DESC
+  `;
+  
+  return db
+    .query(queryString, [data.user_id])
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
 // not used for demo
 const getLogByUserIdAndInterval = (user_id, interval) => {
   const intervalQuery = {
@@ -40,4 +57,4 @@ const getLogByUserIdAndExercise = (data) => {
       console.log(e);
     });
 };
-module.exports = { getLogByUserIdAndExercise, getLogByUserIdAndInterval };
+module.exports = { getLogByUserIdAndExercise, getLogByUserIdAndInterval, getLogByUserId };
