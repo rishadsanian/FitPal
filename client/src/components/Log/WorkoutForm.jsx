@@ -209,7 +209,7 @@ const WorkoutForm = () => {
                 {editingWorkout && (
                   <button
                     type="button"
-                    className="btn btn-secondary mt-2"
+                    className="btn btn-secondary mt-2 fw-bold opacity-75"
                     onClick={handleCancelEdit}
                   >
                     Cancel

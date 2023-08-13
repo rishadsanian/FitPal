@@ -26,7 +26,7 @@ const ChartWorkout = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/chartworkout/${userId}`); //hard-coded change to current user
+        const response = await axios.get(`/api/chartworkout/${userId}`);
         console.log(response.data);
         setWorkoutData(response.data);
       } catch (error) {
@@ -104,7 +104,6 @@ const ChartWorkout = () => {
       chartRef.current.update();
   }, [workoutData.length]);
 
-  //TODO show data on dates for whcih workouts are listed
   const currentDate = moment();
   const startDate = moment(currentDate)
     .startOf("isoWeek")
@@ -115,7 +114,7 @@ const ChartWorkout = () => {
     <div className="chart-container">
       <div className="card bg-dark weekly-tracker-card mb-3">
         <div className="card-body">
-          <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5">
+          <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5 opacity-75">
             Weekly Exercise Tracker
           </h3>
           <p className="text-secondary pb-3">
@@ -123,13 +122,11 @@ const ChartWorkout = () => {
           </p>
           <div>
             <div className="chart-wrapper">
-              {/* Put the canvas inside a div with fixed width of 400px */}
-              <div className="chart-container-400">
+              <div className="chart-container">
                 <canvas id="workoutChart" height="100%" width="100%" />
               </div>
             </div>
           </div>
-          {/* Add more weeks here if desired */}
         </div>
       </div>
     </div>
