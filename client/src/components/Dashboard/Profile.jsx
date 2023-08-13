@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import '../../styles/Profile.css';
 import { useProfileContext } from '../../contexts/ProfileContext';
