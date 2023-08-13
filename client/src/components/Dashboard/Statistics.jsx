@@ -9,32 +9,31 @@ const Statistics = () => {
   const [totalWeight, setTotalWeight] = useState(0);
   const [favouriteExercise, setFavouriteExercise] = useState("");
 
-  const { profile, fetchProfile } = useProfileContext();
-  const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
+  const { allWorkoutHistory, } = useWorkoutContext();
 
 
   useEffect(() => {
     setTotalReps(0);
     setTotalWeight(0);
-    for(const workout of workoutHistory) {
+    for(const workout of allWorkoutHistory) {
       setTotalReps(prev => prev + workout.reps);
       setTotalWeight(prev => prev + (workout.reps * workout.resistance))
     }
-    setTotalSets(workoutHistory.length)
+    setTotalSets(allWorkoutHistory.length)
 
-  }, [workoutHistory.length])
+  }, [allWorkoutHistory.length])
 
   const getFavouriteWorkout = () => {
-    if(workoutHistory.length){
-      let favouriteName = workoutHistory[0].exercise_name;; 
+    if(allWorkoutHistory.length){
+      let favouriteName = allWorkoutHistory[0].exercise_name;; 
       let favouriteCount = 0;
-      for(let i = 0; i < workoutHistory.length; i++) {
+      for(let i = 0; i < allWorkoutHistory.length; i++) {
         // if the count is greater than the length of the rest of the array skip it
-        if((favouriteCount) + i < workoutHistory.length){
+        if((favouriteCount) + i < allWorkoutHistory.length){
           let newFavouriteCount = 0;
-          let newFavouriteName = workoutHistory[i].exercise_name;
-          for(let j = 0; j < workoutHistory.length; j++){ 
-            if(workoutHistory[j].exercise_name === workoutHistory[i].exercise_name) {
+          let newFavouriteName = allWorkoutHistory[i].exercise_name;
+          for(let j = 0; j < allWorkoutHistory.length; j++){ 
+            if(allWorkoutHistory[j].exercise_name === allWorkoutHistory[i].exercise_name) {
               newFavouriteCount ++;
             }
           }
@@ -67,7 +66,7 @@ const Statistics = () => {
                 Average Weight Per Rep
               </th>
               <td>
-                {Math.round(totalWeight/totalReps)}lbs
+                {Math.round(totalWeight/totalReps || 0)} lbs
               </td>
             </tr>
             <tr>
@@ -83,7 +82,7 @@ const Statistics = () => {
                 Average Weight Per Set:
               </th>
               <td>
-                {Math.round(totalWeight/totalSets)}lbs
+                {Math.round(totalWeight/totalSets || 0)} lbs
               </td>
             </tr>
             <tr>
@@ -91,7 +90,7 @@ const Statistics = () => {
                 Total Weight Moved:
               </th>
               <td>
-                {totalWeight}lbs
+                {totalWeight} lbs
               </td>
             </tr>
             <tr>
@@ -99,7 +98,7 @@ const Statistics = () => {
                 Favourite Exercise:
               </th>
               <td>
-                {getFavouriteWorkout()}
+                {getFavouriteWorkout() || "None"}
               </td>
             </tr>
           </tbody>

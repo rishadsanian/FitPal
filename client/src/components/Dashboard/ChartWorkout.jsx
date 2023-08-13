@@ -61,6 +61,7 @@ const ChartWorkout = () => {
 
   useEffect(() => {
     // Initialize or update the chart when the workoutData changes
+    console.log(chartRef.current);
     if (!chartRef.current) {
       // Create chart for the first time
       const ctx = document.getElementById("workoutChart").getContext("2d");
@@ -94,7 +95,10 @@ const ChartWorkout = () => {
       chartRef.current = new Chart(ctx, chartConfig);
     } else {
       // Update the existing chart
+      console.log(chartRef)
       chartRef.current.data.datasets[0].data = processWorkoutData();
+      console.log("proccessed workout data: ", processWorkoutData());
+      console.log(chartRef.current.data.datasets[0].data)
       chartRef.current.update();
     }
   }, [workoutData.length]);

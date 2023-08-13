@@ -11,7 +11,7 @@ export default function UserProvider(props) {
   );
   const [userId, setUserId] = useState(Number(window.sessionStorage.getItem("userId")));
 
-  const providerData = { authenticated, userId };
+  const providerData = { authenticated, setAuthenticated, userId, setUserId };
 
   // We can now use this as a component to wrap anything
   // that needs our state

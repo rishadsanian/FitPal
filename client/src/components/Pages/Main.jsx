@@ -68,8 +68,8 @@ const Main = () => {
           </div>
 
           {/* Statistics */}
-          <div id="statistics" className="bg-dark opacity-75 p-5">
-            <h1 className="display-5 fw-bold text-warning">Statistics</h1>
+          <div id ="statistics" className="bg-dark opacity-75 p-5">
+            <h1 className="display-5 fw-bold text-warning">Weekly Statistics</h1>
             <Statistics />
           </div>
         </div>

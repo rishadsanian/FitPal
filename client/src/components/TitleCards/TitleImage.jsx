@@ -7,7 +7,7 @@ import "../../styles/TitleImage.css";
   return (
     <div>
       <div className="title-container" height="200">
-        <img className="object-fit-cover" height="200" width="100%" src="https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg"/>
+        <img className="object-fit-cover" alt="title" height="200" width="100%" src="https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg"/>
         <div className="overlay-image" height="175">
           <i className={icon}></i>
         </div>

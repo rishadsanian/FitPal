@@ -9,15 +9,16 @@ import { useProfileContext } from "../../contexts/ProfileContext";
 import { userContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { LinearProgress } from "@mui/material";
 
 const daysOfWeek = {
-  0: "Monday",
-  1: "Tuesday",
-  2: "Wednesday",
-  3: "Thursday",
-  4: "Friday",
-  5: "Saturday",
-  6: "Sunday",
+  0: "Sunday",
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
 };
 
 const MUSCLE_ICON = {
@@ -62,6 +63,9 @@ const SliderItem = ({
   const [currentSets, setCurrentSets] = useState(
     sets.filter((set) => exercise === set.name)
   );
+  const [userWorkouts, setUserWorkouts] = useState(
+    uniqueExercises.filter((set) => exercise === set.exercise_name)
+  )
 
   useEffect(() => {
     setUniqueExercises(
@@ -71,7 +75,18 @@ const SliderItem = ({
 
   const isDone =
     uniqueExercises.filter((set) => exercise === set.exercise_name).length >=
-    sets.filter((set) => exercise === set.name).length;
+    currentSets.length;
+
+  const getCompletionVal = () => {
+    const percentComplete = uniqueExercises.filter((set) => exercise === set.exercise_name).length /
+    currentSets.length * 100;
+    if(percentComplete > 100) {
+      return 100;
+    } else {
+      return percentComplete; 
+    }
+  }
+  
 
   const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
 
@@ -106,14 +121,15 @@ const SliderItem = ({
           }
         ></i>
         <h5 className="text-white card-title">{exercise}</h5>
+        
       </div>
-
+      
       <div className="card-body px-0">
         <p className="fw-bold text-white">Recomended: </p>
         {/* RECOMMENDED SETS */}
         <div className="d-flex flex-wrap gap-2 justify-content-center ps-3">
-          {currentSets.map((set) => (
-            <div className="badge text-bg-light">
+          {currentSets.map((set, index) => (
+            <div key={index} className="badge text-bg-light">
               <span>
                 {set.resistant} lbs/{set.reps} Reps
               </span>
@@ -133,8 +149,8 @@ const SliderItem = ({
             <div className="d-flex flex-wrap gap-2 justify-content-center">
               {uniqueExercises
                 .filter((set) => exercise === set.exercise_name)
-                .map((set) => (
-                  <div className="badge text-bg-warning">
+                .map((set, index) => (
+                  <div key={index} className="badge text-bg-warning">
                     <span>
                       {set.resistance} lbs/{set.reps} Reps
                     </span>
@@ -142,8 +158,9 @@ const SliderItem = ({
                 ))}
             </div>
           )}
+          
         </div>
-
+        <LinearProgress color="success" variant="determinate" value={getCompletionVal()}sx={{ width: "100%"}}/>
         <button
           className="text-warning btn btn-outline-warning mt-3"
           disabled={isDone}
@@ -185,7 +202,7 @@ const SliderComponent = () => {
       axios
         .get(
           `http://localhost:8080/sets/program/${profile.program_id}/day/${
-            moment().day() - 1
+            moment().day()
           }`
         )
         .then((res) => {
@@ -209,7 +226,7 @@ const SliderComponent = () => {
       axios
         .get(
           `http://localhost:8080/sessions/program/${profile.program_id}/day/${
-            moment().day() - 1
+            moment().day()
           }`
         )
         .then((res) => {
