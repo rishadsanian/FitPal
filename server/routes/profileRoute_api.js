@@ -3,7 +3,7 @@ const pool = require("../configs/db.config");
 const express = require("express");
 const router = express.Router();
 
-router.get("/:user_id", async (req, res) => {
+router.get("/:user_id", async(req, res) => {
   try {
     const { user_id } = req.params;
 
@@ -31,7 +31,7 @@ router.get("/:user_id", async (req, res) => {
   }
 });
 
-router.get("/:user_id/:interval", async (req, res) => {
+router.get("/:user_id/:interval", async(req, res) => {
   const user_id = req.params.user_id;
   const interval = req.params.interval;
 

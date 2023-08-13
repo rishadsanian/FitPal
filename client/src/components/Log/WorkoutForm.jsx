@@ -32,7 +32,6 @@ const WorkoutForm = () => {
     setExercises,
   } = useWorkoutContext();
 
-  const [readMore, setReadMore] = useState(false);
 
   const [modalDisplay, setModalDisplay] = useState(false);
 
@@ -127,8 +126,6 @@ const WorkoutForm = () => {
                     isOptionEqualToValue={(option, value) => option === value}
                     fullWidth
                     sx={{
-                      // backgroundColor: '#343a40',
-                      // text: "warning",
                       boxShadow: 1,
                       borderRadius: 2,
                       p: 0,
@@ -178,9 +175,6 @@ const WorkoutForm = () => {
                           color: "white",
                           borderColor: "#ffc107",
                           bgcolor: "rgba(52, 58, 64, 0.75)",
-                          "&:hover": {
-                            borderColor: "#ffc107", // Change the border color on hover
-                          },
                         }}
                       />
                     )}
@@ -189,7 +183,7 @@ const WorkoutForm = () => {
               )}
               {!editingWorkout && selectedExercise && exercises.length > 0 && (
                 <p className="text-secondary text-end">
-                  {!readMore && selectedExercise && (
+                  {selectedExercise && (
                     <span
                       className="badge text-bg-warning me-2 pt-1 opacity-75"
                       onClick={() => setModalDisplay(true)}

@@ -11,16 +11,7 @@ import { ProfileProvider } from "../../contexts/ProfileContext";
 import { WorkoutProvider } from "../../contexts/WorkoutContext";
 import ChatGptDailySummary from "../Dashboard/ChatGptDailySummary";
 import Statistics from "../Dashboard/Statistics";
-//Dashboard/logged in main page
-const daysOfWeek = {
-  0: "Monday",
-  1: "Tuesday",
-  2: "Wednesday",
-  3: "Thursday",
-  4: "Friday",
-  5: "Saturday",
-  6: "Sunday",
-};
+
 const Main = () => {
   // Formatted date for display
   const currentDate = moment().format("dddd, MMMM D");

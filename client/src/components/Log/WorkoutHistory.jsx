@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -86,7 +86,7 @@ const SliderItem = ({
                           disabled={editingWorkout === workout}
                           className="btn"
                           style={{
-                            transition: "background-color 0.3s", // Add a smooth transition effect
+                            transition: "background-color 0.3s", 
                             outline: "none",
                           }}
                         >
@@ -96,7 +96,7 @@ const SliderItem = ({
                           onClick={() => handleDeleteWorkout(workout.id)}
                           className="btn"
                           style={{
-                            transition: "background-color 0.3s", // Add a smooth transition effect
+                            transition: "background-color 0.3s", 
                             outline: "none",
                           }}
                         >
@@ -117,13 +117,10 @@ const SliderItem = ({
 
 const WorkoutHistory = () => {
   const {
-    workoutHistory,
     handleSliderChange,
     handleEditWorkout,
     handleDeleteWorkout,
-    currentDate,
     editingWorkout,
-    fetchWorkoutHistory,
     allWorkoutHistory,
     fetchAllWorkoutHistory,
   } = useWorkoutContext();
