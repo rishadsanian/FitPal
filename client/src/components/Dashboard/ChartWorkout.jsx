@@ -121,7 +121,7 @@ const ChartWorkout = () => {
             Weekly Exercise Tracker
           </h3>
           <p className="text-secondary pb-3">
-            {startDate}-{endDate}
+            {startDate} - {endDate}
           </p>
           <div>
             <div className="chart-wrapper">

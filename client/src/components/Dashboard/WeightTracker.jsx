@@ -1,21 +1,40 @@
 import React, { useContext } from "react";
 import WeightChart from "./ChartWeight";
-import { useProfileContext } from "../../contexts/ProfileContext"; 
+import { useProfileContext } from "../../contexts/ProfileContext";
 import { userContext } from "../../contexts/UserContext";
 
-
 const WeightTracker = () => {
-  const { selectedInterval, setSelectedInterval } = useProfileContext(); 
+  const { selectedInterval, setSelectedInterval } = useProfileContext();
   const { userId } = useContext(userContext);
 
   return (
-    <div>
-      {/* Component to change the selected interval */}
-      <button onClick={() => setSelectedInterval("7d")}>7 Days</button>
-      <button onClick={() => setSelectedInterval("30d")}>30 Days</button>
-      <button onClick={() => setSelectedInterval("1yr")}>1 Year</button>
+    <div className="card bg-dark weekly-tracker-card mb-3 pt-5">
+      
+      <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5">Weight Tracker</h3>
+      <div className="pt-3 pb-3">
+        <span
+          className="badge bg-dark me-2 pt-1 opacity-75 text-warning"
+          style={{ cursor: "pointer" }}
+          onClick={() => setSelectedInterval("7d")}
+        >
+          7 Days
+        </span>
+        <span
+          className="badge bg-dark me-2 pt-1 opacity-75 text-warning"
+          style={{ cursor: "pointer" }}
+          onClick={() => setSelectedInterval("30d")}
+        >
+          30 Days
+        </span>
+        <span
+          className="badge bg-dark me-2 pt-1 opacity-75 text-warning"
+          style={{ cursor: "pointer" }}
+          onClick={() => setSelectedInterval("1yr")}
+        >
+          1 Year
+        </span>
+      </div>
 
-      {/* Display the weight chart */}
       <WeightChart userId={userId} selectedInterval={selectedInterval} />
     </div>
   );
