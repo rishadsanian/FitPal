@@ -8,7 +8,7 @@ const CreateProgram = () => {
   return (
     <div className="px-3">
       <form id="create_program_form" className="">
-        <div className="container bg-dark-75 text-white rounded">
+        <div className="container bg-dark opacity-75 text-white rounded">
           <h1 className="display-5 pt-3 fw-bold text-white">Create Program</h1>
           <div className="text-start">
             <label htmlFor="desciption" className="form-label">
