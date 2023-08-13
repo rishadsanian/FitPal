@@ -96,12 +96,14 @@ const SessionDetail = (props) => {
   const exercisesListItem = exercises.map((exercise, index) => {
     
     const exerciseSets = sets.filter((set) => set.exercise_name === exercise.name);
-    const exerciseLogs = logs.filter(
-      (log) =>
+    const exerciseLogs = logs.filter((log) => {
+      const logDayOfWeek = moment(log.timestamp).isoWeekday(); // 1 for Monday, 2 for Tuesday, ..., 7 for Sunday
+      return (
         log.exercise_name === exercise.name &&
-        (moment(log.timestamp).day() - 1) === session.day_of_week &&
-        moment(log.timestamp).isSame(new Date(), 'week')
-    );
+        logDayOfWeek === session.day_of_week &&
+        moment(log.timestamp).isSame(new Date(), "week")
+      );
+    });
     return (
       <SessionItem
         key={index}
