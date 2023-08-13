@@ -119,13 +119,24 @@ const ChartWorkout = () => {
           <p className="text-secondary pb-3">
             {startDate} - {endDate}
           </p>
-          <div>
-            <div className="chart-wrapper">
-              <div className="chart-container">
-                <canvas id="workoutChart" height="100%" width="100%" />
-              </div>
+          <div
+            className="chart-wrapper"
+            style={{ display: workoutData.length > 0 ? "block" : "none" }}
+          >
+            <div className="chart-container">
+              <canvas id="workoutChart" height="100%" width="100%" />
             </div>
           </div>
+          {workoutData.length === 0 && (
+            <p className="text-secondary">No workouts recorded for this week</p>
+          )}
+
+         
+          <span className="d-flex align-items-center justify-content-center pt-4 pb-0">
+            <a href="#log" className="text-decoration-none text-warning">
+              <i className="circle-add-icon fas fa-plus-circle fa-3x opacity-75"></i>
+            </a>
+          </span>
         </div>
       </div>
     </div>
