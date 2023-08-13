@@ -1,5 +1,4 @@
 import React from "react";
-import { Box }from '@mui/material';
 import HeroImage from "../TitleCards/HeroImage";
 import LandingCard from "../LandingCard";
 
