@@ -3,6 +3,7 @@ import { Line } from "react-chartjs-2";
 import { Chart, PointElement, LineElement } from "chart.js";
 import "chart.js/auto"; // Import the auto package
 import moment from "moment";
+import 'chartjs-adapter-moment'
 import { useProfileContext } from "../../contexts/ProfileContext";
 
 const WeightChart = ({ userId, selectedInterval }) => {
@@ -20,20 +21,29 @@ const WeightChart = ({ userId, selectedInterval }) => {
     }
   }, [profileHistory]);
 
-  // Process profileHistory data into chart data points
-  const chartData = profileHistory
-    ? profileHistory.map((entry) => ({
-        x: moment(entry.day).toDate(),
-        y: entry.weights[0],
-      }))
+  // Process profileHistory data into separate arrays for x and y values
+  const xValues = profileHistory
+    ? profileHistory.map((entry) => moment(entry.day).toDate())
+    : [];
+  const yValues = profileHistory
+    ? profileHistory.map((entry) => entry.weights[0])
     : [];
 
-  const chartConfig = {
-    plugins: {
-      legend: {
-        display: true,
+  const chartData = {
+    labels: xValues.map((xValue) => xValue.toISOString().split("T")[0]),
+    datasets: [
+      {
+        label: "Average Weight",
+        data: yValues,
+        fill: false,
+        borderColor: "rgba(75, 192, 192, 1)",
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(75, 192, 192, 1)",
       },
-    },
+    ],
+  };
+
+  const options = {
     scales: {
       x: {
         type: "time",
@@ -46,26 +56,16 @@ const WeightChart = ({ userId, selectedInterval }) => {
         },
       },
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
         title: {
           display: true,
           text: "Weight",
         },
       },
     },
-    datasets: [
-      {
-        label: "Average Weight",
-        data: chartData,
-        fill: false,
-        borderColor: "rgba(75, 192, 192, 1)",
-        pointRadius: 5,
-        pointBackgroundColor: "rgba(75, 192, 192, 1)",
-      },
-    ],
   };
 
-  return loading ? <div>Loading...</div> : <Line data={chartConfig} />;
+  return loading ? <div>Loading...</div> : <Line data={chartData} options={options} />;
 };
 
 export default WeightChart;
