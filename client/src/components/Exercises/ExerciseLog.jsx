@@ -120,6 +120,7 @@ const ExerciseLog = (props) => {
 
       await Promise.all(promises);
       setIsSave(true);
+      props.onSaveComplete();
     } catch (error) {
       console.log('Error saving data:', error);
     }
