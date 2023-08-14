@@ -63,7 +63,7 @@ function ProgramsPage(props) {
       )}
       {authenticated ? (
         <div className="row">
-          <div className="col col-12 col-md-6 col-lg-9">
+          <div className="col col-12 col-md-6 col-lg-9 pe-0">
             {userPrograms.length > 0 && (
               <CardList
                 cardData={userPrograms}
@@ -71,6 +71,7 @@ function ProgramsPage(props) {
                 editable={true}
                 currentProfile={currentProfile}
                 setCurrentProfile={setCurrentProfile}
+                bg="bg-dark-75 pb-3"
               />
             )}
             <CardList
@@ -79,6 +80,7 @@ function ProgramsPage(props) {
               editable={false}
               currentProfile={currentProfile}
               setCurrentProfile={setCurrentProfile}
+              bg="bg-dark-75 border-top border-secondary"
             />
           </div>
 
