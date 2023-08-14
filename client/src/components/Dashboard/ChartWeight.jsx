@@ -8,19 +8,24 @@ import 'chartjs-adapter-moment'
 import { useProfileContext } from "../../contexts/ProfileContext";
 
 const WeightChart = ({ userId, selectedInterval }) => {
-  const { profileHistory, fetchHistoricalProfileData } = useProfileContext();
+  const { profileHistory, fetchHistoricalProfileData, profile } = useProfileContext();
   Chart.register(PointElement, LineElement);
   const [loading, setLoading] = useState(true);
 
+  // fetchHistoricalProfileData()
+
   useEffect(() => {
     fetchHistoricalProfileData();
-  }, [userId, selectedInterval]);
+    console.log("profile history",profileHistory);
+  }, [userId, selectedInterval, profile]);
 
   useEffect(() => {
     if (profileHistory) {
       setLoading(false);
     }
   }, [profileHistory]);
+
+
 
   // Process profileHistory data into separate arrays for x and y values
   const xValues = profileHistory

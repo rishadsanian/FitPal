@@ -50,6 +50,7 @@ export function ProfileProvider({ children }) {
       const response = await axios.get(
         `/api/profile/${userId}/${selectedInterval}`
       );
+      console.log(response.data);
       setProfileHistory(response.data);
     } catch (error) {
       console.error("Error fetching profile data:", error);
@@ -63,12 +64,13 @@ export function ProfileProvider({ children }) {
   //--------------------------------------------------------------------//
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const formattedDateOfBirth = profile.date_of_birth instanceof Date ? profile.date_of_birth.toISOString() : null;
 
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
         user_id: userId,
-        date_of_birth: profile.date_of_birth,
+        date_of_birth: formattedDateOfBirth,
         height: profile.height,
         weight: profile.weight,
         gender: profile.gender,
