@@ -19,7 +19,6 @@ import LogPage from "./components/Pages/LogPage";
 
 import ProgramProvider from "./contexts/ProgramProvider";
 import { userContext } from "./contexts/UserContext";
-import { ProfileProvider } from "./contexts/ProfileContext";
 
 function App() {
   const { authenticated } = useContext(userContext);
@@ -37,16 +36,7 @@ function App() {
 
           <Route
             path="/signup"
-            element={
-              authenticated ? (
-                <Main />
-              ) : (
-                <ProfileProvider>
-                  {" "}
-                  <SignUp />{" "}
-                </ProfileProvider>
-              )
-            }
+            element={ authenticated ? <Main /> : <SignUp /> }
           />
 
           {/* Page Routes */}

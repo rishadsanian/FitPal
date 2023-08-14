@@ -7,7 +7,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { profile, setProfile, handleNewUserProfile } = useProfileContext();
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -18,6 +17,25 @@ const SignUp = () => {
 
   const onChangeRePassword = (e) => {
     setRePassword(e.target.value);
+  };
+
+  const handleNewUserProfile = async (userId) => {
+    try {
+      // Submit form data to the server and db
+      const response = await axios.post("/profile", {
+        user_id: userId,
+        date_of_birth: null,
+        height: 0,
+        weight: 0,
+        gender: "Not Selected",
+        fitness_level: "Not Selected",
+        goal: "Not Set",
+        program_id: null,
+        name: null,
+      });
+    } catch (error) {
+      console.error("Error creating/updating profile:", error);
+    }
   };
 
   const onSignUp = (e) => {
@@ -37,21 +55,7 @@ const SignUp = () => {
           window.sessionStorage.setItem("isAuthenticated", true);
           window.sessionStorage.setItem("userId", res.data.result.id);
           window.sessionStorage.setItem("email", res.data.result.email);
-          console.log("res-userid", res.data.result.id);
-          handleNewUserProfile(
-            {
-              user_id: res.data.result.id,
-              date_of_birth: null,
-              height: 0,
-              weight: 0,
-              gender: "Not Selected",
-              fitness_level: "Not Selected",
-              goal: "Not Set",
-              program_id: null,
-              name: null,
-            },
-          );
-          console.log(profile);
+          handleNewUserProfile(res.data.result.id);
           window.location = "/dashboard";
         }
       })
