@@ -65,7 +65,7 @@ const ChatGptDailySummary = () => {
         localStorage.setItem("cachedMessage", newMessage);
 
         // Generate a new workout plan
-        const workoutPrompt = `your response and sentence must end before tokens are finished.If there is no ${profile.program_id}, Suggest specific exercise name for the day based on the user's goal: ${profile.goal} and user fitness level: ${profile.fitness_level}. If there is a ${profile.program_id}, ask user to check out the program schedule. `;
+        const workoutPrompt = `your response and sentence must end before tokens are finished. If there is no ${profile.program_id}, Suggest specific exercise name for the day based on the user's goal: ${profile.goal} and user fitness level: ${profile.fitness_level}. If there is a ${profile.program_id}, ask user to check out the program schedule. `;
 
         const workoutResponse = await axios.post(
           "https://api.openai.com/v1/chat/completions",
