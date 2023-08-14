@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfileContext } from "../../contexts/ProfileContext";
-import { useWorkoutContext } from "../../contexts/WorkoutContext";
 
 //Chat GPT motivation message Broiler Pate
 const ChatGptDailySummary = () => {
@@ -59,7 +58,7 @@ const ChatGptDailySummary = () => {
             },
           }
         );
-        console.log("Response data", response.data);
+        // console.log("Response data", response.data);
         setMotivationalMessage(response.data.choices[0].message.content);
       } else {
         // Use the cached motivational message
