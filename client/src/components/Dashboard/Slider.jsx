@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import moment from "moment";
 import { useRef, useEffect, useState, useContext } from "react";
 import Slider from "react-slick";
@@ -10,16 +12,6 @@ import { userContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { LinearProgress } from "@mui/material";
-
-const daysOfWeek = {
-  0: "Sunday",
-  1: "Monday",
-  2: "Tuesday",
-  3: "Wednesday",
-  4: "Thursday",
-  5: "Friday",
-  6: "Saturday",
-};
 
 const MUSCLE_ICON = {
   abdominals: "fa-child-reaching",
@@ -60,12 +52,14 @@ const SliderItem = ({
   const [uniqueExercises, setUniqueExercises] = useState(
     workoutHistory.filter((workout) => workout.exercise_name === exercise)
   );
+
   const [currentSets, setCurrentSets] = useState(
     sets.filter((set) => exercise === set.name)
   );
-  const [userWorkouts, setUserWorkouts] = useState(
-    uniqueExercises.filter((set) => exercise === set.exercise_name)
-  )
+
+  // const [userWorkouts, setUserWorkouts] = useState(
+  //   uniqueExercises.filter((set) => exercise === set.exercise_name)
+  // )
 
   useEffect(() => {
     setUniqueExercises(

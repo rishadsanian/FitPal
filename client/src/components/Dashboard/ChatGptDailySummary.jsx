@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfileContext } from "../../contexts/ProfileContext";
-import { useWorkoutContext } from "../../contexts/WorkoutContext";
 
 //Chat GPT motivation message Broiler Pate
 const ChatGptDailySummary = () => {
