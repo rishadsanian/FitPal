@@ -12,6 +12,8 @@ const ExerciseLog = (props) => {
   const [logs, setLogs] = useState([]);
   const user_id = window.sessionStorage.getItem('userId');
   const [isSave, setIsSave] = useState(false);
+  const [isReset, setIsReset] = useState(false);
+
   // Get min anx max set for exercise
   const max = 8;
   const [min, setMin] = useState(null);
@@ -50,6 +52,7 @@ const ExerciseLog = (props) => {
     fetchSets();
     fecthLogs();
     setIsSave(false);
+    console.log(records);
   }, [props.name, isSave]);
 
   //
@@ -85,6 +88,8 @@ const ExerciseLog = (props) => {
         updateRecord={(re) => {
           updateRecords(re);
         }}
+        reset={isReset}
+        setReset={()=>{setIsReset(false)}}
       />
     );
   });
@@ -93,7 +98,7 @@ const ExerciseLog = (props) => {
   const addSet = () => {
     setSets((prev) => [
       ...prev,
-      { id: sets.length, resistant: 5, reps: 10 },
+      { id: sets.length, resistant: null, reps: null },
     ]);
   };
 
@@ -119,7 +124,10 @@ const ExerciseLog = (props) => {
       }
 
       await Promise.all(promises);
+
       setIsSave(true);
+      setRecords([]);
+      setIsReset(true);
       props.onSaveComplete();
     } catch (error) {
       console.log('Error saving data:', error);

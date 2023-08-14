@@ -20,9 +20,9 @@ router.get("/:user_id", async(req, res) => {
     // SQL to db
     const result = await pool.query(queryString, [user_id]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Profile not found" });
-    }
+    // if (result.rows.length === 0) {
+    //   return res.status(404).json({ error: "Profile not found" });
+    // }
 
     res.json(result.rows[0]);
   } catch (error) {
@@ -51,7 +51,6 @@ router.get("/:user_id/:interval", async(req, res) => {
 `;
 
     const result = await pool.query(queryString, [user_id]);
-    console.log(result);
     // if (result.rows.length === 0) {
     //   return res.status(404).json({ error: "Profile not found" });
     // }

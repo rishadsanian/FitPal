@@ -3,7 +3,7 @@ CREATE TABLE log (
   id SERIAL PRIMARY KEY,
   exercise_name VARCHAR(255) NOT NULL,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  resistance INTEGER NOT NULL CHECK (resistance > 0),
+  resistance INTEGER,
   reps INTEGER NOT NULL CHECK (reps > 0),
   timestamp TIMESTAMP DEFAULT NOW()
 );

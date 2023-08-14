@@ -21,7 +21,7 @@ const SliderItem = ({
       className="pt-0 pb-0 m-0 border bg-dark border-secondary bs-border-opacity-75 rounded flex-column border-3"
       style={{
         margin: "0 10px",
-        height: "307px",
+        height: "335px",
         overflow: "hidden",
         overflowX: "auto",
         overflowY: "scroll",
@@ -62,9 +62,12 @@ const SliderItem = ({
             <tr>
               <td
                 colSpan="2"
-                className="workout-entry profile-card p-3 border border-secondary rounded border-3"
+                className="workout-entry p-3"
               >
+                <div className="p-3 border border-secondary rounded border-3">
                 No workouts recorded
+                </div>
+                
               </td>
             </tr>
           ) : (
@@ -75,8 +78,12 @@ const SliderItem = ({
                     <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
                       <p>{workout.exercise_name}</p>
                       <p className="badge text-bg-warning me-2 opacity-75">
-                        {workout.resistance > 0 &&
-                          `${workout.resistance} lbs / ${workout.reps} Reps`}
+                        {workout.resistance === null
+                          ? "0 lbs / " + workout.reps + " Reps"
+                          : workout.resistance +
+                            " lbs / " +
+                            workout.reps +
+                            " Reps"}
                       </p>
                     </div>
                     {workout.reps > 0 && (
@@ -86,7 +93,7 @@ const SliderItem = ({
                           disabled={editingWorkout === workout}
                           className="btn"
                           style={{
-                            transition: "background-color 0.3s", 
+                            transition: "background-color 0.3s",
                             outline: "none",
                           }}
                         >
@@ -96,7 +103,7 @@ const SliderItem = ({
                           onClick={() => handleDeleteWorkout(workout.id)}
                           className="btn"
                           style={{
-                            transition: "background-color 0.3s", 
+                            transition: "background-color 0.3s",
                             outline: "none",
                           }}
                         >
@@ -131,21 +138,21 @@ const WorkoutHistory = () => {
     fetchAllWorkoutHistory();
   }, []);
 
- useEffect(() => {
-  const workoutHistorySorted = Array.from({ length: 7 }, () => []);
-  
-  const currentDate = moment(new Date()).startOf("day");
+  useEffect(() => {
+    const workoutHistorySorted = Array.from({ length: 7 }, () => []);
 
-  allWorkoutHistory.forEach((workout) => {
-    const workoutDate = moment(workout.timestamp).startOf("day");
-    const dayToCheck = currentDate.diff(workoutDate, "days");
-    if (dayToCheck < 7) {
-      workoutHistorySorted[dayToCheck].push(workout);
-    }
-  });
+    const currentDate = moment(new Date()).startOf("day");
 
-  setWorkoutHistoryByDay(workoutHistorySorted);
-}, [allWorkoutHistory]);
+    allWorkoutHistory.forEach((workout) => {
+      const workoutDate = moment(workout.timestamp).startOf("day");
+      const dayToCheck = currentDate.diff(workoutDate, "days");
+      if (dayToCheck < 7) {
+        workoutHistorySorted[dayToCheck].push(workout);
+      }
+    });
+
+    setWorkoutHistoryByDay(workoutHistorySorted);
+  }, [allWorkoutHistory]);
 
   return (
     <div className="workout-history-slider container addlog text-white p-5">

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 
 const SetRecord = (props) => {
   const [rep, setRep] = useState(null);
@@ -13,6 +14,12 @@ const SetRecord = (props) => {
     setRecord(updatedRecord);
     props.updateRecord(updatedRecord);
   };
+
+  useEffect(()=>{
+    setRep(null);
+    setResistance(null);
+    props.setReset();
+  }, [props.reset]);
 
   const onChangeResistant = (e) => {
     const newResistance = e.target.value;

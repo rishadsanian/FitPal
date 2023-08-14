@@ -19,10 +19,10 @@ const ChartSlider = () => {
   return (
     <div className="container mt-5">
       {/* <Slider {...settings}> */}
-      <div border border-secondary rounded border-3>
+      <div>
         <ChartWorkout />
       </div>
-      <div border border-secondary rounded border-3>
+      <div>
         <WeightTracker />
       </div>
       {/* </Slider> */}

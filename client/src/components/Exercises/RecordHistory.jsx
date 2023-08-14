@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../index.css'
-import TimeAgo from 'timeago-react';
 const RecordHistory = (props) => {
   const logs = props.logs;
   const daysArray = [
@@ -28,10 +27,7 @@ const RecordHistory = (props) => {
               aria-expanded="true"
               aria-controls={`collapse${index}`}
             >
-              <div className='d-flex justify-content-between align-items-center p-1'>
-                <p className='text-warning fw-bold m-0'>{day}</p> 
-                <TimeAgo datetime={day}/>
-              </div>
+              <p className='text-warning fw-bold m-0'>{day}</p> 
             </button>
           </h2>
           <div
