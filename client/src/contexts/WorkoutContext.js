@@ -120,13 +120,13 @@ export function WorkoutProvider({ children }) {
 
       if (editingWorkout) {
         // If edit mode, perform an update operation
-        const response = await axios.put(
+        await axios.put(
           `/update/log/${editingWorkout.id}`,
           logData
         );
       } else {
         // create operation
-        const response = await axios.post("/log", logData);
+        await axios.post("/log", logData);
       }
 
       // Clear form and editingWorkout state

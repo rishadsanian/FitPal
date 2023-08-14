@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { useProfileContext } from "../../contexts/ProfileContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +21,7 @@ const SignUp = () => {
   const handleNewUserProfile = async (userId) => {
     try {
       // Submit form data to the server and db
-      const response = await axios.post("/profile", {
+      await axios.post("/profile", {
         user_id: userId,
         date_of_birth: null,
         height: 0,
