@@ -117,7 +117,7 @@ const ChartWorkout = () => {
           <h3 className="pt-1 pb-2 text-warning fw-bold weekly-tracker-header py-5 opacity-75">
             Weekly Exercise Tracker
           </h3>
-          <p className="text-secondary pb-3">
+          <p className="text-white fw-bold pb-3 opacity-75">
             {startDate} - {endDate}
           </p>
           <div
