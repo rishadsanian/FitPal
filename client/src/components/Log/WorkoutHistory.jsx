@@ -62,9 +62,12 @@ const SliderItem = ({
             <tr>
               <td
                 colSpan="2"
-                className="workout-entry profile-card p-3 border border-secondary rounded border-3"
+                className="workout-entry p-3"
               >
+                <div className="p-3 border border-secondary rounded border-3">
                 No workouts recorded
+                </div>
+                
               </td>
             </tr>
           ) : (

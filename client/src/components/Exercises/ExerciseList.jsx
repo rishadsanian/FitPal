@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExerciseItem from './ExerciseItem';
 import { useParams } from 'react-router';
-import { setContext } from '../../contexts/SetContext';
 
 const MUSCLE = {
   abdominals: 'Abdominals',
