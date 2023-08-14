@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-import { useProfileContext } from "../../contexts/ProfileContext";
 
 const Statistics = () => {
   const [totalReps, setTotalReps] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
   const [totalWeight, setTotalWeight] = useState(0);
-  const [favouriteExercise, setFavouriteExercise] = useState("");
 
   const { allWorkoutHistory, } = useWorkoutContext();
 
