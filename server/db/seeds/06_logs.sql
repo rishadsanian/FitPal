@@ -33,3 +33,19 @@ INSERT INTO log (exercise_name, user_id, resistance, reps, timestamp) VALUES
   ('Dumbbell Bench Press',4, 65, 8, NOW() - INTERVAL '1 day'),
   ('Standing dumbbell shrug',4, 70, 10, NOW() - INTERVAL '1 day'),
   ('Kettlebell sumo deadlift high pull',4, 35, 15, NOW() - INTERVAL '1 day');
+
+
+--demo user
+-- Insert workout data for Wednesday (1 day ago)
+INSERT INTO log (exercise_name, user_id, resistance, reps, timestamp) VALUES
+  ('Dumbbell Bench Press', 5, 60, 10, NOW() - INTERVAL '1 day'),
+  ('Standing dumbbell shrug', 5, 70, 10, NOW() - INTERVAL '1 day'),
+  ('Kettlebell sumo deadlift high pull', 5, 35, 15, NOW() - INTERVAL '1 day');
+
+-- Insert workout data for Monday (3 days ago)
+INSERT INTO log (exercise_name, user_id, resistance, reps, timestamp) VALUES
+  ('Incline dumbbell bench press', 5, 55, 10, NOW() - INTERVAL '3 days'),
+  ('Low-cable cross-over', 5, 50, 12, NOW() - INTERVAL '3 days'),
+  ('Dumbbell Bench Press', 5, 60, 10, NOW() - INTERVAL '3 days'),
+  ('Dumbbell Flyes', 5, 45, 12, NOW() - INTERVAL '3 days'),
+  ('Smith machine shrug', 5, 80, 8, NOW() - INTERVAL '3 days');

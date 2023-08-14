@@ -9,6 +9,7 @@ const ChatGptDailySummary = () => {
   const [motivationalMessage, setMotivationalMessage] = useState("");
   const [workoutPlan, setWorkoutPlan] = useState("");
   const [lastGeneratedDate, setLastGeneratedDate] = useState(null);
+  const [cachedProfile, setCachedProfile] = useState({}); // Store the cached profile for comparison
 
   // Fetch messages and workout plan when profile changes
   useEffect(() => {
@@ -18,89 +19,87 @@ const ChatGptDailySummary = () => {
       setLastGeneratedDate(new Date(storedDate));
     }
 
-    fetchMessages();
-  }, [profile]);
+    // Check if profile changes are significant (e.g., fitness level or goal change)
+    const significantChange =
+      profile.fitness_level !== cachedProfile.fitness_level ||
+      profile.goal !== cachedProfile.goal;
 
-  useEffect(() => {
-    fetchMessages();
+    // Update cached profile for comparison in the next render
+    setCachedProfile({ ...profile });
+
+    if (significantChange) {
+      fetchMessages();
+    }
   }, [profile]);
 
   // Fetch motivational message and workout plan
   const fetchMessages = async () => {
     try {
-      const currentDate = new Date();
-      if (
-        !lastGeneratedDate ||
-        currentDate.toDateString() !== lastGeneratedDate.toDateString()
-      ) {
-        const key = process.env.REACT_APP_YOUR_OPENAI_API_KEY;
+      const key = process.env.REACT_APP_YOUR_OPENAI_API_KEY;
 
-        // Fetch motivational message
-        const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}. Sentence must end before tokens are finished`;
+      // Fetch motivational message
+      const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}. Sentence must end before tokens are finished`;
 
-        const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            max_tokens: 50,
-            temperature: 0.7,
-            model: "gpt-3.5-turbo",
-            messages: [
-              {
-                role: "system",
-                content: "You are a personal fitness trainer.",
-              },
-              { role: "user", content: prompt },
-            ],
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${key}`,
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          max_tokens: 50,
+          temperature: 0.7,
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a personal fitness trainer.",
             },
-          }
-        );
+            { role: "user", content: prompt },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${key}`,
+          },
+        }
+      );
 
-        const newMessage = response.data.choices[0].message.content;
-        setMotivationalMessage(newMessage);
-        localStorage.setItem("cachedMessage", newMessage);
+      const newMessage = response.data.choices[0].message.content;
+      setMotivationalMessage(newMessage);
+      localStorage.setItem("cachedMessage", newMessage);
 
+<<<<<<< HEAD
         // Generate a new workout plan
         const workoutPrompt = `your response and sentence must end before tokens are finished. If there is no ${profile.program_id}, Suggest specific exercise name for the day based on the user's goal: ${profile.goal} and user fitness level: ${profile.fitness_level}. If there is a ${profile.program_id}, ask user to check out the program schedule. `;
+=======
+      // Generate a new workout plan
+      const workoutPrompt = `your response and sentence must end before tokens are finished.If there is no ${profile.program_id}, Suggest specific exercise name for the day based on the user's goal: ${profile.goal} and user fitness level: ${profile.fitness_level}. If there is a ${profile.program_id}, ask user to check out the program schedule. `;
+>>>>>>> 64ad90d31f9ee9690d312e07aa4903cb518dbc8d
 
-        const workoutResponse = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            max_tokens: 200,
-            temperature: 0.7,
-            model: "gpt-3.5-turbo",
-            messages: [
-              {
-                role: "system",
-                content: "You are a personal fitness trainer.",
-              },
-              { role: "user", content: workoutPrompt },
-            ],
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${key}`,
+      const workoutResponse = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          max_tokens: 200,
+          temperature: 0.7,
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a personal fitness trainer.",
             },
-          }
-        );
+            { role: "user", content: workoutPrompt },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${key}`,
+          },
+        }
+      );
 
-        const newWorkoutPlan = workoutResponse.data.choices[0].message.content;
-        setWorkoutPlan(newWorkoutPlan);
-        localStorage.setItem("cachedWorkoutPlan", newWorkoutPlan);
-      } else {
-        // Use the cached motivational message
-        const cachedMessage = localStorage.getItem("cachedMessage");
-        setMotivationalMessage(cachedMessage);
+      const newWorkoutPlan = workoutResponse.data.choices[0].message.content;
+      setWorkoutPlan(newWorkoutPlan);
+      localStorage.setItem("cachedWorkoutPlan", newWorkoutPlan);
 
-        // Use the cached workout plan
-        const cachedWorkoutPlan = localStorage.getItem("cachedWorkoutPlan");
-        setWorkoutPlan(cachedWorkoutPlan);
-      }
     } catch (error) {
       console.error("Error fetching messages:", error);
       setMotivationalMessage(
