@@ -33,7 +33,7 @@ const ChartWorkout = () => {
       }
     };
     fetchData();
-  }, [userId, workoutData, workoutHistory]); // Only fetch data when userId changes
+  }, [userId, workoutHistory]); // Only fetch data when userId changes
 
   // Update workoutsThisWeek whenever workoutData/history changes
   useEffect(() => {
