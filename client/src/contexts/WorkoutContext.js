@@ -126,7 +126,6 @@ export function WorkoutProvider({ children }) {
           `/update/log/${editingWorkout.id}`,
           logData
         );
-        console.log("Workout updated successfully:", response.data);
       } else {
         // create operation
 
