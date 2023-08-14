@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useProfileContext } from "../../contexts/ProfileContext";
 
-//Chat GPT motivation message Broiler Pate
+// Chat GPT motivation message and workout plan generator
 const ChatGptDailySummary = () => {
   const { profile } = useProfileContext();
   const [motivationalMessage, setMotivationalMessage] = useState("");
+  const [workoutPlan, setWorkoutPlan] = useState("");
   const [lastGeneratedDate, setLastGeneratedDate] = useState(null);
 
-  //need program for user if they are enrolled in one
-
+  // Fetch messages and workout plan when profile changes
   useEffect(() => {
     // Fetch the last generated date from storage
     const storedDate = localStorage.getItem("lastGeneratedDate");
@@ -17,30 +17,26 @@ const ChatGptDailySummary = () => {
       setLastGeneratedDate(new Date(storedDate));
     }
 
-    fetchMotivationalMessage();
+    fetchMessages();
   }, [profile]);
 
-  const fetchMotivationalMessage = async () => {
+  // Fetch motivational message and workout plan
+  const fetchMessages = async () => {
     try {
       const currentDate = new Date();
       if (
         !lastGeneratedDate ||
         currentDate.toDateString() !== lastGeneratedDate.toDateString()
       ) {
-        // Update the last generated date
-        localStorage.setItem("lastGeneratedDate", currentDate.toISOString());
-        setLastGeneratedDate(currentDate);
-
-        // Generate a new motivational message
-        const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}, and Suggest specific exercises and workouts for the day and a weekly guide based on their goal. Senctence must end before tokens are finished.`;
-
         const key = process.env.REACT_APP_YOUR_OPENAI_API_KEY;
-        console.log("open ai key:", key);
+
+        // Fetch motivational message
+        const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}. Sentence must end before tokens are finished`;
 
         const response = await axios.post(
           "https://api.openai.com/v1/chat/completions",
           {
-            max_tokens: 200,
+            max_tokens: 50,
             temperature: 0.7,
             model: "gpt-3.5-turbo",
             messages: [
@@ -58,18 +54,54 @@ const ChatGptDailySummary = () => {
             },
           }
         );
-        // console.log("Response data", response.data);
-        setMotivationalMessage(response.data.choices[0].message.content);
+
+        const newMessage = response.data.choices[0].message.content;
+        setMotivationalMessage(newMessage);
+        localStorage.setItem("cachedMessage", newMessage);
+
+        // Generate a new workout plan
+        const workoutPrompt = `Suggest specific exercises and workouts for the day and a weekly guide based on the user's goal: ${profile.goal} and user fitness level: ${profile.fitness_level}. Sentences must end before tokens are finished.`;
+
+        const workoutResponse = await axios.post(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            max_tokens: 200,
+            temperature: 0.7,
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                role: "system",
+                content: "You are a personal fitness trainer.",
+              },
+              { role: "user", content: workoutPrompt },
+            ],
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${key}`,
+            },
+          }
+        );
+
+        const newWorkoutPlan = workoutResponse.data.choices[0].message.content;
+        setWorkoutPlan(newWorkoutPlan);
+        localStorage.setItem("cachedWorkoutPlan", newWorkoutPlan);
       } else {
         // Use the cached motivational message
         const cachedMessage = localStorage.getItem("cachedMessage");
         setMotivationalMessage(cachedMessage);
+
+        // Use the cached workout plan
+        const cachedWorkoutPlan = localStorage.getItem("cachedWorkoutPlan");
+        setWorkoutPlan(cachedWorkoutPlan);
       }
     } catch (error) {
-      console.error("Error fetching motivational message:", error);
+      console.error("Error fetching messages:", error);
       setMotivationalMessage(
         "Unlock your potential with every move. Embrace the challenge, push your limits, and celebrate your progress. Your fitness journey is a testament to your strength and determination. Keep going!"
       );
+      setWorkoutPlan("Unable to generate workout plan at the moment.");
     }
   };
 
@@ -77,6 +109,7 @@ const ChatGptDailySummary = () => {
     <div className="motivational-message">
       <h2>Daily Summary</h2>
       <p className="text-white">{motivationalMessage}</p>
+      <p className="text-white">{workoutPlan}</p>
     </div>
   );
 };
