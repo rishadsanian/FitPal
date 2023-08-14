@@ -19,6 +19,7 @@ export default function LandingPage(){
   return (
     <div>
       <HeroImage />
+      
       {features}
     </div>
   )

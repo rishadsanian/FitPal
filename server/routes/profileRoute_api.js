@@ -51,7 +51,6 @@ router.get("/:user_id/:interval", async(req, res) => {
 `;
 
     const result = await pool.query(queryString, [user_id]);
-
     // if (result.rows.length === 0) {
     //   return res.status(404).json({ error: "Profile not found" });
     // }

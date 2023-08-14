@@ -86,28 +86,6 @@ export function ProfileProvider({ children }) {
       console.error("Error creating/updating profile:", error);
     }
   };
-  //--------------------------------------------------------------------//
-  const handleNewUserProfile = async (profile) => {
-    try {
-      // Submit form data to the server and db
-      const response = await axios.post("/profile", {
-        user_id: profile.user_id,
-        date_of_birth: profile.date_of_birth,
-        height: profile.height,
-        weight: profile.weight,
-        gender: profile.gender,
-        fitness_level: profile.fitness_level,
-        program_id: profile.program_id,
-        goal: profile.goal,
-      });
-      console.log("profile",profile);
-      setProfile(response.data);
-      setEditing(false); // Hide the form after submitting
-      fetchProfile();
-    } catch (error) {
-      console.error("Error creating/updating profile:", error);
-    }
-  };
 
   //--------------------------------------------------------------------//
 
@@ -156,7 +134,6 @@ export function ProfileProvider({ children }) {
     selectedInterval,
     setSelectedInterval,
     fetchHistoricalProfileData,
-    handleNewUserProfile
   };
 
   return (

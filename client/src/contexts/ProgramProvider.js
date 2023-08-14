@@ -19,7 +19,7 @@ export default function ProgramProvider(props) {
   // ----------------CONTEXT PROVIDERS-------------------------------------//
   const { authenticated, userId } = useContext(userContext);
 
-  const programId = props.programId;
+
 
   // Use effect to fetch program data from the server
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function ProgramProvider(props) {
   const updateProgram = async (programId, programUpdate) => {
     try {
       // Submit form data to the server
-      const response = await axios.post(
+      await axios.post(
         `/programs/${programId}/update`,
         programUpdate
       );
