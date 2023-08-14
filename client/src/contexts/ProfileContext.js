@@ -30,15 +30,12 @@ export function ProfileProvider({ children }) {
   const [profileHistory, setProfileHistory] = useState(null);
   const [selectedInterval, setSelectedInterval] = useState("7d");
   //------------------------------------------------------------------------//
-  //---------------------FUNCTIONS---------------------------------------//
-
+  //---------------------FUNCTIONS---------------------------------------// 
   const fetchProfile = async () => {
     try {
       const response = await axios.get(`/api/profile/${userId}`);
-      const formattedDate = moment(response.data.date_of_birth).format(
-        "YYYY-MM-DD"
-      ); // Format the date
-      setProfile({ ...response.data, date_of_birth: formattedDate });
+      console.log("API Response:", response.data); // Add this line
+      setProfile(response.data);
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
@@ -63,21 +60,25 @@ export function ProfileProvider({ children }) {
   //--------------------------------------------------------------------//
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formattedDateOfBirth = profile.date_of_birth instanceof Date ? profile.date_of_birth.toISOString() : null;
-
+  
+    // Gather form values from the profile state
+    const formData = {
+      date_of_birth: profile.date_of_birth,
+      height: profile.height,
+      weight: profile.weight,
+      gender: profile.gender,
+      fitness_level: profile.fitness_level,
+      program_id: profile.program_id,
+      goal: profile.goal,
+    };
+  
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
         user_id: userId,
-        date_of_birth: formattedDateOfBirth,
-        height: profile.height,
-        weight: profile.weight,
-        gender: profile.gender,
-        fitness_level: profile.fitness_level,
-        program_id: profile.program_id,
-        goal: profile.goal,
+        ...formData,
       });
-
+  
       // Update the profile state with the newly created/updated profile data
       setProfile(response.data);
       setEditing(false); // Hide the form after submitting
@@ -86,6 +87,7 @@ export function ProfileProvider({ children }) {
       console.error("Error creating/updating profile:", error);
     }
   };
+  
 
   //--------------------------------------------------------------------//
 
