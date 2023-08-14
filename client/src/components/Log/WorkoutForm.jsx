@@ -55,7 +55,7 @@ const WorkoutForm = () => {
       </div>
       <div
         className="
-        m-0 mt-0 mb-1 pt-1 pb-4 border bg-dark border-secondary rounded flex-column border-3" 
+        m-0 mt-0 mb-0 pt-4 pb-4 border bg-dark border-secondary rounded flex-column border-3" 
       >
         <ThemeProvider theme={darkTheme}>
           <Container maxWidth="mg">

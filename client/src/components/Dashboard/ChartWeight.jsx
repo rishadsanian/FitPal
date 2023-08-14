@@ -4,17 +4,18 @@ import { Line } from "react-chartjs-2";
 import { Chart, PointElement, LineElement } from "chart.js";
 import "chart.js/auto"; // Import the auto package
 import moment from "moment";
-import 'chartjs-adapter-moment'
+import "chartjs-adapter-moment";
 import { useProfileContext } from "../../contexts/ProfileContext";
 
 const WeightChart = ({ userId, selectedInterval }) => {
-  const { profileHistory, fetchHistoricalProfileData } = useProfileContext();
+  const { profileHistory, fetchHistoricalProfileData, profile } =
+    useProfileContext();
   Chart.register(PointElement, LineElement);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchHistoricalProfileData();
-  }, [userId, selectedInterval]);
+  }, [userId, selectedInterval, profile]);
 
   useEffect(() => {
     if (profileHistory) {
@@ -64,10 +65,21 @@ const WeightChart = ({ userId, selectedInterval }) => {
         },
       },
     },
-    
   };
 
-  return loading ? <div>Loading...</div> : <Line data={chartData} options={options} />;
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    <>
+      {profileHistory.length === 0 ? (
+        
+        <p className="text-secondary">
+          No weight information recorded for the time interval
+        </p>
+      ) : (
+        <Line data={chartData} options={options} />
+      )}
+    </>
+  );
 };
-
 export default WeightChart;

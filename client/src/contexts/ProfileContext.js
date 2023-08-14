@@ -17,8 +17,8 @@ export function ProfileProvider({ children }) {
   //------------------------STATES------------------------------------------///
   const [profile, setProfile] = useState({
     date_of_birth: "Not Set",
-    height: 0,
-    weight: 0,
+    height: null,
+    weight: null,
     gender: "Not Selected",
     fitness_level: "Not Selected",
     goal: "Not Set",
@@ -63,12 +63,13 @@ export function ProfileProvider({ children }) {
   //--------------------------------------------------------------------//
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const formattedDateOfBirth = profile.date_of_birth instanceof Date ? profile.date_of_birth.toISOString() : null;
 
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
         user_id: userId,
-        date_of_birth: profile.date_of_birth,
+        date_of_birth: formattedDateOfBirth,
         height: profile.height,
         weight: profile.weight,
         gender: profile.gender,
