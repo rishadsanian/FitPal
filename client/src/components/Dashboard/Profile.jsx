@@ -167,7 +167,7 @@ const Profile = () => {
                 <div className="profile-card p-3 border border-secondary rounded border-3">
                   <div className="key text-warning">Height (cm)</div>
                   {profile.height ? (
-                    <div className="value">{profile.height}</div>
+                    <div className="value">{Math.floor(profile.height)}</div>
                   ) : (
                     <div className="value">Not Set</div>
                   )}
@@ -177,7 +177,7 @@ const Profile = () => {
                 <div className="profile-card p-3 border border-secondary rounded border-3">
                   <div className="key text-warning">Weight (lbs)</div>
                   {profile.weight ? (
-                    <div className="value">{profile.weight}</div>
+                    <div className="value">{Math.floor(profile.weight)}</div>
                   ) : (
                     <div className="value">Not Set</div>
                   )}
