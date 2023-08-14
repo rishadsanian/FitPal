@@ -65,7 +65,6 @@ export function WorkoutProvider({ children }) {
         },
       });
       setWorkoutHistory(response.data);
-
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
@@ -75,7 +74,6 @@ export function WorkoutProvider({ children }) {
     try {
       const response = await axios.get(`/log/${userId}`);
       setAllWorkoutHistory(response.data.logs);
-
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
@@ -98,8 +96,12 @@ export function WorkoutProvider({ children }) {
       await axios.delete(`/delete/log/${workoutId}`);
 
       // update workout history after deleting
-      setAllWorkoutHistory([...allWorkoutHistory.filter(workout => workout.id !== workoutId)])
-      setWorkoutHistory([...workoutHistory.filter(workout => workout.id !== workoutId)])
+      setAllWorkoutHistory([
+        ...allWorkoutHistory.filter((workout) => workout.id !== workoutId),
+      ]);
+      setWorkoutHistory([
+        ...workoutHistory.filter((workout) => workout.id !== workoutId),
+      ]);
     } catch (error) {
       console.error("Error deleting workout:", error);
     }
@@ -111,8 +113,8 @@ export function WorkoutProvider({ children }) {
     e.preventDefault();
 
     try {
-
-      const parsedWeightLoad = weightLoad === "" ? null : parseInt(weightLoad, 10);
+      const parsedWeightLoad =
+        weightLoad === "" ? null : parseInt(weightLoad, 10);
       const logData = {
         exercise_name: selectedExercise.name,
         reps,
@@ -122,16 +124,13 @@ export function WorkoutProvider({ children }) {
 
       if (editingWorkout) {
         // If edit mode, perform an update operation
-        await axios.put(
-          `/update/log/${editingWorkout.id}`,
-          logData
-        );
+
+        await axios.put(`/update/log/${editingWorkout.id}`, logData);
+
       } else {
         // create operation
 
-        const response = await axios.post("/log", logData);
-        console.log("Workout logged successfully:", response.data);
-
+        await axios.post("/log", logData);
       }
 
       // Clear form and editingWorkout state
@@ -162,7 +161,7 @@ export function WorkoutProvider({ children }) {
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
-    console.log("selected muscle",selectedMuscle);
+    console.log("selected muscle", selectedMuscle);
   };
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
@@ -242,7 +241,7 @@ export function WorkoutProvider({ children }) {
     WorkoutHistory,
     WorkoutForm,
     setExercises,
-    fetchExercises
+    fetchExercises,
   };
 
   return (

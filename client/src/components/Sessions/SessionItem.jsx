@@ -67,12 +67,12 @@ const SessionItem = (props) => {
           {props.editable && (
             <div>
               <div className="d-flex align-self-center">
-                <button className="btn" onClick={props.onClick}>
+                <button className="btn" onClick={(e) => {props.onClick(); e.stopPropagation()}}>
                   <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
                 </button>
                 <button
                   className="btn"
-                  onClick={() => setDeleteMode(true)}
+                  onClick={(e) => {setDeleteMode(true); e.stopPropagation()}}
                 >
                   <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
                 </button>
