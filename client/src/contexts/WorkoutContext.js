@@ -64,10 +64,8 @@ export function WorkoutProvider({ children }) {
           date: currentDate, // Send the current date as a parameter for SQL
         },
       });
-      console.log("fetchworkouthistory:", response.data);
       setWorkoutHistory(response.data);
 
-      console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
@@ -76,10 +74,8 @@ export function WorkoutProvider({ children }) {
   const fetchAllWorkoutHistory = async () => {
     try {
       const response = await axios.get(`/log/${userId}`);
-      console.log("fetchworkouthistory:", response.data);
       setAllWorkoutHistory(response.data.logs);
 
-      console.log("current date after fetchWorkout history:", currentDate);
     } catch (error) {
       console.error("Error fetching workout history:", error);
     }
@@ -99,7 +95,6 @@ export function WorkoutProvider({ children }) {
   //Delete workout
   const handleDeleteWorkout = async (workoutId) => {
     try {
-      console.log("Delete id:", workoutId);
       await axios.delete(`/delete/log/${workoutId}`);
 
       // update workout history after deleting
@@ -114,8 +109,6 @@ export function WorkoutProvider({ children }) {
   // Post workout
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Selected Muscle Group:", selectedMuscleGroup);
-    console.log("Selected Exercise:", selectedExercise);
 
     try {
       const logData = {
@@ -126,17 +119,14 @@ export function WorkoutProvider({ children }) {
       };
 
       if (editingWorkout) {
-        console.log("Editing workout id in put", editingWorkout.id);
         // If edit mode, perform an update operation
         const response = await axios.put(
           `/update/log/${editingWorkout.id}`,
           logData
         );
-        console.log("Workout updated successfully:", response.data);
       } else {
         // create operation
         const response = await axios.post("/log", logData);
-        console.log("Workout logged successfully:", response.data);
       }
 
       // Clear form and editingWorkout state
@@ -167,14 +157,12 @@ export function WorkoutProvider({ children }) {
   const handleMuscleGroupSelection = (e) => {
     const selectedMuscle = e.target.value;
     setSelectedMuscleGroup(selectedMuscle);
-    console.log("selected muscle",selectedMuscle);
   };
   //--------------------------------------------------------------------------//
   // Slider handle to change to show different days
   const handleSliderChange = (index) => {
     const newDate = moment().subtract(index, "day").format("YYYY-MM-DD");
     setCurrentDate(newDate);
-    console.log("index:", index);
   };
   //--------------------------------------------------------------------------//
   // Fetch exercises from API based on the selected muscle group

@@ -17,9 +17,9 @@ import ProgramsPage from "./components/Pages/ProgramsPage";
 import ChartWorkout from "./components/Dashboard/ChartWorkout";
 import LogPage from "./components/Pages/LogPage";
 
-
 import ProgramProvider from "./contexts/ProgramProvider";
 import { userContext } from "./contexts/UserContext";
+import { ProfileProvider } from "./contexts/ProfileContext";
 
 function App() {
   const { authenticated } = useContext(userContext);
@@ -34,9 +34,19 @@ function App() {
 
           {/* Login and signup routes */}
           <Route path="/login" element={authenticated ? <Main /> : <Login />} />
+
           <Route
             path="/signup"
-            element={authenticated ? <Main /> : <SignUp />}
+            element={
+              authenticated ? (
+                <Main />
+              ) : (
+                <ProfileProvider>
+                  {" "}
+                  <SignUp />{" "}
+                </ProfileProvider>
+              )
+            }
           />
 
           {/* Page Routes */}
@@ -49,7 +59,7 @@ function App() {
             element={
               authenticated ? (
                 <ProgramProvider>
-                  <ProgramsPage/>
+                  <ProgramsPage />
                 </ProgramProvider>
               ) : (
                 <ProgramProvider>
@@ -72,11 +82,15 @@ function App() {
           />
           <Route
             path="/programs/:program_id/sessions/:session_id"
-            element={authenticated ? <SessionDetail editable={true}/> : <Login />}
+            element={
+              authenticated ? <SessionDetail editable={true} /> : <Login />
+            }
           />
           <Route
             path="/programs/:program_id/sessions/:session_id/noedit"
-            element={authenticated ? <SessionDetail editable={false}/> : <Login />}
+            element={
+              authenticated ? <SessionDetail editable={false} /> : <Login />
+            }
           />
           <Route
             path="/programs/1/sessions/1/exercise/1"

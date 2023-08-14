@@ -117,7 +117,6 @@ const WorkoutHistoryCopy = () => {
   /// NEWLY ADDED STUFF -------------------------------
   useEffect(() => {
     let workoutHistorySorted = [];
-    console.log("all workout history", allWorkoutHistory)
     for(let i = 0; i < 7; i++){
       workoutHistorySorted[i] = [];
     }

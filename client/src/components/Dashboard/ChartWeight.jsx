@@ -34,7 +34,7 @@ const WeightChart = ({ userId, selectedInterval }) => {
     labels: xValues.map((xValue) => xValue.toISOString().split("T")[0]),
     datasets: [
       {
-        label: "Average Weight",
+        label: "Aggregate Average Weight",
         data: yValues,
         fill: false,
         borderColor: "#ffc107",

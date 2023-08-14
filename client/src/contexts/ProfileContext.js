@@ -16,7 +16,7 @@ export function ProfileProvider({ children }) {
 
   //------------------------STATES------------------------------------------///
   const [profile, setProfile] = useState({
-    date_of_birth: null,
+    date_of_birth: "Not Set",
     height: 0,
     weight: 0,
     gender: "Not Selected",
@@ -28,7 +28,7 @@ export function ProfileProvider({ children }) {
   const [editing, setEditing] = useState(false);
 
   const [profileHistory, setProfileHistory] = useState(null);
-  const [selectedInterval, setSelectedInterval] = useState('7d');
+  const [selectedInterval, setSelectedInterval] = useState("7d");
   //------------------------------------------------------------------------//
   //---------------------FUNCTIONS---------------------------------------//
 
@@ -47,7 +47,9 @@ export function ProfileProvider({ children }) {
   //--------------------------------------------------------------------//
   const fetchHistoricalProfileData = async () => {
     try {
-      const response = await axios.get(`/api/profile/${userId}/${selectedInterval}`);
+      const response = await axios.get(
+        `/api/profile/${userId}/${selectedInterval}`
+      );
       setProfileHistory(response.data);
     } catch (error) {
       console.error("Error fetching profile data:", error);
@@ -65,7 +67,7 @@ export function ProfileProvider({ children }) {
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
-        user_id: userId, 
+        user_id: userId,
         date_of_birth: profile.date_of_birth,
         height: profile.height,
         weight: profile.weight,
@@ -83,6 +85,29 @@ export function ProfileProvider({ children }) {
       console.error("Error creating/updating profile:", error);
     }
   };
+  //--------------------------------------------------------------------//
+  const handleNewUserProfile = async (profile) => {
+    try {
+      // Submit form data to the server and db
+      const response = await axios.post("/profile", {
+        user_id: profile.user_id,
+        date_of_birth: profile.date_of_birth,
+        height: profile.height,
+        weight: profile.weight,
+        gender: profile.gender,
+        fitness_level: profile.fitness_level,
+        program_id: profile.program_id,
+        goal: profile.goal,
+      });
+      console.log("profile",profile);
+      setProfile(response.data);
+      setEditing(false); // Hide the form after submitting
+      fetchProfile();
+    } catch (error) {
+      console.error("Error creating/updating profile:", error);
+    }
+  };
+
   //--------------------------------------------------------------------//
 
   // Function to handle form input changes
@@ -129,7 +154,8 @@ export function ProfileProvider({ children }) {
     setProfileHistory,
     selectedInterval,
     setSelectedInterval,
-    fetchHistoricalProfileData
+    fetchHistoricalProfileData,
+    handleNewUserProfile
   };
 
   return (
