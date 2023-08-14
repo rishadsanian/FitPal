@@ -10,7 +10,6 @@ export default function LandingPage(){
       key={data.id} 
       id={data.id}
       title={data.title} 
-      tagline={data.tagline} 
       description={data.description}
       image_source={data.image_source}
       image_left={data.image_left}
