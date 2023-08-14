@@ -33,7 +33,7 @@ const ChatGptDailySummary = () => {
         setLastGeneratedDate(currentDate);
 
         // Generate a new motivational message
-        const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}. Suggest specific exercises and workouts for the day and a weekly program based on their goal. Senctence must end before tokens are finished.`;
+        const prompt = `Generate a one line short motivational message for our fitness app for a user whose fitness level is ${profile.fitness_level} with a goal of ${profile.goal}, and Suggest specific exercises and workouts for the day and a weekly guide based on their goal. Senctence must end before tokens are finished.`;
 
         const key = process.env.REACT_APP_YOUR_OPENAI_API_KEY;
         console.log("open ai key:", key);
