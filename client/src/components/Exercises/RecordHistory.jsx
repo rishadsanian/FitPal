@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../index.css'
-// import TimeAgo from 'timeago-react';
 const RecordHistory = (props) => {
   const logs = props.logs;
   const daysArray = [
