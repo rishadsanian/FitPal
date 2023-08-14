@@ -50,7 +50,6 @@ export function ProfileProvider({ children }) {
       const response = await axios.get(
         `/api/profile/${userId}/${selectedInterval}`
       );
-      console.log(response.data);
       setProfileHistory(response.data);
     } catch (error) {
       console.error("Error fetching profile data:", error);

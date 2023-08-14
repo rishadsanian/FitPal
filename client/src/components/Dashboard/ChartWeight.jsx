@@ -15,7 +15,6 @@ const WeightChart = ({ userId, selectedInterval }) => {
 
   useEffect(() => {
     fetchHistoricalProfileData();
-    console.log("profile history", profileHistory);
   }, [userId, selectedInterval, profile]);
 
   useEffect(() => {
