@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -111,7 +112,7 @@ export default function SessionsProvider(props) {
   const updateCurrentProgram = async () => {
     try {
       // Submit form data to the server
-      const response = await axios.post(`/profile/`, {
+      await axios.post(`/profile/`, {
         ...currentProfile,
         program_id: programId,
       });

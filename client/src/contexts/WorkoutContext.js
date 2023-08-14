@@ -124,7 +124,9 @@ export function WorkoutProvider({ children }) {
 
       if (editingWorkout) {
         // If edit mode, perform an update operation
+
         await axios.put(`/update/log/${editingWorkout.id}`, logData);
+
       } else {
         // create operation
 
