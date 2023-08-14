@@ -28,9 +28,7 @@ const Main = () => {
                 <p className="text-white fw-bold fs-5">{currentDate}</p>
               </div>
               <div className="p-3">
-              <ProfileProvider>
-              <ChatGptDailySummary />
-            </ProfileProvider>
+                <ChatGptDailySummary />
               </div>
             </div>
 
