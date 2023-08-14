@@ -1,134 +1,37 @@
 import React from "react";
-import { useContext, useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router";
-import DeletePopupModal from "../DeletePopupModal";
-import { programContext } from "../../contexts/ProgramProvider";
+import { useContext } from "react";
 
-const daysOfWeek = [
-  {day_val: 0, day: "Monday"},
-  {day_val: 1, day: "Tuesday"},
-  {day_val: 2, day: "Wednesday"},
-  {day_val: 3, day: "Thursday"},
-  {day_val: 4, day: "Friday"},
-  {day_val: 5, day: "Saturday"},
-  {day_val: 6, day: "Sunday"},
-]
+import { userContext } from "../../contexts/UserContext";
+import { sessionsContext } from "../../contexts/SessionsProvider";
 
-function ProgramListItem(props) {
-  const [sessions, setSessions] = useState([]);
-  const [newSessionName, setNewSessionName] = useState('');
-  const [newSessionDay, setNewSessionDay] = useState(0);
-  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
-  const [potentialDays, setPotentialDays] = useState([]);
-  // State for when editing a program
-  const [programUpdate, setProgramUpdate] = useState({
-    name: props.name,
-    description: props.description,
-  });
-  const [editMode, setEditMode] = useState(false);
-  // Toggle the class on the card when the program is the current program for the user
-  const cardClass =
-    props.currentProfile && props.currentProfile.program_id === props.programId
-      ? "card bg-dark text-start border-warning"
-      : "card bg-dark text-start";
+function ProgramListItem() {
+  // Get user functions from user provider
+  const { authenticated } = useContext(userContext);
 
-  const navigate = useNavigate();
-
-  // Get program functions from
-  const { deleteProgram, updateProgram } = useContext(programContext);
-
-  const setUpSessions = async () => {
-    // Get the list of sessions based off of the program id
-    let newPotentialDays = [];
-    await axios
-      .get(`http://localhost:8080/sessions/program/${props.programId}`)
-      .then((res) => {
-        setSessions(res.data.sessions);
-        newPotentialDays = daysOfWeek.filter((day) => !res.data.sessions.map(session => session.day_of_week).includes(day.day_val));
-      });
-    setPotentialDays(newPotentialDays);
-    if(newPotentialDays.length){
-      setNewSessionDay(newPotentialDays[0].day_val)
-    }
-   
-  }
-
-  useEffect(() => {
-    // Update possible session days
-    let newPotentialDays = daysOfWeek.filter((day) => !sessions.map(session => session.day_of_week).includes(day.day_val));
-    setPotentialDays(newPotentialDays)
-    if(newPotentialDays.length){
-      setNewSessionDay(newPotentialDays[0].day_val)
-    }
-    setUpSessions();
-  }, [sessions.length]);
-
-  const createNewSession = async (event, program_id) => {
-    // prevent the default form action
-    event.preventDefault();
-    // check if the session name field is not blank
-    if (newSessionName) {
-      try {
-        // Submit form data to the server
-        const response = await axios.post(
-          `/sessions/program/${program_id}`,
-          {
-            name: newSessionName,
-            day_of_week: newSessionDay,
-            program_id,
-          }
-          
-        );
-        setSessions([...sessions, response.data].sort((a,b) => a.day_of_week < b.day_of_week))
-        setNewSessionName("");
-        // reload the page after the session is created
-        // Update the profile state with the newly created/updated profile data
-      } catch (error) {
-        console.error("Error creating session:", error);
-      }
-    }
-  };
-
-  // navigation for the session
-  const navigateToSession = (session) => {
-    navigate(`/programs/${props.programId}/sessions/${session.id}`);
-  };
-
-  // function to toggle edit mode
-  const updateCurrentProgram = async (programId) => {
-    try {
-      // Submit form data to the server
-      const response = await axios.post(`/profile/`, {
-        ...props.currentProfile,
-        program_id: programId,
-      });
-      props.setCurrentProfile({
-        ...props.currentProfile,
-        program_id: programId,
-      });
-      // Update the profile state with the newly created/updated profile data
-    } catch (error) {
-      console.error("Error creating session:", error);
-    }
-  };
-
-  const deleteAndUpdateCurrentProgram = (programId) => {
-    if(props.currentProfile.program_id === programId){
-      updateCurrentProgram(null);
-    }
-    deleteProgram(programId)
-  }
-
-  // function to toggle edit mode
-  const toggleEditMode = async (programId) => {
-    if (editMode) {
-      updateProgram(programId, programUpdate);
-      setEditMode(false);
-    } else {
-      setEditMode(true);
-    }
-  };
+  const { 
+    sessions,
+    programId,
+    newSessionName,
+    setNewSessionName,
+    newSessionDay,
+    setNewSessionDay,
+    createNewSession,
+    editMode,
+    setEditMode,
+    deleteMode,
+    setDeleteMode,
+    potentialDays,
+    programUpdate,
+    setProgramUpdate,
+    updateCurrentProgram,
+    setProgramAndEditMode,
+    deleteAndUpdateCurrentProgram,
+    navigateToSession,
+    daysOfWeek,
+    editable,
+    cardClass,
+    currentProfile
+  } = useContext(sessionsContext);
 
   const sessionsListItem = sessions.map((session, index) => {
     return (
@@ -141,7 +44,7 @@ function ProgramListItem(props) {
     );
   });
   return (
-    <div className="col my-3">
+    <div className="col my-3" style={{minWidth: '23em'}}>
       <div className={cardClass}>
         {/* Program info */}
         {editMode ? (
@@ -178,8 +81,9 @@ function ProgramListItem(props) {
           </div>
         )}
         {/* Add session form */}
-        {props.editable && potentialDays.length && <div className="card-body border-top border-color-white">
+        {editable && potentialDays.length && <div className="card-body border-top border-color-white">
           <form>
+            
             <div className="input-group flex-nowrap">
               <input
                 type="text"
@@ -191,7 +95,7 @@ function ProgramListItem(props) {
               <button
                 className="input-group-text btn btn-warning"
                 id="addon-wrapping"
-                onClick={(e) => createNewSession(e, props.programId)}
+                onClick={(e) => createNewSession(e)}
               >
                 <i className="fa-solid fa-plus"></i>
               </button>
@@ -214,19 +118,23 @@ function ProgramListItem(props) {
           </form>
         </div>}
         {/* Session list */}
-        <div className="card-body d-flex justify-content-between text-white">
-          <table className="table table-dark table-striped">
-            <tbody>{sessionsListItem}</tbody>
-          </table>
-        </div>
-        {props.userView && (
+        {sessions.length > 0 && <div>
+          <h6 className="text-warning px-4">Tap below to view more!</h6>
+          <div className="card-body d-flex justify-content-between text-white">
+
+            <table className="table table-dark table-striped">
+              <tbody>{sessionsListItem}</tbody>
+            </table>
+          </div>
+        </div>}
+        {authenticated && (
           <div className="d-flex justify-content-end gap-3 p-2 border-top border-color-white">
             {/* Toggle star Icon when the current program is the users selected program*/}
-            {props.currentProfile &&
-            props.currentProfile.program_id !== props.programId ? (
+            {currentProfile &&
+            currentProfile.program_id !== programId ? (
               <button
                 className="btn btn-dark"
-                onClick={() => updateCurrentProgram(props.programId)}
+                onClick={() => updateCurrentProgram()}
               >
                 <i className="fa-regular fa-star fa-xl text-warning"></i>
               </button>
@@ -239,46 +147,60 @@ function ProgramListItem(props) {
               </button>
             )}
             {/* Edit - Delete */}
-            {editMode && (
-              <button
-                className="btn btn-dark"
-                onClick={() => setEditMode(false)}
-              >
-                <i className="fa-regular fa-x text-danger fa-xl"></i>
-              </button>
-            )}
-            {props.editable && (
-              <button
-                className="btn btn-dark"
-                onClick={() => toggleEditMode(props.programId)}
-              >
-                {editMode ? (
-                  <i className="fa-solid fa-check fa-xl text-warning"></i>
-                ) : (
-                  <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-                )}
-              </button>
-            )}
-            {props.editable && (
-              <button
-                className="btn btn-dark"
-                onClick={() => setDisplayDeleteModal(true)}
-              >
-                <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-              </button>
-            )}
+            {editable && <div>
+              {editMode ? 
+                <div className="border border-white rounded">
+                  <button
+                    className="btn btn-dark"
+                    onClick={() => setProgramAndEditMode()}
+                  >
+                    <i className="fa-solid fa-check fa-xl text-light"></i>
+                  </button> 
+                   <button
+                    className="btn btn-dark"
+                    onClick={() => setEditMode(false)}
+                  >
+                    <i className="fa-regular fa-x fa-xl text-danger"></i>
+                  </button> 
+                </div>
+                :
+                
+                <button
+                  className="btn btn-dark"
+                  onClick={() => setEditMode(true)}
+                >
+                  <i className="fa-regular fa-edit fa-xl text-light"></i>
+                </button> 
+              }
+              </div>}
+              {editable && <div>
+              {(deleteMode) ? 
+                <div className="border border-danger rounded">
+                  <button
+                    className="btn btn-dark"
+                    onClick={() => deleteAndUpdateCurrentProgram()}
+                  >
+                    <i className="fa-solid fa-check fa-xl text-danger"></i>
+                  </button> 
+                   <button
+                    className="btn btn-dark"
+                    onClick={() => setDeleteMode(false)}
+                  >
+                    <i className="fa-regular fa-x fa-xl text-white"></i>
+                  </button> 
+                </div>
+                :
+                <button
+                  className="btn btn-dark"
+                  onClick={() => setDeleteMode(true)}
+                >
+                  <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+                </button> 
+              }
+              </div>}
           </div>
         )}
       </div>
-      {/* Delete Modal */}
-      {displayDeleteModal && (
-        <DeletePopupModal
-          modalToggle={setDisplayDeleteModal}
-          modalAction={deleteAndUpdateCurrentProgram}
-          modalParams={props.programId}
-          message={`Deleting program ${props.name}`}
-        />
-      )}
     </div>
   );
 }

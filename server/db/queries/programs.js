@@ -1,7 +1,7 @@
 const db = require('../../configs/db.config');
 
 const getAllPrograms = () => {
-  return db.query('SELECT * FROM programs ORDER BY id;').then((data) => {
+  return db.query('SELECT * FROM programs ORDER BY id DESC;').then((data) => {
     return data.rows;
   });
 };
@@ -32,7 +32,7 @@ const getProgramBySessionId = (id) => {
 
 const deleteProgramById = (id) => {
   return db
-    .query('DELETE FROM programs WHERE id = $1;', [id])
+    .query('DELETE FROM programs WHERE id = $1 RETURNING *;', [id])
     .then((data) => {
       return data.rows;
     });

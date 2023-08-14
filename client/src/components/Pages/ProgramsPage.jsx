@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useContext, useState, useEffect } from 'react';
 
@@ -5,19 +6,35 @@ import CardList from '../Programs/CardList';
 import CreateProgram from '../Programs/CreateProgram';
 import axios from 'axios';
 import { programContext } from '../../contexts/ProgramProvider';
+import { userContext } from '../../contexts/UserContext';
 
 function ProgramsPage(props) {
   const [currentProfile, setCurrentProfile] = useState();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+ 
+
+  const {
+    allSearchablePrograms,
+    userPrograms,
+    nonUserPrograms,
+  } = useContext(programContext);
+
+  const {
+    authenticated,
+    userId
+  } = useContext(userContext);
+
   useEffect(() => {
-    if(props.userView){
-      axios.get(`http://localhost:8080/api/profile/${window.sessionStorage.getItem('userId')}`).then((res) => {
-       setCurrentProfile(res.data);
-      });
+    if (authenticated) {
+      axios
+        .get(
+          `http://localhost:8080/api/profile/${userId}`
+        )
+        .then((res) => {
+          setCurrentProfile(res.data);
+        });
     }
   }, []);
-
-  const {allPrograms, userPrograms, nonUserPrograms} = useContext(programContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,48 +52,55 @@ function ProgramsPage(props) {
   const shouldShowLink = windowWidth <= 720;
 
   return (
-      <div className="container-fluid">
-        {props.userView ? <div className="row">
-          <div className="col col-12 col-md-6 col-lg-7 col-xl-8">
-            {userPrograms.length &&
+    <div className="container-fluid p-0">
+      {shouldShowLink && (
+        <a
+          href="#addProgram"
+          className="btn bg-dark w-100 mt-0 ms-0  me-0 opacity-75  p-3 text-info m-3 fw-bold"
+        >
+          {' '}
+          add program
+        </a>
+      )}
+      {authenticated ? (
+        <div className="row">
+          <div className="col col-12 col-md-6 col-lg-9 pe-0">
+            {userPrograms.length > 0 && (
+              <CardList
+                cardData={userPrograms}
+                title="My Programs"
+                editable={true}
+                currentProfile={currentProfile}
+                setCurrentProfile={setCurrentProfile}
+                bg="bg-dark-75 pb-3"
+              />
+            )}
             <CardList
-              cardData={userPrograms}
-              title="My Programs"
-              path={`/programs/`}
-              editable={true}
-              userView={props.userView}
+              cardData={nonUserPrograms}
+              title="Public Programs"
+              editable={false}
               currentProfile={currentProfile}
               setCurrentProfile={setCurrentProfile}
+              bg="bg-dark-75 border-top border-secondary"
             />
-            }
-            <CardList
-            cardData={nonUserPrograms}
-            title="Public Programs"
-            path={`/programs/`}
-            editable={false}
-            userView={props.userView}
-            currentProfile={currentProfile}
-            setCurrentProfile={setCurrentProfile}
-          />
           </div>
 
           <div
-            className="col col-12 col-md-6 col-lg-5 col-xl-4 bg-dark opacity-75 p-0"
+            className="col col-12 col-md-6 col-lg-3 bg-dark opacity-75 p-0"
             id="addProgram"
           >
             <CreateProgram />
           </div>
         </div>
-        : 
+      ) : (
         <CardList
-          cardData={allPrograms}
+          cardData={allSearchablePrograms}
           title="Programs"
-          path={`/programs/`}
           editable={false}
           userView={props.userView}
         />
-        }
-      </div>
+      )}
+    </div>
   );
 }
 

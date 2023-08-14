@@ -6,53 +6,172 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../styles/Slider.css";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
 import { useProfileContext } from "../../contexts/ProfileContext";
+import { userContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router";
 import axios from "axios";
+import { LinearProgress } from "@mui/material";
 
 const daysOfWeek = {
-  0: "Monday",
-  1: "Tuesday",
-  2: "Wednesday",
-  3: "Thursday",
-  4: "Friday",
-  5: "Saturday",
-  6: "Sunday"
-}
+  0: "Sunday",
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
+};
+
+const MUSCLE_ICON = {
+  abdominals: "fa-child-reaching",
+  abductors: "fa-drumstick-bite",
+  adductors: "fa-drumstick-bite",
+  biceps: "fa-dumbbell",
+  calves: "fa-drumstick-bite",
+  chest: "fa-child-reaching",
+  forearms: "fa-dumbbell",
+  glutes: "fa-dumbbell",
+  hamstrings: "fa-drumstick-bite",
+  lats: "fa-child-reaching",
+  lower_back: "fa-child-reaching",
+  middle_back: "fa-child-reaching",
+  neck: "fa-user-xmark",
+  quadriceps: "fa-drumstick-bite",
+  traps: "fa-child-reaching",
+  triceps: "fa-dumbbell",
+};
 
 //each slider item from mock data - could be moved to a different component
-const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
+const SliderItem = ({
+  exercise,
+  date,
+  icon,
+  workoutHistory,
+  sets,
+  profile,
+}) => {
+  const navigate = useNavigate();
+
+  const { userId } = useContext(userContext);
 
   const uniqueExerciseNames = [
-    ...new Set(workoutHistory.map((workout) => workout.exercise_name))]
-  // console.log("Unique Exercises from workout history", uniqueExerciseNames);
+    ...new Set(workoutHistory.map((workout) => workout.exercise_name)),
+  ];
 
-  const uniqueExercises = workoutHistory.filter(workout => workout.exercise_name === exercise)
+  const [uniqueExercises, setUniqueExercises] = useState(
+    workoutHistory.filter((workout) => workout.exercise_name === exercise)
+  );
+  const [currentSets, setCurrentSets] = useState(
+    sets.filter((set) => exercise === set.name)
+  );
+  const [userWorkouts, setUserWorkouts] = useState(
+    uniqueExercises.filter((set) => exercise === set.exercise_name)
+  )
+
+  useEffect(() => {
+    setUniqueExercises(
+      workoutHistory.filter((workout) => workout.exercise_name === exercise)
+    );
+  }, [workoutHistory.length]);
+
+  const isDone =
+    uniqueExercises.filter((set) => exercise === set.exercise_name).length >=
+    currentSets.length;
+
+  const getCompletionVal = () => {
+    const percentComplete = uniqueExercises.filter((set) => exercise === set.exercise_name).length /
+    currentSets.length * 100;
+    if(percentComplete > 100) {
+      return 100;
+    } else {
+      return percentComplete; 
+    }
+  }
+  
+
+  const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
+
+  const navigateToSession = () => {
+    console.log(currentSets[0]);
+    const setReference = currentSets[0];
+    const programId = setReference.program_id;
+    const programUserId = setReference.user_id;
+    const sessionId = setReference.session_id;
+    if (userId === programUserId) {
+      navigate(`/programs/${programId}/sessions/${sessionId}`);
+    } else {
+      navigate(`/programs/${programId}/sessions/${sessionId}/noedit`);
+    }
+  };
 
   return (
-    <div className="slider-item bg-dark border-warning mx-3">
-      <div className="excercise-image">
-        <i className="excercise-icon fa-solid fa-dumbbell"></i>
-      </div>
-      <h3 className="exercise text-warning">{exercise}</h3>
-      <div>
-        <div>
-          {sets.filter((set) => exercise === set.name).map(set => 
-          <div className="badge text-bg-light mx-2">
-            <span>{set.resistant} lbs/{set.reps} Reps</span>
-          </div>
-          )}
-        </div> 
-        {uniqueExerciseNames.includes(exercise) && (
-          <div>
-            {uniqueExercises.filter((set) => exercise === set.exercise_name).map(set => 
-            <div className="badge text-bg-warning mx-2">
-              <span>{set.resistance} lbs/{set.reps} Reps</span>
-            </div>)}
-          </div>
-        )}
-        <button className="text-warning btn border-warning mt-3">
-          <i className="fa-solid fa-plus"></i>
-        </button>
+    <div
+      className={
+        isDone
+          ? "card bg-dark m-3 rounded border-warning border-3"
+          : "card bg-dark m-3 rounded border-secondary border-3"
+      }
+    >
+      {/* Logo icon */}
+
+      <div className="card-header d-flex justify-content-center gap-2 align-items-center border-bottom">
+        <i
+          className={
+            "bg-secondary p-3 rounded-circle text-warning fa-solid " +
+            exerciseIcon
+          }
+        ></i>
+        <h5 className="text-white card-title">{exercise}</h5>
         
+      </div>
+      
+      <div className="card-body px-0">
+        <p className="fw-bold text-white">Recomended: </p>
+        {/* RECOMMENDED SETS */}
+        <div className="d-flex flex-wrap gap-2 justify-content-center ps-3">
+          {currentSets.map((set, index) => (
+            <div key={index} className="badge text-bg-light">
+              <span>
+                {set.resistant} lbs/{set.reps} Reps
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* RECORD */}
+        <div className="card-body border-top border-bottom border-white mt-3">
+          <p className="fw-bold text-warning">
+            {uniqueExercises.filter((set) => exercise === set.exercise_name)
+              .length >= 1
+              ? "Your Record:"
+              : "Start your workout"}
+          </p>
+          {uniqueExerciseNames.includes(exercise) && (
+            <div className="d-flex flex-wrap gap-2 justify-content-center">
+              {uniqueExercises
+                .filter((set) => exercise === set.exercise_name)
+                .map((set, index) => (
+                  <div key={index} className="badge text-bg-warning">
+                    <span>
+                      {set.resistance} lbs/{set.reps} Reps
+                    </span>
+                  </div>
+                ))}
+            </div>
+          )}
+          
+        </div>
+        <LinearProgress color="success" variant="determinate" value={getCompletionVal()}sx={{ width: "100%"}}/>
+        <button
+          className="text-warning btn btn-outline-warning mt-3"
+          disabled={isDone}
+          onClick={navigateToSession}
+        >
+          {isDone ? (
+            <i class="fa-solid fa-check text-info"></i>
+          ) : (
+            <i className="fa-solid fa-plus text-white"></i>
+          )}
+        </button>
       </div>
     </div>
   );
@@ -62,19 +181,15 @@ const SliderItem = ({ exercise, date, icon, workoutHistory, sets }) => {
 
 //main component
 const SliderComponent = () => {
-  const windowSize = useRef([window.innerWidth, window.innerHeight]);
+  const windowSize = useRef([window.innerWidth]);
 
   const [userExercises, setUserExercises] = useState([]);
   const [sets, setSets] = useState([]);
-  const [dailySession, setDailySession] = useState({})
+  const [dailySession, setDailySession] = useState({});
 
   // USE CONTEXT
   const { profile, fetchProfile } = useProfileContext();
   const { workoutHistory, fetchWorkoutHistory } = useWorkoutContext();
-  const programName = profile.name;
-
-
-
 
   useEffect(() => {
     fetchWorkoutHistory();
@@ -84,46 +199,51 @@ const SliderComponent = () => {
   useEffect(() => {
     let exerciseList = []; //needs to be a state
     if (profile.program_id) {
-      axios.get(`http://localhost:8080/sets/program/${profile.program_id}/day/${moment().day() - 1}`).then((res) => {
-        setSets(res.data.sets);
-        //Set up the list of exercises from sets
-        for (const set of res.data.sets) {
-          
-          if (
-            !exerciseList
-              .map((exercise) => exercise.name)
-              .includes(set.name)
-          ) {
-            exerciseList.push({ name: set.name, day_of_week: set.day_of_week });
+      axios
+        .get(
+          `http://localhost:8080/sets/program/${profile.program_id}/day/${
+            moment().day()
+          }`
+        )
+        .then((res) => {
+          setSets(res.data.sets);
+          //Set up the list of exercises from sets
+          for (const set of res.data.sets) {
+            if (
+              !exerciseList.map((exercise) => exercise.name).includes(set.name)
+            ) {
+              exerciseList.push({
+                name: set.name,
+                day_of_week: set.day_of_week,
+              });
+            }
           }
-        }
-      });
+        });
       setUserExercises(exerciseList);
     }
 
     if (profile.program_id) {
-      axios.get(`http://localhost:8080/sessions/program/${profile.program_id}/day/${moment().day() - 1}`).then((res) => {
-        setDailySession(res.data.session)
-      });
+      axios
+        .get(
+          `http://localhost:8080/sessions/program/${profile.program_id}/day/${
+            moment().day()
+          }`
+        )
+        .then((res) => {
+          setDailySession(res.data.session);
+        });
     }
   }, [profile.user_id]);
 
-
-  // const uniqueExercisesCompleted = workoutHistory.map((workout)=>{workout.exercise_name = })
-
   const getSlidesToShow = (windowWidth) => {
-    if (windowWidth <= 540) {
+    if (windowWidth <= 845) {
       return 1;
-    } else if (windowWidth <= 720) {
+    } else if (windowWidth < 1200) {
       return 2;
-    } else if (windowWidth <= 960) {
-      return 3;
     } else {
-      return 4;
+      return 3;
     }
   };
-
-  //---------------------------------------------------------------------//
 
   const [slidesToShow, setSlidesToShow] = useState(
     getSlidesToShow(windowSize.current[0])
@@ -136,54 +256,70 @@ const SliderComponent = () => {
         windowSize.current[0] = newWindowWidth;
         const newSlidesToShow = getSlidesToShow(newWindowWidth);
         setSlidesToShow(newSlidesToShow);
+        console.log(newWindowWidth);
       }
     };
-
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const settings = {
-    dots: true,
+    className: "center",
+    centerMode: true,
     infinite: true,
+    centerPadding: "60px",
+    slidesToShow:
+    userExercises.length < slidesToShow
+      ? userExercises.length
+      : slidesToShow,
     speed: 500,
-    slidesToShow: 1,
-    // slidesToShow: slidesToShow,
-    slidesToScroll: 1,
+    dots: true,
+    
   };
-
-  //current day as day of week
-  const currentDate = moment();
-  // const dayOfWeek = currentDate.format("ddd");
 
   return (
     <div>
-      {!dailySession ? 
-      <div className="slider-container bg-dark p-5">
-        <h2 className="slider-title text-warning">Nothing for today</h2>
-      </div>
-      :
-      <div className=" slider-container bg-dark p-5">
-        <h2 className="slider-title text-warning">{dailySession.name}</h2>
-        <h2 className="slider-title text-warning">{daysOfWeek[moment().day() - 1]}</h2>
-        {!userExercises.length && <h2 className="slider-title text-warning">No exercises listed for todays program</h2>}
-        <Slider {...settings}>
-          {userExercises.length && userExercises.map((workout, index) => (
-
-            <SliderItem
-              key={index}
-              exercise={workout.name}
-              // exercise={workout.exercise}
-              date={workout.day_of_week}
-              icon={workout.icon}
-              workoutHistory={workoutHistory}
-              sets={sets}
-            />
-          ))}
-        </Slider>
-      </div>}
+      {!profile.program_id ? (
+        <div className="bg-dark p-5 border border-secondary border-3">
+          <h2 className="slider-title text-warning">No program selected</h2>
+          <span className="d-flex align-items-center justify-content-center p-3">
+            <a href="/programs" className="text-decoration-none text-warning">
+              <i className="circle-add-icon fas fa-plus-circle fa-3x"></i>
+            </a>
+          </span>
+        </div>
+      ) : (
+        <div className="">
+          {dailySession && (
+            <h1 className="slider-title text-warning p-0">
+              {dailySession.name}
+            </h1>
+          )}
+          {!userExercises.length && (
+            <h2 className="slider-title text-warning">
+              No exercises listed for todays program
+            </h2>
+          )}
+          <Slider {...settings}>
+            {userExercises.length &&
+              userExercises.map((workout, index) => (
+                <SliderItem
+                  key={index}
+                  exercise={workout.name}
+                  // exercise={workout.exercise}
+                  date={workout.day_of_week}
+                  icon={workout.icon}
+                  workoutHistory={workoutHistory}
+                  sets={sets}
+                  profile={profile}
+                />
+              ))}
+          </Slider>
+        </div>
+      )}
     </div>
   );
 };

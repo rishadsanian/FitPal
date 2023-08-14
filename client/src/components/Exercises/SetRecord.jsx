@@ -1,26 +1,49 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 
 const SetRecord = (props) => {
   const [rep, setRep] = useState(null);
-  const [resistant, setResistant] = useState(null);
+  const [resistance, setResistance] = useState(null);
   const set = props.set;
+  const [record, setRecord] = useState({});
 
   const onChangeRep = (e) => {
-    setRep(e.target.value);
+    const newRep = e.target.value;
+    setRep(newRep);
+    const updatedRecord = { ...record, reps: newRep || 0, id: set.id };
+    setRecord(updatedRecord);
+    props.updateRecord(updatedRecord);
   };
 
+  useEffect(()=>{
+    setRep(null);
+    setResistance(null);
+    props.setReset();
+  }, [props.reset]);
+
   const onChangeResistant = (e) => {
-    setResistant(e.target.value);
+    const newResistance = e.target.value;
+    setResistance(newResistance);
+    const updatedRecord = {
+      ...record,
+      resistance: newResistance || 0,
+      id: set.id,
+    };
+    setRecord(updatedRecord);
+    props.updateRecord(updatedRecord);
   };
 
   return (
-    <div className="p-1 text-white m-1 rounded-3">
+    <div className="px-3 text-white my-2">
       <div className="text-start">
         <form>
           <div className="row row-cols-sm-2">
             <div className="col">
               <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
+                <span
+                  className="input-group-text fw-bold text-secondary"
+                  id="addon-wrapping"
+                >
                   {set.resistant ? set.resistant + 'lbs' : 'weight'}
                 </span>
                 <input
@@ -28,14 +51,17 @@ const SetRecord = (props) => {
                   className="form-control form-control-lg text-dark"
                   min="0"
                   onChange={onChangeResistant}
-                  value={resistant || ''}
+                  value={resistance || ''}
                 />
               </div>
             </div>
             <div className="col">
               <div className="input-group flex-nowrap">
-                <span className="input-group-text" id="addon-wrapping">
-                  {set.reps} reps
+                <span
+                  className="input-group-text fw-bold text-secondary"
+                  id="addon-wrapping"
+                >
+                  {set.reps ? 'x ' + set.reps : 'reps'}
                 </span>
                 <input
                   type="number"

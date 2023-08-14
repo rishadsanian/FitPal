@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //State
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { userContext } from "./UserContext";
@@ -15,9 +16,9 @@ export function ProfileProvider({ children }) {
 
   //------------------------STATES------------------------------------------///
   const [profile, setProfile] = useState({
-    date_of_birth: null,
-    height: 0,
-    weight: 0,
+    date_of_birth: "Not Set",
+    height: null,
+    weight: null,
     gender: "Not Selected",
     fitness_level: "Not Selected",
     goal: "Not Set",
@@ -25,6 +26,9 @@ export function ProfileProvider({ children }) {
     name: null, //program name
   });
   const [editing, setEditing] = useState(false);
+
+  const [profileHistory, setProfileHistory] = useState(null);
+  const [selectedInterval, setSelectedInterval] = useState("7d");
   //------------------------------------------------------------------------//
   //---------------------FUNCTIONS---------------------------------------//
 
@@ -41,14 +45,31 @@ export function ProfileProvider({ children }) {
   };
 
   //--------------------------------------------------------------------//
+  const fetchHistoricalProfileData = async () => {
+    try {
+      const response = await axios.get(
+        `/api/profile/${userId}/${selectedInterval}`
+      );
+      setProfileHistory(response.data);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+    fetchHistoricalProfileData();
+  }, [userId, selectedInterval]);
+  //--------------------------------------------------------------------//
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const formattedDateOfBirth = profile.date_of_birth instanceof Date ? profile.date_of_birth.toISOString() : null;
 
     try {
       // Submit form data to the server and db
       const response = await axios.post("/profile", {
-        user_id: userId, 
-        date_of_birth: profile.date_of_birth,
+        user_id: userId,
+        date_of_birth: formattedDateOfBirth,
         height: profile.height,
         weight: profile.weight,
         gender: profile.gender,
@@ -65,6 +86,7 @@ export function ProfileProvider({ children }) {
       console.error("Error creating/updating profile:", error);
     }
   };
+
   //--------------------------------------------------------------------//
 
   // Function to handle form input changes
@@ -106,6 +128,12 @@ export function ProfileProvider({ children }) {
     handleChange,
     handleEdit,
     calculatedAge,
+
+    profileHistory,
+    setProfileHistory,
+    selectedInterval,
+    setSelectedInterval,
+    fetchHistoricalProfileData,
   };
 
   return (

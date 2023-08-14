@@ -19,8 +19,8 @@ const AddSet = (props) => {
     <div className="row row-cols-sm-2 my-2">
       <div className="col">
         <div className="input-group flex-nowrap">
-          <span className="input-group-text" id="addon-wrapping">
-            Weight
+          <span className="input-group-text text-secondary fw-bold" id="addon-wrapping">
+          weight
           </span>
           <input
             type="number"
@@ -28,14 +28,14 @@ const AddSet = (props) => {
             onChange={handleWeightChange}
             required
             min="0"
-            className="form-control form-control-lg bg-dark text-white"
+            className="form-control form-control-lg"
           />
         </div>
       </div>
       <div className="col">
         <div className="input-group flex-nowrap">
-          <span className="input-group-text" id="addon-wrapping">
-            Reps
+          <span className="input-group-text text-secondary fw-bold" id="addon-wrapping">
+            reps
           </span>
           <input
             type="number"
@@ -43,7 +43,7 @@ const AddSet = (props) => {
             onChange={handleRepsChange}
             required
             min="1"
-            className="form-control form-control-lg bg-dark text-white"
+            className="form-control form-control-lg"
           />
         </div>
       </div>

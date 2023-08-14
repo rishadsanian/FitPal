@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 /* eslint-disable camelcase */
 const express = require("express");
 const router = express.Router();

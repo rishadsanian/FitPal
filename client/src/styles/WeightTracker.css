@@ -1,0 +1,6 @@
+.interval:hover,
+.interval:focus {
+  background-color: #212529 !important; 
+  color: #ffc107 !important;
+}
+  

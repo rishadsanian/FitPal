@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 const Login = () => {
   const [email, setEmail] = useState([]);
@@ -22,6 +22,7 @@ const Login = () => {
           window.sessionStorage.setItem('isAuthenticated', true);
           window.sessionStorage.setItem('userId', res.data.user.id);
           window.sessionStorage.setItem('email', res.data.user.email);
+
           window.location = '/dashboard';
         }
       })

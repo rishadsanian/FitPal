@@ -10,9 +10,12 @@ const AddExerciseModal = (props) => {
 
   const [sets, setSets] = useState([]);
   const { session_id } = useParams();
-
-
   useEffect(() => {
+    console.log(props)
+  }, [])
+  
+  useEffect(() => {
+    
     const fetchSets = async () => {
       try {
         const res = await axios.get(`http://localhost:8080/sets/${session_id}/${props.name}`);
@@ -39,7 +42,7 @@ const AddExerciseModal = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     try {
       await axios.delete(`http://localhost:8080/sets/${session_id}/${props.name}`);
       for (const set of sets) {
@@ -47,6 +50,7 @@ const AddExerciseModal = (props) => {
           sessionId: session_id,
           set,
           exerciseName: props.name,
+          muscleGroup: props.muscle
         });
       }
       window.location.reload(true);
@@ -74,12 +78,14 @@ const AddExerciseModal = (props) => {
     setSets(updatedSets);
   };
 
+  
+
   return (
     <div>
       {/* Modal background and foreground elements */}
       <div className="modal-background"></div>
-      <div className="modal-foreground position-fixed top-50 start-50 translate-middle  col col-11 col-md-7 col-xl-5">
-        <div className="container bg-dark text-white rounded p-3">
+      <div className="modal-foreground position-fixed top-50 start-50 translate-middle  col col-11 col-md-7 col-xl-5 border border-warning rounded-3">
+        <div className="container bg-dark text-white rounded p-5">
           {/* Modal content */}
           <div className="d-flex justify-content-between">
             <h3 className="text-warning fw-bold">{props.name}</h3>
@@ -87,24 +93,25 @@ const AddExerciseModal = (props) => {
               <i className="fa-solid fa-x text-warning"></i>
             </button>
           </div>
-
-          <p className="text-secondary text-start">add set and weight for each set</p>
           <form onSubmit={handleSubmit}>
             {/* Sets section */}
             <div className="text-start">
-              <label className="form-label text-secondary">Sets</label>
               {sets.map((set) => (
                 <AddSet key={set.id} set={set} id={set.id} updateSetInSets={updateSetInSets} />
               ))}
-              <div className="d-flex justify-content-between gap-2 mt-3">
-                <button className="btn btn-outline-light flex-fill" onClick={addSet}>
+              <div className="d-flex justify-content-between gap-3 mt-3">
+                <button className={
+                    sets.length === MAX_SETS
+                      ? 'btn btn-secondary flex-fill'
+                      : 'btn btn-light flex-fill'
+                  } onClick={addSet}>
                   <i className="fa-solid fa-plus fa-xs"></i>
                 </button>
                 <button
                   className={
                     sets.length === 1
-                      ? 'btn btn-outline-secondary flex-fill'
-                      : 'btn btn-outline-light flex-fill'
+                      ? 'btn btn-secondary flex-fill'
+                      : 'btn btn-light flex-fill'
                   }
                   onClick={removeSet}
                   disabled={sets.length === 1}

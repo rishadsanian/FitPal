@@ -1,5 +1,4 @@
 import React from "react";
-import { Box }from '@mui/material';
 import HeroImage from "../TitleCards/HeroImage";
 import LandingCard from "../LandingCard";
 
@@ -20,6 +19,7 @@ export default function LandingPage(){
   return (
     <div>
       <HeroImage />
+      
       {features}
     </div>
   )

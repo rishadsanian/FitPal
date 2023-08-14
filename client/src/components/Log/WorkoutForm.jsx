@@ -1,183 +1,218 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // WorkoutForm.js
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-
 import "../../styles/Log.css";
-import axios from "axios";
+import { Container, TextField, Autocomplete } from "@mui/material";
+
+import ExerciseDetailModal from "../Exercises/ExerciseDetailModal";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const WorkoutForm = () => {
   const {
     MUSCLE,
-    muscleGroups,
     selectedMuscleGroup,
     setSelectedMuscleGroup,
     exercises,
     selectedExercise,
-    selectedExerciseDescription,
     reps,
     setReps,
     weightLoad,
     setWeightLoad,
-    handleMuscleGroupSelection,
     handleExerciseSelection,
     handleSubmit,
     editingWorkout,
     handleCancelEdit,
-    API_KEY,
-    API_URL,
-    setExercises,
-    setSelectedExerciseDescription,
+    fetchExercises,
   } = useWorkoutContext();
 
-  useEffect(() => {
-    // Use Select Muscle group as the first option in dropdown menu
-    if (muscleGroups.length > 0) {
-      const firstMuscleGroup = "Select Muscle Group";
-      setSelectedMuscleGroup(firstMuscleGroup);
-    }
-  }, [muscleGroups]);
+  const [modalDisplay, setModalDisplay] = useState(false);
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
 
   useEffect(() => {
-    // Fetch exercises from API based on the selected muscle group
-    const fetchExercisesByMuscle = async () => {
-      try {
-        const response = await axios.get(API_URL, {
-          headers: { "X-Api-Key": API_KEY },
-          params: { muscle: selectedMuscleGroup },
-        });
-        setExercises(response.data);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-
-    fetchExercisesByMuscle();
-  }, [selectedMuscleGroup, selectedExerciseDescription, selectedExercise]);
-
-  useEffect(() => {
-    //load exercise from api response and account for any changes
-    const exercise = exercises.find((ex) => ex.name === selectedExercise);
-    //Dynamic display to show instructions for each exercise or null if no exercise is selected
-    setSelectedExerciseDescription(exercise?.instructions || "");
-  }, [selectedExercise]);
+    fetchExercises();
+  }, [selectedMuscleGroup, selectedExercise]);
 
   return (
-    <div
-      className="container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
-    >
-      <h3 className="text-warning fw-bold">Log Workout</h3>
+    <div className="addlog text-white bg-dark-50 p-5 rounded">
+      <h3 className="text-warning fw-bold opacity-75 pb-3 pt-3 ">
+        Log Workout
+      </h3>
       <div>
         {/* Exercise Details Section */}
         {!editingWorkout && selectedExercise && exercises.length > 0 && (
-          <div>
-            <p className="text-secondary">{selectedExerciseDescription}</p>
-            <p className="text-secondary">
-              <strong>Difficulty:</strong>{" "}
-              {exercises[0].difficulty.toUpperCase()}
-            </p>
-            <p className="text-secondary">
-              <strong>Type:</strong> {exercises[0].type.toUpperCase()}
-            </p>
-          </div>
+          <div></div>
         )}
         {editingWorkout && selectedExercise && (
           <h4 className="text-secondary">{selectedExercise}</h4>
         )}
       </div>
-      <form onSubmit={handleSubmit}>
-        {!editingWorkout && (
-          <div className="text-start mb-3">
-            <label htmlFor="muscleGroup" className="form-label text-secondary">
-              Muscle Group
-            </label>
-            <select
-              id="muscleGroup"
-              className="form-select btn-warning"
-              value={selectedMuscleGroup}
-              onChange={handleMuscleGroupSelection}
-            >
-              <option value="">Select Muscle Group</option>
-              {muscleGroups.map((group) => (
-                <option key={group} value={group}>
-                  {MUSCLE[group]}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-        {!editingWorkout&& (
-          <div className="text-start mb-3">
-            <label htmlFor="exercise" className="form-label text-secondary">
-              Exercise
-            </label>
-            <select
-              id="exercise"
-              className="form-select btn-warning"
-              value={selectedExercise}
-              onChange={handleExerciseSelection}
-            >
-              <option value="">Select Exercise</option>
-              {exercises.map((exercise) => (
-                <option key={exercise.name} value={exercise.name}>
-                  {exercise.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-        <div className="row row-cols-sm-2 pt-4">
-          <div className="col">
-            <div className="input-group flex-nowrap">
-              <span className="input-group-text" id="addon-wrapping">
-                Weight
-              </span>
-              <input
-                type="number"
-                id="weightLoad"
-                value={weightLoad}
-                onChange={(e) => setWeightLoad(e.target.value)}
-                required
-                min="1"
-                className="form-control form-control-lg"
-              />
-            </div>
-          </div>
-          <div className="col">
-            <div className="input-group flex-nowrap">
-              <span className="input-group-text" id="addon-wrapping">
-                Reps
-              </span>
-              <input
-                type="number"
-                id="reps"
-                value={reps}
-                onChange={(e) => setReps(e.target.value)}
-                required
-                min="1"
-                className="form-control form-control-lg"
-              />
-            </div>
-          </div>
-        </div>
+      <div
+        className="
+        m-0 mt-0 mb-0 pt-4 pb-4 border bg-dark border-secondary rounded flex-column border-3" 
+      >
+        <ThemeProvider theme={darkTheme}>
+          <Container maxWidth="mg">
+            <form onSubmit={handleSubmit}>
+              {!editingWorkout && (
+                <div className="text-start mb-3 mt-4">
+                  <Autocomplete
+                    id="muscleGroup"
+                    options={Object.values(MUSCLE).map(
+                      (muscle) =>
+                        muscle.charAt(0).toUpperCase() + muscle.slice(1)
+                    )}
+                    value={selectedMuscleGroup || ""}
+                    onChange={(_, newValue) =>
+                      setSelectedMuscleGroup(
+                        newValue === "Select Muscle Group" ? null : newValue
+                      )
+                    }
+                    getOptionLabel={(group) => group || "Select Muscle Group"}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    fullWidth
+                    sx={{
+                      boxShadow: 1,
+                      borderRadius: 2,
+                      p: 0,
+                      minWidth: 100,
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Muscle Group"
+                        variant="outlined"
+                        placeholder="Select Muscle Group"
+                        sx={{
+                          color: "white",
+                          borderColor: "#ffc107",
+                          bgcolor: "rgba(52, 58, 64, 0.75)",
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+              {!editingWorkout && (
+                <div className="text-start mb-3">
+                  <Autocomplete
+                    id="exercise"
+                    options={exercises}
+                    value={selectedExercise || ""}
+                    onChange={(_, newValue) =>
+                      handleExerciseSelection({ target: { value: newValue } })
+                    }
+                    getOptionLabel={(exercises) =>
+                      exercises.name || "Select Exercise"
+                    }
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    fullWidth
+                    sx={{
+                      borderRadius: 2,
+                      p: 0,
+                      minWidth: 100,
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Exercise"
+                        variant="outlined"
+                        placeholder="Select Exercise"
+                        sx={{
+                          color: "white",
+                          borderColor: "#ffc107",
+                          bgcolor: "rgba(52, 58, 64, 0.75)",
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+              {!editingWorkout && selectedExercise && exercises.length > 0 && (
+                <p className="text-secondary text-end">
+                  {selectedExercise && (
+                    <span
+                      className="badge text-bg-warning me-2 pt-1 opacity-75"
+                      onClick={() => setModalDisplay(true)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Show Details
+                    </span>
+                  )}
+                </p>
+              )}
+              <div className="row row-cols-sm-2 pt-0">
+                <div className="col">
+                  <div className="input-group flex-nowrap">
+                    <span
+                      className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
+                      id="addon-wrapping"
+                    >
+                      Weight
+                    </span>
+                    <input
+                      type="number"
+                      id="weightLoad"
+                      value={weightLoad}
+                      onChange={(e) => setWeightLoad(e.target.value)}
+                      className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="input-group flex-nowrap">
+                    <span
+                      className="input-group-text bg-dark opacity-75 text-warning fw-bold border-secondary border-3"
+                      id="addon-wrapping"
+                    >
+                      Reps
+                    </span>
+                    <input
+                      type="number"
+                      id="reps"
+                      value={reps}
+                      onChange={(e) => setReps(e.target.value)}
+                      required
+                      min="1"
+                      className="form-control form-control-lg text-white  border-secondary border-3 bg-dark opacity-75"
+                    />
+                  </div>
+                </div>
+              </div>
 
-        <div className="d-grid gap-2">
-          <button type="submit" className="btn btn-warning mt-4">
-            {editingWorkout ? "Update" : "Log Workout"}
-          </button>
-          {editingWorkout && (
-            <button
-              type="button"
-              className="btn btn-secondary mt-2"
-              onClick={handleCancelEdit}
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </form>
+              <div className="d-grid gap-2">
+                <button
+                  type="submit"
+                  className="btn btn-warning mt-4 text-dark fw-bold opacity-75"
+                >
+                  {editingWorkout ? "Update" : "Log Workout"}
+                </button>
+                {editingWorkout && (
+                  <button
+                    type="button"
+                    className="btn btn-secondary mt-2 fw-bold opacity-75"
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </form>
+          </Container>
+        </ThemeProvider>
+      </div>
+      {modalDisplay && (
+        <ExerciseDetailModal
+          exercise={selectedExercise}
+          setExerciseDetailDisplay={setModalDisplay}
+        />
+      )}
     </div>
   );
 };

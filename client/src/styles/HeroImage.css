@@ -1,3 +1,19 @@
 .hero-image{
   object-position: 50% 66%;
+  position: relative;
+  filter: brightness(60%)
+}
+
+.hero-image-button{
+  position: absolute;
+  top: 350px;
+  left: 6%;
+}
+
+.hero-image-logo{
+  font-size: 2.75em;
+  letter-spacing: 4px;
+  position: absolute;
+  top: 130px;
+  left: 5%;
 }

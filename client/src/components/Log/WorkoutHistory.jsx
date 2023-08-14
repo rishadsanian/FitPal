@@ -1,110 +1,185 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
-import { userContext } from "../../contexts/UserContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
 import "../../styles/Log.css";
+import "../../styles/WorkoutHistory.css";
+
+const SliderItem = ({
+  workoutHistory,
+  currentDate,
+  handleDeleteWorkout,
+  editingWorkout,
+  handleEditWorkout,
+  workoutDay,
+}) => {
+  return (
+    <div
+      className="pt-0 pb-0 m-0 border bg-dark border-secondary bs-border-opacity-75 rounded flex-column border-3"
+      style={{
+        margin: "0 10px",
+        height: "335px",
+        overflow: "hidden",
+        overflowX: "auto",
+        overflowY: "scroll",
+      }}
+    >
+      <style>
+        {`
+      /* Scrollbar Styles for the specific div */
+      div::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      
+      div::-webkit-scrollbar-track {
+        background: #333333;
+      }
+      
+      div::-webkit-scrollbar-thumb {
+        background-color: rgba(102, 102, 102, 0.75); /* Opacity 75% */
+        border-radius: 4px;
+      }
+      
+      div::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 193, 7, 0.50);
+      }
+    `}
+      </style>
+      <table className="table table-dark table-striped mt-3">
+        <tbody>
+          <tr>
+            <td colSpan="2">
+              <p className="fw-bold text-secondary">
+                {moment().subtract(currentDate, "day").format("MMMM DD, YYYY")}
+              </p>
+            </td>
+          </tr>
+          {!workoutDay.length ? (
+            <tr>
+              <td
+                colSpan="2"
+                className="workout-entry p-3"
+              >
+                <div className="p-3 border border-secondary rounded border-3">
+                No workouts recorded
+                </div>
+                
+              </td>
+            </tr>
+          ) : (
+            workoutDay.reverse().map((workout) => (
+              <tr key={workout.id}>
+                <td>
+                  <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-start align-items-start opacity-75">
+                      <p>{workout.exercise_name}</p>
+                      <p className="badge text-bg-warning me-2 opacity-75">
+                        {workout.resistance === null
+                          ? "0 lbs / " + workout.reps + " Reps"
+                          : workout.resistance +
+                            " lbs / " +
+                            workout.reps +
+                            " Reps"}
+                      </p>
+                    </div>
+                    {workout.reps > 0 && (
+                      <div className="d-flex justify-content-end gap-3 p-2">
+                        <button
+                          onClick={() => handleEditWorkout(workout)}
+                          disabled={editingWorkout === workout}
+                          className="btn"
+                          style={{
+                            transition: "background-color 0.3s",
+                            outline: "none",
+                          }}
+                        >
+                          <i className="far fa-pen-to-square fa-xl text-light opacity-75"></i>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteWorkout(workout.id)}
+                          className="btn"
+                          style={{
+                            transition: "background-color 0.3s",
+                            outline: "none",
+                          }}
+                        >
+                          <i className="far fa-trash-can fa-xl text-danger opacity-75"></i>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 const WorkoutHistory = () => {
   const {
-    workoutHistory,
     handleSliderChange,
     handleEditWorkout,
     handleDeleteWorkout,
-    currentDate,
     editingWorkout,
-    fetchWorkoutHistory,
+    allWorkoutHistory,
+    fetchAllWorkoutHistory,
   } = useWorkoutContext();
 
-  const { userId } = useContext(userContext);
+  const [workoutHistoryByday, setWorkoutHistoryByDay] = useState([]);
 
   useEffect(() => {
-    fetchWorkoutHistory();
-  }, [currentDate]);
+    fetchAllWorkoutHistory();
+  }, []);
+
+  useEffect(() => {
+    const workoutHistorySorted = Array.from({ length: 7 }, () => []);
+
+    const currentDate = moment(new Date()).startOf("day");
+
+    allWorkoutHistory.forEach((workout) => {
+      const workoutDate = moment(workout.timestamp).startOf("day");
+      const dayToCheck = currentDate.diff(workoutDate, "days");
+      if (dayToCheck < 7) {
+        workoutHistorySorted[dayToCheck].push(workout);
+      }
+    });
+
+    setWorkoutHistoryByDay(workoutHistorySorted);
+  }, [allWorkoutHistory]);
 
   return (
-    <div
-      className="workout-history-slider container addlog bg-dark text-white rounded py-5 px-3"
-      style={{ width: "600px" }}
-    >
-      <h3 className="text-warning fw-bold pb-3">Daily Workout History</h3>
+    <div className="workout-history-slider container addlog text-white p-5">
+      <h3 className="text-warning fw-bold pb-3 pt-3 opacity-75">
+        Daily Workout History
+      </h3>
 
       <Slider
         dots={true}
         infinite={true}
         arrows={true}
+        dotsClass={`slick-dots`}
         slidesToShow={1}
         slidesToScroll={1}
         afterChange={(index) => handleSliderChange(index)}
       >
-        {workoutHistory.length === 0 ? (
-          // Render a placeholder entry if workoutHistory is empty
-          <div className="workout-entry workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide">
-            No workouts recorded
-          </div>
-        ) : (
-          // Render actual workout entries if workoutHistory is not empty
-          workoutHistory.map((workout) => (
-            <div
-              key={workout.id}
-              className="workout-entry profile-card p-3 border border-secondary rounded border-3 slick-slide"
-              style={{
-                margin: "0 10px",
-                backgroundColor: "rgba(52, 58, 64, 0.75)",
-              }}
-            >
-              <table className="table table-dark table-striped mt-3">
-                <tbody>
-                  <tr>
-                    <td colSpan="2">
-                      <p className="fw-bold">
-                        {moment(currentDate).format("MMMM D, YYYY")}
-                      </p>
-                    </td>
-                  </tr>
-                  {workoutHistory.map((workout) => (
-                    <tr key={workout.exercise_name}>
-                      <td className="d-flex flex-row  justify-content-between">
-                        <div className="d-flex flex-column justify-content-start align-items-start">
-                          <div>{workout.exercise_name}</div>
-                          <div>
-                            <div className="badge text-bg-warning me-2">
-                              {workout.resistance > 0 &&
-                                `${workout.resistance} lbs`}
-                            </div>
-                            <div className="badge text-bg-warning">
-                              {workout.reps > 0 && `${workout.reps} Reps`}
-                            </div>
-                          </div>
-                        </div>
-                        {workout.reps > 0 && (
-                          <div className="d-flex justify-content-end gap-3 p-2">
-                            <button
-                              onClick={() => handleEditWorkout(workout)}
-                              disabled={editingWorkout === workout}
-                              className="btn btn-dark"
-                            >
-                              <i className="far fa-pen-to-square fa-xl text-light"></i>
-                            </button>
-                            <button
-                              onClick={() => handleDeleteWorkout(workout.id)}
-                              className="btn btn-dark"
-                            >
-                              <i className="far fa-trash-can fa-xl text-danger"></i>
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ))
-        )}
+        {workoutHistoryByday.map((workoutDay, index) => (
+          <SliderItem
+            key={index}
+            workoutDay={workoutDay}
+            workoutHistory={workoutDay}
+            currentDate={index}
+            handleEditWorkout={handleEditWorkout}
+            editingWorkout={editingWorkout}
+            handleDeleteWorkout={handleDeleteWorkout}
+          />
+        ))}
       </Slider>
     </div>
   );

@@ -1,59 +1,89 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router';
-import { useEffect, useState } from 'react';
+import SessionItem from '../Sessions/SessionItem';
 import ExerciseList from '../Exercises/ExerciseList';
-import SessionItem from './SessionItem';
-import AddExerciseModal from '../Exercises/AddExerciseModal';
 import ExerciseLog from '../Exercises/ExerciseLog';
-const SessionDetail = () => {
+import AddExerciseModal from '../Exercises/AddExerciseModal';
+const moment = require('moment');
+
+const SessionDetail = (props) => {
   const [exercises, setExercises] = useState([]);
-  const [title, setTitle] = useState([]);
+  const [title, setTitle] = useState('');
+  const [session, setCurrentSession] = useState(null);
   const [sets, setSets] = useState([]);
-  const [editMode, setEditmode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [editSet, setEditSet] = useState(false);
-  const [selectedEx, setSelectedEx] = useState('');
-
+  const [selectedEx, setSelectedEx] = useState(null);
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [logs, setLogs] = useState([]);
+  const user_id = window.sessionStorage.getItem('userId');
   const [displayLog, setDisplayLog] = useState(false);
-  const [displayExerciseList, setDisplayExerciseList] = useState(
-    !displayLog
-  );
+  const displayExerciseList = !displayLog;
 
-  // get the session id from the url
   const { session_id } = useParams();
+  const fetchSessionData = async () => {
+    const sessionResponse = await axios.get(
+      `http://localhost:8080/sessions/${session_id}`
+    );
+    setTitle(sessionResponse.data.sessions[0].name);
+    setCurrentSession(sessionResponse.data.sessions[0]);
 
-  //edit session's name
-  const onEditSessionName = () => {
-    setEditmode(true);
+    const setsResponse = await axios.get(
+      `http://localhost:8080/sets/${session_id}`
+    );
+    const exerciseList = setsResponse.data.sets.reduce((list, set) => {
+      if (!list.some((exercise) => exercise.name === set.exercise_name)) {
+        list.push({ name: set.exercise_name, muscle: set.muscle_group });
+      }
+      return list;
+    }, []);
+    setSets(setsResponse.data.sets);
+    setExercises(exerciseList);
+
+    try {
+      const logResponse = await axios.get(
+        `http://localhost:8080/log/${user_id}`
+      );
+      setLogs(logResponse.data.logs);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const onSaveSessionName = (e) => {
+  useEffect(() => {
+    fetchSessionData();
+  }, []);
+
+  const onSaveSessionName = async (e) => {
     e.preventDefault();
-    const data = {
-      id: session_id,
-      name: title,
-    };
-    axios
-      .post(`http://localhost:8080/sessions/${session_id}`, data)
-      .then((res) => {
-        if (res.status === 200) {
-          setEditmode(false);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    const data = { id: session_id, name: title };
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/sessions/${session_id}`,
+        data
+      );
+      if (response.status === 200) {
+        setEditMode(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const onDeleteSession = (e) => {
+  const onDeleteSession = async (e) => {
     e.preventDefault();
-    axios
-      .delete(`http://localhost:8080/sessions/${session_id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.href = '/programs';
-        }
-      })
-      .catch((e) => console.log(e));
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/sessions/${session_id}`
+      );
+      if (response.status === 200) {
+        window.location.href = '/programs';
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onChangeName = (e) => {
@@ -65,55 +95,48 @@ const SessionDetail = () => {
     setSelectedEx(exercise);
   };
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8080/sessions/${session_id}`)
-      .then((res) => {
-        setTitle(res.data.sessions[0].name);
-      });
-
-    axios.get(`http://localhost:8080/sets/${session_id}`).then((res) => {
-      //Set up the list of exercises from sets
-      let exerciseList = [];
-      for (const set of res.data.sets) {
-        if (
-          !exerciseList
-            .map((exercise) => exercise.name)
-            .includes(set.exercise_name)
-        ) {
-          exerciseList.push({ name: set.exercise_name });
-        }
-      }
-      setSets(res.data.sets);
-      setExercises(exerciseList);
-    });
-
-    return;
-  }, []);
-
   const onRowSelected = (exercise) => {
     setDisplayLog(true);
-    setDisplayExerciseList(false);
     setSelectedEx(exercise);
   };
 
   const onAddExerciseClick = () => {
-    setDisplayExerciseList(true);
     setDisplayLog(false);
   };
 
+  const updateLogs = async () => {
+    try {
+      const logResponse = await axios.get(
+        `http://localhost:8080/log/${user_id}`
+      );
+      setLogs(logResponse.data.logs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const exercisesListItem = exercises.map((exercise, index) => {
+
+    const exerciseSets = sets.filter(
+      (set) => set.exercise_name === exercise.name
+    );
+    const exerciseLogs = logs.filter(
+      (log) =>
+        log.exercise_name === exercise.name &&
+        moment(log.timestamp).day() === session.day_of_week &&
+        moment(log.timestamp).isSame(new Date(), 'week')
+    );
+
     return (
       <SessionItem
         key={index}
-        sets={sets}
+        sets={exerciseSets}
         exercise={exercise}
-        onClick={() => {
-          onEdit(exercise);
-        }}
-        onRowSelected={() => {
-          onRowSelected(exercise);
-        }}
+        editable={props.editable}
+        onClick={() => onEdit(exercise)}
+        onRowSelected={() => onRowSelected(exercise)}
+        isDone={exerciseLogs.length >= exerciseSets.length}
+        exerciseLogs={exerciseLogs}
       />
     );
   });
@@ -121,7 +144,6 @@ const SessionDetail = () => {
   return (
     <div>
       <div className="row row-col-1 row-col-md-2">
-        {/* List of exercises in current session */}
         <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
             <form className="mb-5">
@@ -137,67 +159,93 @@ const SessionDetail = () => {
                   id="addon-wrapping"
                   onClick={onSaveSessionName}
                 >
-                  <i className="fa-solid fa-check fa-xl text-white"></i>
+                  <i className="fa-solid fa-check fa-xl"></i>
                 </button>
               </div>
             </form>
           ) : (
-            <div className="d-flex justify-content-between mb-5">
-              <div>
-                <h3 className="fw-bold text-warning">{title}</h3>
-                <a
-                  className="btn btn-outline-info text-white"
-                  href="#addExercise"
-                  onClick={onAddExerciseClick}
-                >
-                  <i className="fa-solid fa-plus"></i> exercise
-                </a>
-              </div>
-              <div className="d-flex">
-                <button
-                  className="btn btn-dark"
-                  onClick={onEditSessionName}
-                >
-                  <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
-                </button>
-                <button className="btn btn-dark" onClick={onDeleteSession}>
-                  <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
-                </button>
+            <div>
+              <h1 className="display-5 pt-3 fw-bold text-white">
+                {title}
+              </h1>
+              <div className="d-flex justify-content-between mb-5">
+                {props.editable && (
+                  <a
+                    className="btn btn-warning"
+                    href="#addExercise"
+                    onClick={onAddExerciseClick}
+                  >
+                    <i className="fa-solid fa-plus"></i> exercise
+                  </a>
+                )}
+                {props.editable && (
+                  <div className="d-flex">
+                    {deleteMode ? (
+                      <div className="border border-danger rounded">
+                        <button
+                          className="btn btn-dark"
+                          onClick={onDeleteSession}
+                        >
+                          <i className="fa-solid fa-check fa-xl text-danger"></i>
+                        </button>
+                        <button
+                          className="btn btn-dark"
+                          onClick={() => setDeleteMode(false)}
+                        >
+                          <i className="fa-regular fa-x fa-xl text-white"></i>
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          className="btn btn-dark"
+                          onClick={() => setEditMode(true)}
+                        >
+                          <i className="fa-regular fa-pen-to-square fa-xl text-light"></i>
+                        </button>
+                        <button
+                          className="btn btn-dark"
+                          onClick={() => setDeleteMode(true)}
+                        >
+                          <i className="fa-regular fa-trash-can fa-xl text-danger"></i>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}
-
           <div className="row row-cols-1 ">
+            
             {exercises.length > 0 ? (
-              <table className="table table-dark table-striped">
-                <tbody>{exercisesListItem}</tbody>
-              </table>
+              <div>
+                <h6 className="text-warning">Tap below to add a workout!</h6>
+                <table className="table table-dark table-striped table-hover">
+                  <tbody>{exercisesListItem}</tbody>
+                </table>
+              </div>
             ) : (
-              <p className="display-6 fw-light text-white">
-                no exercises added yet
-              </p>
+              <p className="display-6 fw-light text-white">No exercises added yet</p>
             )}
           </div>
         </div>
-
-        {/* Add New Exercise Part */}
         {displayExerciseList && (
           <div className="col col-12 col-md-6 col-xl-8" id="addExercise">
-            <ExerciseList />
+            <ExerciseList browseMode={!props.editable} />
           </div>
         )}
-
         {displayLog && (
           <div className="col col-12 col-md-6 col-xl-8 px-0">
-            <ExerciseLog name={selectedEx.name}/>
+            <ExerciseLog name={selectedEx?.name} onSaveComplete={updateLogs} />
           </div>
         )}
       </div>
-
       {editSet && (
         <AddExerciseModal
           setModalDisplay={setEditSet}
-          name={selectedEx.name}
+          name={selectedEx?.name}
+          muscle={selectedEx?.muscle}
         />
       )}
     </div>
