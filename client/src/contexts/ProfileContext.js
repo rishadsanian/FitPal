@@ -25,6 +25,7 @@ export function ProfileProvider({ children }) {
     program_id: null,
     name: null, //program name
   });
+  const [savedProfile, setSavedProfile] = useState();
   const [editing, setEditing] = useState(false);
 
   const [profileHistory, setProfileHistory] = useState(null);
@@ -39,6 +40,7 @@ export function ProfileProvider({ children }) {
         "YYYY-MM-DD"
       ); // Format the date
       setProfile({ ...response.data, date_of_birth: formattedDate });
+      setSavedProfile({ ...response.data, date_of_birth: formattedDate })
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
@@ -80,6 +82,7 @@ export function ProfileProvider({ children }) {
 
       // Update the profile state with the newly created/updated profile data
       setProfile(response.data);
+      setSavedProfile(response.data);
       setEditing(false); // Hide the form after submitting
       fetchProfile();
     } catch (error) {
@@ -105,6 +108,7 @@ export function ProfileProvider({ children }) {
   //--------------------------------------------------------------------//
 
   const handleCancel = () => {
+    setProfile(savedProfile);
     setEditing(false); // Hide the form
   };
   //--------------------------------------------------------------------//
@@ -119,6 +123,7 @@ export function ProfileProvider({ children }) {
   const contextValues = {
     profile,
     setProfile,
+    savedProfile,
     editing,
     setEditing,
 

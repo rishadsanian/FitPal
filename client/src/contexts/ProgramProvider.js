@@ -41,16 +41,16 @@ export default function ProgramProvider(props) {
   const setNonUserProgramsByText = (checkString) => {
     setNonUserPrograms(allPrograms.filter((program) => 
       program.user_id !== userId &&
-      (program.name.toLowerCase().includes(checkString) || 
-      program.description.toLowerCase().includes(checkString))
+      (program.name.toLowerCase().includes(checkString.toLowerCase()) || 
+      program.description.toLowerCase().includes(checkString.toLowerCase()))
 
     ));
   }
 
   const setAllSearchableProgramsByText = (checkString) => {
     setAllSearchablePrograms(allPrograms.filter((program) => 
-      (program.name.toLowerCase().includes(checkString) || 
-      program.description.toLowerCase().includes(checkString))
+      (program.name.toLowerCase().includes(checkString.toLowerCase()) || 
+      program.description.toLowerCase().includes(checkString.toLowerCase()))
     ));
   }
 
