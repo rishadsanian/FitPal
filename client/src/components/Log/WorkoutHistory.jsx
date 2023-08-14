@@ -21,7 +21,7 @@ const SliderItem = ({
       className="pt-0 pb-0 m-0 border bg-dark border-secondary bs-border-opacity-75 rounded flex-column border-3"
       style={{
         margin: "0 10px",
-        height: "307px",
+        height: "335px",
         overflow: "hidden",
         overflowX: "auto",
         overflowY: "scroll",

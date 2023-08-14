@@ -133,6 +133,7 @@ const ChartWorkout = () => {
               <i className="circle-add-icon fas fa-plus-circle fa-3x opacity-75"></i>
             </a>
           </span>
+          {/* {workoutData.length === 0 && ( */}
           {workoutData.length === 0 && (
             <p className="text-secondary pt-3">No workouts recorded for this week</p>
           )}
