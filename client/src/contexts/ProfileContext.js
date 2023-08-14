@@ -35,8 +35,8 @@ export function ProfileProvider({ children }) {
   const fetchProfile = async () => {
     try {
       const response = await axios.get(`/api/profile/${userId}`);
-      setProfile({ ...response.data, date_of_birth: formattedDate });
-      setSavedProfile({ ...response.data, date_of_birth: formattedDate })
+      setProfile(response.data);
+      setSavedProfile(response.data)
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
