@@ -17,8 +17,8 @@ export function ProfileProvider({ children }) {
   //------------------------STATES------------------------------------------///
   const [profile, setProfile] = useState({
     date_of_birth: "Not Set",
-    height: 0,
-    weight: 0,
+    height: null,
+    weight: null,
     gender: "Not Selected",
     fitness_level: "Not Selected",
     goal: "Not Set",
