@@ -49,8 +49,8 @@ const Statistics = () => {
 
   return(
     <div className="d-flex justify-content-center">
-      <div className="table-responsive card text-white bg-dark border-secondary border-3 col-6 text-start">
-        <table className="table table-bordered table-dark border-secondary table-striped col-6">
+      <div className="table-responsive card text-white bg-dark border-secondary border-3 text-start col-12 col-sm-12 col-md-10 col-lg-8 col-xl-6 ">
+        <table className="table table-bordered table-dark border-secondary table-striped">
           <tbody>
             <tr>
               <th scope="row">

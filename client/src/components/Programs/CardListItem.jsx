@@ -134,7 +134,7 @@ function ProgramListItem() {
             currentProfile.program_id !== programId ? (
               <button
                 className="btn btn-dark"
-                onClick={() => updateCurrentProgram()}
+                onClick={() => updateCurrentProgram(programId)}
               >
                 <i className="fa-regular fa-star fa-xl text-warning"></i>
               </button>

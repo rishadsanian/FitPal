@@ -59,7 +59,7 @@ function ProgramsPage(props) {
           className="btn bg-dark w-100 mt-0 ms-0  me-0 opacity-75  p-3 text-info m-3 fw-bold"
         >
           {' '}
-          add program
+          Add Program
         </a>
       )}
       {authenticated ? (
