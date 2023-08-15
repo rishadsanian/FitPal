@@ -5,7 +5,7 @@ import { useProfileContext } from "../../contexts/ProfileContext";
 
 // Chat GPT motivation message and workout plan generator
 const ChatGptDailySummary = () => {
-  const { profile } = useProfileContext();
+  const { profile, savedProfile } = useProfileContext();
   const [motivationalMessage, setMotivationalMessage] = useState("");
   const [workoutPlan, setWorkoutPlan] = useState("");
   const [lastGeneratedDate, setLastGeneratedDate] = useState(null);
@@ -30,7 +30,7 @@ const ChatGptDailySummary = () => {
     if (significantChange) {
       fetchMessages();
     }
-  }, [profile]);
+  }, [savedProfile]);
 
   // Fetch motivational message and workout plan
   const fetchMessages = async () => {

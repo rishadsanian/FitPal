@@ -109,7 +109,7 @@ export default function SessionsProvider(props) {
   };
 
   // function to toggle edit mode
-  const updateCurrentProgram = async () => {
+  const updateCurrentProgram = async (programId) => {
     try {
       // Submit form data to the server
       await axios.post(`/profile/`, {
