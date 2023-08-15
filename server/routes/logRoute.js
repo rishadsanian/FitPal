@@ -31,6 +31,33 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/timestamped", async (req, res) => {
+  try {
+    const { exercise_name, reps, resistance, user_id, timestamp } = req.body;
+
+    // queryString
+    const queryString = `
+      INSERT INTO log (exercise_name, reps, resistance, user_id, timestamp)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *;
+    `;
+
+    // SQL to db
+    const result = await pool.query(queryString, [
+      exercise_name,
+      reps,
+      resistance,
+      user_id,
+      timestamp
+    ]);
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error inserting data:", error);
+    res.status(500).json({ error: "Error inserting data" });
+  }
+});
+
 router.get("/:user_id/", (req, res) => {
   logs
     .getLogByUserId(req.params)
