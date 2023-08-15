@@ -110,7 +110,8 @@ const ExerciseLog = (props) => {
 
   // Save button clicked
   const onSave = async () => {
-    console.log("saving")
+    var offset = new Date().getTimezoneOffset();
+    console.log(offset);
     try {
       const promises = [];
       for (const re of records) {
@@ -120,9 +121,9 @@ const ExerciseLog = (props) => {
             resistance: re.resistance || 0,
             exercise_name: props.name,
             user_id: window.sessionStorage.getItem('userId'),
-            //timestamp: moment().day(props.session.day_of_week) 
+            timestamp: moment().day(props.session.day_of_week).subtract(offset, "minutes")
           };
-          promises.push(axios.post(`http://localhost:8080/log/`, data));
+          promises.push(axios.post(`http://localhost:8080/log/timestamped`, data));
         }
       }
 
