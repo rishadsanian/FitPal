@@ -97,5 +97,8 @@ SELECT
   'Male' AS gender,
   'Beginner' AS fitness_level,
   'Bulk Up' AS goal,
-  filtered_dates.measurement_date::timestamp -- Set timestamp to the measurement date
+  CASE
+    WHEN filtered_dates.measurement_date = now() - interval '3 days' THEN filtered_dates.measurement_date::timestamp
+    ELSE filtered_dates.measurement_date::timestamp + interval '1 day' -- Set timestamp to the measurement date + 1 day
+  END AS timestamp
 FROM filtered_dates;
