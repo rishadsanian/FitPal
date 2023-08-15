@@ -44,7 +44,7 @@ const Login = () => {
         <div className="container bg-dark text-white rounded py-5 px-3">
           <h3 className="text-warning fw-bold">Log in</h3>
           <p className="text-secondary">
-            You guys can put some messages here if you want
+            Please enter your email and password below.
           </p>
           <div className="text-start">
             <label htmlFor="email" className="form-label">

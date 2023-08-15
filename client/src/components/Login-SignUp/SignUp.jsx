@@ -74,7 +74,7 @@ const SignUp = () => {
         <div className="container bg-dark text-white rounded py-5 px-3">
           <h3 className="text-warning fw-bold">Create an account</h3>
           <p className="text-secondary">
-            You guys can put some messages here if you want
+            Please fill out the information below to create an account. 
           </p>
           <div className="text-start">
             <label htmlFor="email" className="form-label">
