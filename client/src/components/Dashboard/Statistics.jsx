@@ -1,24 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 
 import { useWorkoutContext } from "../../contexts/WorkoutContext";
+
 
 const Statistics = () => {
   const [totalReps, setTotalReps] = useState(0);
   const [totalSets, setTotalSets] = useState(0);
   const [totalWeight, setTotalWeight] = useState(0);
 
-  const { allWorkoutHistory, } = useWorkoutContext();
+  const { allWorkoutHistory } = useWorkoutContext();
 
 
   useEffect(() => {
     setTotalReps(0);
     setTotalWeight(0);
+    setTotalSets(0)
     for(const workout of allWorkoutHistory) {
-      setTotalReps(prev => prev + workout.reps);
-      setTotalWeight(prev => prev + (workout.reps * workout.resistance))
+      if(moment(workout.timestamp).isSame(new Date(), 'isoweek')) {
+        setTotalReps(prev => prev + workout.reps);
+        setTotalWeight(prev => prev + (workout.reps * workout.resistance))
+        setTotalSets(prev => prev + 1)
+      }
     }
-    setTotalSets(allWorkoutHistory.length)
+    
 
   }, [allWorkoutHistory.length])
 

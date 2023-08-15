@@ -237,7 +237,7 @@ const SessionDetail = (props) => {
         )}
         {displayLog && (
           <div className="col col-12 col-md-6 col-xl-8 px-0">
-            <ExerciseLog name={selectedEx?.name} onSaveComplete={updateLogs} />
+            <ExerciseLog name={selectedEx?.name} onSaveComplete={updateLogs} session={session}/>
           </div>
         )}
       </div>

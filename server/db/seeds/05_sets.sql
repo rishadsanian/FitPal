@@ -1,9 +1,160 @@
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 23, 'Rickshaw Carry', 'forearms');
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 40, 'Rickshaw Carry', 'forearms');
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 33, 'Rickshaw Carry', 'forearms');
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 50, 'Rickshaw Carry', 'forearms');
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (61, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (61, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (61, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (61, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (61, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (61, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (61, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (61, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (61, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (61, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (61, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (61, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (61, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (61, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (61, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (61, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (61, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (61, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (61, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (61, 15, 100, 'Machine Lateral Raise', 'shoulders');
 
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 40, 'Single-Leg Press', 'quadriceps');
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 33, 'Single-Leg Press', 'quadriceps');
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 23, 'Single-Leg Press', 'quadriceps');
-INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group) VALUES (1, 4, 50, 'Single-Leg Press', 'quadriceps');
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (62, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (62, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (62, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (62, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (62, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (62, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (62, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (62, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (62, 15, 45, 'Preacher Curl', 'biceps'),
+    (62, 15, 45, 'Preacher Curl', 'biceps'),
+    (62, 15, 45, 'Preacher Curl', 'biceps'),
+    (62, 15, 45, 'Preacher Curl', 'biceps'),
+    (62, 8, 240, 'Lat pull-down', 'lats'),
+    (62, 8, 240, 'Lat pull-down', 'lats'),
+    (62, 8, 240, 'Lat pull-down', 'lats'),
+    (62, 8, 240, 'Lat pull-down', 'lats'),
+    (62, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (62, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (62, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (62, 12, 55, 'Side Lateral Raise', 'shoulders');
+
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (63, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (63, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (63, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (63, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (63, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (63, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (63, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (63, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (63, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (63, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (63, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (63, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (63, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (63, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (63, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (63, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (63, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (63, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (63, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (63, 15, 100, 'Machine Lateral Raise', 'shoulders');
+
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (64, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (64, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (64, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (64, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (64, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (64, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (64, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (64, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (64, 15, 45, 'Preacher Curl', 'biceps'),
+    (64, 15, 45, 'Preacher Curl', 'biceps'),
+    (64, 15, 45, 'Preacher Curl', 'biceps'),
+    (64, 15, 45, 'Preacher Curl', 'biceps'),
+    (64, 8, 240, 'Lat pull-down', 'lats'),
+    (64, 8, 240, 'Lat pull-down', 'lats'),
+    (64, 8, 240, 'Lat pull-down', 'lats'),
+    (64, 8, 240, 'Lat pull-down', 'lats'),
+    (64, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (64, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (64, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (64, 12, 55, 'Side Lateral Raise', 'shoulders');
+
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (65, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (65, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (65, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (65, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (65, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (65, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (65, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (65, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (65, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (65, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (65, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (65, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (65, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (65, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (65, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (65, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (65, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (65, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (65, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (65, 15, 100, 'Machine Lateral Raise', 'shoulders');
+
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (66, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (66, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (66, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (66, 8, 250, 'Incline dumbbell bench press', 'chest'),
+    (66, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (66, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (66, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (66, 10, 220, 'Barbell Deadlift', 'hamstrings'),
+    (66, 15, 45, 'Preacher Curl', 'biceps'),
+    (66, 15, 45, 'Preacher Curl', 'biceps'),
+    (66, 15, 45, 'Preacher Curl', 'biceps'),
+    (66, 15, 45, 'Preacher Curl', 'biceps'),
+    (66, 8, 240, 'Lat pull-down', 'lats'),
+    (66, 8, 240, 'Lat pull-down', 'lats'),
+    (66, 8, 240, 'Lat pull-down', 'lats'),
+    (66, 8, 240, 'Lat pull-down', 'lats'),
+    (66, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (66, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (66, 12, 55, 'Side Lateral Raise', 'shoulders'),
+    (66, 12, 55, 'Side Lateral Raise', 'shoulders');
+
+INSERT INTO sets (session_id, reps, resistant, exercise_name, muscle_group)
+VALUES
+    (67, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (67, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (67, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (67, 8, 200, 'Barbell Bench Press - Medium Grip', 'chest'),
+    (67, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (67, 10, 150, 'Barbell Full Squat', 'quadriceps'),
+    (67, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (67, 10, 160, 'Barbell Full Squat', 'quadriceps'),
+    (67, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (67, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (67, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (67, 12, 50, 'Dumbbell Bicep Curl', 'biceps'),
+    (67, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (67, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (67, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (67, 8, 180, 'Barbell Deadlift', 'hamstrings'),
+    (67, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (67, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (67, 15, 100, 'Machine Lateral Raise', 'shoulders'),
+    (67, 15, 100, 'Machine Lateral Raise', 'shoulders');
