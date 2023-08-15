@@ -30,7 +30,9 @@ const ChatGptDailySummary = () => {
     if (significantChange) {
       fetchMessages();
     }
+
   }, [savedProfile]);
+
 
   // Fetch motivational message and workout plan
   const fetchMessages = async () => {
@@ -94,7 +96,6 @@ const ChatGptDailySummary = () => {
       const newWorkoutPlan = workoutResponse.data.choices[0].message.content;
       setWorkoutPlan(newWorkoutPlan);
       localStorage.setItem("cachedWorkoutPlan", newWorkoutPlan);
-
     } catch (error) {
       console.error("Error fetching messages:", error);
       setMotivationalMessage(
