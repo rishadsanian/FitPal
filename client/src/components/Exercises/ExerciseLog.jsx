@@ -120,9 +120,9 @@ const ExerciseLog = (props) => {
             resistance: re.resistance || 0,
             exercise_name: props.name,
             user_id: window.sessionStorage.getItem('userId'),
-            timestamp: moment().day(props.session.day_of_week) 
+            //timestamp: moment().day(props.session.day_of_week) 
           };
-          promises.push(axios.post(`http://localhost:8080/log/timestamped`, data));
+          promises.push(axios.post(`http://localhost:8080/log/`, data));
         }
       }
 
