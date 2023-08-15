@@ -109,7 +109,7 @@ const ChatGptDailySummary = () => {
       <br></br>
       <h3 className="text-white blockquote">{motivationalMessage}</h3>
       <br></br>
-      <p className="text-white" style={{ fontSize: "20px" }}>
+      <p className="text-white" style={{ fontSize: "1em" }}>
         {workoutPlan}
       </p>
     </div>
