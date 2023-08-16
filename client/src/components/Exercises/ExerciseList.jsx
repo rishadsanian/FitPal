@@ -86,7 +86,7 @@ const ExerciseList = (props) => {
   });
 
   return (
-    <div className="w-100 p-3">
+    <div className=" w-100 p-3">
       {props.browseMode ? 
         <h1 className="text-warning fw-bold text-white">Browse Exercises</h1>
         :

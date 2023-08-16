@@ -147,7 +147,7 @@ const WorkoutHistory = () => {
       const workoutDate = moment(workout.timestamp).startOf("day");
       const dayToCheck = currentDate.diff(workoutDate, "days");
       console.log(dayToCheck)
-      if (dayToCheck < 7 && dayToCheck > 0) {
+      if (dayToCheck < 7 && dayToCheck >= 0) {
         workoutHistorySorted[dayToCheck].push(workout);
       }
     });

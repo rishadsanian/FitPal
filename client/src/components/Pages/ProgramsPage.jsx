@@ -98,6 +98,7 @@ function ProgramsPage(props) {
           title="Programs"
           editable={false}
           userView={props.userView}
+          bg="bg-dark-75" 
         />
       )}
     </div>

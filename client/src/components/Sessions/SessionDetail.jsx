@@ -144,7 +144,7 @@ const SessionDetail = (props) => {
   });
 
   return (
-    <div>
+    <div className=' bg-dark-75'>
       <div className="row row-col-1 row-col-md-2">
         <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
