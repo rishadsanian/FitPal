@@ -7,14 +7,14 @@ import { programContext } from './ProgramProvider';
 export const sessionsContext = createContext();
 
 const daysOfWeek = [
-  {day_val: 0, day: "Sunday"},
-  {day_val: 1, day: "Monday"},
-  {day_val: 2, day: "Tuesday"},
-  {day_val: 3, day: "Wednesday"},
-  {day_val: 4, day: "Thursday"},
-  {day_val: 5, day: "Friday"},
-  {day_val: 6, day: "Saturday"},
   
+  {day_val: 0, day: "Monday"},
+  {day_val: 1, day: "Tuesday"},
+  {day_val: 2, day: "Wednesday"},
+  {day_val: 3, day: "Thursday"},
+  {day_val: 4, day: "Friday"},
+  {day_val: 5, day: "Saturday"},
+  {day_val: 6, day: "Sunday"},
 ]
 
 // Create a Component wrapper from Context.Provider

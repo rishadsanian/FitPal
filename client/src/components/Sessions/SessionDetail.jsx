@@ -123,8 +123,9 @@ const SessionDetail = (props) => {
     const exerciseLogs = logs.filter(
       (log) =>
         log.exercise_name === exercise.name &&
-        moment(log.timestamp).day() === session.day_of_week &&
-        moment(log.timestamp).isSame(new Date(), 'week')
+        moment(log.timestamp).isoWeekday() - 1 === session.day_of_week &&
+        moment(log.timestamp).isoWeekday() - 1 >= 0 &&
+        moment(log.timestamp).isoWeekday() - 1 <= 6
     );
 
     return (
@@ -142,7 +143,7 @@ const SessionDetail = (props) => {
   });
 
   return (
-    <div>
+    <div className='bg-dark-75 container-fluid'>
       <div className="row row-col-1 row-col-md-2">
         <div className="col col-12 col-md-6 col-xl-4 bg-dark opacity-75 text-start py-3 px-5">
           {editMode ? (
@@ -169,15 +170,13 @@ const SessionDetail = (props) => {
                 {title}
               </h1>
               <div className="d-flex justify-content-between mb-5">
-                {props.editable && (
                   <a
                     className="btn btn-warning"
                     href="#addExercise"
                     onClick={onAddExerciseClick}
                   >
-                    <i className="fa-solid fa-plus"></i> exercise
+                    <i className="fa-solid fa-plus"></i> View Exercises
                   </a>
-                )}
                 {props.editable && (
                   <div className="d-flex">
                     {deleteMode ? (

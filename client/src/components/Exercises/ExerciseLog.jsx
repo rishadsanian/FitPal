@@ -111,7 +111,6 @@ const ExerciseLog = (props) => {
   // Save button clicked
   const onSave = async () => {
     var offset = new Date().getTimezoneOffset();
-    console.log(offset);
     try {
       const promises = [];
       for (const re of records) {
@@ -121,7 +120,7 @@ const ExerciseLog = (props) => {
             resistance: re.resistance || 0,
             exercise_name: props.name,
             user_id: window.sessionStorage.getItem('userId'),
-            timestamp: moment().day(props.session.day_of_week).subtract(offset, "minutes")
+            timestamp: moment().isoWeekday(props.session.day_of_week + 1).subtract(offset, "minutes")
           };
           promises.push(axios.post(`http://localhost:8080/log/timestamped`, data));
         }

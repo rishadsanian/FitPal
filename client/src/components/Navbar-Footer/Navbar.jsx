@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className="navbar bg-dark navbar-expand-sm fixed-top"
+        className="navbar bg-dark navbar-expand-sm fixed-top "
         data-bs-theme="dark"
       >
         <div className="container-fluid">
