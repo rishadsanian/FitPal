@@ -17,7 +17,6 @@ body {
   background-color: #27374D;
   padding-top: 93px;
   animation: fadeIn 1s ease-in;
-
 }
 
 body::-webkit-scrollbar {

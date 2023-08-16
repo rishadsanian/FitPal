@@ -33,9 +33,13 @@ function CardList(props) {
             onChange={(e) => searchProgramsByText(e.target.value, props.editable)}
           /> 
         </div>}
-        <div className="px-3 row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-          {cards}
+        <div className='container-fluid'>
+          <div className="px-3 row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+            {cards}
+          </div>
         </div>
+        
+        
       </div>
   );
 }

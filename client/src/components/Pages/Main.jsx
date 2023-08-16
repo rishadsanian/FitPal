@@ -16,31 +16,32 @@ const Main = () => {
   return (
     <ProfileProvider>
       <WorkoutProvider>
-        <div className="">
+        <div>
           {/* <TitleImage icon={'fa-solid fa-table-columns'} /> */}
-
-          <div className="row row-cols-1 row-cols-md-2 bg-dark opacity-75">
-            <div className="p-3 text-start col col-sm-12 col-md-6 col-lg-7 text-white ">
-              <div className="container-fluid py-5 px-3">
-                <h1 className="display-5 fw-bold text-warning mb-0">
-                  Welcome User
-                </h1>
-                <p className="text-white fw-bold fs-5">{currentDate}</p>
+          <div className="container-fluid">
+            <div className="row row-cols-1 row-cols-md-2 bg-dark opacity-75">
+              <div className="p-3 text-start col col-sm-12 col-md-6 col-lg-7 text-white ">
+                <div className="container-fluid py-5 px-3">
+                  <h1 className="display-5 fw-bold text-warning mb-0">
+                    Welcome User
+                  </h1>
+                  <p className="text-white fw-bold fs-5">{currentDate}</p>
+                </div>
+                <div className="p-3">
+                  <ChatGptDailySummary />
+                </div>
               </div>
-              <div className="p-3">
-                <ChatGptDailySummary />
-              </div>
-            </div>
 
-            <div
-              id="profile"
-              className="text-start col col-sm-12 col-md-6 col-lg-5"
-            >
-              <Profile />
+              <div
+                id="profile"
+                className="text-start col col-sm-12 col-md-6 col-lg-5"
+              >
+                <Profile />
+              </div>
             </div>
           </div>
           {/* Log Section */}
-          <div id="log" className="log-container bg-dark">
+          <div id="log" className="log-container bg-dark container-fluid">
           <h3 className="display-5 m-0  fw-bold text-warning opacity-75 pt-4"> 
               Workout
             </h3>  
