@@ -64,7 +64,7 @@ function ProgramsPage(props) {
       )}
       {authenticated ? (
         <div className="row">
-          <div className="col col-12 col-md-6 col-lg-9 pe-0">
+          <div className="col col-12 col-md-6 col-lg-9 m-0 p-0">
             {userPrograms.length > 0 && (
               <CardList
                 cardData={userPrograms}
@@ -85,7 +85,7 @@ function ProgramsPage(props) {
             />
           </div>
           <div
-            className="col col-12 col-md-6 col-lg-3 bg-dark opacity-75 p-0"
+            className="col col-12 col-md-6 col-lg-3 bg-dark opacity-75 m-0"
             id="addProgram"
           >
             <CreateProgram />
