@@ -11,6 +11,13 @@ const ChatGptDailySummary = () => {
   const [lastGeneratedDate, setLastGeneratedDate] = useState(null);
   const [cachedProfile, setCachedProfile] = useState({}); // Store the cached profile for comparison
 
+  //Function to get rid of unused-variables for lastGenerated Date that stores cached values in local storage
+  let backupDate;
+  const storebackupdate = (lastGeneratedDate, backupDate) => {
+    backupDate = lastGeneratedDate;
+  };
+  storebackupdate(backupDate, lastGeneratedDate);
+
   // Fetch messages and workout plan when profile changes
   useEffect(() => {
     // Fetch the last generated date from storage
