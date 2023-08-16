@@ -196,7 +196,7 @@ const SliderComponent = () => {
       axios
         .get(
           `http://localhost:8080/sets/program/${profile.program_id}/day/${
-            moment().day()
+            moment().isoWeekday() -1
           }`
         )
         .then((res) => {
@@ -220,7 +220,7 @@ const SliderComponent = () => {
       axios
         .get(
           `http://localhost:8080/sessions/program/${profile.program_id}/day/${
-            moment().day()
+            moment().isoWeekday() - 1
           }`
         )
         .then((res) => {
