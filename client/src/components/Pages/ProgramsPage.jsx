@@ -52,7 +52,7 @@ function ProgramsPage(props) {
   const shouldShowLink = windowWidth <= 720;
 
   return (
-    <div className="container-fluid p-0">
+    <div className="container-fluid m-0">
       {shouldShowLink && (
         <a
           href="#addProgram"
