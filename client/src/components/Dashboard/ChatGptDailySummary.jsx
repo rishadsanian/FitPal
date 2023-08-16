@@ -30,9 +30,7 @@ const ChatGptDailySummary = () => {
     if (significantChange) {
       fetchMessages();
     }
-
   }, [savedProfile]);
-
 
   // Fetch motivational message and workout plan
   const fetchMessages = async () => {
@@ -108,8 +106,12 @@ const ChatGptDailySummary = () => {
   return (
     <div className="motivational-message">
       <h2>Daily Summary</h2>
-      <p className="text-white">{motivationalMessage}</p>
-      <p className="text-white">{workoutPlan}</p>
+      <br></br>
+      <h3 className="text-white blockquote">{motivationalMessage}</h3>
+      <br></br>
+      <p className="text-white" style={{ fontSize: "1em" }}>
+        {workoutPlan}
+      </p>
     </div>
   );
 };
