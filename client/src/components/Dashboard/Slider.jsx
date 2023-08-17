@@ -82,7 +82,7 @@ const SliderItem = ({
   }
   
 
-  const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
+  const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group] ? MUSCLE_ICON[currentSets[0].muscle_group] : "fa-dumbbell";
 
   const navigateToSession = () => {
     console.log(currentSets[0]);
