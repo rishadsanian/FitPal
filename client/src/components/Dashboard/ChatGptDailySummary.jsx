@@ -9,35 +9,14 @@ const ChatGptDailySummary = () => {
   const [motivationalMessage, setMotivationalMessage] = useState("");
   const [workoutPlan, setWorkoutPlan] = useState("");
   const [lastGeneratedDate, setLastGeneratedDate] = useState(null);
-  const [cachedProfile, setCachedProfile] = useState({}); // Store the cached profile for comparison
+  const [cachedProfile, setCachedProfile] = useState({});
 
-  //Function to get rid of unused-variables for lastGenerated Date that stores cached values in local storage
+  // Function to get rid of unused variables for lastGenerated Date that stores cached values in local storage
   let backupDate;
   const storebackupdate = (lastGeneratedDate, backupDate) => {
     backupDate = lastGeneratedDate;
   };
   storebackupdate(backupDate, lastGeneratedDate);
-
-  // Fetch messages and workout plan when profile changes
-  useEffect(() => {
-    // Fetch the last generated date from storage
-    const storedDate = localStorage.getItem("lastGeneratedDate");
-    if (storedDate) {
-      setLastGeneratedDate(new Date(storedDate));
-    }
-
-    // Check if profile changes are significant (e.g., fitness level or goal change)
-    const significantChange =
-      profile.fitness_level !== cachedProfile.fitness_level ||
-      profile.goal !== cachedProfile.goal;
-
-    // Update cached profile for comparison in the next render
-    setCachedProfile({ ...profile });
-
-    if (significantChange) {
-      fetchMessages();
-    }
-  }, [savedProfile]);
 
   // Fetch motivational message and workout plan
   const fetchMessages = async () => {
@@ -110,12 +89,33 @@ const ChatGptDailySummary = () => {
     }
   };
 
+  // Fetch messages and workout plan when profile changes
+  useEffect(() => {
+    // Fetch the last generated date from storage
+    const storedDate = localStorage.getItem("lastGeneratedDate");
+    if (storedDate) {
+      setLastGeneratedDate(new Date(storedDate));
+    }
+
+    // Check if profile changes are significant (e.g., fitness level or goal change)
+    const significantChange =
+      profile.fitness_level !== cachedProfile.fitness_level ||
+      profile.goal !== cachedProfile.goal;
+
+    // Update cached profile for comparison in the next render
+    setCachedProfile({ ...profile });
+
+    if (significantChange) {
+      fetchMessages();
+    }
+  }, [savedProfile]);
+
   return (
     <div className="motivational-message">
       <h2>Daily Summary</h2>
-      <br></br>
+      <br />
       <h3 className="text-white blockquote">{motivationalMessage}</h3>
-      <br></br>
+      <br />
       <p className="text-white" style={{ fontSize: "1em" }}>
         {workoutPlan}
       </p>
