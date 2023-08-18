@@ -57,10 +57,6 @@ const SliderItem = ({
     sets.filter((set) => exercise === set.name)
   );
 
-  // const [userWorkouts, setUserWorkouts] = useState(
-  //   uniqueExercises.filter((set) => exercise === set.exercise_name)
-  // )
-
   useEffect(() => {
     setUniqueExercises(
       workoutHistory.filter((workout) => workout.exercise_name === exercise)
@@ -82,7 +78,7 @@ const SliderItem = ({
   }
   
 
-  const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group];
+  const exerciseIcon = MUSCLE_ICON[currentSets[0].muscle_group] ? MUSCLE_ICON[currentSets[0].muscle_group] : "fa-dumbbell";
 
   const navigateToSession = () => {
     console.log(currentSets[0]);
