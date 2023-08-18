@@ -55,9 +55,11 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
 
 [Back to Table of Contents](#table-of-contents)
 ## Screenshots and Demo
+![Alt text](docs/FitPal_mobile_screenshots.png)
 ![Alt text](docs/FitPal_animation_mobile.gif)
 ![Alt text](docs/FitPal_animation_lg_screen.gif)
 [Back to Table of Contents](#table-of-contents)
+
 
 ## Setup
 
@@ -96,7 +98,8 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
 [Back to Table of Contents](#table-of-contents)
 
 ## Known Issues
-
+ - Loading of Chat GPT Daily Summary
+ 
 [Back to Table of Contents](#table-of-contents)
 
 
