@@ -8,7 +8,7 @@ Fit Pal is an all-in-one fitness app designed to simplify and enhance workout ex
 
 Target Audience: The Fit Pal app is targeted towards fitness enthusiasts of all levels - from beginners to trainers and coaches and experienced athletes. It caters to individuals who wish to log information about their workouts, establish or maintain a regular workout routine, track their progress, customizable training programs, and receive personalized exercise suggestions based on their goals, preferences, and fitness levels. 
 
-Fit Pal aims to make exercise management accessible and enjoyable for everyone, regardless of their prior experience in fitness training.
+
 
 This project has been completed from scratch using the PERN Stack (PostgreSQL, Express, React, Node) for the [Lighthouse Labs](https://www.lighthouselabs.ca/) Web Development Bootcamp Program. It took 13 days to complete, including planning and presentation prep, with development taking up 8 days.
 
@@ -55,7 +55,8 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
 
 [Back to Table of Contents](#table-of-contents)
 ## Screenshots and Demo
-
+![Alt text](docs/FitPal_animation_mobile.gif)
+![Alt text](docs/FitPal_animation_lg_screen.gif)
 [Back to Table of Contents](#table-of-contents)
 
 ## Setup
