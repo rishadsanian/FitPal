@@ -57,10 +57,6 @@ const SliderItem = ({
     sets.filter((set) => exercise === set.name)
   );
 
-  // const [userWorkouts, setUserWorkouts] = useState(
-  //   uniqueExercises.filter((set) => exercise === set.exercise_name)
-  // )
-
   useEffect(() => {
     setUniqueExercises(
       workoutHistory.filter((workout) => workout.exercise_name === exercise)
