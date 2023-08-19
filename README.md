@@ -3,14 +3,19 @@
 ## Overview
 Fit Pal is an all-in-one fitness app designed to simplify and enhance workout experiences for fitness enthusiasts.
 
- The app aims to solve the problem of managing workout routines, tracking progress, fitness programs, and providing personalized exercise recommendations though AI and from a library consisting around 1000 exercises. Fit Pal is a user-friendly and comprehensive tool that helps individuals achieve their fitness goals efficiently.
+ The app aims to solve the problem of managing workout routines, tracking progress, fitness programs, and providing personalized exercise recommendations through AI and from a library consisting of around 1000 exercises. Fit Pal is a user-friendly and comprehensive tool that helps individuals achieve their fitness goals efficiently.
 
 
 Target Audience: The Fit Pal app is targeted towards fitness enthusiasts of all levels - from beginners to trainers and coaches and experienced athletes. It caters to individuals who wish to log information about their workouts, establish or maintain a regular workout routine, track their progress, customizable training programs, and receive personalized exercise suggestions based on their goals, preferences, and fitness levels. 
 
 
-
 This project has been completed from scratch using the PERN Stack (PostgreSQL, Express, React, Node) for the [Lighthouse Labs](https://www.lighthouselabs.ca/) Web Development Bootcamp Program. It took 13 days to complete, including planning and presentation prep, with development taking up 8 days.
+
+## Team 
+Our team consists of [Rishad Alam](https://github.com/rishadsanian), [Phat Luong](https://github.com/luongtanphat25), and [Dylan Burnham](https://github.com/dburnham1212).
+
+
+
 
 ## Table of Contents
 - [Overview](#overview)
@@ -23,25 +28,10 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
 - [Future Features](#future-features)
 - [Known Issues](#known-issues)
 
-
-## Team
-
-
- [Rishad Alam](https://github.com/rishadsanian) : 
-    Full Stack Developer, with a background in Accounting & Finance, Project Management and Event Planning for trade shows and conferences.
-
-[Phat Luong](https://github.com/luongtanphat25):  Full Stack Developer, with a background in iOS development, graduated in Computer Engineering and Programming.
-
-[Dylan Burnham](https://github.com/dburnham1212): Full Stack Developer, with a background in Game Development.
-
- [Back to Table of Contents](#table-of-contents)
-
-
-
 ## Features
 
  - User Authentication
- - Chat GPT generated motivational message and daily workout plan based on user profile
+ - Chat GPT generated motivational messages and daily workout plans based on user profile
  - Editable User Profile
  - CRUD Workout Log
  - Exercise instructions and details
@@ -50,14 +40,21 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
  - Public Programs and CRUD logging and tracking capabilities
   - CRUD Customizable Programs with customizable daily sessions 
 - Weekly Exercise Tracking chart
-- Weight Tracker Chart - Aggeregate Average weight tracking over 7 days, 30 days, or 1 year. 
+- Weight Tracker Chart - Aggregate Average weight tracking over 7 days, 30 days, or 1 year. 
 - Weekly Exercise Statistics
 
 [Back to Table of Contents](#table-of-contents)
+
 ## Screenshots and Demo
 ![Alt text](docs/FitPal_mobile_screenshots.png)
-![Alt text](docs/FitPal_animation_mobile.gif)
-![Alt text](docs/FitPal_animation_lg_screen.gif)
+
+### Mobile View
+<img src="docs/FitPal_animation_mobile.gif" alt="Mobile Animation" width="300">
+
+
+### Desktop View
+<img src="docs/FitPal_animation_lg_screen.gif" alt="Large Screen Animation" width="600">
+
 [Back to Table of Contents](#table-of-contents)
 
 
@@ -74,8 +71,8 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
 
 ## Tech Stacks and Dependencies
  - Planning: Jira, Trello, Draw.io, Photoshop
- - Database : PostgreSQL
- - External APIs : Open AI, API-Ninja Exercise
+ - Database: PostgreSQL
+ - External APIs: Open AI, API-Ninja Exercise
 
  - Server:   
 
@@ -90,7 +87,7 @@ This project has been completed from scratch using the PERN Stack (PostgreSQL, E
 [Back to Table of Contents](#table-of-contents)
 
 ## Future Features
-- Connect to smart wear though Google Fit API via websocket
+- Connect to smart wear though Google Fit API via WebSocket
 - Further integration of Chat-GPT
 - Ratings, sharing, and subscription of programs between users
 - Calendar
