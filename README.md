@@ -34,11 +34,11 @@ Our team consists of [Rishad Alam](https://github.com/rishadsanian), [Phat Luong
  - Chat GPT generated motivational messages and daily workout plans based on user profile
  - Editable User Profile
  - CRUD Workout Log
- - Exercise instructions and details
+ - Library of Exercises, instructions and details from external API
  - Workout History
  - Program Schedule 
  - Public Programs and CRUD logging and tracking capabilities
-  - CRUD Customizable Programs with customizable daily sessions 
+ - CRUD Customizable Programs with customizable daily sessions 
 - Weekly Exercise Tracking chart
 - Weight Tracker Chart - Aggregate Average weight tracking over 7 days, 30 days, or 1 year. 
 - Weekly Exercise Statistics
