@@ -3,7 +3,7 @@
 ## Overview
 Fit Pal is an all-in-one fitness app designed to simplify and enhance workout experiences for fitness enthusiasts.
 
- The app aims to solve the problem of managing workout routines, tracking progress, fitness programs, and providing personalized exercise recommendations through AI and from a library consisting of around 1000 exercises. Fit Pal is a user-friendly and comprehensive tool that helps individuals achieve their fitness goals efficiently.
+ The app aims to solve the problem of managing workout routines by tracking progress, providing customizable fitness programs, and personalized exercise recommendations through AI and from a library consisting of around 1000 exercises. Fit Pal is a user-friendly and comprehensive tool that helps individuals achieve their fitness goals efficiently.
 
 
 Target Audience: The Fit Pal app is targeted towards fitness enthusiasts of all levels - from beginners to trainers and coaches and experienced athletes. It caters to individuals who wish to log information about their workouts, establish or maintain a regular workout routine, track their progress, customizable training programs, and receive personalized exercise suggestions based on their goals, preferences, and fitness levels. 
